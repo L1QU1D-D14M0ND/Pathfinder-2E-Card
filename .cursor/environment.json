@@ -1,0 +1,17 @@
+{
+  "name": "Pathfinder-2E-Card",
+  "install": "npm --prefix app ci",
+  "terminals": [
+    {
+      "name": "dev",
+      "command": "cd app && npm run dev -- --host",
+      "description": "Vite dev server for the PF2e character sheet app on port 5173."
+    }
+  ],
+  "ports": [
+    {
+      "name": "vite",
+      "port": 5173
+    }
+  ]
+}
