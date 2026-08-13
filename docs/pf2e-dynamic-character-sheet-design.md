@@ -1,6 +1,6 @@
 # Pathfinder Second Edition — Dynamic Character Sheet Design
 
-**Status:** Decisions locked (v0.3) — three elaborations pending choice in §12  
+**Status:** Product decisions complete (v1.0 design lock)  
 **Repo context:** `Pathfinder-2E-Card`  
 **Audience:** Product / engineering  
 **Ruleset target:** Pathfinder Second Edition — **Remaster-first**, legacy fallback when Remaster data is missing or errors
@@ -24,6 +24,7 @@ Build a **dynamic character sheet** for **players** that can create, edit, recal
 | 3 | Ruleset | **Remaster when possible**; **legacy fallback** on missing data or errors |
 | 4 | Calc depth (1.0) | **Core calculations only**; architecture expandable to complex feat/spell/mechanic effects |
 | 5 | Content books | **Player Core + Player Core 2** only (player-facing). **No GM-exclusive** content |
+| 5a | Content acquisition | **Hybrid** — curated hand-maintained pack first; optional attributed open/ORC import pipeline later |
 | 5b | Spells UI (later) | Sidebar (post-placeholder) with tabs for **spells**, **afflictions**, and **actions** (e.g. combat maneuvers) |
 | 6 | Persistence | **One sheet at a time** + **Save sheet** / **Load sheet** (local files). No multi-character library, no cloud |
 | 7 | Character types | **All** player character types in the data model |
@@ -33,7 +34,9 @@ Build a **dynamic character sheet** for **players** that can create, edit, recal
 | 11 | Dice | **No** dice roller |
 | 12 | Language | **English for 0.9**; **Spanish for 1.0** (i18n-ready strings from the start) |
 | 13 | Stack | **TypeScript** (lightweight UI layer TBD) |
-| 14 | License | **Open source** (exact SPDX license TBD — see §12) |
+| 14 | License | **MIT** |
+| 15 | Campaign / house rules | **Omit** optional flags (e.g. Free Archetype) in 0.9/1.0 — extra feats entered as custom rows if needed |
+| 16 | Golden tests | **Accepted proposed set** (see §12) |
 
 See also: [`adr/0001-product-direction.md`](adr/0001-product-direction.md).
 
@@ -218,7 +221,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 **Later reference sidebar (not 0.9 blocker):** browsable Spells, Afflictions, Actions (combat maneuvers, etc.) fed from the same catalog where licensing allows.
 
-**How we obtain that data** is still a choice — see §12 elaboration A.
+**Acquisition:** **Hybrid** — ship a curated hand-maintained PC1/PC2 player pack for 0.9; keep schema compatible with a later attributed open/ORC dataset import after license review.
 
 ---
 
@@ -243,7 +246,6 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
     "appVersion": "",
     "locale": "en"
   },
-  "campaignOptions": {},
   "identity": {},
   "attributes": {},
   "proficiencies": {},
@@ -301,10 +303,10 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 ## 11. Phased delivery
 
-### Phase 0 — Design lock (current)
+### Phase 0 — Design lock (done)
 
-- Decisions recorded; remaining elaborations answered.
-- ADR updated; schema draft next.
+- Product decisions complete; ADR accepted.
+- Next: character JSON schema draft + TypeScript project scaffold.
 
 ### Phase 1 — Schema + core calc engine (TypeScript)
 
@@ -332,83 +334,31 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 ---
 
-## 12. Remaining choices (need your call)
+## 12. Accepted golden-test characters
 
-Three items still need a decision. Short answers are enough.
+Engineering fixtures (not necessarily shipped as player samples). Assert core outputs (HP, AC, skills, strikes, spell DC, etc.):
 
-### A. Content source / licensing (elaboration of prior Q2)
+1. Martial — **Fighter 5** (armor + multiple strikes)
+2. Prepared caster — **Wizard 5** or **Witch 5**
+3. Spontaneous caster — **Bard 5** or **Sorcerer 5**
+4. Divine prepared — **Cleric 5**
+5. Companion user — **Ranger 5** with animal companion **or** Druid with companion
+6. PC2 smoke test — one **Player Core 2** class at level 3 or 5
 
-Pathfinder game text is owned by Paizo. An app can store **structured mechanical data** (names, HP dice, proficiency lists, traits) only if we respect license terms.
-
-Two practical approaches:
-
-| Approach | What we do | Pros | Cons |
-| --- | --- | --- | --- |
-| **Hand-maintained minimal tables** | We type/curate only the fields the sheet needs into our own JSON | Full control; small footprint; clear provenance | Slow to fill PC1+PC2; easy to drift from books |
-| **Bundle attributed open/ORC community datasets** | Import from a permissively licensed Remaster-oriented open data project, keep attribution, trim to player fields | Faster coverage; better completeness | Must verify license compatibility with **our** open-source license; may need a build step to subset/transform data; upstream renames can break ids |
-
-**Hybrid (often best):** hand-maintained schema + start with a small curated pack; optionally add an open-data import pipeline later if license review passes.
-
-**Please choose:** `hand-maintained`, `open-data bundle`, or `hybrid`.
-
-### B. Campaign / house-rule flags (elaboration of prior Q6)
-
-Some tables use optional campaign rules that change **how many choices** appear while building — not just flavor text. Example: **Free Archetype** (extra archetype feat slots each odd level). Others: variant proficiency progressions, optional ancestry parity rules, etc.
-
-| Approach | Meaning |
-| --- | --- |
-| **Omit in 0.9/1.0** | Sheet assumes standard advancement only; users add extra feats manually as custom rows |
-| **Stub `campaignOptions` flags** | e.g. `{ "freeArchetype": true }` unlocks extra feat slots in the UI, still no deep automation |
-| **Full variant rules** | Out of scope for 1.0 |
-
-Recommendation: **stub flags** for Free Archetype only (cheap, prevents redesign later).
-
-**Please choose:** `omit`, `stub free archetype`, or list any other flags you want.
-
-### C. Golden-test / reference characters (elaboration of prior Q9)
-
-“Golden tests” means we save a few **finished example characters** as JSON fixtures and assert the engine’s outputs (HP, AC, skill bonuses, strike attack, spell DC, etc.) match expected numbers. That catches calc regressions when we change code.
-
-This is **not** shipping sample heroes for players (unless you want that too). It is an engineering checklist:
-
-- Which **classes/levels** must be correct before we call a release good?
-- Any **must-pass builds** from your table?
-
-Proposed starter set (PC1/PC2):
-
-1. Martial — Fighter 5 (armor + multiple strikes)  
-2. Prepared caster — Wizard 5 or Witch 5  
-3. Spontaneous caster — Bard 5 or Sorcerer 5  
-4. Divine prepared — Cleric 5  
-5. Companion user — Ranger 5 with animal companion **or** Druid with companion  
-6. PC2 class smoke test — one PC2 class at level 3 or 5  
-
-**Please choose:** accept this set, edit the list, or say “engineers pick.”
-
-### D. Exact open-source license
-
-You asked for an open-source license. Common options:
-
-| License | Rough vibe |
-| --- | --- |
-| **MIT** | Short, permissive, very common for apps |
-| **Apache-2.0** | Permissive + explicit patent clause |
-| **GPL-3.0** | Copyleft — derivatives must stay open |
-
-**Recommendation:** **MIT** unless you want stronger copyleft.
-
-**Please choose:** `MIT`, `Apache-2.0`, `GPL-3.0`, or other.
+Exact subclass/spell picks can be chosen during implementation as long as the roles above stay covered.
 
 ---
 
 ## 13. Working product summary
 
-- **Installable PWA**, spreadsheet UI, TypeScript.  
-- **One character** loaded; **Save sheet / Load sheet**.  
-- **Player Core + Player Core 2** content; no GM exclusives.  
-- **Remaster-first / legacy fallback**; **core calcs** for 0.9/1.0 with expansion hooks.  
-- **English in 0.9**, **Spanish in 1.0**.  
-- **No** dice roller, cloud, or VTT interop.  
+- **Installable PWA**, spreadsheet UI, **TypeScript**, **MIT** license.
+- **One character** loaded; **Save sheet** / **Load sheet**.
+- **Player Core + Player Core 2** (hybrid content acquisition); no GM exclusives.
+- **Remaster-first / legacy fallback**; **core calcs** for 0.9/1.0 with expansion hooks.
+- **No** campaign house-rule flags in 0.9/1.0.
+- **English in 0.9**, **Spanish in 1.0**.
+- **No** dice roller, cloud, or VTT interop.
+- Golden tests use the accepted reference set in §12.
 - Later: reference sidebar for spells / afflictions / actions.
 
 ---
@@ -439,3 +389,4 @@ You asked for an open-source license. Common options:
 | 2026-08-13 | Initial options document |
 | 2026-08-13 | First decision lock (local/mobile, spreadsheet, Remaster+legacy) |
 | 2026-08-13 | PWA; PC1+PC2; Save/Load one sheet; i18n plan; TypeScript; elaborations for content source, house rules, golden tests, license |
+| 2026-08-13 | Final lock: hybrid content, omit house-rule flags, accepted golden-test set, MIT |
