@@ -119,7 +119,7 @@ Schema caps `level` at **20**.
 
 ### I1 — Required empty strings vs optional fields
 
-Many identity fields are required (including empty `ContentRef.name: ""` in the minimal fixture). That makes “blank new sheet” valid but weakens validation for “finished” characters.
+Many identity fields are required (including empty `ContentRef.name: ""` in the minimal fixture). Blank drafts are schema-valid by design (`name` allows empty string). That weakens validation for “finished” characters.
 
 **Mitigation:** keep schema permissive for empty drafts; add a separate `character.complete.schema.json` or runtime “ready to play” checklist later.
 
