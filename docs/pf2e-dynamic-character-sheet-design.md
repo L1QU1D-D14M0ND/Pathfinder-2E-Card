@@ -33,10 +33,12 @@ Build a **dynamic character sheet** for **players** that can create, edit, recal
 | 10 | Interop | **No** Pathbuilder / Foundry import-export for now |
 | 11 | Dice | **No** dice roller |
 | 12 | Language | **English for 0.9**; **Spanish for 1.0** (i18n-ready strings from the start) |
-| 13 | Stack | **TypeScript** (lightweight UI layer TBD) |
+| 13 | Stack | **TypeScript + React** |
 | 14 | License | **MIT** |
 | 15 | Campaign / house rules | **Omit** optional flags (e.g. Free Archetype) in 0.9/1.0 — extra feats entered as custom rows if needed |
 | 16 | Golden tests | **Accepted proposed set** (see §12) |
+| 17 | Save extension | **`.json`** |
+| 18 | App display name | **Pathfinder 2E Character sheet** |
 
 See also: [`adr/0001-product-direction.md`](adr/0001-product-direction.md).
 
@@ -290,10 +292,11 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 | Concern | Choice |
 | --- | --- |
-| Language | **TypeScript** |
-| UI | Lightweight framework or minimal TS DOM layer (final pick during scaffold) |
+| Language | TypeScript |
+| UI | **React** |
 | Styling | Minimal CSS tables/grids; system fonts OK for placeholder |
-| State | One character document in memory; Save/Load files; optional single draft buffer |
+| State | One character document in memory; Save/Load `.json` files; optional single draft buffer |
+| App title | **Pathfinder 2E Character sheet** |
 | Calcs | Pure functions + golden tests |
 | Content | Static JSON under `/content/remaster` and `/content/legacy` |
 | Offline | Service worker caches app shell + content packs |
@@ -311,7 +314,8 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 ### Phase 1 — Schema + core calc engine (TypeScript)
 
-- Character JSON schema; Remaster/legacy stubs for PC1/PC2 player content.
+- ~~Character JSON schema; Remaster/legacy stubs for PC1/PC2 player content.~~ (schema done; content packs next)
+- ~~React + TypeScript PWA scaffold with Save/Load `.json`.~~
 - Core math + overrides + golden tests.
 
 ### Phase 2 — PWA spreadsheet shell (0.9 track)

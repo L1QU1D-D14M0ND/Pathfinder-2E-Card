@@ -56,13 +56,13 @@ lore.warfare
 
 ---
 
-## Remaining non-blocking choices (scaffold-time)
+## Scaffold decisions (locked)
 
-Schema work does not need these answered to proceed, but scaffolding will pick defaults if unspecified:
-
-1. **UI framework** — Preact / Svelte / React / vanilla TypeScript DOM?
-2. **Save file extension** — `.json` vs `.pf2e.json`?
-3. **App display name** — keep repo name `Pathfinder-2E-Card` or a player-facing title?
+| Topic | Decision |
+| --- | --- |
+| UI framework | **React** + TypeScript |
+| Save file extension | **`.json`** |
+| App display name | **Pathfinder 2E Character sheet** |
 
 ### Soft follow-up (not blocking)
 
@@ -117,8 +117,9 @@ Legacy rune names map in content fallback, not alternate schema enums.
 
 ## Next implementation steps
 
-1. TypeScript types mirrored from (or generated from) the schema.  
-2. Empty-sheet factory: auto-seed 16 skills; `schemaVersion: 1`.  
-3. Save sheet serializer that strips `derived`.  
+1. ~~TypeScript types mirrored from the schema.~~  
+2. ~~Empty-sheet factory: auto-seed 16 skills; `schemaVersion: 1`.~~  
+3. ~~Save sheet serializer that strips `derived`.~~  
 4. Core calc engine + golden fixtures (Fighter 5, …).  
-5. PWA spreadsheet shell.
+5. Expand spreadsheet editors (strikes, feats, inventory rows, spell lists).  
+6. Optional IndexedDB draft buffer for refresh safety.

@@ -25,6 +25,9 @@ Build a **lightweight installable PWA** Pathfinder Second Edition **player** cha
 | Campaign options | Omit house-rule flags (e.g. Free Archetype) for 0.9/1.0 |
 | i18n | English in 0.9; Spanish in 1.0 (strings externalized from the start) |
 | Language | TypeScript |
+| UI | React |
+| Save files | `.json` |
+| App title | Pathfinder 2E Character sheet |
 | Interop | No Pathbuilder/Foundry integration for now |
 | License | MIT |
 | Golden tests | Fighter 5; Wizard/Witch 5; Bard/Sorcerer 5; Cleric 5; companion user; one PC2 class |
