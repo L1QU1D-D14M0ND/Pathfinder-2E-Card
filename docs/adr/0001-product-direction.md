@@ -1,32 +1,44 @@
 # ADR 0001 — Product direction for PF2e character sheet
 
-**Status:** Accepted  
+**Status:** Accepted (amended)  
 **Date:** 2026-08-13  
-**Context:** Initial design options discussed; stakeholder answered priority questions.
+**Context:** Stakeholder answered product questions across two rounds.
 
 ## Decision
 
-Build a **lightweight, locally running, mobile-compatible** Pathfinder Second Edition character sheet with a **spreadsheet-style placeholder UI**, supporting **Build and Play**.
+Build a **lightweight installable PWA** Pathfinder Second Edition **player** character sheet with a **spreadsheet-style** UI, **Build + Play**, and **TypeScript**.
 
 | Area | Choice |
 | --- | --- |
-| Platform | Local (PWA / static web primary); mobile browsers supported |
+| Platform | Installable PWA; offline after install; mobile-compatible |
 | UI | Excel-like tables/tabs; no fancy UI or animations |
 | Ruleset | Remaster-first; legacy fallback on missing data or errors |
-| 1.0 calcs | Core math only |
-| Extensibility | Schema and resolver must allow later complex feat/spell/mechanic effects |
-| Content | Core content pack(s) for now |
-| Save | Local only (autosave + JSON export/import) |
-| Scope | All character types in the data model |
+| Content books | Player Core + Player Core 2 (player-facing only; no GM exclusives) |
+| Later reference UI | Sidebar with Spells / Afflictions / Actions (e.g. combat maneuvers) |
+| 0.9/1.0 calcs | Core math only |
+| Extensibility | Schema/resolver allow later complex feat/spell/mechanic effects |
+| Persistence | One active sheet; Save sheet / Load sheet (local JSON); optional single draft buffer |
+| Character types | All player character types in the data model |
 | Modes | Build and Play |
+| Dice | No dice roller |
+| i18n | English in 0.9; Spanish in 1.0 (strings externalized from the start) |
+| Language | TypeScript |
 | Interop | No Pathbuilder/Foundry integration for now |
+| License | Open source (exact SPDX pending final pick) |
 
 ## Consequences
 
-- Prefer a static/PWA frontend over a mandatory cloud backend.
-- Invest in character JSON schema, modifier resolver hooks, and Remaster/legacy content layers early.
-- Defer card-centric UX (repo name notwithstanding) until after functional spreadsheet MVP.
-- 1.0 success is measured by complete data coverage + correct core calcs + reliable local save, not by automation completeness.
+- No multi-character in-app library; file Save/Load is the source of truth between sessions/devices.
+- Content pipeline limited to player-facing PC1/PC2 (+ legacy fallback), not GM Core exclusives.
+- i18n infrastructure required before 0.9 even though Spanish ships at 1.0.
+- Card-centric UX and reference sidebar stay post-placeholder.
+
+## Still open (see design doc §12)
+
+- Content acquisition: hand-maintained vs open-data vs hybrid  
+- Campaign option stubs (e.g. Free Archetype)  
+- Golden-test reference characters  
+- Exact open-source license (MIT recommended)
 
 ## References
 
