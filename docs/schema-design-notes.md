@@ -120,6 +120,8 @@ Legacy rune names map in content fallback, not alternate schema enums.
 1. ~~TypeScript types mirrored from the schema.~~  
 2. ~~Empty-sheet factory: auto-seed 16 skills; `schemaVersion: 1`.~~  
 3. ~~Save sheet serializer that strips `derived`.~~  
-4. Core calc engine + golden fixtures (Fighter 5, …).  
-5. Expand spreadsheet editors (strikes, feats, inventory rows, spell lists).  
-6. Optional IndexedDB draft buffer for refresh safety.
+4. Validate Load and Save against `schemas/character.schema.json` (required by ADR 0002; not implemented).  
+5. Core calc engine + golden fixtures (Fighter 5, …).  
+6. Expand spreadsheet editors (strikes, feats, inventory rows, spell lists).  
+7. Externalize English UI strings (i18n catalogs; Spanish at 1.0).  
+8. Optional IndexedDB draft buffer for refresh safety.

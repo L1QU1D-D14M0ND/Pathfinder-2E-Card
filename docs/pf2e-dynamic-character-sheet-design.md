@@ -1,6 +1,7 @@
 # Pathfinder Second Edition — Dynamic Character Sheet Design
 
 **Status:** Product decisions complete (v1.0 design lock)  
+**Implementation:** Phase 1 in progress — schema v1 + React PWA scaffold exist; calc engine, content packs, JSON Schema validation, and i18n catalogs are not started  
 **Repo context:** `Pathfinder-2E-Card`  
 **Audience:** Product / engineering  
 **Ruleset target:** Pathfinder Second Edition — **Remaster-first**, legacy fallback when Remaster data is missing or errors
@@ -231,7 +232,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 | Mechanism | Role |
 | --- | --- |
-| Save sheet | Export current character to a local `.json` (or `.pf2e.json`) file |
+| Save sheet | Export current character to a local `.json` file |
 | Load sheet | Replace the active sheet by opening a saved file |
 | Optional draft autosave | Single in-progress buffer in IndexedDB so refresh does not wipe work — **not** a character library |
 | `schemaVersion` | Migrations as the model grows |
@@ -284,7 +285,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 **Later:** side panel/drawer for reference tabs (Spells / Afflictions / Actions) without abandoning the sheet grid.
 
-**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; add `es` for 1.0.
+**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; add `es` for 1.0. **Not started** — scaffold UI strings are hardcoded English in `app/src/App.tsx`.
 
 ---
 
@@ -298,7 +299,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 | State | One character document in memory; Save/Load `.json` files; optional single draft buffer |
 | App title | **Pathfinder 2E Character sheet** |
 | Calcs | Pure functions + golden tests |
-| Content | Static JSON under `/content/remaster` and `/content/legacy` |
+| Content | Planned: static JSON under `/content/remaster` and `/content/legacy` (directories not in the repo yet) |
 | Offline | Service worker caches app shell + content packs |
 | Telemetry | None |
 
@@ -308,20 +309,19 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 ### Phase 0 — Design lock (done)
 
-- Product decisions complete; ADR accepted.
-- Character JSON schema v1 drafted (`schemas/character.schema.json`); open schema questions in `docs/schema-design-notes.md`.
-- Next: answer schema questions → TypeScript project scaffold + calc engine.
+- Product decisions complete; ADR 0001 accepted.
+- Schema questions answered; `schemas/character.schema.json` is schemaVersion 1 (ADR 0002).
 
-### Phase 1 — Schema + core calc engine (TypeScript)
+### Phase 1 — Schema + core calc engine (TypeScript) — in progress
 
-- ~~Character JSON schema; Remaster/legacy stubs for PC1/PC2 player content.~~ (schema done; content packs next)
-- ~~React + TypeScript PWA scaffold with Save/Load `.json`.~~
-- Core math + overrides + golden tests.
+- Done: character JSON schema v1; TypeScript types; empty-sheet factory (16 standard skills); Save serializer strips `derived`; React PWA scaffold.
+- Remaining: JSON Schema validation on Load and before Save; core math + overrides; golden tests (§12).
+- Content pack stubs (`/content/remaster`, `/content/legacy`) move to Phase 3; they are not in the repo yet.
 
 ### Phase 2 — PWA spreadsheet shell (0.9 track)
 
-- Tabs/tables; Save/Load; optional draft buffer; English UI strings externalized.
-- Build + Play tracking.
+- Scaffold already has tab chrome and Save/Load. Remaining: row editors (strikes, feats, inventory, spells); optional IndexedDB draft buffer; English UI strings externalized (currently hardcoded).
+- Build + Play tracking beyond the current HP / hero-point / dying fields.
 
 ### Phase 3 — Content fill-out
 
@@ -355,6 +355,8 @@ Exact subclass/spell picks can be chosen during implementation as long as the ro
 ---
 
 ## 13. Working product summary
+
+This section is the **locked product target**, not a description of the current scaffold.
 
 - **Installable PWA**, spreadsheet UI, **TypeScript**, **MIT** license.
 - **One character** loaded; **Save sheet** / **Load sheet**.
@@ -395,3 +397,4 @@ Exact subclass/spell picks can be chosen during implementation as long as the ro
 | 2026-08-13 | First decision lock (local/mobile, spreadsheet, Remaster+legacy) |
 | 2026-08-13 | PWA; PC1+PC2; Save/Load one sheet; i18n plan; TypeScript; elaborations for content source, house rules, golden tests, license |
 | 2026-08-13 | Final lock: hybrid content, omit house-rule flags, accepted golden-test set, MIT |
+| 2026-08-13 | Align phases and technical notes with the repo: scaffold exists, calc/content/i18n/validation not started; Save extension is `.json` only |

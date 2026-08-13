@@ -25,7 +25,8 @@ Use `schemas/character.schema.json` as **schemaVersion 1** for a single PC sheet
 
 ## Consequences
 
-- TypeScript app validates on Load and before Save.
+- The app **must** validate documents against `schemas/character.schema.json` on Load and before Save.
+- **Current (scaffold):** Load checks `schemaVersion === 1` and that `identity`, `meta`, and `attributes` exist. It does not run JSON Schema validation. Save strips `derived` and does not schema-validate.
 - Save serializer strips `derived`.
 - New-character factory inserts the 16 standard skills.
 - Level-up / proficiency math must not assume a max level of 20.
