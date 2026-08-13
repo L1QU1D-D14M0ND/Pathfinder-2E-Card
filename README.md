@@ -14,7 +14,8 @@ Product decisions are locked; see the design doc and ADR before implementing.
 ## Schema
 
 - [`schemas/character.schema.json`](schemas/character.schema.json) — Save/Load document (`schemaVersion` 1)
-- [`fixtures/characters/minimal.example.json`](fixtures/characters/minimal.example.json) — empty valid sheet
+- [`fixtures/characters/minimal.example.json`](fixtures/characters/minimal.example.json) — minimal valid sheet
+- [`fixtures/characters/new-sheet.example.json`](fixtures/characters/new-sheet.example.json) — auto-seeded skills example
 
 ## License
 
