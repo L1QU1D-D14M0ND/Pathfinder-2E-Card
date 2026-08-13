@@ -306,7 +306,8 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 ### Phase 0 — Design lock (done)
 
 - Product decisions complete; ADR accepted.
-- Next: character JSON schema draft + TypeScript project scaffold.
+- Character JSON schema v1 drafted (`schemas/character.schema.json`); open schema questions in `docs/schema-design-notes.md`.
+- Next: answer schema questions → TypeScript project scaffold + calc engine.
 
 ### Phase 1 — Schema + core calc engine (TypeScript)
 

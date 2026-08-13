@@ -1,0 +1,1044 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/L1QU1D-D14M0ND/Pathfinder-2E-Card/schemas/character.schema.json",
+  "title": "PF2e Character Sheet Document",
+  "description": "Versioned save format for one Pathfinder Second Edition player character (Remaster-first). schemaVersion 1. Inputs and play state are authoritative; derived.* is optional cache.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "meta",
+    "identity",
+    "attributes",
+    "proficiencies",
+    "vitals",
+    "armorClass",
+    "skills",
+    "feats",
+    "features",
+    "actions",
+    "strikes",
+    "spellcasting",
+    "inventory",
+    "companions",
+    "conditions",
+    "play",
+    "notes",
+    "overrides",
+    "extensions"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1,
+      "description": "Document schema version. Bump only with a migration path."
+    },
+    "meta": { "$ref": "#/$defs/Meta" },
+    "identity": { "$ref": "#/$defs/Identity" },
+    "attributes": { "$ref": "#/$defs/Attributes" },
+    "proficiencies": { "$ref": "#/$defs/Proficiencies" },
+    "vitals": { "$ref": "#/$defs/Vitals" },
+    "armorClass": { "$ref": "#/$defs/ArmorClassInputs" },
+    "skills": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SkillEntry" }
+    },
+    "feats": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/FeatEntry" }
+    },
+    "features": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/FeatureEntry" }
+    },
+    "actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ActionEntry" }
+    },
+    "strikes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/StrikeEntry" }
+    },
+    "spellcasting": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SpellcastingEntry" },
+      "description": "Zero or more spellcasting sources (class, archetype, innate tradition blocks, etc.)."
+    },
+    "inventory": { "$ref": "#/$defs/Inventory" },
+    "companions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/CompanionEntry" }
+    },
+    "conditions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ConditionEntry" }
+    },
+    "play": { "$ref": "#/$defs/PlayState" },
+    "notes": { "$ref": "#/$defs/Notes" },
+    "overrides": {
+      "type": "object",
+      "description": "Manual overrides keyed by stable path (e.g. derived.ac.total). UI should mark overridden fields.",
+      "additionalProperties": { "$ref": "#/$defs/OverrideValue" }
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Forward-compatible bag for experimental fields. Consumers must ignore unknown keys.",
+      "additionalProperties": true
+    },
+    "derived": {
+      "$ref": "#/$defs/DerivedCache",
+      "description": "Optional recomputable cache. Safe to strip on save; engine should recompute on load."
+    }
+  },
+  "$defs": {
+    "IsoDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp."
+    },
+    "RulesetSource": {
+      "type": "string",
+      "enum": ["remaster", "legacy", "custom"],
+      "description": "Where this entry resolved from after Remaster→legacy→custom fallback."
+    },
+    "ContentRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "id": {
+          "type": ["string", "null"],
+          "description": "Stable catalog id when known (e.g. class.fighter). Null for free-text/custom rows."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name; required even when id is present. Empty string allowed for blank drafts."
+        },
+        "rulesetSource": { "$ref": "#/$defs/RulesetSource" },
+        "legacyId": {
+          "type": ["string", "null"],
+          "description": "Legacy catalog id if this row was resolved via fallback."
+        },
+        "source": { "$ref": "#/$defs/PublicationRef" }
+      }
+    },
+    "PublicationRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "book": { "type": "string" },
+        "page": { "type": ["integer", "null"], "minimum": 1 },
+        "rarity": {
+          "type": "string",
+          "enum": ["common", "uncommon", "rare", "unique"]
+        }
+      }
+    },
+    "ProficiencyRank": {
+      "type": "string",
+      "enum": ["untrained", "trained", "expert", "master", "legendary"]
+    },
+    "AttributeKey": {
+      "type": "string",
+      "enum": ["str", "dex", "con", "int", "wis", "cha"]
+    },
+    "Size": {
+      "type": "string",
+      "enum": ["tiny", "small", "medium", "large", "huge", "gargantuan"]
+    },
+    "Effect": {
+      "type": "object",
+      "description": "Extensibility hook. 0.9/1.0 may leave effects empty; unknown types must be ignored by the resolver.",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Discriminator. Core types may be added over time (e.g. flatModifier, grantProficiency)."
+        },
+        "selector": {
+          "type": "string",
+          "description": "What the effect targets (skill:athletics, ac, hp.max, strike:*, etc.)."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["add", "override", "downgrade", "upgrade", "remove", "note"]
+        },
+        "value": {
+          "description": "Numeric or structured payload depending on type."
+        },
+        "predicate": {
+          "type": "array",
+          "description": "Opaque predicate tokens for later automation.",
+          "items": true
+        },
+        "label": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "ModifierBreakdown": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "untyped": { "type": "integer", "default": 0 },
+        "item": { "type": "integer", "default": 0 },
+        "status": { "type": "integer", "default": 0 },
+        "circumstance": { "type": "integer", "default": 0 },
+        "ability": { "type": "integer", "default": 0 },
+        "proficiency": { "type": "integer", "default": 0 },
+        "other": { "type": "integer", "default": 0 }
+      }
+    },
+    "OverrideValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value"],
+      "properties": {
+        "value": true,
+        "reason": { "type": "string" },
+        "updatedAt": { "$ref": "#/$defs/IsoDateTime" }
+      }
+    },
+    "Meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createdAt", "updatedAt", "preferredRuleset", "appVersion", "locale"],
+      "properties": {
+        "createdAt": { "$ref": "#/$defs/IsoDateTime" },
+        "updatedAt": { "$ref": "#/$defs/IsoDateTime" },
+        "preferredRuleset": {
+          "type": "string",
+          "enum": ["remaster", "legacy"],
+          "default": "remaster"
+        },
+        "appVersion": {
+          "type": "string",
+          "description": "App semver that last wrote this file."
+        },
+        "locale": {
+          "type": "string",
+          "description": "UI locale preference hint for this sheet (en in 0.9; es from 1.0).",
+          "default": "en"
+        },
+        "characterId": {
+          "type": "string",
+          "description": "Optional stable UUID for draft buffers; not required for Save/Load identity."
+        }
+      }
+    },
+    "Identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["characterName", "level", "ancestry", "heritage", "background", "class", "size", "traits", "languages"],
+      "properties": {
+        "characterName": { "type": "string" },
+        "playerName": { "type": "string" },
+        "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "xp": { "type": "integer", "minimum": 0, "default": 0 },
+        "ancestry": { "$ref": "#/$defs/ContentRef" },
+        "heritage": { "$ref": "#/$defs/ContentRef" },
+        "background": { "$ref": "#/$defs/ContentRef" },
+        "class": { "$ref": "#/$defs/ContentRef" },
+        "subclass": {
+          "description": "Class path detail: doctrine, muse, instinct, research field, etc.",
+          "anyOf": [
+            { "$ref": "#/$defs/ContentRef" },
+            { "type": "null" }
+          ]
+        },
+        "archetypes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ContentRef" },
+          "description": "Dedication archetypes taken (no Free Archetype campaign flag in 0.9/1.0)."
+        },
+        "size": { "$ref": "#/$defs/Size" },
+        "traits": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "languages": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ContentRef" }
+        },
+        "deity": {
+          "anyOf": [
+            { "$ref": "#/$defs/ContentRef" },
+            { "type": "null" }
+          ]
+        },
+        "homeRegion": { "type": "string" },
+        "alignment": {
+          "type": ["string", "null"],
+          "description": "Optional legacy alignment string for tables that still use it."
+        },
+        "edicts": { "type": "string" },
+        "anathema": { "type": "string" }
+      }
+    },
+    "AttributeBoostSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "attribute", "amount"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "ancestry",
+            "background",
+            "class",
+            "free",
+            "level",
+            "apex",
+            "partial",
+            "flaw",
+            "other"
+          ]
+        },
+        "attribute": { "$ref": "#/$defs/AttributeKey" },
+        "amount": {
+          "type": "integer",
+          "description": "+1 boost, -1 flaw, or other encoded amounts (partials may use app-specific rules)."
+        },
+        "levelGained": { "type": ["integer", "null"], "minimum": 1, "maximum": 20 },
+        "label": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "AttributeBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["boosts"],
+      "properties": {
+        "boosts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AttributeBoostSource" }
+        },
+        "legacyScore": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 30,
+          "description": "Optional legacy ability score for fallback display; Remaster play uses boosts→modifier."
+        },
+        "modifierOverride": {
+          "type": ["integer", "null"],
+          "description": "Prefer top-level overrides map; field kept for per-attribute convenience."
+        }
+      }
+    },
+    "Attributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["str", "dex", "con", "int", "wis", "cha"],
+      "properties": {
+        "str": { "$ref": "#/$defs/AttributeBlock" },
+        "dex": { "$ref": "#/$defs/AttributeBlock" },
+        "con": { "$ref": "#/$defs/AttributeBlock" },
+        "int": { "$ref": "#/$defs/AttributeBlock" },
+        "wis": { "$ref": "#/$defs/AttributeBlock" },
+        "cha": { "$ref": "#/$defs/AttributeBlock" }
+      }
+    },
+    "RankedProficiency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rank"],
+      "properties": {
+        "rank": { "$ref": "#/$defs/ProficiencyRank" },
+        "attribute": { "$ref": "#/$defs/AttributeKey" },
+        "modifiers": { "$ref": "#/$defs/ModifierBreakdown" },
+        "notes": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "Proficiencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["perception", "fortitude", "reflex", "will", "classDC", "armor", "weapons"],
+      "properties": {
+        "perception": { "$ref": "#/$defs/RankedProficiency" },
+        "fortitude": { "$ref": "#/$defs/RankedProficiency" },
+        "reflex": { "$ref": "#/$defs/RankedProficiency" },
+        "will": { "$ref": "#/$defs/RankedProficiency" },
+        "classDC": { "$ref": "#/$defs/RankedProficiency" },
+        "armor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["unarmored", "light", "medium", "heavy"],
+          "properties": {
+            "unarmored": { "$ref": "#/$defs/ProficiencyRank" },
+            "light": { "$ref": "#/$defs/ProficiencyRank" },
+            "medium": { "$ref": "#/$defs/ProficiencyRank" },
+            "heavy": { "$ref": "#/$defs/ProficiencyRank" }
+          }
+        },
+        "weapons": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["unarmed", "simple", "martial", "advanced"],
+          "properties": {
+            "unarmed": { "$ref": "#/$defs/ProficiencyRank" },
+            "simple": { "$ref": "#/$defs/ProficiencyRank" },
+            "martial": { "$ref": "#/$defs/ProficiencyRank" },
+            "advanced": { "$ref": "#/$defs/ProficiencyRank" },
+            "specific": {
+              "type": "array",
+              "description": "Per-weapon proficiency exceptions (e.g. familiar weapons).",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["weapon", "rank"],
+                "properties": {
+                  "weapon": { "$ref": "#/$defs/ContentRef" },
+                  "rank": { "$ref": "#/$defs/ProficiencyRank" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "SkillEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "name", "attribute", "rank"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Stable key: acrobatics, lore:warfare, etc."
+        },
+        "name": { "type": "string" },
+        "attribute": { "$ref": "#/$defs/AttributeKey" },
+        "rank": { "$ref": "#/$defs/ProficiencyRank" },
+        "isLore": { "type": "boolean", "default": false },
+        "armorPenaltyApplies": { "type": "boolean", "default": false },
+        "modifiers": { "$ref": "#/$defs/ModifierBreakdown" },
+        "notes": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "Vitals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ancestryHp", "classHpPerLevel", "bonuses", "currentHp", "temporaryHp", "dying", "wounded", "doomed", "resistances", "immunities", "weaknesses", "speeds", "senses"],
+      "properties": {
+        "ancestryHp": { "type": "integer", "minimum": 0 },
+        "classHpPerLevel": { "type": "integer", "minimum": 0 },
+        "bonuses": {
+          "type": "array",
+          "description": "Flat HP bonuses with labels (toughness, items, etc.) for core calc summation.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "amount"],
+            "properties": {
+              "label": { "type": "string" },
+              "amount": { "type": "integer" },
+              "perLevel": { "type": "boolean", "default": false },
+              "effects": {
+                "type": "array",
+                "items": { "$ref": "#/$defs/Effect" }
+              }
+            }
+          }
+        },
+        "currentHp": { "type": "integer" },
+        "temporaryHp": { "type": "integer", "minimum": 0, "default": 0 },
+        "dying": { "type": "integer", "minimum": 0, "maximum": 4, "default": 0 },
+        "wounded": { "type": "integer", "minimum": 0, "default": 0 },
+        "doomed": { "type": "integer", "minimum": 0, "default": 0 },
+        "resistances": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/DamageAdjustment" }
+        },
+        "immunities": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/DamageAdjustment" }
+        },
+        "speeds": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SpeedEntry" },
+          "minItems": 1
+        },
+        "senses": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SenseEntry" }
+        }
+      }
+    },
+    "DamageAdjustment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "value"],
+      "properties": {
+        "type": { "type": "string" },
+        "value": { "type": "integer", "minimum": 0 },
+        "notes": { "type": "string" }
+      }
+    },
+    "SpeedEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "feet"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "land, climb, swim, fly, burrow, or custom."
+        },
+        "feet": { "type": "integer", "minimum": 0 },
+        "notes": { "type": "string" }
+      }
+    },
+    "SenseEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "rangeFeet": { "type": ["integer", "null"], "minimum": 0 },
+        "notes": { "type": "string" }
+      }
+    },
+    "ArmorClassInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["equippedArmorItemId", "equippedShieldItemId", "shieldRaised", "modifiers"],
+      "properties": {
+        "equippedArmorItemId": {
+          "type": ["string", "null"],
+          "description": "Matches inventory.items[].id"
+        },
+        "equippedShieldItemId": { "type": ["string", "null"] },
+        "shieldRaised": { "type": "boolean", "default": false },
+        "dexCapOverride": {
+          "type": ["integer", "null"],
+          "description": "If set, overrides armor Dex cap for edge cases."
+        },
+        "modifiers": { "$ref": "#/$defs/ModifierBreakdown" },
+        "notes": { "type": "string" }
+      }
+    },
+    "FeatEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "feat", "levelGained"],
+      "properties": {
+        "id": { "type": "string", "description": "Instance id within this sheet." },
+        "category": {
+          "type": "string",
+          "enum": ["ancestry", "heritage", "background", "class", "skill", "general", "archetype", "bonus", "other"]
+        },
+        "feat": { "$ref": "#/$defs/ContentRef" },
+        "levelGained": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "traits": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "summary": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "FeatureEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "feature", "levelGained"],
+      "properties": {
+        "id": { "type": "string" },
+        "feature": { "$ref": "#/$defs/ContentRef" },
+        "levelGained": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "summary": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "ActionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "actionType"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "actionType": {
+          "type": "string",
+          "enum": ["action", "reaction", "free", "exploration", "downtime"]
+        },
+        "actionCost": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Actions required; null for reaction/free/variable."
+        },
+        "traits": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "frequency": { "type": "string" },
+        "summary": { "type": "string" },
+        "sourceFeatId": { "type": ["string", "null"] },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "StrikeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "strikeType", "damageDice", "damageType", "traits", "rangeFeet", "modifiers"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "strikeType": {
+          "type": "string",
+          "enum": ["melee", "ranged", "unarmed"]
+        },
+        "weaponCategory": {
+          "type": "string",
+          "enum": ["unarmed", "simple", "martial", "advanced", "other"]
+        },
+        "itemId": {
+          "type": ["string", "null"],
+          "description": "Linked inventory item when strike comes from gear."
+        },
+        "attackAttribute": { "$ref": "#/$defs/AttributeKey" },
+        "damageAttribute": { "$ref": "#/$defs/AttributeKey" },
+        "damageDice": { "type": "string", "description": "e.g. 1d8, 2d6" },
+        "damageType": { "type": "string" },
+        "traits": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rangeFeet": { "type": ["integer", "null"], "minimum": 0 },
+        "reload": { "type": ["string", "null"] },
+        "ammoItemId": { "type": ["string", "null"] },
+        "modifiers": { "$ref": "#/$defs/ModifierBreakdown" },
+        "notes": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "SpellcastingEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "tradition", "castType", "proficiency", "slots", "cantrips", "spells", "focusSpells", "innateSpells", "rituals"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "description": "e.g. Wizard Spellcasting, Divine Innate" },
+        "tradition": {
+          "type": "string",
+          "enum": ["arcane", "divine", "occult", "primal", "none", "other"]
+        },
+        "castType": {
+          "type": "string",
+          "enum": ["prepared", "spontaneous", "innate", "focus", "other"]
+        },
+        "attribute": { "$ref": "#/$defs/AttributeKey" },
+        "proficiency": { "$ref": "#/$defs/RankedProficiency" },
+        "slots": {
+          "type": "array",
+          "description": "Ranks 1–10 typically; cantrips handled separately.",
+          "items": { "$ref": "#/$defs/SpellSlotRank" }
+        },
+        "cantrips": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SpellListEntry" }
+        },
+        "spells": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SpellListEntry" }
+        },
+        "focusSpells": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SpellListEntry" }
+        },
+        "innateSpells": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SpellListEntry" }
+        },
+        "rituals": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SpellListEntry" }
+        },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "SpellSlotRank": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rank", "max", "remaining"],
+      "properties": {
+        "rank": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "max": { "type": "integer", "minimum": 0 },
+        "remaining": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "SpellListEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "spell", "rank"],
+      "properties": {
+        "id": { "type": "string" },
+        "spell": { "$ref": "#/$defs/ContentRef" },
+        "rank": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "0 = cantrip."
+        },
+        "tradition": {
+          "type": "string",
+          "enum": ["arcane", "divine", "occult", "primal", "none", "other"]
+        },
+        "prepared": {
+          "type": "boolean",
+          "description": "For prepared casters: currently prepared."
+        },
+        "signature": {
+          "type": "boolean",
+          "description": "Spontaneous signature spell."
+        },
+        "usesPerDay": { "type": ["integer", "null"], "minimum": 0 },
+        "usesRemaining": { "type": ["integer", "null"], "minimum": 0 },
+        "traits": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "summary": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "Inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currency", "items"],
+      "properties": {
+        "currency": { "$ref": "#/$defs/Currency" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ItemEntry" }
+        },
+        "bulkBonus": {
+          "type": "integer",
+          "default": 0,
+          "description": "Extra bulk allowance beyond Str-based formula if needed."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "Currency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cp", "sp", "gp", "pp"],
+      "properties": {
+        "cp": { "type": "integer", "default": 0 },
+        "sp": { "type": "integer", "default": 0 },
+        "gp": { "type": "integer", "default": 0 },
+        "pp": { "type": "integer", "default": 0 }
+      }
+    },
+    "ItemEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "item", "quantity", "bulk", "location", "invested", "equipped", "containerId"],
+      "properties": {
+        "id": { "type": "string" },
+        "item": { "$ref": "#/$defs/ContentRef" },
+        "quantity": { "type": "integer", "minimum": 0, "default": 1 },
+        "bulk": {
+          "type": "number",
+          "description": "Per-unit bulk. Light items may use 0.1 encoding (L); exact encoding TBD — see schema notes."
+        },
+        "priceGp": { "type": ["number", "null"], "minimum": 0 },
+        "location": {
+          "type": "string",
+          "enum": ["worn", "readied", "stowed", "other"]
+        },
+        "invested": { "type": "boolean", "default": false },
+        "equipped": { "type": "boolean", "default": false },
+        "containerId": {
+          "type": ["string", "null"],
+          "description": "Parent container item id, if any."
+        },
+        "armor": { "$ref": "#/$defs/ArmorItemStats" },
+        "weapon": { "$ref": "#/$defs/WeaponItemStats" },
+        "shield": { "$ref": "#/$defs/ShieldItemStats" },
+        "charges": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["max", "remaining"],
+          "properties": {
+            "max": { "type": "integer", "minimum": 0 },
+            "remaining": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "formula": { "type": "boolean", "default": false },
+        "traits": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "ArmorItemStats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "acBonus", "dexCap", "checkPenalty", "speedPenalty", "strength"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["unarmored", "light", "medium", "heavy"]
+        },
+        "acBonus": { "type": "integer" },
+        "dexCap": { "type": ["integer", "null"] },
+        "checkPenalty": { "type": "integer", "maximum": 0 },
+        "speedPenalty": { "type": "integer", "maximum": 0 },
+        "strength": { "type": ["integer", "null"] },
+        "potencyRune": { "type": "integer", "minimum": 0, "default": 0 },
+        "resilientRune": {
+          "type": "string",
+          "enum": ["none", "resilient", "greaterResilient", "majorResilient"],
+          "default": "none"
+        },
+        "propertyRunes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "WeaponItemStats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "damageDice", "damageType", "group"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["unarmed", "simple", "martial", "advanced", "other"]
+        },
+        "group": { "type": "string" },
+        "damageDice": { "type": "string" },
+        "damageType": { "type": "string" },
+        "hands": { "type": "string" },
+        "rangeFeet": { "type": ["integer", "null"], "minimum": 0 },
+        "reload": { "type": ["string", "null"] },
+        "potencyRune": { "type": "integer", "minimum": 0, "default": 0 },
+        "strikingRune": {
+          "type": "string",
+          "enum": ["none", "striking", "greaterStriking", "majorStriking"],
+          "default": "none"
+        },
+        "propertyRunes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "ShieldItemStats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acBonus", "hardness", "hp", "brokenThreshold", "maxHp"],
+      "properties": {
+        "acBonus": { "type": "integer" },
+        "speedPenalty": { "type": "integer", "maximum": 0, "default": 0 },
+        "hardness": { "type": "integer", "minimum": 0 },
+        "maxHp": { "type": "integer", "minimum": 0 },
+        "brokenThreshold": { "type": "integer", "minimum": 0 },
+        "hp": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "CompanionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "name", "sheet"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["animalCompanion", "familiar", "eidolon", "construct", "other"]
+        },
+        "name": { "type": "string" },
+        "linkedFeatureId": {
+          "type": ["string", "null"],
+          "description": "Feature/feat instance that granted this companion."
+        },
+        "sheet": { "$ref": "#/$defs/CompanionSheet" }
+      }
+    },
+    "CompanionSheet": {
+      "type": "object",
+      "description": "Nested subset of character data for companions. Not a full CharacterDocument (avoids recursion and keeps 0.9 scope tight).",
+      "additionalProperties": false,
+      "required": ["identity", "attributes", "vitals", "armorClass", "skills", "strikes", "actions", "inventory", "conditions", "notes"],
+      "properties": {
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["level", "size", "traits"],
+          "properties": {
+            "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+            "size": { "$ref": "#/$defs/Size" },
+            "traits": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "ancestryOrType": { "$ref": "#/$defs/ContentRef" }
+          }
+        },
+        "attributes": { "$ref": "#/$defs/Attributes" },
+        "proficiencies": { "$ref": "#/$defs/Proficiencies" },
+        "vitals": { "$ref": "#/$defs/Vitals" },
+        "armorClass": { "$ref": "#/$defs/ArmorClassInputs" },
+        "skills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SkillEntry" }
+        },
+        "strikes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/StrikeEntry" }
+        },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ActionEntry" }
+        },
+        "spellcasting": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SpellcastingEntry" }
+        },
+        "inventory": { "$ref": "#/$defs/Inventory" },
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ConditionEntry" }
+        },
+        "notes": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "ConditionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "condition"],
+      "properties": {
+        "id": { "type": "string" },
+        "condition": { "$ref": "#/$defs/ContentRef" },
+        "value": {
+          "type": ["integer", "null"],
+          "description": "Valued conditions (frightened 2, sickened 1). Null if unvalued."
+        },
+        "duration": { "type": ["string", "null"] },
+        "notes": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
+    "PlayState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heroPoints", "focusPool", "focusRemaining", "dailyResources", "initiativeModifier"],
+      "properties": {
+        "heroPoints": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "focusPool": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Max focus points (typically ≤ 3)."
+        },
+        "focusRemaining": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "initiativeModifier": {
+          "type": ["integer", "null"],
+          "description": "Optional cached initiative mod if distinct from Perception."
+        },
+        "dailyResources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "max", "remaining"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "max": { "type": "integer", "minimum": 0 },
+              "remaining": { "type": "integer", "minimum": 0 },
+              "resetsOn": {
+                "type": "string",
+                "enum": ["daily", "encounter", "refocus", "other"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "Notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "appearance": { "type": "string" },
+        "personality": { "type": "string" },
+        "campaign": { "type": "string" },
+        "other": { "type": "string" }
+      }
+    },
+    "DerivedCache": {
+      "type": "object",
+      "description": "Optional recomputed totals for faster UI load. Never treat as source of truth over inputs+overrides.",
+      "additionalProperties": true,
+      "properties": {
+        "attributeModifiers": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "maxHp": { "type": "integer" },
+        "ac": { "type": "integer" },
+        "perception": { "type": "integer" },
+        "fortitude": { "type": "integer" },
+        "reflex": { "type": "integer" },
+        "will": { "type": "integer" },
+        "classDC": { "type": "integer" },
+        "skillTotals": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "bulkUsed": { "type": "number" },
+        "bulkCapacity": { "type": "number" },
+        "investedCount": { "type": "integer" },
+        "computedAt": { "$ref": "#/$defs/IsoDateTime" }
+      }
+    }
+  }
+}
