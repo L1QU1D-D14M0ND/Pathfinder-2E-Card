@@ -1,202 +1,243 @@
-# Pathfinder Second Edition — Dynamic Character Sheet Design Options
+# Pathfinder Second Edition — Dynamic Character Sheet Design
 
-**Status:** Initial design (options + open questions)  
+**Status:** Decisions locked (v0.2) — remaining questions in §12  
 **Repo context:** `Pathfinder-2E-Card`  
-**Audience:** Product / engineering decision-making before implementation  
-**Ruleset target:** Pathfinder Second Edition (Remaster-aware; see open questions)
+**Audience:** Product / engineering  
+**Ruleset target:** Pathfinder Second Edition — **Remaster-first**, legacy fallback when Remaster data is missing or errors
 
 ---
 
 ## 1. Purpose
 
-Define options for building a **dynamic character sheet** that can create, edit, recalculate, and **persist all information a player needs to play** Pathfinder Second Edition (PF2e) at the table (or online).
+Build a **dynamic character sheet** that can create, edit, recalculate, and **persist all information a player needs to play** Pathfinder Second Edition (PF2e) locally on desktop and mobile.
 
-“Dynamic” means the sheet is not a static form only: when the user changes level, ability boosts, proficiency, gear, feats, or conditions, **dependent values update** (modifiers, AC, HP, skills, attack/damage, spell attack/DC, bulk, etc.).
-
-This document lists **product shapes**, **data scope**, **calculation strategies**, **persistence options**, **UI paradigms** (including card-oriented layouts suggested by the repo name), and **open questions** that should be answered before locking an MVP.
+“Dynamic” means dependent values update when inputs change (level, attributes, proficiency, gear, etc.). “Complete” means the saved character covers official sheet domains needed at the table (identity through spells, inventory, and session state).
 
 ---
 
-## 2. Goals and non-goals
+## 2. Locked decisions (from stakeholder answers)
 
-### Goals (MVP-oriented)
+| # | Topic | Decision |
+| --- | --- | --- |
+| 1 | Platform | **Local-running** app/site that is **mobile-compatible** (usable on phones/tablets without a required server) |
+| 2 | UI (placeholder) | **Spreadsheet / Excel-like** layout for now — dense grids, tabs/sheets, plain inputs — not card-first yet |
+| 3 | Ruleset | **Remaster when possible**; **legacy fallback** if Remaster content/calc path fails or is unavailable |
+| 4 | Calc depth (1.0) | **Core calculations only**; architecture must **allow expansion** to complex feat/spell/mechanic effects later |
+| 5 | Content | **Core content** for now (see §7 for scope clarification still open) |
+| 6 | Persistence | **Local save only** (no cloud sync for now) |
+| 7 | Character types | **All** playable types in scope for data model (martials, prepared/spontaneous casters, focus casters, companions as nested records where needed) |
+| 8 | Modes | **Build and Play** both required |
+| 9 | UX polish | **Lightweight** — no fancy UI or animations |
+| 10 | Interop | **No** Pathbuilder / Foundry import-export for now |
 
-- Represent a complete playable PF2e character (Remaster Player Core sheet coverage as baseline).
-- Persist character data so it can be reopened later without loss.
-- Recalculate derived combat/exploration stats from stored inputs.
-- Support level progression (ability boosts, feats, skills, class features, spells).
-- Work well on desktop; be usable on tablet/phone for session reference.
-
-### Stretch goals (post-MVP)
-
-- Multi-character / party library.
-- Encounter mode (HP, focus points, spell slots remaining, conditions).
-- Import/export interchange with Foundry / Pathbuilder / JSON.
-- Offline-first / PWA.
-- GM-readable share links.
-- Dice roller integration.
-
-### Non-goals (for this design phase)
-
-- Replacing a VTT (Foundry/Roll20).
-- Hosting Paizo proprietary full text beyond what licensing allows.
-- Automating every edge-case archetype/feat interaction in v1.
+See also: [`adr/0001-product-direction.md`](adr/0001-product-direction.md).
 
 ---
 
-## 3. What “complete character data” means
+## 3. Goals and non-goals
 
-A playable PF2e character needs **inputs** (choices & equipment), **derived outputs** (modifiers & totals), and **session state** (current HP, slots used). The sheet should **save inputs and session state**; derived fields can be stored as cache or recomputed on load.
+### Goals (1.0)
 
-### 3.1 Identity & campaign
+- Complete playable PF2e character data model (all character types).
+- Remaster-first lookups/calcs with legacy fallback.
+- Core derived math: attributes, proficiencies, HP, AC, saves, Perception, skills, Class DC, strikes (basic), spell attack/DC & slots tracking.
+- Local persistence (reload without data loss) + export/import of the character file for backup.
+- Build mode (level-up / choices) and Play mode (HP, slots, conditions, daily resources).
+- Runs locally; usable on mobile browsers / installable local web (PWA or equivalent).
+- Spreadsheet-style placeholder UI: tabs, tables, cells — minimal chrome.
+
+### Explicitly deferred (post-1.0, but design must not block)
+
+- Automated complex feat/spell/condition interaction graphs.
+- Fancy or card-based UI (repo name retained; cards may return later).
+- Cloud sync, accounts, share links.
+- Foundry / Pathbuilder interchange.
+- Rich animations / heavy design systems.
+
+### Non-goals
+
+- Replacing a VTT.
+- Shipping copyrighted Paizo full rules text beyond allowed open/core packaging.
+- Perfect automation of every edge-case archetype interaction in 1.0.
+
+---
+
+## 4. What “complete character data” means
+
+Save **inputs** and **session state**; **derived** fields may be cached but must be recomputable.
+
+### 4.1 Identity & campaign
 
 | Field | Notes |
 | --- | --- |
 | Character name, player name | |
 | Level, XP | |
-| Ancestry, heritage, background, class, subclass/doctrine/etc. | Remaster naming may differ from legacy |
-| Size, traits, languages, deity (if any), home region | |
-| Alignment / edicts & anathema (if used at table) | Remaster reduced alignment emphasis — configurable |
+| Ancestry, heritage, background, class, subclass/doctrine/etc. | Remaster IDs preferred; legacy IDs as fallback |
+| Size, traits, languages, deity (if any) | |
+| Edicts/anathema or legacy alignment (table-optional) | Configurable |
 | Campaign notes, appearance, personality | Free text |
 
-### 3.2 Ability scores / attributes
+### 4.2 Attributes
 
-- Six attributes: Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.
-- Track **boosts/flaws sources** (ancestry, background, class, free, apex, etc.) so recalculation is auditable.
-- Store modifiers and (optionally) legacy-style scores if supporting pre-Remaster tables.
+- Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.
+- Boost/flaw **sources** stored for auditability (ancestry, background, class, free, apex, …).
+- Remaster attribute model primary; legacy score display optional if needed for fallback characters.
 
-### 3.3 Proficiencies
+### 4.3 Proficiencies
 
 - Perception; Fortitude / Reflex / Will.
-- Class DC; spell attack & spell DC (per tradition if multiclass/dual).
-- Armor categories; weapon categories (+ specific weapons if needed).
-- All skills + lore skills (dynamic list).
-- Proficiency ranks: Untrained / Trained / Expert / Master / Legendary.
-- Item bonuses, circumstance/status bonuses/penalties, conditional modifiers.
+- Class DC; spell attack & spell DC (support multiple traditions / sources).
+- Armor & weapon category proficiencies.
+- All skills + dynamic Lore list.
+- Ranks: Untrained / Trained / Expert / Master / Legendary.
+- Slots for item / status / circumstance modifiers (even if 1.0 only sums simple cases).
 
-### 3.4 Defenses & vitality
+### 4.4 Defenses & vitality
 
-- Max HP (ancestry + class + Con + feats/items), current HP, temporary HP, dying/wounded/doomed.
-- AC breakdown (Dex capped by armor, proficiency, item, etc.).
+- Max HP, current HP, temporary HP, dying / wounded / doomed.
+- AC breakdown (armor, Dex cap, proficiency, item, etc.).
 - Resistances, immunities, weaknesses.
-- Speed(s), movement types, special senses.
+- Speeds, senses.
 
-### 3.5 Offense
+### 4.5 Offense
 
-- Melee / ranged strikes (weapon, attack bonus breakdown, damage dice + modifiers, traits, reload, range, ammo).
-- Unarmed attacks from ancestry/class.
+- Melee / ranged / unarmed strikes (weapon, attack bonus parts, damage, traits, range/reload).
 - Spell attack rolls and save DCs.
 - Class DC for class abilities.
 
-### 3.6 Feats, features, actions
+### 4.6 Feats, features, actions
 
-- Ancestry feats, heritage features, background feat.
-- Class feats & class features (by level gained).
-- Skill feats, general feats, archetype dedication/feats.
-- Free actions / reactions / activities granted (name, traits, frequency, effects summary).
+- Ancestry, heritage, background, class, skill, general, archetype feats.
+- Class features by level.
+- Granted actions/reactions (name, traits, frequency, effect summary text).
 - Focus spells & focus pool.
 
-### 3.7 Magic
+**1.0:** store as structured records + free-text effects; **do not** auto-apply arbitrary mechanical text.  
+**Later:** attach typed `effects[]` / modifiers to the same records without schema breakage.
 
-- Tradition(s), prepared vs spontaneous vs innate.
-- Spell slots per rank; slots remaining (session).
-- Cantrips, repertoire / spellbook / prepared list.
-- Innate spells, rituals, staff charges / wand uses (as custom consumable trackers).
+### 4.7 Magic
 
-### 3.8 Inventory & wealth
+- Tradition(s); prepared / spontaneous / innate / focus.
+- Slots per rank + remaining (Play).
+- Cantrips, repertoire / spellbook / prepared lists.
+- Innate spells, rituals; simple charge trackers for staves/wands.
 
-- Worn / readied / stowed items; invested items; bulk & encumbered thresholds.
-- Containers; formulas; crafting materials.
-- Currency (cp/sp/gp/pp) and valuables.
-- Item bonuses that feed AC/skills/attacks (linked to equipped state).
+### 4.8 Inventory & wealth
 
-### 3.9 Companions / extras (optional but common)
+- Worn / readied / stowed; invested; bulk.
+- Currency; formulas; notes.
+- Equipped flags that feed core calcs (armor, weapon, item bonus).
 
-- Animal companion, familiar, eidolon, construct, etc.
-- Separate mini-sheet or nested character record.
+### 4.9 Companions / extras
 
-### 3.10 Session / encounter state
+- Animal companion, familiar, eidolon, etc. as **nested character-like records** (same schema subset).
+- In 1.0: editable nested sheets; limited auto-linkage.
 
-- Current HP, conditions list with values/durations.
-- Hero points.
-- Focus points remaining; spell slots remaining; daily abilities used.
-- Initiative modifier / current initiative (if desired).
+### 4.10 Session / Play state
 
-**Persistence rule of thumb:** save everything the player would write on the official multi-page sheet, plus enough source metadata to recompute safely.
+- Current HP, conditions, hero points.
+- Focus remaining; spell slots remaining; daily abilities used.
+- Optional initiative modifier.
 
----
-
-## 4. Product form options
-
-| Option | Description | Pros | Cons | Fit |
-| --- | --- | --- | --- | --- |
-| **A. Web app (SPA/PWA)** | Browser character builder + live sheet | Fast iteration, shareable, offline via PWA | Needs hosting; mobile keyboard UX care | **Strong MVP candidate** |
-| **B. Local-first desktop (Tauri/Electron)** | Installable app, files on disk | Offline, privacy, no server | Distribution, updates | Good if privacy-first |
-| **C. Fillable PDF + JSON sidecar** | Classic sheet UX, export JSON | Familiar print layout | Weak “dynamic” recalculation | Weak alone |
-| **D. Card deck UI** | Character as modular cards (ancestry, class, feats, spells, gear) | Matches repo name `Pathfinder-2E-Card`; tactile; great for feats/spells | Needs summary “combat strip” too | **Strong UX differentiator** |
-| **E. Hybrid: summary sheet + card library** | Compact play view + browsable cards for features/spells | Best of both: glanceable math + rich text | More UI surface | **Recommended direction** |
-| **F. Document-only (Markdown/YAML)** | Human-editable files in git | Simple, no runtime | Poor live calc / mobile | Design notes only |
-
-**Recommendation for this repo:** **Option E** (hybrid summary + cards), delivered first as a **web PWA (A)** with local save, optionally later packaged as desktop (B).
+**Coverage checklist:** Appendix A.
 
 ---
 
-## 5. Architecture options
+## 5. Platform options (filtered by decision #1)
 
-### 5.1 Calculation model
+Must run **locally** and work on **mobile**.
 
-| Approach | How it works | Pros | Cons |
-| --- | --- | --- | --- |
-| **1. Manual totals** | User types final numbers | Simple | Error-prone; not dynamic |
-| **2. Formula fields** | Each output = expression over inputs | Transparent | Complex PF2e edge cases |
-| **3. Rules engine + effect graph** | Choices apply typed modifiers (item/status/circumstance); engine resolves | Correct stacking; Foundry-like | Highest build cost |
-| **4. Hybrid** | Engine for core math; free-text overrides for rare cases | Pragmatic | Need clear “override” UX |
-
-**Recommendation:** **Hybrid (4)** for MVP — compute attributes, proficiencies, AC, HP, skills, strikes, spell stats; allow manual overrides with a badge when overridden.
-
-### 5.2 Content / rules data
-
-| Approach | Pros | Cons |
+| Option | Fits? | Notes |
 | --- | --- | --- |
-| **User-entered free text only** | No licensing risk; ships fast | No auto-fill; typos |
-| **Bundled open data (community SRD/ORC)** | Autocomplete ancestries/feats/spells | Must track Remaster vs legacy; licensing diligence |
-| **Remote API (e.g. community databases)** | Always current | Offline/legal/rate-limit issues |
-| **Import packs (JSON)** | User supplies content | Support burden |
+| **Static web app + PWA** (service worker, IndexedDB) | **Yes — recommended** | Open `localhost` or installed PWA; works offline; phones/tablets supported |
+| **Single-page static files** opened via local static server | **Yes** | `file://` often breaks modules/storage; prefer tiny local server or PWA install |
+| **Tauri / Capacitor wrapper** | Optional later | Native install shells around the same web UI |
+| **Electron** | Possible but heavy | Conflicts with “lightweight” preference |
+| **Native Swift/Kotlin** | No for 1.0 | Duplicate work; not needed |
 
-**Recommendation:** MVP = structured schema + free-text entry + optional curated JSON packs; do **not** scrape proprietary Paizo text.
-
-### 5.3 Application stack (illustrative)
-
-| Layer | Option set |
-| --- | --- |
-| UI | React / Svelte / Vue; card components + sticky combat header |
-| State | Local store (Zustand/Pinia/Svelte stores) + optional effect graph |
-| Persistence | See §6 |
-| Validation | Zod / TypeBox schema for character JSON |
-| Testing | Golden tests: known characters → expected modifiers |
-
-Stack choice is secondary to **schema + calculation correctness**.
+**Recommendation:** Lightweight **static frontend (PWA)** with IndexedDB autosave + JSON file export/import. Same codebase on desktop and mobile browsers.
 
 ---
 
-## 6. Persistence / save options
+## 6. Calculation architecture (1.0 core, expandable)
 
-| Option | Description | Pros | Cons |
-| --- | --- | --- | --- |
-| **LocalStorage / IndexedDB** | Browser save | Zero backend | Device-bound; easy to wipe |
-| **Download/upload JSON** | Portable `.pf2e.json` | Simple backup/share | Manual |
-| **File System Access API** | Edit a real file on disk | Feels like documents | Browser support varies |
-| **Cloud sync (auth)** | Accounts + multi-device | Convenience | Privacy, cost, complexity |
-| **SQLite (desktop/PWA wasm)** | Structured query | Strong local-first | More moving parts |
+### 6.1 Layers
 
-**MVP recommendation:** Character as versioned JSON document + IndexedDB autosave + explicit Export/Import. Schema version field (`schemaVersion`) for migrations.
+```
+Content catalog (Remaster → legacy fallback)
+        ↓
+Character document (choices, gear, session state, overrides)
+        ↓
+Modifier providers (1.0: attributes, prof, items, simple conditions)
+        ↓
+Resolver (bonus types, stacking rules)
+        ↓
+Derived view model → spreadsheet UI cells
+```
 
-### 6.1 Suggested top-level JSON shape (sketch)
+### 6.2 1.0 core calcs (in scope)
+
+- Attribute modifiers from boosts/flaws.
+- Proficiency bonus = rank + level (Untrained special-case).
+- Perception, saves, skills, Class DC.
+- HP max from ancestry/class/Con (+ simple listed bonuses if encoded).
+- AC from armor + Dex (capped) + proficiency + item.
+- Strike attack/damage from attribute + proficiency + weapon dice + item (basic).
+- Spell attack / spell DC from key attribute + proficiency.
+- Bulk totals; investiture count.
+- Spell slot / focus / hero point **tracking** (not full spell automation).
+
+### 6.3 Expansion hooks (required in design, not fully implemented in 1.0)
+
+- Every feat/spell/item/feature record may include optional `effects: Effect[]`.
+- `Effect` is typed (e.g. flat modifier, grant proficiency, adjust HP formula) with selector/predicates.
+- Resolver ignores unknown effect types safely (forward compatible).
+- Manual **overrides** map always wins and is visually marked in the sheet.
+
+### 6.4 Remaster → legacy fallback
+
+1. Resolve content by Remaster id/name.  
+2. On miss or validation error, try legacy catalog entry.  
+3. Record `rulesetSource: "remaster" | "legacy" | "custom"` on the field.  
+4. Never fail the whole sheet load for one bad row — isolate errors to the cell/row.
+
+---
+
+## 7. Content strategy
+
+**Decision:** core content for now.
+
+**Working interpretation (confirm in §12):**
+
+- Ship a **bundled catalog** of Remaster **Player Core** (and clearly licensed open/core equivalents) entities needed to build: ancestries, heritages, backgrounds, classes, skills, weapons/armor basics, conditions, spell *names/ranks/traditions* as needed for sheet structure.
+- User can still add **custom** rows (homebrew / missing legacy).
+- Full rules text optional/minimal; prefer name + short reference + mechanical numbers needed for core calcs.
+
+Legacy pack loaded as fallback layer, not the default browse list.
+
+---
+
+## 8. Persistence
+
+| Mechanism | Role |
+| --- | --- |
+| IndexedDB (or equivalent local DB) | Autosave active characters |
+| Export / Import `.json` | Backup, move between devices manually |
+| `schemaVersion` | Migrations as model grows |
+
+No accounts, no cloud. Multi-device = user exports JSON on one device and imports on another.
+
+### Top-level document sketch
 
 ```json
 {
   "schemaVersion": 1,
-  "meta": { "createdAt": "", "updatedAt": "", "ruleset": "remaster" },
+  "meta": {
+    "createdAt": "",
+    "updatedAt": "",
+    "preferredRuleset": "remaster",
+    "appVersion": ""
+  },
   "identity": {},
   "attributes": {},
   "proficiencies": {},
@@ -209,163 +250,125 @@ Stack choice is secondary to **schema + calculation correctness**.
   "strikes": [],
   "spellcasting": [],
   "inventory": { "items": [], "currency": {} },
+  "companions": [],
   "conditions": [],
+  "play": { "heroPoints": 0, "focusRemaining": 0 },
   "notes": {},
-  "overrides": {}
+  "overrides": {},
+  "extensions": {}
 }
 ```
 
-Exact field list should be expanded into a formal schema once product options are chosen.
+`effects` on entries and `extensions` keep the door open for complex automation without breaking 1.0 files.
 
 ---
 
-## 7. UI / UX options
+## 9. UI direction (placeholder)
 
-### 7.1 Layout paradigms
+**Spreadsheet metaphor:**
 
-1. **Classic multipage sheet** — mirrors Paizo PDF; lowest learning curve.
-2. **Tabbed builder** — Identity → Attributes → Skills → Feats → Magic → Gear → Play.
-3. **Card board** — each feat/spell/item is a card; filters by type/traits; pin favorites to “Play” tray.
-4. **Play mode vs Build mode** — Build for leveling; Play for HP, slots, conditions, strikes.
+- Top: character identity strip (name, level, class, HP, hero points) — compact, not animated.
+- Main: **tabs as sheets** — e.g. `Identity`, `Attributes`, `Skills`, `Combat`, `Feats`, `Spells`, `Inventory`, `Play`, `Notes`.
+- Cells: plain inputs, selects, checkboxes; read-only derived cells visually distinct.
+- Mobile: horizontal scroll for wide tables OK; sticky first column for labels; Play tab optimized for thumb use (HP, conditions, slots).
+- **No** card masonry, **no** decorative motion, **no** heavy design system.
 
-**Recommended:** Build mode (guided) + Play mode (dense summary + cards for abilities/spells).
-
-### 7.2 Dynamic behaviors to prioritize
-
-- Level change proposes feat/skill/boost slots still empty.
-- Equipping armor recalculates AC and speed penalties.
-- Condition badges apply mapped penalties (frightened, clumsy, etc.) when enabled.
-- Spell slot / focus / daily checkbox toggles for session tracking.
-- Bulk and investiture warnings.
-
-### 7.3 Accessibility & print
-
-- Keyboard-navigable cards; sufficient contrast.
-- Print stylesheet or “export printable PDF” of current totals.
-- Reduced-motion option for card animations.
+Build vs Play can be two tabs or a simple mode toggle that shows/hides encounter controls.
 
 ---
 
-## 8. Legal / content considerations
+## 10. Suggested technical approach (lightweight)
 
-- Paizo character sheet layout and Pathfinder branding are protected; avoid copying official PDF art/layout verbatim.
-- Prefer **ORC / Community Use / open Remaster content** sources with attribution.
-- Store **references** (name + source book/page or open ID) rather than pasting full copyrighted rules text when unsure.
-- Product name should avoid implying official Paizo affiliation unless licensed.
+| Concern | Suggestion |
+| --- | --- |
+| UI | Small SPA or even multi-tab DOM app; prefer **one lightweight framework or none** |
+| Styling | Minimal CSS grid/tables; system fonts acceptable for placeholder |
+| State | Character document in memory → debounce write to IndexedDB |
+| Calcs | Pure functions + golden tests (known characters → expected numbers) |
+| Content | Static JSON packs in `/content/remaster` and `/content/legacy` |
+| Offline | Service worker caching app shell + content packs |
 
----
-
-## 9. Phased delivery options
-
-### Phase 0 — Design lock
-
-- Answer open questions (§11).
-- Freeze MVP feature list and JSON schema v1.
-
-### Phase 1 — Data + calc core
-
-- Schema, persistence, attribute/proficiency/HP/AC/skills engine.
-- Manual feat/spell/item entry.
-
-### Phase 2 — Playable sheet UI
-
-- Play mode summary + card views for feats/spells/items.
-- Session state (HP, slots, conditions, hero points).
-
-### Phase 3 — Builder assist
-
-- Ancestry/class/background templates from open data packs.
-- Level-up wizard.
-
-### Phase 4 — Interop & polish
-
-- Import/export, PWA offline, optional cloud, companion sheets.
+Exact framework is still open (§12) but must stay lean.
 
 ---
 
-## 10. Comparison to existing tools (context only)
+## 11. Phased delivery
 
-| Tool | Role | Implication for this project |
-| --- | --- | --- |
-| Pathbuilder 2e | Mobile builder | High bar for builder UX; differentiate with cards / local-first web |
-| Foundry PF2e | VTT + actors | Different problem space; optional JSON export compatibility later |
-| Official PDF | Print/reference | Use as **coverage checklist**, not visual clone |
-| Wanderer’s Guide / others | Web builders | Validate feature checklist against what players expect |
+### Phase 0 — Design lock (current)
 
-Differentiation ideas aligned with this repo: **card-centric play surface**, transparent modifier breakdowns, portable JSON, Remaster-first.
+- Decisions in §2 recorded; remaining questions answered.
+- ADR + schema draft.
+
+### Phase 1 — Schema + core calc engine
+
+- Character JSON schema; Remaster/legacy content stubs.
+- Core math with tests; override support.
+
+### Phase 2 — Spreadsheet UI shell
+
+- Tabs/tables for all data domains; local autosave; export/import.
+- Build entry + Play resource tracking.
+
+### Phase 3 — Core content pack fill-out
+
+- Populate Remaster core catalog enough to build common characters without custom rows.
+- Legacy fallback entries for renamed/replaced content.
+
+### Phase 4 — Expansion readiness demo
+
+- One sample `effects[]` pipeline (e.g. item bonus to a skill) proving post-1.0 path — still optional for 1.0 ship.
 
 ---
 
-## 11. Open questions (please answer)
+## 12. Remaining questions
 
-These decisions unblock architecture. Defaults in parentheses are suggestions only.
-
-### Product
-
-1. **Primary platform?** (Web PWA first)
-2. **Primary use case?** Build at home / play at table / both? (Both, with Play mode emphasized)
-3. **Single player local app, or multi-user/cloud?** (Local-first MVP)
-4. **Should the UI be card-first** given `Pathfinder-2E-Card`? (Hybrid summary + cards)
-5. **Printable / PDF export required for MVP?** (Nice-to-have, not MVP)
-
-### Ruleset
-
-6. **Remaster-only, legacy-only, or dual support?** (Remaster-first, legacy import later)
-7. **How complete must automation be for feats that alter math?** (Core math + manual overrides)
-8. **Companions/familiars/eidolons in MVP?** (No — schema stub only)
-9. **Free archetype / dual-class / uncommon-rare content?** (Support fields; limited automation)
+Most product direction is set. These still affect implementation choices:
 
 ### Content & licensing
 
-10. **Bundle open content packs, or user-typed only at first?** (User-typed + small sample pack)
-11. **Any requirement to avoid all Paizo trademarks in UI?** (Use “unofficial fan project” framing)
+1. **What exactly is “core content”?**  
+   Player Core only? Player Core + Player Core 2? GM Core conditions/items? Remaster spell lists by name only?
+2. **Licensing comfort:** OK to bundle community ORC/open datasets with attribution, or only hand-maintained minimal tables?
 
-### Persistence & privacy
+### Platform specifics
 
-12. **Must data stay on-device only?** (Yes for MVP)
-13. **Need encrypted backups / password?** (Optional later)
-14. **Multi-device sync priority?** (Post-MVP)
+3. **Distribution preference for “runs locally”:**  
+   - (A) Installable PWA in browser  
+   - (B) Download folder + `npm start` / static server  
+   - (C) Future wrapped app (Tauri/Capacitor)  
+   Multiple OK — which is primary?
+4. **Offline required on first load after install?** (Recommended: yes)
 
-### Technical preferences
+### Product details
 
-15. **Preferred frontend stack?** (No preference yet — pick for velocity)
-16. **Must support offline from day one?** (Yes if Play-at-table matters)
-17. **Import from Pathbuilder/Foundry desired?** (Post-MVP)
+5. **Multi-character library** on one device (list of sheets) in 1.0, or one active file at a time?
+6. **Dice roller** in Play tab for 1.0? (Default proposal: **no**)
+7. **House-rule toggles** (e.g. free archetype) as first-class flags in 1.0?
+8. **Languages/i18n** needed, or English-only?
 
-### Success criteria
+### Technical preference
 
-18. **What character archetypes must MVP support end-to-end?** e.g. martials only vs prepared caster vs spontaneous vs kineticist-like?
-19. **Target devices?** Desktop only vs tablet play?
-20. **Who is the primary user?** New players, veterans, GMs?
+9. **Language/tooling preference:** TypeScript + small framework (e.g. Svelte/React/Preact) vs plain HTML/JS?
+10. **Any forbidden dependencies** (telemetry, cloud SDKs, large UI kits)?
 
----
+### Acceptance
 
-## 12. Proposed MVP (pending answers)
-
-Until questions are answered, the working proposal is:
-
-- **Hybrid Play/Build web app** with a **card library** for feats, features, spells, and items.
-- **Versioned JSON** character documents, autosaved locally, with export/import.
-- **Dynamic core math** for attributes, proficiencies, HP, AC, skills, strikes, spell attack/DC.
-- **Manual entry** for content text; overrides allowed.
-- **Session trackers** for HP, conditions, hero points, focus, and spell slots.
-- Explicit **Remaster-first** labeling; no claim of Paizo endorsement.
+11. **Reference characters** for golden tests — any specific builds you want (e.g. Fighter 5, Wizard 5, Cleric 5, Kineticist if in core packs)?
+12. **Project license** for this repo (MIT, Apache-2.0, etc.)?
 
 ---
 
-## 13. Next steps after decisions
+## 13. Working MVP summary
 
-1. Freeze answers to §11 into an ADR (`docs/adr/0001-product-direction.md`).
-2. Author `character.schema.json` covering §3.
-3. Prototype one martial + one spontaneous caster on the schema.
-4. Spike UI: Play summary strip + feat/spell cards.
-5. Implement calc engine with golden-test characters.
+- Local **PWA-style** spreadsheet character sheet for PF2e.  
+- **Remaster-first / legacy fallback** content resolution.  
+- **All character types** in the data model; **core calcs** only in 1.0.  
+- Extensible `effects` / resolver design for later complex automation.  
+- **Build + Play**, **local save**, **lightweight** UI, **no** VTT interop yet.
 
 ---
 
-## Appendix A — Coverage checklist (official sheet mapping)
-
-Use as acceptance criteria for “can save everything needed to play”:
+## Appendix A — Coverage checklist
 
 - [ ] Identity / level / XP / ancestry / heritage / background / class
 - [ ] Attributes + boost history
@@ -375,14 +378,17 @@ Use as acceptance criteria for “can save everything needed to play”:
 - [ ] Speeds, senses, languages, traits
 - [ ] All skills + lore + armor/weapon proficiencies
 - [ ] Strikes (melee/ranged/unarmed)
-- [ ] Feats by category + class features
+- [ ] Feats by category + class features (+ optional `effects` stubs)
 - [ ] Inventory, bulk, investment, wealth
 - [ ] Spell tradition, slots, cantrips, repertoire/prepared, focus, innate, rituals
+- [ ] Companions nested records
 - [ ] Conditions, hero points, daily/encounter resources
-- [ ] Notes / roleplay / campaign free text
+- [ ] Notes / roleplay free text
+- [ ] Overrides + schemaVersion + export/import
 
 ## Appendix B — Document history
 
 | Date | Change |
 | --- | --- |
-| 2026-08-13 | Initial options document created |
+| 2026-08-13 | Initial options document |
+| 2026-08-13 | Locked stakeholder decisions; spreadsheet UI; Remaster+legacy; remaining questions narrowed |
