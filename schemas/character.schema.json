@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/L1QU1D-D14M0ND/Pathfinder-2E-Card/schemas/character.schema.json",
   "title": "PF2e Character Sheet Document",
-  "description": "Versioned save format for one Pathfinder Second Edition player character (Remaster-first). schemaVersion 1. Inputs and play state are authoritative; derived.* is optional cache.",
+  "description": "Versioned save format for one Pathfinder Second Edition player character (Remaster-first). schemaVersion 1. Inputs and play state are authoritative; derived.* is optional cache and MUST be omitted from Save sheet exports.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -233,7 +233,7 @@
       "properties": {
         "characterName": { "type": "string" },
         "playerName": { "type": "string" },
-        "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "level": { "type": "integer", "minimum": 1 },
         "xp": { "type": "integer", "minimum": 0, "default": 0 },
         "ancestry": { "$ref": "#/$defs/ContentRef" },
         "heritage": { "$ref": "#/$defs/ContentRef" },
@@ -297,9 +297,9 @@
         "attribute": { "$ref": "#/$defs/AttributeKey" },
         "amount": {
           "type": "integer",
-          "description": "+1 boost, -1 flaw, or other encoded amounts (partials may use app-specific rules)."
+          "description": "+1 boost or -1 flaw typically. 0.9/1.0: user enters final boosts only (no automatic partial-boost pairing). kind=partial reserved for later."
         },
-        "levelGained": { "type": ["integer", "null"], "minimum": 1, "maximum": 20 },
+        "levelGained": { "type": ["integer", "null"], "minimum": 1 },
         "label": { "type": "string" },
         "effects": {
           "type": "array",
@@ -541,7 +541,7 @@
           "enum": ["ancestry", "heritage", "background", "class", "skill", "general", "archetype", "bonus", "other"]
         },
         "feat": { "$ref": "#/$defs/ContentRef" },
-        "levelGained": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "levelGained": { "type": "integer", "minimum": 1 },
         "traits": {
           "type": "array",
           "items": { "type": "string" }
@@ -560,7 +560,7 @@
       "properties": {
         "id": { "type": "string" },
         "feature": { "$ref": "#/$defs/ContentRef" },
-        "levelGained": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "levelGained": { "type": "integer", "minimum": 1 },
         "summary": { "type": "string" },
         "effects": {
           "type": "array",
@@ -600,6 +600,7 @@
     },
     "StrikeEntry": {
       "type": "object",
+      "description": "Resolved strike snapshot. When linked to gear, copy stats from the item at link/refresh time; do not live-auto-update when the item changes.",
       "additionalProperties": false,
       "required": ["id", "name", "strikeType", "damageDice", "damageType", "traits", "rangeFeet", "modifiers"],
       "properties": {
@@ -615,7 +616,7 @@
         },
         "itemId": {
           "type": ["string", "null"],
-          "description": "Linked inventory item when strike comes from gear."
+          "description": "Linked inventory item id. Snapshot fields are authoritative until an explicit refresh-from-item."
         },
         "attackAttribute": { "$ref": "#/$defs/AttributeKey" },
         "damageAttribute": { "$ref": "#/$defs/AttributeKey" },
@@ -771,7 +772,7 @@
         "quantity": { "type": "integer", "minimum": 0, "default": 1 },
         "bulk": {
           "type": "number",
-          "description": "Per-unit bulk. Light items may use 0.1 encoding (L); exact encoding TBD — see schema notes."
+          "description": "Per-unit bulk as a decimal. Convention: 1 = 1 Bulk, 0.1 = 1 light (L). Engine should be aware of float noise."
         },
         "priceGp": { "type": ["number", "null"], "minimum": 0 },
         "location": {
@@ -903,7 +904,7 @@
           "additionalProperties": false,
           "required": ["level", "size", "traits"],
           "properties": {
-            "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+            "level": { "type": "integer", "minimum": 1 },
             "size": { "$ref": "#/$defs/Size" },
             "traits": {
               "type": "array",
