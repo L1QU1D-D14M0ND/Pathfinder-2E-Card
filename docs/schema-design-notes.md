@@ -125,3 +125,5 @@ Legacy rune names map in content fallback, not alternate schema enums.
 6. Expand spreadsheet editors (strikes, feats, inventory rows, spell lists).  
 7. Externalize English UI strings (i18n catalogs; Spanish at 1.0).  
 8. Optional IndexedDB draft buffer for refresh safety.
+
+Options, sequencing, and recommended defaults for these steps: [`continuation-design.md`](continuation-design.md).
