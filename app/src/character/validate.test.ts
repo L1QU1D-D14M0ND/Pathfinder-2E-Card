@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from './createEmptyCharacter'
 import {
+  createEmptyAction,
+  createEmptyCondition,
+  createEmptyDailyResource,
+  createEmptyFeat,
+  createEmptyFeature,
+  createEmptySpellListEntry,
+  createEmptySpellcasting,
+} from './createRows'
+import {
   CharacterLoadError,
   CharacterSaveError,
   parseCharacterJson,
@@ -23,10 +32,31 @@ describe('character JSON Schema validation', () => {
     expect(doc.skills).toHaveLength(16)
   })
 
+  it.each([
+    'fixtures/characters/golden/fighter-5.json',
+    'fixtures/characters/golden/wizard-5.json',
+  ])('accepts golden fixture %s', (path) => {
+    expect(() => parseCharacterJson(readRepoFile(path))).not.toThrow()
+  })
+
   it('accepts createEmptyCharacter()', () => {
     const empty = createEmptyCharacter()
     expect(() => validateCharacterDocument(empty)).not.toThrow()
     expect(() => serializeCharacter(empty)).not.toThrow()
+  })
+
+  it('accepts empty feat, spell, and play rows added from factories', () => {
+    const doc = createEmptyCharacter()
+    const entry = createEmptySpellcasting()
+    entry.cantrips.push(createEmptySpellListEntry(0))
+    entry.spells.push(createEmptySpellListEntry(1))
+    doc.spellcasting.push(entry)
+    doc.feats.push(createEmptyFeat())
+    doc.features.push(createEmptyFeature())
+    doc.actions.push(createEmptyAction())
+    doc.conditions.push(createEmptyCondition())
+    doc.play.dailyResources.push(createEmptyDailyResource())
+    expect(() => serializeCharacter(doc)).not.toThrow()
   })
 
   it('rejects invalid JSON', () => {

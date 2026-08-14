@@ -5,6 +5,7 @@ import { proficiencyBonus } from './proficiency'
 import { stackTyped } from './stacking'
 import { armorCheckPenalty } from './ac'
 import { maxHp } from './hp'
+import { createEmptySpellcasting } from '../character/createRows'
 
 describe('proficiencyBonus', () => {
   it('does not add level when untrained', () => {
@@ -48,6 +49,7 @@ describe('compute empty sheet', () => {
     expect(view.bulkUsed).toBe(0)
     expect(view.bulkCapacity).toBe(5)
     expect(view.investedCount).toBe(0)
+    expect(view.spellcasting).toEqual({})
   })
 
   it('applies a maxHp override and records the path', () => {
@@ -63,6 +65,28 @@ describe('compute empty sheet', () => {
     character.overrides['derived.notAField'] = { value: 1 }
     const view = compute(character)
     expect(view.ignoredOverridePaths).toContain('derived.notAField')
+  })
+
+  it('computes spell attack and DC and honors overrides', () => {
+    const character = createEmptyCharacter()
+    character.identity.level = 5
+    character.attributes.int.boosts = [
+      { kind: 'free', attribute: 'int', amount: 4 },
+    ]
+    const entry = createEmptySpellcasting()
+    entry.id = 'cast-test'
+    entry.attribute = 'int'
+    entry.proficiency = { rank: 'trained', attribute: 'int', modifiers: {} }
+    character.spellcasting = [entry]
+    const view = compute(character)
+    expect(view.spellcasting['cast-test']).toEqual({ attack: 11, dc: 21 })
+
+    character.overrides['derived.spellcasting.cast-test.dc'] = { value: 22 }
+    const overridden = compute(character)
+    expect(overridden.spellcasting['cast-test'].dc).toBe(22)
+    expect(overridden.overriddenPaths).toContain(
+      'derived.spellcasting.cast-test.dc',
+    )
   })
 })
 

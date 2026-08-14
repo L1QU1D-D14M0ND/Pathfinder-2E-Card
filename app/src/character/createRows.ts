@@ -1,4 +1,14 @@
-import type { ItemEntry, StrikeEntry } from './types'
+import type {
+  ActionEntry,
+  ConditionEntry,
+  ContentRef,
+  FeatEntry,
+  FeatureEntry,
+  ItemEntry,
+  SpellListEntry,
+  SpellcastingEntry,
+  StrikeEntry,
+} from './types'
 
 export function newId(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
@@ -7,10 +17,14 @@ export function newId(): string {
   return `id-${Date.now()}-${Math.random().toString(16).slice(2)}`
 }
 
+export function blankRef(): ContentRef {
+  return { id: null, name: '', rulesetSource: 'custom' }
+}
+
 export function createEmptyItem(): ItemEntry {
   return {
     id: newId(),
-    item: { id: null, name: '', rulesetSource: 'custom' },
+    item: blankRef(),
     quantity: 1,
     bulk: 0,
     location: 'stowed',
@@ -34,6 +48,100 @@ export function createEmptyStrike(): StrikeEntry {
     traits: [],
     rangeFeet: null,
     modifiers: {},
+  }
+}
+
+export function createEmptySpellListEntry(rank = 0): SpellListEntry {
+  return {
+    id: newId(),
+    spell: blankRef(),
+    rank,
+    prepared: false,
+    signature: false,
+    usesPerDay: null,
+    usesRemaining: null,
+    traits: [],
+    summary: '',
+  }
+}
+
+export function createEmptySpellcasting(): SpellcastingEntry {
+  return {
+    id: newId(),
+    name: 'Spellcasting',
+    tradition: 'arcane',
+    castType: 'prepared',
+    attribute: 'int',
+    proficiency: { rank: 'trained', attribute: 'int', modifiers: {} },
+    slots: Array.from({ length: 10 }, (_, i) => ({
+      rank: i + 1,
+      max: 0,
+      remaining: 0,
+    })),
+    cantrips: [],
+    spells: [],
+    focusSpells: [],
+    innateSpells: [],
+    rituals: [],
+  }
+}
+
+export function createEmptyFeat(): FeatEntry {
+  return {
+    id: newId(),
+    category: 'class',
+    feat: blankRef(),
+    levelGained: 1,
+    traits: [],
+    summary: '',
+  }
+}
+
+export function createEmptyFeature(): FeatureEntry {
+  return {
+    id: newId(),
+    feature: blankRef(),
+    levelGained: 1,
+    summary: '',
+  }
+}
+
+export function createEmptyAction(): ActionEntry {
+  return {
+    id: newId(),
+    name: '',
+    actionType: 'action',
+    actionCost: 1,
+    traits: [],
+    frequency: '',
+    summary: '',
+    sourceFeatId: null,
+  }
+}
+
+export function createEmptyCondition(): ConditionEntry {
+  return {
+    id: newId(),
+    condition: blankRef(),
+    value: null,
+    duration: '',
+    notes: '',
+  }
+}
+
+export function createEmptyDailyResource(): {
+  id: string
+  name: string
+  max: number
+  remaining: number
+  resetsOn: 'daily' | 'encounter' | 'refocus' | 'other'
+} {
+  return {
+    id: newId(),
+    name: '',
+    max: 1,
+    remaining: 1,
+    resetsOn: 'daily',
   }
 }
 

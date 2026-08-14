@@ -5,6 +5,11 @@ export interface StrikeDerived {
   damage: string
 }
 
+export interface SpellcastingDerived {
+  attack: number
+  dc: number
+}
+
 export interface DerivedView {
   attributeModifiers: Record<AttributeKey, number>
   maxHp: number
@@ -21,6 +26,7 @@ export interface DerivedView {
   bulkMaximum: number
   investedCount: number
   strikes: Record<string, StrikeDerived>
+  spellcasting: Record<string, SpellcastingDerived>
   overriddenPaths: string[]
   ignoredOverridePaths: string[]
 }
@@ -61,6 +67,7 @@ export type ComputeInput = Pick<
   | 'armorClass'
   | 'skills'
   | 'strikes'
+  | 'spellcasting'
   | 'inventory'
   | 'overrides'
 >

@@ -13,6 +13,7 @@ import { maxHp } from './hp'
 import { applyOverrides } from './overrides'
 import { skillTotals } from './skills'
 import { allStrikeDerived } from './strikes'
+import { spellcastingDerived } from './spellcasting'
 import type { ComputeInput, DerivedView } from './types'
 
 export function compute(character: ComputeInput): DerivedView {
@@ -35,6 +36,7 @@ export function compute(character: ComputeInput): DerivedView {
     bulkMaximum: tenthsToBulk(bulkMaximumTenths(attrs.str, bulkBonus)),
     investedCount: investedCount(character.inventory.items),
     strikes: allStrikeDerived(character, attrs),
+    spellcasting: spellcastingDerived(character.spellcasting, level, attrs),
     overriddenPaths: [],
     ignoredOverridePaths: [],
   }

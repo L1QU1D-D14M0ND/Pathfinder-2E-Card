@@ -17,7 +17,15 @@ export {
   suggestedSaveFilename,
 } from './saveLoad'
 export {
+  blankRef,
+  createEmptyAction,
+  createEmptyCondition,
+  createEmptyDailyResource,
+  createEmptyFeat,
+  createEmptyFeature,
   createEmptyItem,
+  createEmptySpellListEntry,
+  createEmptySpellcasting,
   createEmptyStrike,
   DEFAULT_ARMOR,
   DEFAULT_SHIELD,

@@ -1,0 +1,820 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "createdAt": "2026-08-14T16:00:00.000Z",
+    "updatedAt": "2026-08-14T16:00:00.000Z",
+    "preferredRuleset": "remaster",
+    "appVersion": "0.0.0",
+    "locale": "en"
+  },
+  "identity": {
+    "characterName": "Lira Spellwright",
+    "playerName": "Golden Test",
+    "level": 5,
+    "xp": 40,
+    "ancestry": {
+      "id": "ancestry.human",
+      "name": "Human",
+      "rulesetSource": "custom"
+    },
+    "heritage": {
+      "id": "heritage.versatile-human",
+      "name": "Versatile Human",
+      "rulesetSource": "custom"
+    },
+    "background": {
+      "id": "background.scholar",
+      "name": "Scholar",
+      "rulesetSource": "custom"
+    },
+    "class": {
+      "id": "class.wizard",
+      "name": "Wizard",
+      "rulesetSource": "custom"
+    },
+    "subclass": {
+      "id": "class.wizard.universalist",
+      "name": "Universalist",
+      "rulesetSource": "custom"
+    },
+    "archetypes": [],
+    "size": "medium",
+    "traits": [
+      "human",
+      "humanoid"
+    ],
+    "languages": [
+      {
+        "id": "language.common",
+        "name": "Common",
+        "rulesetSource": "custom"
+      },
+      {
+        "id": "language.draconic",
+        "name": "Draconic",
+        "rulesetSource": "custom"
+      }
+    ],
+    "deity": null,
+    "homeRegion": "Absalom",
+    "alignment": null,
+    "edicts": "Seek and share knowledge.",
+    "anathema": ""
+  },
+  "attributes": {
+    "str": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "dex": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "dex",
+          "amount": 2,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "con": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "con",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "int": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "int",
+          "amount": 4,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "wis": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "wis",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "cha": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    }
+  },
+  "proficiencies": {
+    "perception": {
+      "rank": "trained",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "fortitude": {
+      "rank": "trained",
+      "attribute": "con",
+      "modifiers": {}
+    },
+    "reflex": {
+      "rank": "trained",
+      "attribute": "dex",
+      "modifiers": {}
+    },
+    "will": {
+      "rank": "expert",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "classDC": {
+      "rank": "trained",
+      "attribute": "int",
+      "modifiers": {}
+    },
+    "armor": {
+      "unarmored": "trained",
+      "light": "untrained",
+      "medium": "untrained",
+      "heavy": "untrained"
+    },
+    "weapons": {
+      "unarmed": "trained",
+      "simple": "trained",
+      "martial": "untrained",
+      "advanced": "untrained",
+      "specific": []
+    }
+  },
+  "vitals": {
+    "ancestryHp": 8,
+    "classHpPerLevel": 6,
+    "bonuses": [],
+    "currentHp": 43,
+    "temporaryHp": 0,
+    "dying": 0,
+    "wounded": 0,
+    "doomed": 0,
+    "resistances": [],
+    "immunities": [],
+    "weaknesses": [],
+    "speeds": [
+      {
+        "kind": "land",
+        "feet": 25
+      }
+    ],
+    "senses": []
+  },
+  "armorClass": {
+    "equippedArmorItemId": null,
+    "equippedShieldItemId": null,
+    "shieldRaised": false,
+    "dexCapOverride": null,
+    "modifiers": {},
+    "notes": ""
+  },
+  "skills": [
+    {
+      "key": "acrobatics",
+      "name": "Acrobatics",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "arcana",
+      "name": "Arcana",
+      "attribute": "int",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "athletics",
+      "name": "Athletics",
+      "attribute": "str",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "crafting",
+      "name": "Crafting",
+      "attribute": "int",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "deception",
+      "name": "Deception",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "diplomacy",
+      "name": "Diplomacy",
+      "attribute": "cha",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "intimidation",
+      "name": "Intimidation",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "medicine",
+      "name": "Medicine",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "nature",
+      "name": "Nature",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "occultism",
+      "name": "Occultism",
+      "attribute": "int",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "performance",
+      "name": "Performance",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "religion",
+      "name": "Religion",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "society",
+      "name": "Society",
+      "attribute": "int",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "stealth",
+      "name": "Stealth",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "survival",
+      "name": "Survival",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "thievery",
+      "name": "Thievery",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    }
+  ],
+  "feats": [
+    {
+      "id": "feat-counterspell",
+      "category": "class",
+      "feat": {
+        "id": "feat.counterspell",
+        "name": "Counterspell",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "traits": [],
+      "summary": "Counter a spell.",
+      "effects": []
+    },
+    {
+      "id": "feat-reach-spell",
+      "category": "class",
+      "feat": {
+        "id": "feat.reach-spell",
+        "name": "Reach Spell",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "traits": [
+        "manipulate"
+      ],
+      "summary": "Increase a spell's range.",
+      "effects": []
+    },
+    {
+      "id": "feat-recognize-spell",
+      "category": "skill",
+      "feat": {
+        "id": "feat.recognize-spell",
+        "name": "Recognize Spell",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 2,
+      "traits": [],
+      "summary": "Identify a spell as it is cast.",
+      "effects": []
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-arcane-school",
+      "feature": {
+        "id": "feature.arcane-spellcasting",
+        "name": "Arcane Spellcasting",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "summary": "Prepared arcane spells.",
+      "effects": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "action-cast",
+      "name": "Cast a Spell",
+      "actionType": "action",
+      "actionCost": null,
+      "traits": [
+        "concentrate",
+        "manipulate"
+      ],
+      "frequency": "",
+      "summary": "Cast a prepared spell.",
+      "sourceFeatId": null,
+      "effects": []
+    }
+  ],
+  "strikes": [
+    {
+      "id": "strike-staff",
+      "name": "Staff",
+      "strikeType": "melee",
+      "weaponCategory": "simple",
+      "itemId": "item-staff",
+      "attackAttribute": "str",
+      "damageAttribute": "str",
+      "damageDice": "1d4",
+      "damageType": "bludgeoning",
+      "traits": [
+        "two-hand-d8"
+      ],
+      "rangeFeet": null,
+      "reload": null,
+      "ammoItemId": null,
+      "modifiers": {},
+      "notes": ""
+    }
+  ],
+  "spellcasting": [
+    {
+      "id": "cast-wizard",
+      "name": "Wizard Spellcasting",
+      "tradition": "arcane",
+      "castType": "prepared",
+      "attribute": "int",
+      "proficiency": {
+        "rank": "trained",
+        "attribute": "int",
+        "modifiers": {}
+      },
+      "slots": [
+        {
+          "rank": 1,
+          "max": 4,
+          "remaining": 3
+        },
+        {
+          "rank": 2,
+          "max": 4,
+          "remaining": 4
+        },
+        {
+          "rank": 3,
+          "max": 2,
+          "remaining": 2
+        },
+        {
+          "rank": 4,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 5,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 6,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 7,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 8,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 9,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 10,
+          "max": 0,
+          "remaining": 0
+        }
+      ],
+      "cantrips": [
+        {
+          "id": "spell-detect-magic",
+          "spell": {
+            "id": "spell.detect-magic",
+            "name": "Detect Magic",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-shield",
+          "spell": {
+            "id": "spell.shield",
+            "name": "Shield",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-electric-arc",
+          "spell": {
+            "id": "spell.electric-arc",
+            "name": "Electric Arc",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-mage-hand",
+          "spell": {
+            "id": "spell.mage-hand",
+            "name": "Mage Hand",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-prestidigitation",
+          "spell": {
+            "id": "spell.prestidigitation",
+            "name": "Prestidigitation",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "spells": [
+        {
+          "id": "spell-magic-missile",
+          "spell": {
+            "id": "spell.magic-missile",
+            "name": "Magic Missile",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-fear",
+          "spell": {
+            "id": "spell.fear",
+            "name": "Fear",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-invisibility",
+          "spell": {
+            "id": "spell.invisibility",
+            "name": "Invisibility",
+            "rulesetSource": "custom"
+          },
+          "rank": 2,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-dispel-magic",
+          "spell": {
+            "id": "spell.dispel-magic",
+            "name": "Dispel Magic",
+            "rulesetSource": "custom"
+          },
+          "rank": 2,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-fireball",
+          "spell": {
+            "id": "spell.fireball",
+            "name": "Fireball",
+            "rulesetSource": "custom"
+          },
+          "rank": 3,
+          "tradition": "arcane",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-haste",
+          "spell": {
+            "id": "spell.haste",
+            "name": "Haste",
+            "rulesetSource": "custom"
+          },
+          "rank": 3,
+          "tradition": "arcane",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "focusSpells": [],
+      "innateSpells": [],
+      "rituals": [],
+      "effects": []
+    }
+  ],
+  "inventory": {
+    "currency": {
+      "cp": 0,
+      "sp": 8,
+      "gp": 15,
+      "pp": 0
+    },
+    "items": [
+      {
+        "id": "item-staff",
+        "item": {
+          "id": "weapon.staff",
+          "name": "Staff",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "readied",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "weapon": {
+          "category": "simple",
+          "group": "club",
+          "damageDice": "1d4",
+          "damageType": "bludgeoning",
+          "hands": "1",
+          "rangeFeet": null,
+          "reload": null,
+          "potencyRune": 0,
+          "strikingRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [
+          "two-hand-d8"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "item-spellbook",
+        "item": {
+          "id": null,
+          "name": "Spellbook",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 0.1,
+        "location": "stowed",
+        "invested": false,
+        "equipped": false,
+        "containerId": null,
+        "traits": [],
+        "notes": ""
+      }
+    ],
+    "bulkBonus": 0,
+    "notes": ""
+  },
+  "companions": [],
+  "conditions": [
+    {
+      "id": "cond-frightened",
+      "condition": {
+        "id": "condition.frightened",
+        "name": "Frightened",
+        "rulesetSource": "custom"
+      },
+      "value": 1,
+      "duration": "1 round",
+      "notes": "Golden smoke test",
+      "effects": []
+    }
+  ],
+  "play": {
+    "heroPoints": 1,
+    "focusPool": 0,
+    "focusRemaining": 0,
+    "initiativeModifier": null,
+    "dailyResources": [
+      {
+        "id": "res-drain-bonded",
+        "name": "Drain Bonded Item",
+        "max": 1,
+        "remaining": 1,
+        "resetsOn": "daily"
+      }
+    ]
+  },
+  "notes": {
+    "appearance": "",
+    "personality": "",
+    "campaign": "Engineering golden: Wizard 5",
+    "other": ""
+  },
+  "overrides": {},
+  "extensions": {}
+}

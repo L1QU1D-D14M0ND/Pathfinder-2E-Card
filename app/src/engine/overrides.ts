@@ -27,7 +27,8 @@ function isFiniteNumber(value: unknown): value is number {
  * derived.reflex, derived.will, derived.classDC, derived.bulkUsed,
  * derived.bulkCapacity, derived.investedCount,
  * derived.attributeModifiers.{str|dex|con|int|wis|cha},
- * derived.skillTotals.<key>, derived.strikes.<id>.attack
+ * derived.skillTotals.<key>, derived.strikes.<id>.attack,
+ * derived.spellcasting.<id>.attack, derived.spellcasting.<id>.dc
  */
 export function applyOverrides(
   view: DerivedView,
@@ -117,6 +118,20 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
     const existing = view.strikes[parts[2]]
     if (!existing) return false
     existing.attack = value
+    return true
+  }
+
+  if (
+    parts.length === 4 &&
+    parts[1] === 'spellcasting' &&
+    (parts[3] === 'attack' || parts[3] === 'dc') &&
+    parts[2]
+  ) {
+    if (!isFiniteNumber(value)) return false
+    const existing = view.spellcasting[parts[2]]
+    if (!existing) return false
+    if (parts[3] === 'attack') existing.attack = value
+    else existing.dc = value
     return true
   }
 
