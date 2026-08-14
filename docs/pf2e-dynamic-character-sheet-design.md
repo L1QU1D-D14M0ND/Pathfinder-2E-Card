@@ -1,7 +1,7 @@
 # Pathfinder Second Edition — Dynamic Character Sheet Design
 
 **Status:** Product decisions complete (v1.0 design lock)  
-**Implementation:** Phase 1 in progress — S1 Fighter 5 slice and S4 validation prelude exist; remaining goldens, spell/companion editors, content packs, and i18n catalogs are not started  
+**Implementation:** Phase 1 in progress — S1 Fighter 5, T1 Wizard 5, T3 form editors, and S4 validation prelude exist; remaining goldens, companion editors, content packs, and i18n catalogs are not started  
 **Next actions / options:** [`next-increment-design.md`](next-increment-design.md) (S1/S4 record: [`continuation-design.md`](continuation-design.md))  
 **Repo context:** `Pathfinder-2E-Card`  
 **Audience:** Product / engineering  
@@ -315,14 +315,14 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 ### Phase 1 — Schema + core calc engine (TypeScript) — in progress
 
-- Done: character JSON schema v1; TypeScript types; empty-sheet factory; Save strips `derived`; Ajv validation on Load/Save; `compute()` for attributes, proficiency, HP, AC, skills, strikes, bulk, investiture, overrides; Fighter 5 golden; React PWA scaffold with derived cells plus inventory/strike editors.
-- Remaining: spell attack/DC; goldens for Wizard/Witch, Bard/Sorcerer, Cleric, companion user, one PC2 class; feats/spells/companion editors.
+- Done: character JSON schema v1; TypeScript types; empty-sheet factory; Save strips `derived`; Ajv validation on Load/Save; `compute()` for attributes, proficiency, HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides; Fighter 5 and Wizard 5 goldens; React PWA scaffold with derived cells plus identity, feats, spells, inventory, strike, and play editors.
+- Remaining: goldens for Bard/Sorcerer, Cleric, companion user, one PC2 class; companion nested-sheet editor.
 - Content pack stubs (`/content/remaster`, `/content/legacy`) move to Phase 3; they are not in the repo yet.
 - Next increment options: [`next-increment-design.md`](next-increment-design.md).
 
 ### Phase 2 — PWA spreadsheet shell (0.9 track)
 
-- Tab chrome, Save/Load, derived cells, inventory and strike editors exist. Remaining: feats, spells, companions, conditions; optional IndexedDB draft buffer; English UI strings externalized (currently hardcoded).
+- Tab chrome, Save/Load, derived cells, identity/feats/spells/inventory/strike/play editors exist. Remaining: companion nested sheet; optional IndexedDB draft buffer; English UI strings externalized (currently hardcoded).
 - Build + Play tracking beyond the current HP / hero-point / dying fields.
 
 ### Phase 3 — Content fill-out

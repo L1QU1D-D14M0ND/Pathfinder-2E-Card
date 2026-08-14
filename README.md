@@ -2,7 +2,7 @@
 
 **Pathfinder 2E Character sheet** — installable local PWA for Pathfinder Second Edition player characters (Build + Play).
 
-**Current phase:** 1 of 5 — S1 Fighter 5 slice and S4 validation prelude are in the repo. Remaining goldens, spell/companion editors, content packs, and i18n catalogs are not started. See [design doc §11](docs/pf2e-dynamic-character-sheet-design.md#11-phased-delivery) and [next increment options](docs/next-increment-design.md).
+**Current phase:** 1 of 5 — S1 Fighter 5, T1 Wizard 5, T3 form editors, and S4 validation prelude are in the repo. Remaining goldens, companion editors, content packs, and i18n catalogs are not started. See [design doc §11](docs/pf2e-dynamic-character-sheet-design.md#11-phased-delivery) and [next increment options](docs/next-increment-design.md).
 
 ## App
 
@@ -14,8 +14,8 @@ npm run dev
 
 - React + TypeScript + Vite
 - Save/Load `.json` character sheets (JSON Schema validation on Load and Save)
-- Core calc engine for HP, AC, skills, strikes, bulk (Fighter 5 golden fixture)
-- Spreadsheet-style placeholder UI with derived cells
+- Core calc engine for HP, AC, skills, strikes, spell attack/DC, bulk (Fighter 5 and Wizard 5 golden fixtures)
+- Spreadsheet-style UI with derived cells and editors for identity, feats, spells, combat, inventory, and play
 
 ## Docs
 
@@ -32,6 +32,7 @@ npm run dev
 - [`fixtures/characters/minimal.example.json`](fixtures/characters/minimal.example.json)
 - [`fixtures/characters/new-sheet.example.json`](fixtures/characters/new-sheet.example.json)
 - [`fixtures/characters/golden/fighter-5.json`](fixtures/characters/golden/fighter-5.json)
+- [`fixtures/characters/golden/wizard-5.json`](fixtures/characters/golden/wizard-5.json)
 
 ## License
 

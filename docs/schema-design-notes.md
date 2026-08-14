@@ -121,8 +121,8 @@ Legacy rune names map in content fallback, not alternate schema enums.
 2. ~~Empty-sheet factory: auto-seed 16 skills; `schemaVersion: 1`.~~  
 3. ~~Save sheet serializer that strips `derived`.~~  
 4. ~~Validate Load and Save against `schemas/character.schema.json`.~~  
-5. ~~Core calc engine + Fighter 5 golden.~~ Remaining goldens still open.  
-6. Expand spreadsheet editors (strikes and inventory items exist; feats/spells/companions remain).  
+5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5 golden exists; remaining goldens still open.  
+6. Expand spreadsheet editors (identity leftovers, feats, spells, strikes, inventory, conditions exist; companions remain).  
 7. Externalize English UI strings (i18n catalogs; Spanish at 1.0).  
 8. Optional IndexedDB draft buffer for refresh safety.
 

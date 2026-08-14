@@ -1,11 +1,11 @@
 # Next increment design — options after S1 / S4
 
-**Status:** Proposed (implementation choices only; product lock unchanged)  
+**Status:** T1 + T3 executed 2026-08-14 (Wizard 5 slice and form editors; T4 i18n prelude skipped)  
 **Date:** 2026-08-14  
 **Audience:** Product / engineering  
 **Depends on:** [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (v1.0 lock), [ADR 0001](adr/0001-product-direction.md), [ADR 0002](adr/0002-character-schema.md), [`schema-design-notes.md`](schema-design-notes.md), [`continuation-design.md`](continuation-design.md) (S1/S4 path, now executed)
 
-This document does **not** reopen locked product decisions. It maps the repo **after** the Fighter 5 slice and validation prelude, lists **options** for the next increment, and recommends a default path.
+This document does **not** reopen locked product decisions. It mapped the repo **after** the Fighter 5 slice, listed **options** for the next increment, and recommended T1 (with a T4 prelude). **T1 and T3 landed together; T4 did not.** Treat §3–§7 as the pre-T1 snapshot. Remaining work: Cleric/Bard goldens, companion nested sheet, Champion 5, i18n catalogs, IndexedDB, content packs.
 
 S1/S4 choices that already landed stay locked unless an option below says otherwise: Vitest, Ajv 2020-12 in-app with reject-on-invalid, `compute(doc) → DerivedView`, boost-sum modifiers, override allow-list, shared row editors (not a generic `SheetTable` yet), Fighter 5 as the martial golden.
 
@@ -343,18 +343,19 @@ Steps 1–4 are the **next development increment**.
 - [x] Untrained proficiency does not add level; no max-level cap
 - [x] Vitest + CI
 
-### Next increment (Wizard slice)
+### Next increment (Wizard slice + editors)
 
-- [ ] `en` catalog for existing chrome; new Spells-tab strings go through `t()`
-- [ ] Spell attack and spell DC in `compute()` per spellcasting entry
-- [ ] Spells tab can add/edit a prepared caster (slots + lists)
-- [ ] Wizard 5 golden asserts HP, AC, skills, spell attack, spell DC, a slot row
-- [ ] Save/Load round-trip of that golden still schema-valid
+- [ ] `en` catalog for existing chrome; new Spells-tab strings go through `t()` (T4 skipped)
+- [x] Spell attack and spell DC in `compute()` per spellcasting entry
+- [x] Spells tab can add/edit a prepared caster (slots + lists)
+- [x] Wizard 5 golden asserts HP, AC, skills, spell attack, spell DC, a slot row
+- [x] Save/Load round-trip of that golden still schema-valid
+- [x] Identity leftovers, HP bonuses, speeds/senses, feats/features/actions, conditions, daily resources (T3; no companions)
 
 ### Phase 1 (schema + core calc) — still open after the next increment
 
 - [ ] Remaining goldens: Cleric, Bard, Ranger+companion, Champion
-- [ ] Spell attack/DC covered (once Wizard lands)
+- [x] Spell attack/DC covered (once Wizard lands)
 
 ### 0.9
 
@@ -424,3 +425,4 @@ That slice proves casters on the same architecture as Fighter 5 without waiting 
 | Date | Change |
 | --- | --- |
 | 2026-08-14 | Options after merging S1/S4 with the Phase 1 continuation design |
+| 2026-08-14 | T1 + T3 executed (Wizard 5, spell attack/DC, form editors); T4 skipped |
