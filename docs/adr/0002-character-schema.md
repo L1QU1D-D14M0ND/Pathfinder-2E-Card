@@ -38,3 +38,4 @@ Use `schemas/character.schema.json` as **schemaVersion 1** for a single PC sheet
 - [`../../fixtures/characters/minimal.example.json`](../../fixtures/characters/minimal.example.json)
 - [`../schema-design-notes.md`](../schema-design-notes.md)
 - [`0001-product-direction.md`](0001-product-direction.md)
+- [`../continuation-design.md`](../continuation-design.md) — remaining implementation options

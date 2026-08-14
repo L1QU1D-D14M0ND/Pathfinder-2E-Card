@@ -2,6 +2,7 @@
 
 **Status:** Product decisions complete (v1.0 design lock)  
 **Implementation:** Phase 1 in progress — schema v1 + React PWA scaffold exist; calc engine, content packs, JSON Schema validation, and i18n catalogs are not started  
+**Next actions / options:** [`continuation-design.md`](continuation-design.md)  
 **Repo context:** `Pathfinder-2E-Card`  
 **Audience:** Product / engineering  
 **Ruleset target:** Pathfinder Second Edition — **Remaster-first**, legacy fallback when Remaster data is missing or errors
@@ -317,6 +318,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 - Done: character JSON schema v1; TypeScript types; empty-sheet factory (16 standard skills); Save serializer strips `derived`; React PWA scaffold.
 - Remaining: JSON Schema validation on Load and before Save; core math + overrides; golden tests (§12).
 - Content pack stubs (`/content/remaster`, `/content/legacy`) move to Phase 3; they are not in the repo yet.
+- Implementation options and a recommended next slice: [`continuation-design.md`](continuation-design.md).
 
 ### Phase 2 — PWA spreadsheet shell (0.9 track)
 
@@ -398,3 +400,4 @@ This section is the **locked product target**, not a description of the current 
 | 2026-08-13 | PWA; PC1+PC2; Save/Load one sheet; i18n plan; TypeScript; elaborations for content source, house rules, golden tests, license |
 | 2026-08-13 | Final lock: hybrid content, omit house-rule flags, accepted golden-test set, MIT |
 | 2026-08-13 | Align phases and technical notes with the repo: scaffold exists, calc/content/i18n/validation not started; Save extension is `.json` only |
+| 2026-08-14 | Point remaining Phase 1+ work at continuation options (`continuation-design.md`) |
