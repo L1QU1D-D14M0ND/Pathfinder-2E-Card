@@ -396,6 +396,11 @@ export function IdentityPanel({
                 <button
                   type="button"
                   disabled={character.vitals.speeds.length <= 1}
+                  title={
+                    character.vitals.speeds.length <= 1
+                      ? 'At least one speed is required'
+                      : 'Remove speed'
+                  }
                   onClick={() =>
                     update((c) => ({
                       ...c,
