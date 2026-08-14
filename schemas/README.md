@@ -12,3 +12,4 @@ Examples:
 
 - [`../fixtures/characters/minimal.example.json`](../fixtures/characters/minimal.example.json) — minimal valid document
 - [`../fixtures/characters/new-sheet.example.json`](../fixtures/characters/new-sheet.example.json) — factory-style sheet with auto-seeded skills
+- [`../fixtures/characters/golden/fighter-5.json`](../fixtures/characters/golden/fighter-5.json) — Fighter 5 golden test character

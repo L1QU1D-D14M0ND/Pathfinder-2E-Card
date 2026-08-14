@@ -73,7 +73,7 @@ button:hover {
 
 .identity-strip {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
@@ -172,6 +172,61 @@ textarea {
   margin-top: 0.75rem;
   font-size: 0.85rem;
   color: #333;
+}
+
+.derived {
+  display: inline-block;
+  min-width: 2.5rem;
+  background: #e7efe4;
+  border: 1px solid #b7c9b0;
+  padding: 0.3rem 0.45rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.derived.overridden {
+  background: #f7edd4;
+  border-color: #c4a35a;
+}
+
+.hp-pair {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hp-pair input {
+  flex: 1;
+}
+
+.panel-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.table-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.25rem 0;
+}
+
+.sheet-table.wide th {
+  width: auto;
+  white-space: nowrap;
+}
+
+.nested-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  align-items: end;
+  background: #f7f7f2;
+  font-size: 0.85rem;
+}
+
+.nested-stats label {
+  min-width: 5.5rem;
 }
 
 @media (max-width: 800px) {

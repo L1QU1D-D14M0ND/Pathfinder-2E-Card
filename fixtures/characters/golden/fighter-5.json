@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "createdAt": "2026-08-14T12:00:00.000Z",
+    "updatedAt": "2026-08-14T12:00:00.000Z",
+    "preferredRuleset": "remaster",
+    "appVersion": "0.0.0",
+    "locale": "en"
+  },
+  "identity": {
+    "characterName": "Kael Ironbrand",
+    "playerName": "Golden Test",
+    "level": 5,
+    "xp": 0,
+    "ancestry": {
+      "id": "ancestry.human",
+      "name": "Human",
+      "rulesetSource": "custom"
+    },
+    "heritage": {
+      "id": "heritage.versatile-human",
+      "name": "Versatile Human",
+      "rulesetSource": "custom"
+    },
+    "background": {
+      "id": "background.warrior",
+      "name": "Warrior",
+      "rulesetSource": "custom"
+    },
+    "class": {
+      "id": "class.fighter",
+      "name": "Fighter",
+      "rulesetSource": "custom"
+    },
+    "subclass": null,
+    "archetypes": [],
+    "size": "medium",
+    "traits": ["human", "humanoid"],
+    "languages": [
+      {
+        "id": "language.common",
+        "name": "Common",
+        "rulesetSource": "custom"
+      }
+    ],
+    "deity": null,
+    "homeRegion": "",
+    "alignment": null,
+    "edicts": "",
+    "anathema": ""
+  },
+  "attributes": {
+    "str": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "str",
+          "amount": 4,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "dex": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "dex",
+          "amount": 2,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "con": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "con",
+          "amount": 2,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "int": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "wis": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "wis",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "cha": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    }
+  },
+  "proficiencies": {
+    "perception": {
+      "rank": "expert",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "fortitude": {
+      "rank": "expert",
+      "attribute": "con",
+      "modifiers": {}
+    },
+    "reflex": {
+      "rank": "expert",
+      "attribute": "dex",
+      "modifiers": {}
+    },
+    "will": {
+      "rank": "trained",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "classDC": {
+      "rank": "trained",
+      "attribute": "str",
+      "modifiers": {}
+    },
+    "armor": {
+      "unarmored": "trained",
+      "light": "trained",
+      "medium": "trained",
+      "heavy": "trained"
+    },
+    "weapons": {
+      "unarmed": "expert",
+      "simple": "master",
+      "martial": "master",
+      "advanced": "trained",
+      "specific": []
+    }
+  },
+  "vitals": {
+    "ancestryHp": 8,
+    "classHpPerLevel": 10,
+    "bonuses": [
+      {
+        "label": "Toughness",
+        "amount": 1,
+        "perLevel": true
+      }
+    ],
+    "currentHp": 73,
+    "temporaryHp": 0,
+    "dying": 0,
+    "wounded": 0,
+    "doomed": 0,
+    "resistances": [],
+    "immunities": [],
+    "weaknesses": [],
+    "speeds": [
+      {
+        "kind": "land",
+        "feet": 25
+      }
+    ],
+    "senses": []
+  },
+  "armorClass": {
+    "equippedArmorItemId": "item-breastplate",
+    "equippedShieldItemId": "item-steel-shield",
+    "shieldRaised": true,
+    "dexCapOverride": null,
+    "modifiers": {},
+    "notes": ""
+  },
+  "skills": [
+    {
+      "key": "acrobatics",
+      "name": "Acrobatics",
+      "attribute": "dex",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "arcana",
+      "name": "Arcana",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "athletics",
+      "name": "Athletics",
+      "attribute": "str",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "crafting",
+      "name": "Crafting",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "deception",
+      "name": "Deception",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "diplomacy",
+      "name": "Diplomacy",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "intimidation",
+      "name": "Intimidation",
+      "attribute": "cha",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "medicine",
+      "name": "Medicine",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "nature",
+      "name": "Nature",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "occultism",
+      "name": "Occultism",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "performance",
+      "name": "Performance",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "religion",
+      "name": "Religion",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "society",
+      "name": "Society",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "stealth",
+      "name": "Stealth",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "survival",
+      "name": "Survival",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "thievery",
+      "name": "Thievery",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    }
+  ],
+  "feats": [],
+  "features": [],
+  "actions": [],
+  "strikes": [
+    {
+      "id": "strike-longsword",
+      "name": "Longsword",
+      "strikeType": "melee",
+      "weaponCategory": "martial",
+      "itemId": "item-longsword",
+      "attackAttribute": "str",
+      "damageAttribute": "str",
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "traits": ["versatileP"],
+      "rangeFeet": null,
+      "reload": null,
+      "ammoItemId": null,
+      "modifiers": {
+        "item": 1
+      },
+      "notes": "+1 potency snapshot"
+    },
+    {
+      "id": "strike-fist",
+      "name": "Fist",
+      "strikeType": "unarmed",
+      "weaponCategory": "unarmed",
+      "itemId": null,
+      "attackAttribute": "str",
+      "damageAttribute": "str",
+      "damageDice": "1d4",
+      "damageType": "bludgeoning",
+      "traits": ["agile", "finesse", "nonlethal", "unarmed"],
+      "rangeFeet": null,
+      "modifiers": {},
+      "notes": ""
+    }
+  ],
+  "spellcasting": [],
+  "inventory": {
+    "currency": {
+      "cp": 0,
+      "sp": 5,
+      "gp": 12,
+      "pp": 0
+    },
+    "items": [
+      {
+        "id": "item-breastplate",
+        "item": {
+          "id": "armor.breastplate",
+          "name": "Breastplate",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 2,
+        "location": "worn",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "armor": {
+          "category": "medium",
+          "acBonus": 4,
+          "dexCap": 1,
+          "checkPenalty": -2,
+          "speedPenalty": -5,
+          "strength": 3,
+          "potencyRune": 1,
+          "resilientRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [],
+        "notes": ""
+      },
+      {
+        "id": "item-longsword",
+        "item": {
+          "id": "weapon.longsword",
+          "name": "Longsword",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "readied",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "weapon": {
+          "category": "martial",
+          "group": "sword",
+          "damageDice": "1d8",
+          "damageType": "slashing",
+          "hands": "1",
+          "rangeFeet": null,
+          "reload": null,
+          "potencyRune": 1,
+          "strikingRune": "none",
+          "propertyRunes": []
+        },
+        "traits": ["versatileP"],
+        "notes": ""
+      },
+      {
+        "id": "item-steel-shield",
+        "item": {
+          "id": "armor.steel-shield",
+          "name": "Steel Shield",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "readied",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "shield": {
+          "acBonus": 2,
+          "speedPenalty": 0,
+          "hardness": 5,
+          "maxHp": 20,
+          "brokenThreshold": 10,
+          "hp": 20
+        },
+        "traits": [],
+        "notes": ""
+      },
+      {
+        "id": "item-adventurers-pack",
+        "item": {
+          "id": null,
+          "name": "Adventurer's Pack",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "stowed",
+        "invested": false,
+        "equipped": false,
+        "containerId": null,
+        "traits": [],
+        "notes": ""
+      },
+      {
+        "id": "item-cloak",
+        "item": {
+          "id": null,
+          "name": "Cloak of Elvenkind",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 0.1,
+        "location": "worn",
+        "invested": true,
+        "equipped": true,
+        "containerId": null,
+        "traits": [],
+        "notes": "Invested smoke test"
+      }
+    ],
+    "bulkBonus": 0,
+    "notes": ""
+  },
+  "companions": [],
+  "conditions": [],
+  "play": {
+    "heroPoints": 1,
+    "focusPool": 0,
+    "focusRemaining": 0,
+    "initiativeModifier": null,
+    "dailyResources": []
+  },
+  "notes": {
+    "appearance": "",
+    "personality": "",
+    "campaign": "Engineering golden: Fighter 5",
+    "other": ""
+  },
+  "overrides": {},
+  "extensions": {}
+}

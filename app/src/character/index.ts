@@ -8,6 +8,7 @@ export { createEmptyCharacter } from './createEmptyCharacter'
 export { createStandardSkillEntries, STANDARD_SKILLS } from './standardSkills'
 export {
   CharacterLoadError,
+  CharacterSaveError,
   downloadCharacterJson,
   parseCharacterJson,
   readCharacterFile,
@@ -15,3 +16,10 @@ export {
   stripDerivedForSave,
   suggestedSaveFilename,
 } from './saveLoad'
+export {
+  createEmptyItem,
+  createEmptyStrike,
+  DEFAULT_ARMOR,
+  DEFAULT_SHIELD,
+  DEFAULT_WEAPON,
+} from './createRows'

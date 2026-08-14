@@ -1,12 +1,17 @@
-import { useRef, useState, type ChangeEvent } from 'react'
+import { useMemo, useRef, useState, type ChangeEvent } from 'react'
 import {
   APP_DISPLAY_NAME,
+  CharacterSaveError,
   createEmptyCharacter,
   downloadCharacterJson,
   readCharacterFile,
   type CharacterDocument,
 } from './character'
 import type { AttributeKey, ProficiencyRank } from './character/types'
+import { compute, signed } from './engine'
+import { CombatPanel } from './sheet/CombatPanel'
+import { DerivedCell } from './sheet/DerivedCell'
+import { InventoryPanel } from './sheet/InventoryPanel'
 import './App.css'
 
 type TabId =
@@ -55,6 +60,7 @@ export default function App() {
   const [tab, setTab] = useState<TabId>('identity')
   const [status, setStatus] = useState('New sheet ready.')
   const fileRef = useRef<HTMLInputElement>(null)
+  const derived = useMemo(() => compute(character), [character])
 
   function update(mutator: (c: CharacterDocument) => CharacterDocument) {
     setCharacter((prev) => touch(mutator(prev)))
@@ -75,8 +81,18 @@ export default function App() {
   }
 
   function onSave() {
-    downloadCharacterJson(character)
-    setStatus('Save sheet downloaded (.json).')
+    try {
+      downloadCharacterJson(character)
+      setStatus('Save sheet downloaded (.json).')
+    } catch (err) {
+      setStatus(
+        err instanceof CharacterSaveError
+          ? err.message
+          : err instanceof Error
+            ? err.message
+            : 'Save failed.',
+      )
+    }
   }
 
   function onNew() {
@@ -90,6 +106,34 @@ export default function App() {
     setCharacter(createEmptyCharacter())
     setTab('identity')
     setStatus('New sheet created.')
+  }
+
+  function addLore() {
+    const raw = window.prompt('Lore topic (e.g. Warfare)')
+    if (!raw?.trim()) return
+    const topic = raw.trim()
+    const key = `lore:${topic.toLowerCase().replace(/\s+/g, '-')}`
+    if (character.skills.some((skill) => skill.key === key)) {
+      setStatus(`Lore already exists: ${key}`)
+      return
+    }
+    update((c) => ({
+      ...c,
+      skills: [
+        ...c.skills,
+        {
+          key,
+          name: `${topic} Lore`,
+          attribute: 'int',
+          rank: 'untrained',
+          isLore: true,
+          armorPenaltyApplies: false,
+          modifiers: {},
+          notes: '',
+          effects: [],
+        },
+      ],
+    }))
   }
 
   return (
@@ -169,18 +213,31 @@ export default function App() {
         </label>
         <label>
           HP
-          <input
-            type="number"
-            value={character.vitals.currentHp}
-            onChange={(e) =>
-              update((c) => ({
-                ...c,
-                vitals: {
-                  ...c.vitals,
-                  currentHp: Number(e.target.value) || 0,
-                },
-              }))
-            }
+          <span className="hp-pair">
+            <input
+              type="number"
+              value={character.vitals.currentHp}
+              onChange={(e) =>
+                update((c) => ({
+                  ...c,
+                  vitals: {
+                    ...c.vitals,
+                    currentHp: Number(e.target.value) || 0,
+                  },
+                }))
+              }
+            />
+            <DerivedCell
+              value={`/ ${derived.maxHp}`}
+              overridden={derived.overriddenPaths.includes('derived.maxHp')}
+            />
+          </span>
+        </label>
+        <label>
+          AC
+          <DerivedCell
+            value={derived.ac}
+            overridden={derived.overriddenPaths.includes('derived.ac')}
           />
         </label>
         <label>
@@ -299,6 +356,47 @@ export default function App() {
                   </select>
                 </td>
               </tr>
+              <tr>
+                <th>Ancestry HP</th>
+                <td>
+                  <input
+                    type="number"
+                    min={0}
+                    value={character.vitals.ancestryHp}
+                    onChange={(e) =>
+                      update((c) => ({
+                        ...c,
+                        vitals: {
+                          ...c.vitals,
+                          ancestryHp: Math.max(0, Number(e.target.value) || 0),
+                        },
+                      }))
+                    }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>Class HP / level</th>
+                <td>
+                  <input
+                    type="number"
+                    min={0}
+                    value={character.vitals.classHpPerLevel}
+                    onChange={(e) =>
+                      update((c) => ({
+                        ...c,
+                        vitals: {
+                          ...c.vitals,
+                          classHpPerLevel: Math.max(
+                            0,
+                            Number(e.target.value) || 0,
+                          ),
+                        },
+                      }))
+                    }
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
         )}
@@ -309,6 +407,7 @@ export default function App() {
               <tr>
                 <th>Attribute</th>
                 <th>Boost count (user-entered)</th>
+                <th>Modifier</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -351,6 +450,14 @@ export default function App() {
                         }}
                       />
                     </td>
+                    <td>
+                      <DerivedCell
+                        value={signed(derived.attributeModifiers[key])}
+                        overridden={derived.overriddenPaths.includes(
+                          `derived.attributeModifiers.${key}`,
+                        )}
+                      />
+                    </td>
                     <td className="muted">Final boosts only (no partial pairing)</td>
                   </tr>
                 )
@@ -360,127 +467,68 @@ export default function App() {
         )}
 
         {tab === 'skills' && (
-          <table className="sheet-table">
-            <thead>
-              <tr>
-                <th>Skill</th>
-                <th>Attr</th>
-                <th>Rank</th>
-              </tr>
-            </thead>
-            <tbody>
-              {character.skills.map((skill, index) => (
-                <tr key={skill.key}>
-                  <th>{skill.name}</th>
-                  <td>{skill.attribute.toUpperCase()}</td>
-                  <td>
-                    <select
-                      value={skill.rank}
-                      onChange={(e) =>
-                        update((c) => {
-                          const skills = [...c.skills]
-                          skills[index] = {
-                            ...skills[index],
-                            rank: e.target.value as ProficiencyRank,
-                          }
-                          return { ...c, skills }
-                        })
-                      }
-                    >
-                      {RANKS.map((r) => (
-                        <option key={r} value={r}>
-                          {r}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
+          <>
+            <div className="table-toolbar">
+              <button type="button" onClick={addLore}>
+                Add lore
+              </button>
+            </div>
+            <table className="sheet-table">
+              <thead>
+                <tr>
+                  <th>Skill</th>
+                  <th>Attr</th>
+                  <th>Rank</th>
+                  <th>Total</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {character.skills.map((skill, index) => (
+                  <tr key={skill.key}>
+                    <th>{skill.name}</th>
+                    <td>{skill.attribute.toUpperCase()}</td>
+                    <td>
+                      <select
+                        value={skill.rank}
+                        onChange={(e) =>
+                          update((c) => {
+                            const skills = [...c.skills]
+                            skills[index] = {
+                              ...skills[index],
+                              rank: e.target.value as ProficiencyRank,
+                            }
+                            return { ...c, skills }
+                          })
+                        }
+                      >
+                        {RANKS.map((r) => (
+                          <option key={r} value={r}>
+                            {r}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <DerivedCell
+                        value={signed(derived.skillTotals[skill.key] ?? 0)}
+                        overridden={derived.overriddenPaths.includes(
+                          `derived.skillTotals.${skill.key}`,
+                        )}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
         )}
 
         {tab === 'combat' && (
-          <table className="sheet-table">
-            <tbody>
-              <tr>
-                <th>Perception rank</th>
-                <td>
-                  <select
-                    value={character.proficiencies.perception.rank}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        proficiencies: {
-                          ...c.proficiencies,
-                          perception: {
-                            ...c.proficiencies.perception,
-                            rank: e.target.value as ProficiencyRank,
-                          },
-                        },
-                      }))
-                    }
-                  >
-                    {RANKS.map((r) => (
-                      <option key={r} value={r}>
-                        {r}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <th>Class DC attr</th>
-                <td>
-                  <select
-                    value={character.proficiencies.classDC.attribute ?? 'str'}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        proficiencies: {
-                          ...c.proficiencies,
-                          classDC: {
-                            ...c.proficiencies.classDC,
-                            attribute: e.target.value as AttributeKey,
-                          },
-                        },
-                      }))
-                    }
-                  >
-                    {ATTRS.map((a) => (
-                      <option key={a} value={a}>
-                        {a.toUpperCase()}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <th>Strikes</th>
-                <td className="muted">
-                  {character.strikes.length} (editor coming with calc engine)
-                </td>
-              </tr>
-              <tr>
-                <th>Shield raised</th>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={character.armorClass.shieldRaised}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        armorClass: {
-                          ...c.armorClass,
-                          shieldRaised: e.target.checked,
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <CombatPanel
+            character={character}
+            derived={derived}
+            update={update}
+          />
         )}
 
         {tab === 'feats' && (
@@ -549,40 +597,11 @@ export default function App() {
         )}
 
         {tab === 'inventory' && (
-          <table className="sheet-table">
-            <tbody>
-              {(['cp', 'sp', 'gp', 'pp'] as const).map((coin) => (
-                <tr key={coin}>
-                  <th>{coin.toUpperCase()}</th>
-                  <td>
-                    <input
-                      type="number"
-                      value={character.inventory.currency[coin]}
-                      onChange={(e) =>
-                        update((c) => ({
-                          ...c,
-                          inventory: {
-                            ...c.inventory,
-                            currency: {
-                              ...c.inventory.currency,
-                              [coin]: Number(e.target.value) || 0,
-                            },
-                          },
-                        }))
-                      }
-                    />
-                  </td>
-                </tr>
-              ))}
-              <tr>
-                <th>Items</th>
-                <td className="muted">
-                  {character.inventory.items.length} (bulk uses decimals; 0.1 =
-                  1L)
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <InventoryPanel
+            character={character}
+            derived={derived}
+            update={update}
+          />
         )}
 
         {tab === 'play' && (
@@ -603,6 +622,15 @@ export default function App() {
                         },
                       }))
                     }
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>Max HP</th>
+                <td>
+                  <DerivedCell
+                    value={derived.maxHp}
+                    overridden={derived.overriddenPaths.includes('derived.maxHp')}
                   />
                 </td>
               </tr>

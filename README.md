@@ -2,7 +2,7 @@
 
 **Pathfinder 2E Character sheet** — installable local PWA for Pathfinder Second Edition player characters (Build + Play).
 
-**Current phase:** 1 of 5 — character schema v1 and a React spreadsheet scaffold are in the repo. Core calc engine, Player Core content packs, golden tests, and i18n catalogs are not started. See [design doc §11](docs/pf2e-dynamic-character-sheet-design.md#11-phased-delivery).
+**Current phase:** 1 of 5 — schema validation, core calc engine, and a Fighter 5 golden fixture are in place. Content packs, remaining goldens, i18n catalogs, and some row editors are not started. See [design doc §11](docs/pf2e-dynamic-character-sheet-design.md#11-phased-delivery).
 
 ## App
 
@@ -13,8 +13,9 @@ npm run dev
 ```
 
 - React + TypeScript + Vite
-- Save/Load `.json` character sheets (Load does not yet JSON-Schema-validate)
-- Spreadsheet-style placeholder UI
+- Save/Load `.json` character sheets (JSON Schema validation on Load and Save)
+- Core calc engine for HP, AC, skills, strikes, bulk (Fighter 5 golden fixture)
+- Spreadsheet-style placeholder UI with derived cells
 
 ## Docs
 
