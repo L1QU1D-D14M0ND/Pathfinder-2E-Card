@@ -20,7 +20,8 @@ npm run dev
 ## Docs
 
 - [PF2e Dynamic Character Sheet — Design](docs/pf2e-dynamic-character-sheet-design.md)
-- [Continuation design — options from Phase 1](docs/continuation-design.md)
+- [Next increment — options after S1/S4](docs/next-increment-design.md)
+- [Continuation design — S1/S4 options (executed)](docs/continuation-design.md)
 - [ADR 0001 — Product direction](docs/adr/0001-product-direction.md)
 - [ADR 0002 — Character JSON schema](docs/adr/0002-character-schema.md)
 - [Schema design notes](docs/schema-design-notes.md)
@@ -30,6 +31,7 @@ npm run dev
 - [`schemas/character.schema.json`](schemas/character.schema.json)
 - [`fixtures/characters/minimal.example.json`](fixtures/characters/minimal.example.json)
 - [`fixtures/characters/new-sheet.example.json`](fixtures/characters/new-sheet.example.json)
+- [`fixtures/characters/golden/fighter-5.json`](fixtures/characters/golden/fighter-5.json)
 
 ## License
 

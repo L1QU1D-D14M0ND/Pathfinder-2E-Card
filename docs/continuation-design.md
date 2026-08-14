@@ -1,11 +1,14 @@
 # Continuation design — options to proceed from Phase 1
 
-**Status:** Proposed (implementation choices only; product lock unchanged)  
+**Status:** Executed (S1 vertical slice + S4 validation prelude landed 2026-08-14)  
 **Date:** 2026-08-14  
 **Audience:** Product / engineering  
-**Depends on:** [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (v1.0 lock), [ADR 0001](adr/0001-product-direction.md), [ADR 0002](adr/0002-character-schema.md), [`schema-design-notes.md`](schema-design-notes.md)
+**Depends on:** [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (v1.0 lock), [ADR 0001](adr/0001-product-direction.md), [ADR 0002](adr/0002-character-schema.md), [`schema-design-notes.md`](schema-design-notes.md)  
+**Remaining work:** [`next-increment-design.md`](next-increment-design.md)
 
-This document does **not** reopen locked product decisions. It maps the current scaffold to remaining 0.9/1.0 work, lists **options** where implementation is still open, and recommends a default path so development can continue.
+This document does **not** reopen locked product decisions. It mapped the pre-S1 scaffold to remaining 0.9/1.0 work and recommended S1 + S4. Treat it as the record of those choices. **Do not use §11 as the next coding slice** — use the next-increment design.
+
+Sections §3–§11 below are the **pre-S1 snapshot** and are intentionally not rewritten.
 
 ---
 
@@ -565,3 +568,4 @@ That slice is enough to prove the 0.9 architecture without waiting on content pa
 | Date | Change |
 | --- | --- |
 | 2026-08-14 | Initial continuation options from current scaffold vs locked design |
+| 2026-08-14 | Marked executed after S1/S4; remaining options moved to `next-increment-design.md` |
