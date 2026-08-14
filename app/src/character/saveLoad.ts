@@ -1,10 +1,21 @@
 import type { CharacterDocument } from './types'
 import { APP_VERSION, SAVE_FILE_EXTENSION } from './types'
+import {
+  CharacterValidationError,
+  validateCharacterDocument,
+} from './validate'
 
 export class CharacterLoadError extends Error {
   constructor(message: string) {
     super(message)
     this.name = 'CharacterLoadError'
+  }
+}
+
+export class CharacterSaveError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'CharacterSaveError'
   }
 }
 
@@ -24,7 +35,15 @@ export function stripDerivedForSave(
 }
 
 export function serializeCharacter(character: CharacterDocument): string {
-  return `${JSON.stringify(stripDerivedForSave(character), null, 2)}\n`
+  const stripped = stripDerivedForSave(character)
+  try {
+    validateCharacterDocument(stripped)
+  } catch (err) {
+    const detail =
+      err instanceof CharacterValidationError ? err.message : 'invalid document'
+    throw new CharacterSaveError(`Cannot save sheet: ${detail}`)
+  }
+  return `${JSON.stringify(stripped, null, 2)}\n`
 }
 
 export function parseCharacterJson(text: string): CharacterDocument {
@@ -37,16 +56,14 @@ export function parseCharacterJson(text: string): CharacterDocument {
   if (!data || typeof data !== 'object') {
     throw new CharacterLoadError('Character file must be a JSON object.')
   }
-  const doc = data as Partial<CharacterDocument>
-  if (doc.schemaVersion !== 1) {
-    throw new CharacterLoadError(
-      `Unsupported schemaVersion: ${String(doc.schemaVersion)} (expected 1).`,
-    )
+  try {
+    return validateCharacterDocument(data)
+  } catch (err) {
+    if (err instanceof CharacterValidationError) {
+      throw new CharacterLoadError(`Invalid character sheet: ${err.message}`)
+    }
+    throw err
   }
-  if (!doc.identity || !doc.meta || !doc.attributes) {
-    throw new CharacterLoadError('Character file is missing required sections.')
-  }
-  return doc as CharacterDocument
 }
 
 export function suggestedSaveFilename(character: CharacterDocument): string {

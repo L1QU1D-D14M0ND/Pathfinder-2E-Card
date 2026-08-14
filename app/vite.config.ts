@@ -1,6 +1,12 @@
+/// <reference types="vitest/config" />
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+
+const appRoot = path.dirname(fileURLToPath(import.meta.url))
+const repoRoot = path.resolve(appRoot, '..')
 
 export default defineConfig({
   plugins: [
@@ -31,4 +37,21 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      '@character-schema': path.resolve(
+        repoRoot,
+        'schemas/character.schema.json',
+      ),
+    },
+  },
+  server: {
+    fs: {
+      allow: [repoRoot],
+    },
+  },
+  test: {
+    environment: 'node',
+    include: ['src/**/*.test.ts'],
+  },
 })
