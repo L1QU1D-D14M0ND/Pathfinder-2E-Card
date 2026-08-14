@@ -11,7 +11,11 @@ import type { AttributeKey, ProficiencyRank } from './character/types'
 import { compute, signed } from './engine'
 import { CombatPanel } from './sheet/CombatPanel'
 import { DerivedCell } from './sheet/DerivedCell'
+import { FeatsPanel } from './sheet/FeatsPanel'
+import { IdentityPanel } from './sheet/IdentityPanel'
 import { InventoryPanel } from './sheet/InventoryPanel'
+import { PlayPanel } from './sheet/PlayPanel'
+import { SpellsPanel } from './sheet/SpellsPanel'
 import './App.css'
 
 type TabId =
@@ -278,127 +282,7 @@ export default function App() {
 
       <main className="sheet-panel">
         {tab === 'identity' && (
-          <table className="sheet-table">
-            <tbody>
-              {(
-                [
-                  ['Player', 'playerName'],
-                  ['Ancestry', 'ancestry'],
-                  ['Heritage', 'heritage'],
-                  ['Background', 'background'],
-                ] as const
-              ).map(([label, key]) => (
-                <tr key={key}>
-                  <th>{label}</th>
-                  <td>
-                    {key === 'playerName' ? (
-                      <input
-                        value={character.identity.playerName ?? ''}
-                        onChange={(e) =>
-                          update((c) => ({
-                            ...c,
-                            identity: {
-                              ...c.identity,
-                              playerName: e.target.value,
-                            },
-                          }))
-                        }
-                      />
-                    ) : (
-                      <input
-                        value={character.identity[key].name}
-                        onChange={(e) =>
-                          update((c) => ({
-                            ...c,
-                            identity: {
-                              ...c.identity,
-                              [key]: {
-                                ...c.identity[key],
-                                name: e.target.value,
-                              },
-                            },
-                          }))
-                        }
-                      />
-                    )}
-                  </td>
-                </tr>
-              ))}
-              <tr>
-                <th>Size</th>
-                <td>
-                  <select
-                    value={character.identity.size}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        identity: {
-                          ...c.identity,
-                          size: e.target.value as CharacterDocument['identity']['size'],
-                        },
-                      }))
-                    }
-                  >
-                    {(
-                      [
-                        'tiny',
-                        'small',
-                        'medium',
-                        'large',
-                        'huge',
-                        'gargantuan',
-                      ] as const
-                    ).map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <th>Ancestry HP</th>
-                <td>
-                  <input
-                    type="number"
-                    min={0}
-                    value={character.vitals.ancestryHp}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        vitals: {
-                          ...c.vitals,
-                          ancestryHp: Math.max(0, Number(e.target.value) || 0),
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Class HP / level</th>
-                <td>
-                  <input
-                    type="number"
-                    min={0}
-                    value={character.vitals.classHpPerLevel}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        vitals: {
-                          ...c.vitals,
-                          classHpPerLevel: Math.max(
-                            0,
-                            Number(e.target.value) || 0,
-                          ),
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <IdentityPanel character={character} update={update} />
         )}
 
         {tab === 'attributes' && (
@@ -532,68 +416,15 @@ export default function App() {
         )}
 
         {tab === 'feats' && (
-          <p className="placeholder">
-            Feats / features tables will expand here. Currently{' '}
-            {character.feats.length} feats, {character.features.length}{' '}
-            features.
-          </p>
+          <FeatsPanel character={character} update={update} />
         )}
 
         {tab === 'spells' && (
-          <table className="sheet-table">
-            <tbody>
-              <tr>
-                <th>Spellcasting entries</th>
-                <td>{character.spellcasting.length}</td>
-              </tr>
-              <tr>
-                <th>Focus pool</th>
-                <td>
-                  <input
-                    type="number"
-                    min={0}
-                    max={3}
-                    value={character.play.focusPool}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        play: {
-                          ...c.play,
-                          focusPool: Math.min(
-                            3,
-                            Math.max(0, Number(e.target.value) || 0),
-                          ),
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Focus remaining</th>
-                <td>
-                  <input
-                    type="number"
-                    min={0}
-                    max={3}
-                    value={character.play.focusRemaining}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        play: {
-                          ...c.play,
-                          focusRemaining: Math.min(
-                            3,
-                            Math.max(0, Number(e.target.value) || 0),
-                          ),
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <SpellsPanel
+            character={character}
+            derived={derived}
+            update={update}
+          />
         )}
 
         {tab === 'inventory' && (
@@ -605,108 +436,11 @@ export default function App() {
         )}
 
         {tab === 'play' && (
-          <table className="sheet-table">
-            <tbody>
-              <tr>
-                <th>Current HP</th>
-                <td>
-                  <input
-                    type="number"
-                    value={character.vitals.currentHp}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        vitals: {
-                          ...c.vitals,
-                          currentHp: Number(e.target.value) || 0,
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Max HP</th>
-                <td>
-                  <DerivedCell
-                    value={derived.maxHp}
-                    overridden={derived.overriddenPaths.includes('derived.maxHp')}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Temp HP</th>
-                <td>
-                  <input
-                    type="number"
-                    min={0}
-                    value={character.vitals.temporaryHp}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        vitals: {
-                          ...c.vitals,
-                          temporaryHp: Math.max(0, Number(e.target.value) || 0),
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Dying / Wounded / Doomed</th>
-                <td className="inline-triple">
-                  <input
-                    type="number"
-                    min={0}
-                    max={4}
-                    value={character.vitals.dying}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        vitals: {
-                          ...c.vitals,
-                          dying: Math.max(0, Number(e.target.value) || 0),
-                        },
-                      }))
-                    }
-                  />
-                  <input
-                    type="number"
-                    min={0}
-                    value={character.vitals.wounded}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        vitals: {
-                          ...c.vitals,
-                          wounded: Math.max(0, Number(e.target.value) || 0),
-                        },
-                      }))
-                    }
-                  />
-                  <input
-                    type="number"
-                    min={0}
-                    value={character.vitals.doomed}
-                    onChange={(e) =>
-                      update((c) => ({
-                        ...c,
-                        vitals: {
-                          ...c.vitals,
-                          doomed: Math.max(0, Number(e.target.value) || 0),
-                        },
-                      }))
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>Conditions</th>
-                <td className="muted">{character.conditions.length}</td>
-              </tr>
-            </tbody>
-          </table>
+          <PlayPanel
+            character={character}
+            derived={derived}
+            update={update}
+          />
         )}
 
         {tab === 'notes' && (
