@@ -308,6 +308,8 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 ## 11. Phased delivery
 
+Live status checkboxes: [`ROADMAP.md`](ROADMAP.md).
+
 ### Phase 0 — Design lock (done)
 
 - Product decisions complete; ADR 0001 accepted.
@@ -402,3 +404,4 @@ This section is the **locked product target**, not a description of the current 
 | 2026-08-13 | Align phases and technical notes with the repo: scaffold exists, calc/content/i18n/validation not started; Save extension is `.json` only |
 | 2026-08-14 | Point remaining Phase 1+ work at continuation options (`continuation-design.md`) |
 | 2026-08-14 | Record S1/S4 landing; point remaining work at `next-increment-design.md` |
+| 2026-08-15 | Point §11 at operational [`ROADMAP.md`](ROADMAP.md) after T1/T3 merge |

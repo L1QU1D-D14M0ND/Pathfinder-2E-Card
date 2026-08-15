@@ -2,7 +2,7 @@
 
 **Pathfinder 2E Character sheet** — installable local PWA for Pathfinder Second Edition player characters (Build + Play).
 
-**Current phase:** 1 of 5 — S1 Fighter 5, T1 Wizard 5, T3 form editors, and S4 validation prelude are in the repo. Remaining goldens, companion editors, content packs, and i18n catalogs are not started. See [design doc §11](docs/pf2e-dynamic-character-sheet-design.md#11-phased-delivery) and [next increment options](docs/next-increment-design.md).
+**Current phase:** 1–2 of 5 — S1 Fighter 5, T1 Wizard 5, T3 form editors, and S4 validation prelude are in the repo. Remaining goldens, companion editors, content packs, and i18n catalogs are not started. See the [roadmap](docs/ROADMAP.md), [design doc §11](docs/pf2e-dynamic-character-sheet-design.md#11-phased-delivery), and [next increment options](docs/next-increment-design.md).
 
 ## App
 
@@ -19,6 +19,7 @@ npm run dev
 
 ## Docs
 
+- [Roadmap](docs/ROADMAP.md)
 - [PF2e Dynamic Character Sheet — Design](docs/pf2e-dynamic-character-sheet-design.md)
 - [Next increment — options after S1/S4](docs/next-increment-design.md)
 - [Continuation design — S1/S4 options (executed)](docs/continuation-design.md)
