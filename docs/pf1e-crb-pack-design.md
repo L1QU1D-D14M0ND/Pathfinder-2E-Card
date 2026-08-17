@@ -257,12 +257,12 @@ Armor **max Dex** caps Dex on AC and touch, **not** on CMD (CMD uses the full De
 
 **In this batch:** CRB procedure in our own words; table tests beyond the three goldens (Dex cap, negative Dex on FF, touch omits armor); Combat UI labels if a total is easy to misread; document that armor/shield/natural/deflection fields are **user-responsible** (no typed-bonus stacker — risk P2).
 
-UI honesty already noticed (fix in this batch, not a rewrite):
+UI honesty already noticed (partially landed; remaining work is formula table tests):
 
-- AC / touch / FF derived cell only flags `derived.ac` as overridden; touch and FF paths are ignored.
-- Iterative-attacks cell flags `derived.bab` but displays `babIteratives` (overriding BAB does not recompute the slash line).
-- CMD uses **uncapped** Dex; AC/touch use `maxDex`. The Combat tab does not say so.
-- `armorClass.other` applies to touch and flat-footed (dodge does not apply to FF). Easy to park a dodge-like bonus in Other.
+- AC / touch / FF derived cell flags any of the three override paths.
+- Combat shows BAB (flags `derived.bab`) and iteratives (flags `derived.babIteratives`) separately. Overriding BAB does not rewrite the slash line.
+- `armorClass.other` applies to touch and flat-footed (dodge does not apply to FF). Combat tab states this. User-responsible.
+- CMD uses **uncapped** Dex; AC/touch use `maxDex`. No extra copy (decision 8C).
 
 **Out:** Item-granted AC from inventory; max Dex from an armor catalog (batch 10); size table expansion (batch 5 — already applied, Medium-only in goldens); Combat Expertise / fighting defensively; shield bash; CMD vs specific maneuvers.
 
@@ -276,7 +276,7 @@ UI honesty already noticed (fix in this batch, not a rewrite):
 
 **Already in the app:** `skillTotal` = ranks + ability + (trained and class skill → +3) + ACP (if the skill flags it) + misc. Factory seeds the CRB skill list. Favored-class **skill ranks** are stored on the class row but not auto-applied to a skill.
 
-**In this batch:** Confirm +3 only when ranks ≥ 1; ACP only on flagged skills (Climb, not Diplomacy); max ranks = **character level** (CRB; no 3.5 cross-class half ranks). UI or engine honesty if ranks can exceed level today. Untrained-only skills (Disable Device, Use Magic Device, Handle Animal) still show a numeric total at 0 ranks — decide whether to blank or warn; do not auto-fail the check.
+**In this batch:** Confirm +3 only when ranks ≥ 1; ACP only on flagged skills (Climb, not Diplomacy); max ranks = **character level** (CRB; no 3.5 cross-class half ranks). UI warns when ranks exceed level (no clamp). Disable Device, Use Magic Device, and Handle Animal show **—** at 0 ranks; Fly shows **—** without a fly speed.
 
 **Out:** Stamping Fighter/Wizard class-skill checkboxes from the pack (batch 9); armor-load penalties stacking on top of typed ACP (batch 6); Craft/Perform/Profession catalogs.
 
@@ -336,3 +336,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-17 | Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks |
 | 2026-08-17 | Annotated upcoming batches 3–10 (next PR is AC/touch/FF + CMB/CMD) |
 | 2026-08-17 | Batch 3 UI-honesty notes; typo Encumberance → Encumbrance |
+| 2026-08-17 | Skill warn/blank and Combat honesty landed early; batch 3 formula table tests still next |

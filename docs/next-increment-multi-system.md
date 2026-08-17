@@ -24,7 +24,7 @@ The next **code** increment is **Phase 3c batch 3** (AC / touch / FF + CMB / CMD
 | PF1e development priority; PF2e slice must not regress | ADR 0003 |
 | Existing Load files without `system` are PF2e | ADR 0003 |
 | One sheet; Save/Load `.json`; no library, dice, VTT, house-rule flags | ADR 0003 |
-| English 0.9 / Spanish 1.0; externalize strings | ADR 0003 (still not done) |
+| English 0.9 / Spanish 1.0; chrome catalog landed | ADR 0003 (T4′) |
 | PF2e documents still validate against `schemas/character.schema.json` until a dedicated move is part of Phase M | ADR 0002 |
 | Core calcs only; unknown `effects[]` ignored | ADR 0003 |
 | Sidebar host when a sheet is loaded; tools TBD; empty host OK for 0.9 | ADR 0005 |
@@ -220,7 +220,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Wizard 5 golden
 - [x] Multiclass golden
 - [ ] Editors for those domains (no familiar nested sheet)
-- [ ] `en` catalog (no new hardcoded chrome)
+- [x] `en` catalog for shell chrome + PF1e Combat/Abilities/Skills/tabs (PF2e panel literals remain)
 - [ ] PWA install + offline proven once
 - [ ] PF2e Fighter 5 / Wizard 5 still pass
 - [ ] Sidebar host may be empty; named tools not required
@@ -243,23 +243,20 @@ Steps 2–4 are the **next development increments** after this documentation cha
 
 ## 9. Audit notes (2026-08-17)
 
-Code/docs pass after Phases M–3e and 3c batches 1–2. **Fixed in that pass:** Wizard 5 user-entered slots were 4/5/4/3 (double-counted INT bonus or an off-by-one class table); CRB Wizard 5 + INT 18 is **4/4/3/2**. `miscDamage` was dropped when `damageAbility` was `null`. Overriding `derived.attacks.<id>.attack` did not shift the slash line the Combat tab displays.
+Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 5 slots **4/4/3/2**; `miscDamage` with null damage ability; attack-override slash line.
 
-**Do not treat as batch-3 scope** (already sequenced or accepted):
+**Decisions (implemented):** 1A New-sheet picker with Cancel abort (boot stays PF2e). 2B `tempScore` + keep `tempModifier`. 3A last-wins BAB; Combat flags BAB vs iteratives separately. 4A one `other` field; Combat states it applies to all three ACs. 5A warn when ranks > level (no clamp). 6B blank Disable Device / UMD / Handle Animal at 0 ranks; blank Fly without a fly speed. 7B full attack-row fields. 8C no extra CMD/max-Dex copy. 9B `en.json` + `t()` for chrome (shell, tabs, PF1e Combat/Abilities/Skills, Notes). 10B shared `ContentRef`/`Effect`/`applyOverrides`/`Notes`/`Currency`.
 
-| Item | Where | Disposition |
-| --- | --- | --- |
-| Combat UI honesty (AC override flag, BAB vs iteratives, CMD vs max Dex, `other` on touch/FF) | Combat tab | Batch 3 |
-| Max skill ranks = level; untrained-only skills (Disable Device, UMD, Handle Animal) still show a total | Skills | Batch 4 |
-| Size tables untested beyond Medium; Stealth/Fly size mods not auto | Identity / skills | Batch 5 (combat/carry tables). Skill size mods stay out of 0.9 |
-| Load penalties not written onto ACP / max Dex | Inventory / AC | Batch 6 (document only) |
-| `tempModifier` is a modifier addend, not a score bump; bonus slots use the **score**, DCs use the **modifier** (so temp changes DC but not bonus slots) | Abilities / spells | Documented gap; do not silently treat temp as a score increase |
-| `en.json` still missing; chrome is hardcoded English | Shell / panels | T4′ (ADR 0003 i18n lock) |
-| Kernel types (`ContentRef`, `Effect`, `applyOverrides`, Notes panel) still duplicated per system | `shared/` vs `systems/*` | Phase 1e follow-up; do not block 3c |
-| `SystemModule` has no `tabs`; `App.tsx` still `if (system === 'pf1e')` to mount workspaces | Shell | Cosmetic vs ADR 0004 sketch; fine until a third system |
-| New sheet: second confirm Cancel creates PF2e (cannot abort); boot default is a PF2e blank | Shell | UX; not a schema issue |
-| Combat attack editor has no misc-damage / ability / crit fields | Combat | Goldens use 0 / defaults; add when an editor needs them |
-| Overriding `derived.bab` does not recompute iteratives or attack rows | Overrides | Last-wins on that cell only (same as PF2e) |
+**Still sequenced (not this change):**
+
+| Item | Disposition |
+| --- | --- |
+| Full CRB review of AC/touch/FF + CMB/CMD table tests | Batch 3 |
+| Class-skill lists / skill points catalog | Batch 4 remainder / batch 9 |
+| Size tables beyond Medium | Batch 5 |
+| Load penalties onto ACP / max Dex | Batch 6 (document only) |
+| `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
+| Remaining PF2e panel literals | Extract when those panels next change |
 
 ---
 
@@ -278,3 +275,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **Fixed in that pass:**
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative attacks |
 | 2026-08-17 | Annotate CRB batches 3–10; next increment is batch 3 only |
 | 2026-08-17 | Audit: Wizard 5 slots 4/4/3/2; remaining design notes in §9 |
+| 2026-08-17 | Implement audit decisions 1A–10B (picker, tempScore, chrome i18n, kernel types) |

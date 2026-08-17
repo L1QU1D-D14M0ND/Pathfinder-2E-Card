@@ -32,7 +32,7 @@ Other systems (Starfinder, D&D 5e, etc.) are **architecture-only** for 0.9/1.0: 
 | Modes | Build and Play |
 | Dice | No dice roller (a future sidebar tool does not reopen this unless a later ADR says so) |
 | Campaign options | Omit house-rule flags for 0.9/1.0 (PF2e Free Archetype; PF1e traits/variant rules). Extra feats/traits entered as custom rows |
-| i18n | English in 0.9; Spanish in 1.0 (strings externalized from the start — still not done in the scaffold) |
+| i18n | English in 0.9; Spanish in 1.0. Chrome uses `en.json` + `t()`; remaining PF2e panel literals extract when those panels change |
 | Language | TypeScript |
 | UI framework | React |
 | Save files | `.json` |

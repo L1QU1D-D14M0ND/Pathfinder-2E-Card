@@ -45,7 +45,7 @@ See the JSON Schema for types. Summary:
 | --- | --- |
 | Identity | `characterName`, `playerName`, `race`, `size` (includes Fine/Diminutive/Colossal), `alignment`, `deity` (string), `xp`, `languages` |
 | Classes | `id`, `class` ContentRef, `levels`, `hitDie`, `babProgression` (`full` / `threeQuarter` / `half`), `saves` good/poor, `favored.hp` / `favored.skillRanks` |
-| Abilities | `score` + optional `tempModifier` per key |
+| Abilities | `score` + optional `tempScore` (score addend) + optional `tempModifier` (check/DC addend) per key |
 | Vitals | `hpRolled[]` (before Con), `currentHp` (may be negative), `tempHp`, `nonlethal`, speeds/senses |
 | AC | explicit `armorBonus`, `shieldBonus`, `natural`, `deflection`, `dodge`, `other`, `maxDex` (null = no cap), `armorCheckPenalty` (≤ 0) |
 | Combat misc | initiative / melee / ranged / CMB / CMD / save misc |
@@ -72,7 +72,8 @@ User adds `craft-*`, `perform-*`, `profession-*` like PF2e lore.
 
 ## Engine notes (0.9 martial)
 
-- Modifier = `floor((score − 10) / 2)` + `tempModifier`.
+- Modifier = `floor((score + tempScore − 10) / 2)` + `tempModifier`.
+- `tempScore` feeds bonus spells and Strength carrying capacity. `tempModifier` does not.
 - BAB/saves stack **per class row** (do not add levels then apply one table).
 - Iteratives: extra attacks when BAB ≥ 6, −5 steps, max four from BAB. Display as a CRB slash line (`+6/+1`). **Fighter 5 is +5 only**, not +5/+0.
 - HP: each `hpRolled` entry contributes `max(1, roll + Con mod)`, plus favored-class HP totals. The player types each HD result in the Max HP breakdown dialog (physical dice).
@@ -144,3 +145,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative slash notation |
 | 2026-08-17 | Point next schema/pack work at annotated CRB batches 3–10 |
 | 2026-08-17 | Catalog ids vs skill keys: `skill.knowledge-arcana`, not `knowledge.arcana` |
+| 2026-08-17 | Optional `tempScore` (score addend); `tempModifier` remains a check/DC addend |

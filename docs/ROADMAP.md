@@ -52,7 +52,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 - [x] New sheet still produces a valid PF2e document until PF1e factory exists
 - [x] Existing PF2e goldens and unit tests stay green
 - [x] Leave shell layout room for a sidebar rail (empty/collapsed aside OK)
-- [ ] Optional: extract English chrome (`en.json`) so PF1e UI does not add literals (T4′)
+- [x] Optional: extract English chrome (`en.json`) so PF1e UI does not add literals (T4′)
 
 Working display name in chrome is **TTRPG Character Sheet**.
 
@@ -270,3 +270,4 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog (manual HD rolls) + iterative attack slash notation |
 | 2026-08-17 | Annotate CRB batches 3–10; next recommended PR is AC/touch/FF + CMB/CMD |
 | 2026-08-17 | Audit: Wizard 5 slots corrected to CRB 4/4/3/2; remaining issues in next-increment §9 |
+| 2026-08-17 | Design decisions 1A–10B: new-sheet picker, tempScore, en.json chrome, shared kernel types |

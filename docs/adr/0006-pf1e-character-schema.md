@@ -12,7 +12,7 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 - Discriminator **`system` is required** and must be `"pf1e"`. (PF2e still allows omitting `system` on Load.)
 - **`schemaVersion` 1** is the PF1e document version. It is independent of PF2e’s `schemaVersion`.
 - **`classes[]`** is the class list. Total level is **derived** (sum of `classes[].levels`). Do not store a competing `identity.level` input.
-- Ability input is a final **score** per key, not PF2e boosts. Modifier = `floor((score − 10) / 2)` plus optional `tempModifier`.
+- Ability input is a final **score** per key, not PF2e boosts. Modifier = `floor((score + tempScore − 10) / 2)` plus optional `tempModifier`. `tempScore` is a score addend (bonus spells, carry); `tempModifier` is a check/DC addend only.
 - BAB and saves are **not** user totals. They come from per-class progressions (`full` / `threeQuarter` / `half` BAB; `good` / `poor` saves), then stack. Manual totals go through **`overrides`**.
 - AC uses **explicit buckets** (armor, shield, Dex via `maxDex`, size, natural, deflection, dodge, other) rather than a 12-type bonus graph. Armor check penalty is a user field on `armorClass` for 0.9.
 - Skills are **rank-based**. Class-skill +3 when trained (`ranks >= 1`). No `ProficiencyRank`. Skill **keys must not contain `.`** so override paths `derived.skillTotals.<key>` stay unambiguous (use `knowledge-arcana`, not `knowledge.arcana`).

@@ -189,7 +189,7 @@ One active character. Switching system on an existing document is **not** suppor
 
 **New sheet:** system choice before the empty factory runs.
 
-**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; `es` in 1.0. Still hardcoded English in the current scaffold — extract during or immediately before the first PF1e editors so a second wave of literals is not added.
+**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; `es` in 1.0. Chrome (`en.json` + `t()`) covers shell, tabs, PF1e Combat/Abilities/Skills, and Notes. Remaining PF2e panel literals extract when those panels change.
 
 ---
 

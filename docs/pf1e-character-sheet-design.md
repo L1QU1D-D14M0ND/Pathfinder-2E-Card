@@ -21,7 +21,7 @@ Ruleset target: **Core Rulebook**, player-facing. No GM-exclusive bestiary/adven
 
 | # | Topic | Decision |
 | --- | --- | --- |
-| 1 | Ability model | Six **ability scores** (3–… no schema max). Modifier = `floor((score − 10) / 2)`. No PF2e boosts |
+| 1 | Ability model | Six **ability scores** (3–… no schema max). Modifier = `floor((score + tempScore − 10) / 2)` + `tempModifier`. `tempScore` is a score bump; `tempModifier` is a check/DC addend |
 | 2 | Classes | `classes[]` rows: class id/name, levels, favored flag, optional prestige. **Free multiclass.** Total level = sum of class levels |
 | 3 | BAB / saves / HD | Engine tables for the **11 CRB classes**. Custom/prestige rows pick a progression (full / ¾ / ½ BAB; good/poor saves; HD) |
 | 4 | Skills | Rank-based. Class-skill +3 when trained. Armor check penalty on listed skills. Knowledge/Craft/Perform/Profession as addable rows (Knowledge subtypes auto-seeded) |
@@ -201,3 +201,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog (manual HD rolls) + iterative slash notation. |
 | 2026-08-17 | Annotate upcoming CRB batches 3–10; next is AC/touch/FF + CMB/CMD. |
 | 2026-08-17 | Size lock is AC/attack/CMB/CMD/carry, not skill size mods. PF1e goldens have no `rulesetSource`. |
+| 2026-08-17 | Ability modifier uses `tempScore` (score bump) plus `tempModifier` (check/DC addend). |
