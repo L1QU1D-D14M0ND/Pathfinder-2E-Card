@@ -11,7 +11,14 @@ export { toDerivedCache } from './types'
 export {
   babFromProgression,
   characterLevel,
+  formatIteratives,
   iterativeAttacks,
   saveFromProgression,
   stackedBab,
 } from './progressions'
+export {
+  hpBreakdown,
+  hpFromHitDie,
+  maxHp,
+  setHitDieRoll,
+} from './vitals'
