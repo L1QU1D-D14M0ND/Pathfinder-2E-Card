@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** question is not “which PF2e golden is next?” It is: **extract a shared kernel and make the shell multi-system without breaking PF2e, then start the PF1e schema/engine.** Reuse boundaries: [`shared-kernel-design.md`](shared-kernel-design.md).
+The next **code** increment is **Phase 1e** (PF1e schema + Fighter 5). Phase M (kernel + `system` + PF2e module) and a thin sidebar host are in the repo. Reuse boundaries: [`shared-kernel-design.md`](shared-kernel-design.md).
 
 ---
 
@@ -37,11 +37,12 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 
 | Area | What exists |
 | --- | --- |
-| Product docs | ADR 0003 + umbrella/PF1e designs (this change). Code still PF2e-titled |
-| Schema | PF2e `character.schema.json` only |
-| Engine | PF2e `app/src/engine` — proficiency ranks, typed stacking, one AC, MAP strikes, bulk, spell attack/DC |
-| UI | PF2e spreadsheet tabs; hardcoded English |
-| Goldens | `fighter-5.json`, `wizard-5.json` (PF2e) |
+| Product docs | ADR 0003–0005 + umbrella/PF1e/kernel/sidebar + Attack Helper spec |
+| Layout | `app/src/shared`, `shell`, `systems/pf2e` |
+| Schema | PF2e `character.schema.json`; optional `system: "pf2e"` |
+| Engine | PF2e under `systems/pf2e/engine` |
+| UI | PF2e workspace + empty Tools sidebar |
+| Goldens | `fighter-5.json`, `wizard-5.json` (PF2e; load without `system`) |
 | Content | No packs |
 | PF1e | Docs only |
 
@@ -85,11 +86,11 @@ Wire the collapsible rail + registry + `SidebarToolContext`. Zero tools is a val
 - Spanish
 - A third game system
 - Full 1E bonus-type stacker or feat automation
-- Named sidebar tools (wait for a tools spec)
+- Named sidebar tools except documenting **Attack Helper** for later (do not implement it in M/Sb)
 
 ### Recommendation
 
-**M → 1e → 2e → 3e**, with T4′ as soon as new PF1e strings would otherwise land as literals. **Sb** after M when convenient (parallel with 1e+). Content pack 3c after (or with) 3e, not before Fighter 5.
+**1e → 2e → 3e**, with T4′ before a large PF1e UI wave. Content pack 3c after (or with) 3e. **Attack Helper** after that (sidebar tools).
 
 ---
 
@@ -166,19 +167,20 @@ Steps 2–4 are the **next development increments** after this documentation cha
 
 ### Phase M
 
-- [ ] `system` on saved PF2e documents
-- [ ] Load without `system` still works (current goldens)
-- [ ] PF2e unit + golden tests pass
-- [ ] `shared/` + `shell/` + `systems/pf2e/` (or equivalent); systems do not import each other
-- [ ] PF2e registered as a `SystemModule`; no edition `if` in math
-- [ ] Kernel includes at least: `newId`, strip-derived, Ajv error format, file Save/Load wiring, `DerivedCell`
-- [ ] Shell layout can host a sidebar rail (empty/collapsed OK)
+- [x] `system` on saved PF2e documents
+- [x] Load without `system` still works (current goldens)
+- [x] PF2e unit + golden tests pass
+- [x] `shared/` + `shell/` + `systems/pf2e/` (or equivalent); systems do not import each other
+- [x] PF2e registered as a `SystemModule`; no edition `if` in math
+- [x] Kernel includes at least: `newId`, strip-derived, Ajv error format, file Save/Load wiring, `DerivedCell`
+- [x] Shell layout can host a sidebar rail (empty/collapsed OK)
 
 ### Phase Sb
 
-- [ ] Collapsible rail on a loaded sheet
-- [ ] Registry + empty state; tools would receive `character`, `derived`, `update`
-- [ ] No fake placeholder tools
+- [x] Collapsible rail on a loaded sheet
+- [x] Registry + empty state; tools would receive `character`, `derived`, `update`
+- [x] No fake placeholder tools
+- [ ] Attack Helper implementation (later; spec exists)
 
 ### Phase 1e
 
@@ -219,3 +221,4 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | 2026-08-17 | First multi-system / PF1e-first increment plan |
 | 2026-08-17 | Phase M includes shared kernel (ADR 0004) |
 | 2026-08-17 | Sidebar host (ADR 0005); tools unspecified |
+| 2026-08-17 | Phase M/Sb implemented; Attack Helper reserved as later tool |

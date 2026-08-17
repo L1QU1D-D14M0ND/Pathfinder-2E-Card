@@ -1,8 +1,8 @@
 # Pathfinder-2E-Card
 
-**TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** remains a supported system and the current code is still the PF2e slice (Build + Play).
+**TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
-**Current phase:** 0b of the [roadmap](docs/ROADMAP.md) (product lock). Next **code** work is the multi-system refactor, then a PF1e schema/engine. See [ADR 0003](docs/adr/0003-multi-system-product-direction.md) and the [umbrella design](docs/ttrpg-character-sheet-design.md).
+**Current phase:** M + sidebar host done. Next code work is PF1e schema + Fighter 5. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), and [Attack Helper](docs/sidebar-tools-attack-helper.md) (later tool, no dice roller).
 
 The GitHub repository name is unchanged.
 
@@ -15,20 +15,22 @@ npm run dev
 ```
 
 - React + TypeScript + Vite
-- Save/Load `.json` character sheets (JSON Schema validation on Load and Save)
-- **Today:** PF2e core calc engine for HP, AC, skills, strikes, spell attack/DC, bulk (Fighter 5 and Wizard 5 golden fixtures)
-- Spreadsheet-style UI with derived cells and editors for identity, feats, spells, combat, inventory, and play
-- **Planned:** `system` discriminator; PF1e engine; **sidebar host** on a loaded sheet (tools specified later)
+- Save/Load `.json` (Ajv). Missing `system` loads as PF2e; Save writes `"system": "pf2e"`
+- Layout: `app/src/shared` kernel, `app/src/shell` (chrome + empty Tools sidebar), `app/src/systems/pf2e`
+- PF2e core calc engine (Fighter 5 and Wizard 5 goldens)
+- Spreadsheet editors for identity, feats, spells, combat, inventory, and play
+- **Planned:** PF1e engine; **Attack Helper** sidebar tool (weapon + feats preview; physical dice only)
 
 ## Docs
 
 - [Roadmap](docs/ROADMAP.md)
 - [ADR 0003 — Multi-system product direction](docs/adr/0003-multi-system-product-direction.md) (current lock)
 - [ADR 0004 — Shared kernel vs per-system modules](docs/adr/0004-shared-kernel.md)
-- [ADR 0005 — Loaded-sheet sidebar host](docs/adr/0005-sidebar-host.md) (tools TBD)
+- [ADR 0005 — Loaded-sheet sidebar host](docs/adr/0005-sidebar-host.md)
 - [Umbrella design](docs/ttrpg-character-sheet-design.md)
 - [Shared kernel — reuse between editions](docs/shared-kernel-design.md)
 - [Sidebar host](docs/sidebar-host-design.md)
+- [Attack Helper (later tool)](docs/sidebar-tools-attack-helper.md)
 - [PF1e system design](docs/pf1e-character-sheet-design.md)
 - [PF2e system design](docs/pf2e-dynamic-character-sheet-design.md) (still valid for PF2e documents)
 - [Next increment — multi-system / PF1e](docs/next-increment-multi-system.md)
@@ -41,7 +43,7 @@ npm run dev
 
 ## Schema
 
-- [`schemas/character.schema.json`](schemas/character.schema.json) — PF2e document (`schemaVersion` 1)
+- [`schemas/character.schema.json`](schemas/character.schema.json) — PF2e document (`schemaVersion` 1; optional `system: "pf2e"`)
 - [`fixtures/characters/minimal.example.json`](fixtures/characters/minimal.example.json)
 - [`fixtures/characters/new-sheet.example.json`](fixtures/characters/new-sheet.example.json)
 - [`fixtures/characters/golden/fighter-5.json`](fixtures/characters/golden/fighter-5.json) — PF2e Fighter 5

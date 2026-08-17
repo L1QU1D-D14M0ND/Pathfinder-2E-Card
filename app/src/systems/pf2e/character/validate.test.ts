@@ -15,15 +15,33 @@ import {
   parseCharacterJson,
   serializeCharacter,
 } from './saveLoad'
-import { readRepoFile } from '../test/readRepoFile'
+import { readRepoFile } from '../../../test/readRepoFile'
 import { validateCharacterDocument } from './validate'
 
 describe('character JSON Schema validation', () => {
-  it('accepts the minimal fixture', () => {
+  it('treats files without system as pf2e and writes system on save', () => {
     const text = readRepoFile('fixtures/characters/minimal.example.json')
     const doc = parseCharacterJson(text)
     expect(doc.schemaVersion).toBe(1)
+    expect(doc.system).toBe('pf2e')
     expect(doc.skills).toEqual([])
+    const saved = JSON.parse(serializeCharacter(doc)) as { system: string }
+    expect(saved.system).toBe('pf2e')
+  })
+
+  it('writes system on a new sheet', () => {
+    const empty = createEmptyCharacter()
+    expect(empty.system).toBe('pf2e')
+    expect(serializeCharacter(empty)).toContain('"system": "pf2e"')
+  })
+
+  it('rejects a non-pf2e system id', () => {
+    const text = readRepoFile('fixtures/characters/minimal.example.json')
+    const data = JSON.parse(text) as Record<string, unknown>
+    data.system = 'pf1e'
+    expect(() => parseCharacterJson(JSON.stringify(data))).toThrow(
+      /Invalid character sheet/,
+    )
   })
 
   it('accepts the new-sheet fixture', () => {

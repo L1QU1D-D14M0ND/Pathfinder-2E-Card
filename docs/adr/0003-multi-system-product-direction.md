@@ -36,7 +36,7 @@ Other systems (Starfinder, D&D 5e, etc.) are **architecture-only** for 0.9/1.0: 
 | Language | TypeScript |
 | UI framework | React |
 | Save files | `.json` |
-| Working app title | **TTRPG Character Sheet** (PWA chrome still says “Pathfinder 2E Character sheet” until the refactor increment) |
+| Working app title | **TTRPG Character Sheet** |
 | Interop | No Pathbuilder / Foundry / Hero Lab integration for now |
 | License | MIT (app). Content packs follow the source license; curated stats/summaries only; no GM-only text dumps |
 | PF1e golden tests | Fighter 5; Wizard 5; one multiclass (see design § goldens) |

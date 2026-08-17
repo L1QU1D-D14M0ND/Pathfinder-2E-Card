@@ -2,7 +2,7 @@
 
 **Status:** Engineering lock (ADR 0004) — 2026-08-17  
 **Parent:** [ADR 0003](adr/0003-multi-system-product-direction.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md)  
-**Code:** not extracted yet. Today everything lives under `app/src/character`, `engine`, `sheet`. Phase M creates this layout with PF2e as the first consumer.
+**Code:** Phase M extracted `app/src/shared`, `app/src/shell`, `app/src/systems/pf2e` (2026-08-17).
 
 This document is the inventory of **what to share**, **what to fork**, and **how to work** so two editions stay compact without pretending they are one ruleset.
 

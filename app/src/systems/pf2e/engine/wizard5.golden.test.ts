@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { parseCharacterJson, serializeCharacter } from '../character/saveLoad'
 import { compute } from './compute'
-import { readRepoFile } from '../test/readRepoFile'
+import { readRepoFile } from '../../../test/readRepoFile'
 
 describe('golden Wizard 5', () => {
   const character = parseCharacterJson(

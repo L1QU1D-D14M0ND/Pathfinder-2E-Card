@@ -1,3 +1,4 @@
+import { newId } from '../../../shared/ids'
 import type {
   ActionEntry,
   ConditionEntry,
@@ -10,12 +11,7 @@ import type {
   StrikeEntry,
 } from './types'
 
-export function newId(): string {
-  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
-    return crypto.randomUUID()
-  }
-  return `id-${Date.now()}-${Math.random().toString(16).slice(2)}`
-}
+export { newId }
 
 export function blankRef(): ContentRef {
   return { id: null, name: '', rulesetSource: 'custom' }

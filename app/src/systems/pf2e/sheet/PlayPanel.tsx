@@ -4,7 +4,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { DerivedView } from '../engine'
-import { DerivedCell } from './DerivedCell'
+import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { SheetUpdate } from './update'
 
 const RESETS = ['daily', 'encounter', 'refocus', 'other'] as const

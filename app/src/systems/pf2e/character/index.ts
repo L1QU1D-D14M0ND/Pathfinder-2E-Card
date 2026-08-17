@@ -16,6 +16,7 @@ export {
   stripDerivedForSave,
   suggestedSaveFilename,
 } from './saveLoad'
+export { validateCharacterDocument } from './validate'
 export {
   blankRef,
   createEmptyAction,

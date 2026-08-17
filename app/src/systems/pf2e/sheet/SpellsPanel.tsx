@@ -10,7 +10,7 @@ import type {
   SpellcastingEntry,
 } from '../character/types'
 import { signed, type DerivedView } from '../engine'
-import { DerivedCell } from './DerivedCell'
+import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { SheetUpdate } from './update'
 
 const ATTRS: AttributeKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']

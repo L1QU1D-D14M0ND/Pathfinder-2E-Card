@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-17  
-**Implementation:** Documentation-only so far. Code is still the PF2e-only scaffold (Fighter 5 / Wizard 5).  
+**Implementation:** Phase M + thin sidebar host landed. PF2e still the only computing system (Fighter 5 / Wizard 5). Next: PF1e schema (1e).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -79,7 +79,7 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 **Later (design must not block)**
 
 - Remaining PF2e goldens, companion editor, Remaster + legacy content packs (the old PF2e 0.9 leftovers).
-- **Sidebar tools** (list unspecified). The old Spells / Afflictions / Actions encyclopedia is a candidate tool, not the host ([ADR 0005](adr/0005-sidebar-host.md)).
+- **Sidebar tools** (list unspecified except **Attack Helper**). The old Spells / Afflictions / Actions encyclopedia is a candidate tool, not the host ([ADR 0005](adr/0005-sidebar-host.md)). **Attack Helper:** [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md).
 - Typed `effects[]` automation.
 - Optional card-oriented play surfaces.
 - Additional systems behind the same `system` discriminator.

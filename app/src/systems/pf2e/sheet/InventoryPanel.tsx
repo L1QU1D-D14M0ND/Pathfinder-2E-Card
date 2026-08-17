@@ -6,7 +6,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { DerivedView } from '../engine'
-import { DerivedCell } from './DerivedCell'
+import { DerivedCell } from '../../../shared/ui/DerivedCell'
 
 const LOCATIONS = ['worn', 'readied', 'stowed', 'other'] as const
 const ARMOR_CATS = ['unarmored', 'light', 'medium', 'heavy'] as const

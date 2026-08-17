@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { parseCharacterJson } from '../character/saveLoad'
 import { compute } from './compute'
 import { signed } from './types'
-import { readRepoFile } from '../test/readRepoFile'
+import { readRepoFile } from '../../../test/readRepoFile'
 
 describe('golden Fighter 5', () => {
   const character = parseCharacterJson(

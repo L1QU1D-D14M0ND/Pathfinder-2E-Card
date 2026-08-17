@@ -1,3 +1,4 @@
+import { newId } from '../../../shared/ids'
 import { createStandardSkillEntries } from './standardSkills'
 import {
   APP_VERSION,
@@ -30,18 +31,12 @@ function nowIso(): string {
   return new Date().toISOString()
 }
 
-function newId(): string {
-  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
-    return crypto.randomUUID()
-  }
-  return `char-${Date.now()}`
-}
-
 /** Factory for a new editable sheet with auto-seeded standard skills. */
 export function createEmptyCharacter(): CharacterDocument {
   const timestamp = nowIso()
   return {
     schemaVersion: 1,
+    system: 'pf2e',
     meta: {
       createdAt: timestamp,
       updatedAt: timestamp,

@@ -1,6 +1,12 @@
 # TTRPG Character Sheet (app)
 
-React + TypeScript + Vite PWA. Working product title: **TTRPG Character Sheet**. Current chrome and package name are still Pathfinder 2E until Phase M.
+React + TypeScript + Vite PWA. Working product title: **TTRPG Character Sheet**.
+
+Layout:
+
+- `src/shared` — ids, signed, Ajv helper, file IO, `DerivedCell`
+- `src/shell` — chrome, Save/Load, empty Tools sidebar
+- `src/systems/pf2e` — PF2e schema types, `compute()`, spreadsheet workspace
 
 ## Scripts
 
@@ -11,13 +17,15 @@ npm test
 npm run build
 ```
 
-## Features in this scaffold (PF2e)
+## Features
 
 - Spreadsheet-style UI with identity, feats, spells, combat, inventory, and play editors
 - New / Load / Save sheet (`.json`), validated against `character.schema.json`
+- `system: "pf2e"` written on Save; files without `system` still load as PF2e
 - Auto-seeded standard PF2e skills
 - Core calc engine (`compute`) for attributes, proficiency, HP, AC, skills, strikes, spell attack/DC, bulk, investiture
 - Save export strips `derived`
+- Collapsible Tools sidebar (empty registry; Attack Helper is a later tool)
 - PWA manifest + service worker configured via `vite-plugin-pwa` (not separately runtime-tested)
 - UI strings are hardcoded English; message catalogs are not started
 

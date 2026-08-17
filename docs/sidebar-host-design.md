@@ -2,9 +2,9 @@
 
 **Status:** Product + shell lock (ADR 0005) — 2026-08-17  
 **Parent:** [ADR 0005](adr/0005-sidebar-host.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md)  
-**Code:** not started. Current `App.tsx` is full-width tabs only.
+**Code:** thin host in `app/src/shell/sidebar` (collapsed empty rail). Named tools not implemented.
 
-This document locks the **host**. It does **not** name the tools that will live in it.
+This document locks the **host**. Named later tools are listed in §5; they are **not** implemented until a tools increment.
 
 ---
 
@@ -86,9 +86,15 @@ interface SidebarTool<Doc, Derived> {
 
 Adding a tool later = implement `SidebarTool` + register. It must not require changing Save/Load or the envelope.
 
-**Unspecified:** the actual `id` list. Do not stub fake tools in the registry. Placeholder host with zero tools is correct until a tools increment.
+### Named later tools
 
-The old “reference sidebar” (Spells / Afflictions / Actions) is **one possible future tool group**, catalog-fed, still license-gated. It is not the host.
+Do not stub these in the registry until their increment. Reserved ids:
+
+| Id | Name | Spec |
+| --- | --- | --- |
+| `shell.attack-helper` | **Attack Helper** | [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md) — pick a weapon + applicable feats; show mechanical triggers/inflicts and to-hit/damage **expressions**. **No dice roller** (physical dice at the table). |
+
+The old “reference sidebar” (Spells / Afflictions / Actions) remains a possible future tool group, catalog-fed, still license-gated. It is not the host.
 
 ---
 
@@ -96,7 +102,7 @@ The old “reference sidebar” (Spells / Afflictions / Actions) is **one possib
 
 - Not a second full sheet (do not duplicate every tab in the rail).
 - Not GM encounter tools, cloud, or VTT (ADR 0003 non-goals unless a later ADR pulls one in).
-- Not a dice roller unless explicitly unlocked later — listing “tools” does not reopen that non-goal.
+- Not a dice roller. **Attack Helper** (and any other tool) must not add one; the player rolls physical dice.
 - Not a multi-character library (still one loaded sheet).
 - Not a requirement that 0.9 ship useful widgets. 0.9 ships the **ability to host** them (or a collapsed empty rail).
 
@@ -107,9 +113,9 @@ The old “reference sidebar” (Spells / Afflictions / Actions) is **one possib
 | Phase | Sidebar work |
 | --- | --- |
 | Docs (now) | This file + ADR 0005 |
-| **M** | Shell layout: do not lock CSS to `max-width` full-bleed without a rail slot. Optional: empty collapsed `<aside>` with no tools |
-| **Sb** (after M, not blocking 1e) | Host: collapse, registry, empty state, `SidebarToolContext` wired to the active document |
-| **Tools** (later, when specified) | First real tools; encyclopedia is a candidate |
+| **M** | Done — empty collapsed `<aside>` in the shell |
+| **Sb** | Done (thin host: collapse, registry, empty state, context wired) |
+| **Tools** (later) | First real tools; **Attack Helper** is specified; encyclopedia is a candidate |
 | 0.9 | PF1e bar does **not** wait on tools. Empty/collapsed host is fine |
 | 1.0 | Same; Spanish includes `shell.sidebar.*` if the host shipped |
 
@@ -139,3 +145,4 @@ Import rule unchanged: PF1e tools must not import PF2e modules.
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Initial host lock; tools left unspecified (ADR 0005) |
+| 2026-08-17 | Reserve **Attack Helper** as a later named tool (no in-app dice) |

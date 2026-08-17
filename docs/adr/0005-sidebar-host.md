@@ -16,13 +16,14 @@ When a character document is in memory (New or Load), the shell shows a **sideba
 - **One document.** Tools read `character` + `derived` and write only through the same `update(mutator)` path as sheet tabs. No parallel copy, no bypass of Ajv on Save, no private undo stack that diverges from the sheet.
 - **Registry, not a hard-coded encyclopedia.** The host is a slot. Tools register (shared and/or per `SystemModule`). Unspecified tools must be addable without redesigning chrome or forking persistence.
 - **Sheet stays primary.** Spreadsheet tabs remain the full editor. The sidebar is companion chrome, not a second character sheet. Mobile: collapsed by default; sheet stays usable full-width.
-- **Host vs tools.** The **host** (rail, collapse, registry, empty state, read/write context) is a locked product feature. **Tool implementations are not specified** in this ADR and are **not** on the PF1e 0.9 critical path. A later increment lists tools; pulling a tool that contradicts a non-goal (dice, VTT, cloud) still needs its own lock.
+- **Tool implementations are not specified** except **Attack Helper**, which is named for a later increment ([`../sidebar-tools-attack-helper.md`](../sidebar-tools-attack-helper.md)): weapon + feat selection, mechanical and mathematical **preview**, **no dice roller**. Attack Helper is **not** on the PF1e 0.9 critical path. Pulling a tool that contradicts a non-goal (in-app dice, VTT, cloud) still needs its own lock.
 - **UI chrome only for tool layout.** Which tool is open / whether the rail is collapsed is **session UI state**, not a save-file field, unless a specific tool must persist something — then it writes through `update` into the character (`extensions` or a later schema field).
 
 ## Consequences
 
 - Phase M should leave room in the shell layout for the rail (even if collapsed/empty) so Phase Sb is not a full-width retrofit.
 - Phase **Sb** (sidebar host) follows M; it does **not** block Phase 1e. 0.9 may ship with an empty or collapsed host.
+- **Attack Helper** is the first named later tool: weapon + feat preview; physical dice only.
 - ADR 0001’s Spells / Afflictions / Actions browser is a candidate **tool**, sequenced with other tools when specified.
 - Sidebar strings go through i18n (`shell.sidebar.*`, tool keys under `shell.*` or `pf1e.*` / `pf2e.*`).
 
@@ -30,15 +31,16 @@ When a character document is in memory (New or Load), the shell shows a **sideba
 
 | Pick | Default | Override if… |
 | --- | --- | --- |
-| 0.9 tools populated | **No** — host may be empty/collapsed | A named tool is pulled into 0.9 |
+| 0.9 tools populated | **No** — host may be empty/collapsed | Attack Helper or another named tool is pulled into 0.9 |
 | Host on New (empty sheet) | **Yes** — any in-memory document |
 | Collapse default (desktop) | Expanded if any tool is registered; else collapsed |
 | Collapse default (narrow) | Collapsed |
-| Dice / VTT in the sidebar | Still out until an ADR says otherwise |
+| Dice / VTT in the sidebar | **Out.** Attack Helper shows expressions only; player rolls physical dice |
 
 ## References
 
 - [`../sidebar-host-design.md`](../sidebar-host-design.md)
+- [`../sidebar-tools-attack-helper.md`](../sidebar-tools-attack-helper.md)
 - [`../ttrpg-character-sheet-design.md`](../ttrpg-character-sheet-design.md)
 - [`../shared-kernel-design.md`](../shared-kernel-design.md)
 - [`../ROADMAP.md`](../ROADMAP.md)

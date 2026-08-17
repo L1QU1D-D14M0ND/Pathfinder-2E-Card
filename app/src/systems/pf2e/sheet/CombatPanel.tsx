@@ -1,7 +1,7 @@
 import { createEmptyStrike, type CharacterDocument } from '../character'
 import type { AttributeKey, ProficiencyRank } from '../character/types'
 import { signed, type DerivedView } from '../engine'
-import { DerivedCell } from './DerivedCell'
+import { DerivedCell } from '../../../shared/ui/DerivedCell'
 
 const ATTRS: AttributeKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 const RANKS: ProficiencyRank[] = [

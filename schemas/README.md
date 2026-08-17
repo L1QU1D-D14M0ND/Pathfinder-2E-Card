@@ -6,7 +6,7 @@ JSON Schema definitions for TTRPG Character Sheet save formats (repo: Pathfinder
 | --- | --- |
 | [`character.schema.json`](character.schema.json) | One **PF2e** PC character sheet document (`schemaVersion` 1). [ADR 0002](../docs/adr/0002-character-schema.md). |
 
-A PF1e schema is planned under a later ADR ([target notes](../docs/pf1e-schema-design-notes.md)). Do not add First Edition fields to `character.schema.json`. After Phase M, PF2e documents gain a `system` field (`pf2e`); current files without it still load as PF2e.
+A PF1e schema is planned under a later ADR ([target notes](../docs/pf1e-schema-design-notes.md)). Do not add First Edition fields to `character.schema.json`. Optional `system` is `"pf2e"`; files without it still load as PF2e. Save always writes `system`.
 
 Design notes: [`../docs/schema-design-notes.md`](../docs/schema-design-notes.md) (PF2e).
 

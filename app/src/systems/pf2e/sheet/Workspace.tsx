@@ -1,22 +1,16 @@
-import { useMemo, useRef, useState, type ChangeEvent } from 'react'
-import {
-  APP_DISPLAY_NAME,
-  CharacterSaveError,
-  createEmptyCharacter,
-  downloadCharacterJson,
-  readCharacterFile,
-  type CharacterDocument,
-} from './character'
-import type { AttributeKey, ProficiencyRank } from './character/types'
-import { compute, signed } from './engine'
-import { CombatPanel } from './sheet/CombatPanel'
-import { DerivedCell } from './sheet/DerivedCell'
-import { FeatsPanel } from './sheet/FeatsPanel'
-import { IdentityPanel } from './sheet/IdentityPanel'
-import { InventoryPanel } from './sheet/InventoryPanel'
-import { PlayPanel } from './sheet/PlayPanel'
-import { SpellsPanel } from './sheet/SpellsPanel'
-import './App.css'
+import { useState } from 'react'
+import type { CharacterDocument } from '../character'
+import type { AttributeKey, ProficiencyRank } from '../character/types'
+import { signed } from '../../../shared/format'
+import type { DerivedView } from '../engine'
+import { DerivedCell } from '../../../shared/ui/DerivedCell'
+import { CombatPanel } from './CombatPanel'
+import { FeatsPanel } from './FeatsPanel'
+import { IdentityPanel } from './IdentityPanel'
+import { InventoryPanel } from './InventoryPanel'
+import { PlayPanel } from './PlayPanel'
+import { SpellsPanel } from './SpellsPanel'
+import type { SheetUpdate } from './update'
 
 type TabId =
   | 'identity'
@@ -50,67 +44,18 @@ const RANKS: ProficiencyRank[] = [
   'legendary',
 ]
 
-function touch(character: CharacterDocument): CharacterDocument {
-  return {
-    ...character,
-    meta: { ...character.meta, updatedAt: new Date().toISOString() },
-  }
-}
-
-export default function App() {
-  const [character, setCharacter] = useState<CharacterDocument>(() =>
-    createEmptyCharacter(),
-  )
+export function Pf2eWorkspace({
+  character,
+  derived,
+  update,
+  setStatus,
+}: {
+  character: CharacterDocument
+  derived: DerivedView
+  update: SheetUpdate
+  setStatus: (message: string) => void
+}) {
   const [tab, setTab] = useState<TabId>('identity')
-  const [status, setStatus] = useState('New sheet ready.')
-  const fileRef = useRef<HTMLInputElement>(null)
-  const derived = useMemo(() => compute(character), [character])
-
-  function update(mutator: (c: CharacterDocument) => CharacterDocument) {
-    setCharacter((prev) => touch(mutator(prev)))
-  }
-
-  async function onLoadFile(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0]
-    event.target.value = ''
-    if (!file) return
-    try {
-      const loaded = await readCharacterFile(file)
-      setCharacter(loaded)
-      setTab('identity')
-      setStatus(`Loaded ${file.name}`)
-    } catch (err) {
-      setStatus(err instanceof Error ? err.message : 'Load failed.')
-    }
-  }
-
-  function onSave() {
-    try {
-      downloadCharacterJson(character)
-      setStatus('Save sheet downloaded (.json).')
-    } catch (err) {
-      setStatus(
-        err instanceof CharacterSaveError
-          ? err.message
-          : err instanceof Error
-            ? err.message
-            : 'Save failed.',
-      )
-    }
-  }
-
-  function onNew() {
-    if (
-      !window.confirm(
-        'Start a new blank sheet? Unsaved changes in memory will be lost.',
-      )
-    ) {
-      return
-    }
-    setCharacter(createEmptyCharacter())
-    setTab('identity')
-    setStatus('New sheet created.')
-  }
 
   function addLore() {
     const raw = window.prompt('Lore topic (e.g. Warfare)')
@@ -141,35 +86,7 @@ export default function App() {
   }
 
   return (
-    <div className="app">
-      <header className="topbar">
-        <div className="brand">
-          <h1>{APP_DISPLAY_NAME}</h1>
-          <p className="tagline">
-            Local Build + Play sheet · Remaster-first · schema v
-            {character.schemaVersion}
-          </p>
-        </div>
-        <div className="toolbar">
-          <button type="button" onClick={onNew}>
-            New sheet
-          </button>
-          <button type="button" onClick={() => fileRef.current?.click()}>
-            Load sheet
-          </button>
-          <button type="button" className="primary" onClick={onSave}>
-            Save sheet
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="application/json,.json"
-            hidden
-            onChange={onLoadFile}
-          />
-        </div>
-      </header>
-
+    <div className="pf2e-workspace">
       <section className="identity-strip sheet-grid">
         <label>
           Character
@@ -474,8 +391,6 @@ export default function App() {
           </table>
         )}
       </main>
-
-      <footer className="status">{status}</footer>
     </div>
   )
 }
