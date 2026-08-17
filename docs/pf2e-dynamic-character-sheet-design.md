@@ -29,7 +29,7 @@ This document is the **PF2e system spec**. The app is a multi-system sheet ([umb
 | 4 | Calc depth (1.0) | **Core calculations only**; architecture expandable to complex feat/spell/mechanic effects |
 | 5 | Content books | **Player Core + Player Core 2** only (player-facing). **No GM-exclusive** content |
 | 5a | Content acquisition | **Hybrid** — curated hand-maintained pack first; optional attributed open/ORC import pipeline later |
-| 5b | Spells UI (later) | Sidebar (post-placeholder) with tabs for **spells**, **afflictions**, and **actions** (e.g. combat maneuvers) |
+| 5b | Sidebar | **Host** on loaded sheet (app-level, ADR 0005). Spells / Afflictions / Actions encyclopedia is a **future tool**, not the host |
 | 6 | Persistence | **One sheet at a time** + **Save sheet** / **Load sheet** (local files). No multi-character library, no cloud |
 | 7 | Character types | **All** player character types in the data model |
 | 8 | Modes | **Build and Play** |
@@ -73,7 +73,7 @@ The **app** 0.9/1.0 bars are defined in the [umbrella design](ttrpg-character-sh
 
 **Later (design must not block)**
 
-- Reference sidebar: Spells / Afflictions / Actions (combat maneuvers, etc.).
+- **Sidebar tools** when specified. Candidate: Spells / Afflictions / Actions (combat maneuvers, etc.).
 - Typed `effects[]` automation for feats/spells/items.
 - Optional card-oriented play surfaces.
 
@@ -145,7 +145,7 @@ Save **inputs** and **session state**; **derived** fields may be cached but must
 - Cantrips, repertoire / spellbook / prepared lists.
 - Innate spells, rituals; simple charge trackers.
 
-**Later UI:** sidebar browser for spell / affliction / action reference (not required for sheet save format).
+**Later UI:** sidebar **tools** may include a spell / affliction / action reference (not required for sheet save format). The **host** is app chrome ([`sidebar-host-design.md`](sidebar-host-design.md)).
 
 ### 4.8 Inventory & wealth
 
@@ -230,7 +230,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 **Exclude:** GM-exclusive material (e.g. GM-only guidance, NPC building exclusives, hazard design content that players do not need on a sheet).
 
-**Later reference sidebar (not 0.9 blocker):** browsable Spells, Afflictions, Actions (combat maneuvers, etc.) fed from the same catalog where licensing allows.
+**Later reference tool (not 0.9 blocker):** browsable Spells, Afflictions, Actions (combat maneuvers, etc.) fed from the same catalog where licensing allows — registered on the **sidebar host**, not a separate window.
 
 **Acquisition:** **Hybrid** — ship a curated hand-maintained PC1/PC2 player pack for 0.9; keep schema compatible with a later attributed open/ORC dataset import after license review.
 
@@ -288,10 +288,11 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 - Tabs: `Identity`, `Attributes`, `Skills`, `Combat`, `Feats`, `Spells`, `Inventory`, `Play`, `Notes` (names may adjust).
 - Plain inputs; derived cells read-only and visually distinct.
 - Prominent **Save sheet** / **Load sheet** controls.
-- Mobile: wide-table horizontal scroll; Play tab thumb-friendly.
+- **Sidebar host** (app-level): collapsible rail; tools read/write the same document. Tool list TBD; empty host is valid.
+- Mobile: wide-table horizontal scroll; Play tab thumb-friendly; sidebar collapsed by default.
 - No cards, no decorative motion.
 
-**Later:** side panel/drawer for reference tabs (Spells / Afflictions / Actions) without abandoning the sheet grid.
+**Later tools:** reference tabs (Spells / Afflictions / Actions) plug into the host without abandoning the sheet grid.
 
 **i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; add `es` for 1.0. **Not started** — scaffold UI strings are hardcoded English in `app/src/App.tsx`.
 
@@ -343,7 +344,7 @@ Live status checkboxes: [`ROADMAP.md`](ROADMAP.md). App-level phases (M, 1e, 2e,
 
 ### Phase 5 — Post-1.0
 
-- Reference sidebar (spells / afflictions / actions).
+- Reference encyclopedia as a **sidebar tool** (spells / afflictions / actions), once tools are specified.
 - Complex `effects[]` automation.
 
 ---
@@ -412,3 +413,4 @@ This section is the **PF2e system target**, not the app 0.9 bar (see [umbrella �
 | 2026-08-14 | Record S1/S4 landing; point remaining work at `next-increment-design.md` |
 | 2026-08-15 | Point §11 at operational [`ROADMAP.md`](ROADMAP.md) after T1/T3 merge |
 | 2026-08-17 | Relabel as PF2e **system** spec under ADR 0003; leftover goldens/content after PF1e 0.9 |
+| 2026-08-17 | Sidebar is an app host (ADR 0005); encyclopedia is a future tool |

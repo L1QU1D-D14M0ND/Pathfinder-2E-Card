@@ -26,6 +26,7 @@ Do not introduce a shared abstraction for a pattern that has only one caller. Ph
 ├─────────────────────────────────────────────┤
 │  Shell — tabs, New/Load/Save, system picker │
 │          SystemModule registry              │
+│          Sidebar host (tools TBD)           │
 ├─────────────────────────────────────────────┤
 │  Shared kernel — envelope, refs, effects,   │
 │    overrides apply, ids, i18n, row UI,      │
@@ -46,7 +47,7 @@ Do not introduce a shared abstraction for a pattern that has only one caller. Ph
 
 ```text
 app/src/
-  shell/                 # App chrome, tab bar, New/Load/Save, registry
+  shell/                 # App chrome, tab bar, New/Load/Save, registry, sidebar host
   shared/
     envelope.ts          # SystemId, schemaVersion, Meta (locale, timestamps)
     contentRef.ts        # id + name + optional publication
@@ -95,6 +96,7 @@ interface SystemModule<Doc, Derived> {
   suggestedFilename(doc: Doc): string
   tabs: Array<{ id: string; labelKey: string }>
   // Panels rendered by tab id; each panel is system-owned
+  sidebarTools?: SidebarTool<Doc, Derived>[]  // optional; host is shell (ADR 0005)
 }
 ```
 
@@ -167,11 +169,12 @@ A generic `decreasingSteps(start, step)` (PF2e MAP and PF1e iteratives both walk
 | `DerivedCell` | Read-only + override styling | — |
 | Tab chrome / identity strip layout | One PWA | Strip *fields* differ (hero points vs class-level summary) |
 | New / Load / Save / status line | Persistence UX | — |
+| Sidebar **host** (rail, collapse, registry) | One loaded-sheet companion ([ADR 0005](adr/0005-sidebar-host.md)) | **Tools** may be per system; host is shell |
 | Notes panel | Same `Notes` shape | — |
 | Generic add/remove table | Feats, features, conditions, daily resources, inventory lines | Column set and row type are props or system-owned. **Do not build `SheetTable` in Phase M** unless two panels in that PR use it |
 | Number input conventions | Integers, min 0 where needed | Validation messages per field |
 
-**Fork panels (system-owned):** Identity (classes vs ancestry/class), Abilities vs Attributes, Skills (ranks vs proficiency), Combat, Spells, Play (dying vs negative HP), Inventory (bulk vs pounds).
+**Fork panels (system-owned):** Identity (classes vs ancestry/class), Abilities vs Attributes, Skills (ranks vs proficiency), Combat, Spells, Play (dying vs negative HP), Inventory (bulk vs pounds). Edition-specific **sidebar tools** register on `SystemModule`; they must not duplicate a second write path.
 
 **Parameterized later:** Feats/features tables are the best `SheetTable` candidates — both editions are “name, type, level, summary, remove”. Categories enums stay props.
 
@@ -262,6 +265,14 @@ Use this table when naming fields so we do not “standardize” the wrong thing
 3. Register in the shell. No edits inside another system’s engine.
 4. Fixtures named with the system (`pf1e-fighter-5.json` or a `pf1e/` folder).
 5. i18n keys under `<id>.*`.
+6. Optional `sidebarTools` on the module; do not skip the host `update` path.
+
+### Adding a sidebar tool (later)
+
+1. Implement `SidebarTool` (shared or under the system).
+2. Register; use `character` / `derived` / `update` only ([`sidebar-host-design.md`](sidebar-host-design.md)).
+3. Do not add a save-file field for “which tool is open.”
+4. A tool that needs new persisted data uses `extensions` or a schema ADR — not a parallel file.
 
 ### Adding a calculated field
 
@@ -300,6 +311,7 @@ Use this table when naming fields so we do not “standardize” the wrong thing
 - `DerivedCell` + spreadsheet CSS stay shared (already are).
 - Shell registry with **one** module registered (PF2e).
 - Working display name in chrome (ADR 0003) can land here.
+- Layout: do not paint the shell into a full-bleed grid with no room for a sidebar rail ([ADR 0005](adr/0005-sidebar-host.md)). Optional empty collapsed `<aside>`.
 
 **Out of scope for Phase M:**
 
@@ -307,6 +319,7 @@ Use this table when naming fields so we do not “standardize” the wrong thing
 - Shared spell-slot or feat TypeScript interfaces used by both (PF1e types do not exist yet).
 - Moving goldens on disk.
 - PF1e schema (Phase 1e).
+- Named sidebar **tools** (Phase Sb host, then a tools increment). Empty rail is OK.
 - Full override-kernel generic if the PF2e allow-list move is riskier than copying `applyOverrides` once — **prefer one generic apply with a callback** if it stays under ~80 lines and PF2e tests pass; otherwise move the current function with PF2e and genericize in 1e.
 
 **Phase 1e then:** PF1e module; start sharing `NotesPanel`, `Currency`, `DailyResource`, `abilityModifierFromScore`, `ContentRef` core, `Effect`, `OverrideValue` as soon as both types exist. If a shared type does not fit without optional edition fields, **stop and fork**.
@@ -337,3 +350,4 @@ Duplicating a 20-line skill total function is cheaper than a shared skill API wi
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Initial shared-kernel inventory and SystemModule contract (ADR 0004) |
+| 2026-08-17 | Sidebar host on the shell; `sidebarTools` on SystemModule (ADR 0005) |

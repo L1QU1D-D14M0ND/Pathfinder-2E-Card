@@ -1,6 +1,6 @@
 # Roadmap
 
-Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
+Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-17  
 **Current phase:** 0b done (docs lock). Code is still the PF2e-only scaffold (old phases 1–2). Next **code** phase is **M** (multi-system refactor), then **1e** (PF1e Fighter 5).  
@@ -10,11 +10,11 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 
 ## Target milestones
 
-**0.9** — installable English PWA; spreadsheet Build + Play; **PF1e** core calcs + editors for Fighter 5, Wizard 5, and one multiclass golden; **PF2e** existing slice (Fighter 5, Wizard 5, current editors) still loads and computes; Save/Load one sheet with a `system` discriminator.
+**0.9** — installable English PWA; spreadsheet Build + Play; **PF1e** core calcs + editors for Fighter 5, Wizard 5, and one multiclass golden; **PF2e** existing slice (Fighter 5, Wizard 5, current editors) still loads and computes; Save/Load one sheet with a `system` discriminator; **sidebar host** may be empty or collapsed (no named tools required).
 
 **1.0** — Spanish locale; same functional bar as 0.9, called stable.
 
-**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; reference sidebar; typed `effects[]`; optional card play surfaces; additional systems.
+**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools** (list TBD; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
 
 ---
 
@@ -37,6 +37,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 - [x] PF1e system spec + schema target notes
 - [x] Roadmap and next-increment retargeted
 - [x] Shared kernel vs per-system inventory ([ADR 0004](adr/0004-shared-kernel.md))
+- [x] Loaded-sheet sidebar host; tools TBD ([ADR 0005](adr/0005-sidebar-host.md))
 - [ ] Working display name in PWA chrome (deferred to Phase M)
 
 ---
@@ -50,6 +51,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 - [ ] Isolate PF2e types/engine/panels so a second system can sit beside them (no cross-imports)
 - [ ] New sheet still produces a valid PF2e document until PF1e factory exists
 - [ ] Existing PF2e goldens and unit tests stay green
+- [ ] Leave shell layout room for a sidebar rail (empty/collapsed aside OK)
 - [ ] Optional: extract English chrome (`en.json`) so PF1e UI does not add literals (T4′)
 
 ---
@@ -100,6 +102,19 @@ Until this pack exists, goldens use `custom` numeric inputs (same as current PF2
 
 ---
 
+## Phase Sb — Sidebar host
+
+**Status:** Not started (0%). After Phase M; **does not block** Phase 1e.
+
+- [ ] Collapsible rail on the loaded sheet (New or Load)
+- [ ] Tool registry + empty state; `SidebarToolContext` (`character`, `derived`, `update`)
+- [ ] Mobile collapsed by default
+- [ ] No named tools required (list specified later)
+
+See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).
+
+---
+
 ## Phase 1–2 leftover (PF2e) — deprioritized
 
 **Status:** Frozen relative to 0.9. Do not schedule ahead of Phase 1e–3e unless the product lock changes.
@@ -147,7 +162,7 @@ Not started (after PF1e 0.9):
 **Status:** Deferred by design (0%)
 
 - [ ] Remaining PF2e 0.9 leftovers if not already done
-- [ ] Reference sidebar: Spells / Afflictions / Actions
+- [ ] Sidebar **tools** (list TBD). Candidate: Spells / Afflictions / Actions reference
 - [ ] Typed `effects[]` automation
 - [ ] Optional card-oriented play surfaces
 - [ ] Additional systems behind `system`
@@ -199,14 +214,15 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Phase M** — shared kernel + `system` discriminator + isolate PF2e as a `SystemModule`; keep goldens green. Optionally extract `en.json`.
+1. **Phase M** — shared kernel + `system` discriminator + isolate PF2e as a `SystemModule`; keep goldens green. Leave sidebar rail room. Optionally extract `en.json`.
 2. **Phase 1e** — PF1e schema + martial `compute()` + Fighter 5 + New→PF1e.
 3. **Phase 2e** — Wizard 5 + spell editors.
 4. **Phase 3e** — Multiclass golden.
 5. **Phase 3c** — Minimal CRB pack.
-6. **Draft buffer + PWA proof** — app 0.9 platform.
-7. **Spanish** — 1.0.
-8. **Only then** leftover PF2e goldens / companion / Remaster packs.
+6. **Phase Sb** — sidebar host (empty registry OK); can run after M in parallel with 1e+.
+7. **Draft buffer + PWA proof** — app 0.9 platform.
+8. **Spanish** — 1.0.
+9. **Only then** leftover PF2e goldens / companion / Remaster packs, and **sidebar tools** when specified.
 
 ---
 
@@ -230,3 +246,4 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | 2026-08-15 | Refresh after merging S1/S4/T1/T3 into `main` |
 | 2026-08-17 | Retarget to multi-system / PF1e-first (ADR 0003). PF2e leftover 0.9 work deprioritized |
 | 2026-08-17 | Shared kernel inventory (ADR 0004); Phase M extracts it |
+| 2026-08-17 | Sidebar host (ADR 0005); tools TBD; Phase Sb |

@@ -13,9 +13,11 @@ Split the codebase into three layers:
 
 1. **Platform** — Vite, React, PWA, CI, spreadsheet CSS. One app.
 2. **Shared kernel** — envelope, persistence wiring, IDs, `ContentRef` core, `Effect` stub, override *application*, row-table UI primitives, i18n helper, golden-test helper. No edition math.
-3. **System modules** — PF2e and PF1e each own schema, document types, `compute()`, class/skill tables, and Combat / Spells / Play / Identity panels.
+3. **System modules** — PF2e and PF1e each own schema, document types, `compute()`, class/skill tables, Combat / Spells / Play / Identity panels, and **optional sidebar tools**.
 
-The shell talks to a system through a **`SystemModule` interface** (id, validate, createEmpty, compute, tabs/panels, save filename). The active sheet is a discriminated union. **Do not** share one TypeScript `CharacterDocument` or one JSON Schema `oneOf` body.
+The shell talks to a system through a **`SystemModule` interface** (id, validate, createEmpty, compute, tabs/panels, save filename, optional `sidebarTools`). The active sheet is a discriminated union. **Do not** share one TypeScript `CharacterDocument` or one JSON Schema `oneOf` body.
+
+The loaded-sheet **sidebar host** is shell chrome ([ADR 0005](0005-sidebar-host.md)): tools read/write the same document via `update`. Host extraction may start in Phase M as an empty rail; named tools are later.
 
 **Extract during Phase M** (with PF2e as the first consumer) so PF1e does not duplicate Save/Load. **Do not** extract a generic `SheetTable` or a 12-type bonus stacker in Phase M unless a second caller already exists in the same PR.
 
@@ -32,3 +34,4 @@ The shell talks to a system through a **`SystemModule` interface** (id, validate
 - [`../ttrpg-character-sheet-design.md`](../ttrpg-character-sheet-design.md)
 - [`../next-increment-multi-system.md`](../next-increment-multi-system.md)
 - [`0003-multi-system-product-direction.md`](0003-multi-system-product-direction.md)
+- [`0005-sidebar-host.md`](0005-sidebar-host.md)

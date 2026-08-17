@@ -147,7 +147,7 @@ Fork or parameterize vs PF2e:
 - **Play:** current HP (can be negative); conditions; daily resources. No dying track.
 - **Inventory:** lb, not bulk/invested.
 
-Shared: Notes, generic feat/feature row tables, Save/Load, derived-cell look.
+Shared: Notes, generic feat/feature row tables, Save/Load, derived-cell look, **sidebar host** (PF1e may register edition tools later; none required for 0.9).
 
 ---
 
@@ -175,7 +175,7 @@ Enough catalog to rebuild the three goldens is the 0.9 content bar. Full CRB spe
 
 ## 8. Relationship to PF2e
 
-Reuse is the **kernel**, not the rules. See [`shared-kernel-design.md`](shared-kernel-design.md): PWA, Ajv Load/Save, `ContentRef` core, `Effect` stub, coins, notes, `DerivedCell`, golden helper. Do not share proficiency math, bulk, hero points, `ProficiencyRank`, or a single character TypeScript type.
+Reuse is the **kernel**, not the rules. See [`shared-kernel-design.md`](shared-kernel-design.md): PWA, Ajv Load/Save, `ContentRef` core, `Effect` stub, coins, notes, `DerivedCell`, golden helper, **sidebar host**. Do not share proficiency math, bulk, hero points, `ProficiencyRank`, or a single character TypeScript type.
 
 PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same as PF1e multiclass. PF1e multiclass is in scope here.
 
@@ -186,3 +186,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Initial PF1e system spec under ADR 0003 |
+| 2026-08-17 | Share sidebar host with PF2e; PF1e tools optional later |

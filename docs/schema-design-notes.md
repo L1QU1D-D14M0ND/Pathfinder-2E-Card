@@ -109,7 +109,7 @@ Legacy rune names map in content fallback, not alternate schema enums.
 
 ## Deferred
 
-- Campaign flags, card UI metadata, sidebar encyclopedia caches  
+- Campaign flags, card UI metadata, sidebar **tool** caches (host is session UI; catalogs are content packs)  
 - Foundry/Pathbuilder mappings, dice roller, multi-character library  
 - Automatic partial-boost pairing, live strike sync from items  
 

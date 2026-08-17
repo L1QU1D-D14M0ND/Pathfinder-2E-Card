@@ -19,7 +19,7 @@ Other systems (Starfinder, D&D 5e, etc.) are **architecture-only** for 0.9/1.0: 
 | --- | --- |
 | Product | Multi-system player character sheet (not a VTT, not a GM suite) |
 | Platform | Installable PWA; offline after install; mobile-compatible |
-| UI | Excel-like tables/tabs; no fancy UI or animations |
+| UI | Excel-like tables/tabs **plus a loaded-sheet sidebar host** (tools TBD); no fancy UI or animations |
 | Systems in 0.9/1.0 | **PF1e** (priority to complete) + **PF2e** (existing slice preserved) |
 | System discriminator | Top-level `system` on every save file (`pf1e` \| `pf2e`); missing field on existing files means `pf2e` |
 | Engines | One calc engine **per system**; shared shell, persistence, and golden-test harness |
@@ -30,7 +30,7 @@ Other systems (Starfinder, D&D 5e, etc.) are **architecture-only** for 0.9/1.0: 
 | Persistence | One active sheet; Save sheet / Load sheet (local JSON); optional single draft buffer |
 | Character types | All player character types **in that system’s** data model (PF1e includes free multiclassing + prestige as class rows) |
 | Modes | Build and Play |
-| Dice | No dice roller |
+| Dice | No dice roller (a future sidebar tool does not reopen this unless a later ADR says so) |
 | Campaign options | Omit house-rule flags for 0.9/1.0 (PF2e Free Archetype; PF1e traits/variant rules). Extra feats/traits entered as custom rows |
 | i18n | English in 0.9; Spanish in 1.0 (strings externalized from the start — still not done in the scaffold) |
 | Language | TypeScript |
@@ -55,6 +55,7 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 - 0.9 is redefined: a playable **PF1e** sheet plus a non-regressed PF2e slice, not “finish every PF2e golden.”
 - Content Phase 3 splits per system; PF1e Core pack is sequenced before the PF2e Remaster pack.
 - Shared vs forked code is locked in [ADR 0004](0004-shared-kernel.md). Phase M extracts the kernel with PF2e as the first consumer.
+- Sidebar **host** (read/write rail when a sheet is loaded; tools unspecified) is locked in [ADR 0005](0005-sidebar-host.md). Empty/collapsed host is enough for 0.9; tool list comes later.
 - A future ADR will lock the PF1e JSON schema (analog of ADR 0002). Envelope rules in this ADR and [PF1e schema notes](../pf1e-schema-design-notes.md) are the standing defaults until then.
 
 ## Defaults for open questions
@@ -73,6 +74,7 @@ These are **locked for sequencing** unless the stakeholder overrides them. See a
 | PF1e BAB/saves/HD | Engine tables for the 11 CRB classes + user-picked progression on custom/prestige rows | Fully user-entered BAB (weaker golden) |
 | PF1e spells per day | User-entered max slots in 0.9 (content pack may seed later) | Same as PF2e slot policy |
 | Third nearby system (Starfinder 1e) | Out of scope; architecture must not make it impossible | Explicitly added later |
+| Sidebar tools in 0.9 | Host only (empty/collapsed OK); no named tools | A specific tool is pulled into 0.9 |
 
 ## References
 
@@ -85,3 +87,4 @@ These are **locked for sequencing** unless the stakeholder overrides them. See a
 - [`0001-product-direction.md`](0001-product-direction.md) — superseded
 - [`0002-character-schema.md`](0002-character-schema.md) — PF2e schema, still accepted
 - [`0004-shared-kernel.md`](0004-shared-kernel.md) — reuse boundaries
+- [`0005-sidebar-host.md`](0005-sidebar-host.md) — loaded-sheet sidebar; tools TBD

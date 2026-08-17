@@ -1,7 +1,7 @@
 # Next increment — multi-system refactor, then PF1e
 
 **Status:** Active sequencing document (2026-08-17)  
-**Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
+**Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
 This document **does** change product sequencing: PF1e is first; remaining PF2e 0.9 work waits. It does **not** reopen PF2e schema math (ADR 0002) or authorize deleting the PF2e slice.
@@ -27,6 +27,7 @@ The next **code** question is not “which PF2e golden is next?” It is: **extr
 | English 0.9 / Spanish 1.0; externalize strings | ADR 0003 (still not done) |
 | PF2e documents still validate against `schemas/character.schema.json` until a dedicated move is part of Phase M | ADR 0002 |
 | Core calcs only; unknown `effects[]` ignored | ADR 0003 |
+| Sidebar host when a sheet is loaded; tools TBD; empty host OK for 0.9 | ADR 0005 |
 
 Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject-on-invalid, `compute(doc) → DerivedView`, override allow-list, Fighter 5 + Wizard 5 goldens.
 
@@ -72,6 +73,10 @@ Fighter 2 / Wizard 3 (or equivalent); proves stacked BAB/saves. May be a thin en
 
 Extract current chrome to `en.json` **before** a large PF1e UI wave. Same rationale as the skipped T4. Recommended as a **thin prelude or parallel** to M/1e, not instead of them.
 
+### Option Sb — Sidebar host (after M, not instead of 1e)
+
+Wire the collapsible rail + registry + `SidebarToolContext`. Zero tools is a valid empty state. Do **not** invent placeholder widgets.
+
 ### Not next
 
 - PF2e Cleric/Bard/Champion/Ranger goldens
@@ -80,10 +85,11 @@ Extract current chrome to `en.json` **before** a large PF1e UI wave. Same ration
 - Spanish
 - A third game system
 - Full 1E bonus-type stacker or feat automation
+- Named sidebar tools (wait for a tools spec)
 
 ### Recommendation
 
-**M → 1e → 2e → 3e**, with T4′ as soon as new PF1e strings would otherwise land as literals. Content pack 3c after (or with) 3e, not before Fighter 5.
+**M → 1e → 2e → 3e**, with T4′ as soon as new PF1e strings would otherwise land as literals. **Sb** after M when convenient (parallel with 1e+). Content pack 3c after (or with) 3e, not before Fighter 5.
 
 ---
 
@@ -98,7 +104,11 @@ Extract current chrome to `en.json` **before** a large PF1e UI wave. Same ration
 | M3. Parallel app / route | Two PWAs; rejects the product |
 | M4. Shared `CharacterDocument` with optional 1E fields | Forbidden by ADR 0004 |
 
-**Action:** keep `schemas/character.schema.json` path for PF2e in this increment (less churn). Do **not** extract `SheetTable` or a bonus-type library in M. Genericize `applyOverrides` only if PF2e tests stay green with an allow-list callback; otherwise move it with PF2e and genericize in 1e.
+**Action:** keep `schemas/character.schema.json` path for PF2e in this increment (less churn). Do **not** extract `SheetTable` or a bonus-type library in M. Genericize `applyOverrides` only if PF2e tests stay green with an allow-list callback; otherwise move it with PF2e and genericize in 1e. Leave CSS/layout room for a sidebar rail.
+
+### WP-Sb — Sidebar host
+
+Collapsible `<aside>`, tool registry, empty state, context `{ character, derived, update }`. No named tools. See [`sidebar-host-design.md`](sidebar-host-design.md).
 
 ### WP-1e — PF1e martial slice
 
@@ -126,17 +136,18 @@ After goldens can be typed by hand. Minimal ids for the three goldens.
 
 | Step | Package | Deliverable |
 | --- | --- | --- |
-| 1 | Docs (this PR) | ADR 0003, umbrella + PF1e designs, roadmap |
-| 2 | WP-M | Shared kernel + multi-system shell; PF2e goldens green; `system` on Save |
+| 1 | Docs (this PR) | ADR 0003–0005, umbrella + PF1e + kernel + sidebar host, roadmap |
+| 2 | WP-M | Shared kernel + multi-system shell; PF2e goldens green; `system` on Save; layout room for rail |
 | 3 | WP-F (thin) | Extract existing English chrome |
 | 4 | WP-1e | PF1e schema + martial `compute()` + Fighter 5 + New→PF1e |
 | 5 | WP-2e | Wizard 5 + spells UI |
 | 6 | WP-3e | Multiclass golden |
 | 7 | WP-3c | Minimal CRB pack for golden ids |
+| 7b | WP-Sb | Sidebar host (empty registry); after M, not blocking 1e |
 | 8 | Platform | IndexedDB draft; PWA install/offline proof |
-| 9 | 0.9 | English; PF1e bar; PF2e slice still works |
+| 9 | 0.9 | English; PF1e bar; PF2e slice still works; sidebar host may be empty |
 | 10 | Phase 4 | `es`; stability = 1.0 |
-| 11 | Later | Leftover PF2e goldens/content; sidebar; more systems |
+| 11 | Later | Leftover PF2e goldens/content; **sidebar tools** when specified; more systems |
 
 Steps 2–4 are the **next development increments** after this documentation change.
 
@@ -151,6 +162,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Roadmap tracks PF1e-first phases
 - [x] PF2e design/schema docs labeled as system specs, not the app 0.9 bar
 - [x] Shared-kernel inventory ([ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md))
+- [x] Sidebar host lock ([ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md))
 
 ### Phase M
 
@@ -160,6 +172,13 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [ ] `shared/` + `shell/` + `systems/pf2e/` (or equivalent); systems do not import each other
 - [ ] PF2e registered as a `SystemModule`; no edition `if` in math
 - [ ] Kernel includes at least: `newId`, strip-derived, Ajv error format, file Save/Load wiring, `DerivedCell`
+- [ ] Shell layout can host a sidebar rail (empty/collapsed OK)
+
+### Phase Sb
+
+- [ ] Collapsible rail on a loaded sheet
+- [ ] Registry + empty state; tools would receive `character`, `derived`, `update`
+- [ ] No fake placeholder tools
 
 ### Phase 1e
 
@@ -175,6 +194,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [ ] `en` catalog (no new hardcoded chrome)
 - [ ] PWA install + offline proven once
 - [ ] PF2e Fighter 5 / Wizard 5 still pass
+- [ ] Sidebar host may be empty; named tools not required
 
 ---
 
@@ -198,3 +218,4 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | --- | --- |
 | 2026-08-17 | First multi-system / PF1e-first increment plan |
 | 2026-08-17 | Phase M includes shared kernel (ADR 0004) |
+| 2026-08-17 | Sidebar host (ADR 0005); tools unspecified |

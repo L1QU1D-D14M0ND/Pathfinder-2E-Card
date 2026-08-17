@@ -12,6 +12,7 @@ System-specific specs:
 - Pathfinder 1E — [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)
 - Pathfinder 2E — [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md)
 - Shared kernel — [`shared-kernel-design.md`](shared-kernel-design.md) ([ADR 0004](adr/0004-shared-kernel.md))
+- Sidebar host — [`sidebar-host-design.md`](sidebar-host-design.md) ([ADR 0005](adr/0005-sidebar-host.md))
 
 ---
 
@@ -32,7 +33,7 @@ System-specific locks live in the PF1e / PF2e design docs. This table is the **a
 | # | Topic | Decision |
 | --- | --- | --- |
 | 1 | Platform | **Installable PWA** — local/offline after install; mobile-compatible |
-| 2 | UI | **Spreadsheet / Excel-like** — dense grids, tabs, plain inputs |
+| 2 | UI | **Spreadsheet / Excel-like** plus a **loaded-sheet sidebar host** (tools TBD) — dense grids, tabs, plain inputs |
 | 3 | Systems | Discriminated engines. 0.9/1.0 ship **PF1e** (priority) + **PF2e** (preserve). Further systems are reserved ids only |
 | 4 | Priority | **PF1e first** to a playable 0.9 bar. Do not delete PF2e. Remaining PF2e goldens/content **after** that bar |
 | 5 | Calc depth (1.0) | **Core calculations only** per system; expansion hooks (`effects[]`, overrides) |
@@ -49,6 +50,7 @@ System-specific locks live in the PF1e / PF2e design docs. This table is the **a
 | 16 | Working app title | **TTRPG Character Sheet** |
 | 17 | Content | **Hybrid** curated pack per system; optional attributed open-data import later; **no GM-exclusive** content |
 | 18 | Existing PF2e files | Load without `system` as **`pf2e`** |
+| 19 | Sidebar | **Host** when a sheet is loaded; tools **read/write** the same document; tool list **TBD** ([ADR 0005](adr/0005-sidebar-host.md)) |
 
 See [ADR 0003](adr/0003-multi-system-product-direction.md).
 
@@ -62,6 +64,7 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 
 - Installable PWA; English UI; working title in chrome.
 - Spreadsheet UI with Save / Load (one active character).
+- Sidebar **host** may be empty or collapsed; **no named tools required**.
 - User can **New** a PF1e or PF2e sheet (PF2e new-sheet path already exists).
 - **PF1e** core calcs + editors enough to build and play the three PF1e goldens (martial, prepared caster, multiclass).
 - **PF2e** existing slice still loads, computes, and round-trips (Fighter 5, Wizard 5). Not a full PF2e 0.9 catalog.
@@ -76,7 +79,7 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 **Later (design must not block)**
 
 - Remaining PF2e goldens, companion editor, Remaster + legacy content packs (the old PF2e 0.9 leftovers).
-- Reference sidebar: Spells / Afflictions / Actions.
+- **Sidebar tools** (list unspecified). The old Spells / Afflictions / Actions encyclopedia is a candidate tool, not the host ([ADR 0005](adr/0005-sidebar-host.md)).
 - Typed `effects[]` automation.
 - Optional card-oriented play surfaces.
 - Additional systems behind the same `system` discriminator.
@@ -89,6 +92,7 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 - A third game system implementation.
 - Merging PF1e and PF2e into one schema or one `compute()`.
 - House-rule flag matrices (Free Archetype, PF1e Automatic Bonus Progression, etc.).
+- Populated sidebar **tools** in 0.9 (the **host** may ship empty). Dice/VTT stay out even as future tools until an ADR says otherwise.
 
 ---
 
@@ -104,9 +108,10 @@ Load: pick schema + engine by system
         ↓
 System calc engine → Derived view
         ↓
-Shared spreadsheet chrome
+Shared spreadsheet chrome  +  sidebar host (read/write via update)
   + per-system panels (Combat, Spells, Play, Identity details)
   + shared-ish panels (Notes, generic row tables)
+  + registered sidebar tools (shared and/or per system; list TBD)
 ```
 
 ### 4.1 Code layout (target, not current)
@@ -117,11 +122,11 @@ Target sketch (locked in [ADR 0004](adr/0004-shared-kernel.md) / [`shared-kernel
 
 ```text
 app/src/
-  shell/          # PWA chrome, tabs, Save/Load, New-system picker, registry
+  shell/          # PWA chrome, tabs, Save/Load, New-system picker, registry, sidebar host
   shared/         # envelope, ids, Ajv helper, overrides apply, DerivedCell, …
   systems/
-    pf2e/         # today’s character/ + engine/ (+ PF2e-specific panels)
-    pf1e/         # schema types, engine, PF1e-specific panels
+    pf2e/         # today’s character/ + engine/ (+ PF2e-specific panels + optional tools)
+    pf1e/         # schema types, engine, PF1e-specific panels + optional tools
 ```
 
 Exact folder names are an implementation detail of the refactor; the constraint is **one engine per system**, **no cross-imports between systems**, and **PF2e tests stay green**.
@@ -148,6 +153,7 @@ Full inventory: [`shared-kernel-design.md`](shared-kernel-design.md) ([ADR 0004]
 | `ContentRef` core, `Effect` stub, `OverrideValue`, coins, notes | Stacking, proficiency/BAB, AC, HP formula, skills, spells |
 | Ajv helper, strip `derived`, file Save/Load | Class/skill tables, factories for strikes/spells |
 | `DerivedCell`; later generic row tables | Combat / Spells / Play / Identity panels |
+| Sidebar **host** + `SidebarToolContext` (`update`) | Named sidebar tools (TBD; may be shared or per system) |
 | Golden-test helper; i18n with `shell.*` / `pf2e.*` / `pf1e.*` keys | Fixture numbers; content packs |
 
 **Do not share:** one `CharacterDocument`, `ProficiencyRank`, typed PF2e bonus stacking, bulk, or a `compute()` that branches on edition.
@@ -179,7 +185,8 @@ One active character. Switching system on an existing document is **not** suppor
 - Tabs stay in the same family: Identity, Attributes/Abilities, Skills, Combat, Feats, Spells, Inventory, Play, Notes. Labels may differ per system (e.g. PF1e “Abilities” vs PF2e “Attributes”).
 - Plain inputs; derived cells read-only and visually distinct.
 - Prominent Save / Load / New.
-- Mobile: wide-table horizontal scroll; Play tab thumb-friendly.
+- **Sidebar host** when a sheet is in memory: collapsible rail; tools and extra info; **read/write** through the same `update` as tabs ([`sidebar-host-design.md`](sidebar-host-design.md)). Tool list is unspecified; empty host is valid.
+- Mobile: wide-table horizontal scroll; Play tab thumb-friendly; sidebar **collapsed by default**.
 - No cards, no decorative motion.
 
 **New sheet:** system choice before the empty factory runs.
@@ -223,14 +230,15 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | --- | --- |
 | 0 | Original PF2e design lock — **done** (ADR 0001/0002) |
 | 0b | Multi-system product lock — **this document / ADR 0003** |
-| M | Multi-system refactor; PF2e goldens still green |
+| M | Multi-system refactor; PF2e goldens still green; leave layout room for the sidebar rail |
 | 1e | PF1e schema + core calc + Fighter 5 |
 | 2e | PF1e Wizard 5 + system-specific editors |
 | 3e | PF1e multiclass golden + remaining PF1e editors |
 | 3c | PF1e Core content pack (may overlap 2e/3e) |
-| 0.9 | English PWA; PF1e playable bar; PF2e slice non-regressed |
+| Sb | Sidebar host (registry, collapse, empty state); **not** blocking 1e |
+| 0.9 | English PWA; PF1e playable bar; PF2e slice non-regressed; sidebar host may be empty |
 | 4 | Spanish; stability (**1.0**) |
-| 5 | Leftover PF2e 0.9 work; sidebar; `effects[]`; more systems |
+| 5 | Leftover PF2e 0.9 work; **sidebar tools** (when specified); `effects[]`; more systems |
 
 ---
 
@@ -238,11 +246,11 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 
 - **Installable PWA**, spreadsheet UI, **TypeScript**, **MIT**.
 - **Multi-system** save files; **PF1e priority**, **PF2e preserved**.
-- **One character** loaded; **Save / Load**.
+- **One character** loaded; **Save / Load**; **sidebar host** on the loaded sheet (tools later).
 - **Core calcs** for 0.9/1.0 with expansion hooks.
 - **No** campaign house-rule flags, dice, cloud, or VTT.
 - **English in 0.9**, **Spanish in 1.0**.
-- Later: leftover PF2e catalog/goldens, reference sidebar, more systems.
+- Later: leftover PF2e catalog/goldens, sidebar tools, more systems.
 
 ---
 
@@ -252,3 +260,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | --- | --- |
 | 2026-08-17 | Initial umbrella design from ADR 0003 (PF1e-first multi-system pivot) |
 | 2026-08-17 | Point §4 at shared-kernel inventory (ADR 0004) |
+| 2026-08-17 | Loaded-sheet sidebar host; tools TBD (ADR 0005) |

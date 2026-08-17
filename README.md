@@ -18,15 +18,17 @@ npm run dev
 - Save/Load `.json` character sheets (JSON Schema validation on Load and Save)
 - **Today:** PF2e core calc engine for HP, AC, skills, strikes, spell attack/DC, bulk (Fighter 5 and Wizard 5 golden fixtures)
 - Spreadsheet-style UI with derived cells and editors for identity, feats, spells, combat, inventory, and play
-- **Planned:** `system` discriminator; PF1e engine (ability scores, BAB/saves, three ACs, multiclass) without removing the PF2e slice
+- **Planned:** `system` discriminator; PF1e engine; **sidebar host** on a loaded sheet (tools specified later)
 
 ## Docs
 
 - [Roadmap](docs/ROADMAP.md)
 - [ADR 0003 — Multi-system product direction](docs/adr/0003-multi-system-product-direction.md) (current lock)
 - [ADR 0004 — Shared kernel vs per-system modules](docs/adr/0004-shared-kernel.md)
+- [ADR 0005 — Loaded-sheet sidebar host](docs/adr/0005-sidebar-host.md) (tools TBD)
 - [Umbrella design](docs/ttrpg-character-sheet-design.md)
 - [Shared kernel — reuse between editions](docs/shared-kernel-design.md)
+- [Sidebar host](docs/sidebar-host-design.md)
 - [PF1e system design](docs/pf1e-character-sheet-design.md)
 - [PF2e system design](docs/pf2e-dynamic-character-sheet-design.md) (still valid for PF2e documents)
 - [Next increment — multi-system / PF1e](docs/next-increment-multi-system.md)
