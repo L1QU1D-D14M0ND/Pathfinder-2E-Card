@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "system": "pf1e",
+  "meta": {
+    "createdAt": "2026-08-17T13:00:00.000Z",
+    "updatedAt": "2026-08-17T13:00:00.000Z",
+    "appVersion": "0.0.0",
+    "locale": "en",
+    "characterId": "golden-pf1e-wizard-5"
+  },
+  "identity": {
+    "characterName": "Golden Wizard",
+    "playerName": "Fixture",
+    "race": { "id": "race.human", "name": "Human" },
+    "size": "medium",
+    "alignment": "neutral",
+    "deity": "",
+    "xp": 10000,
+    "languages": [
+      { "id": null, "name": "Common" },
+      { "id": null, "name": "Draconic" }
+    ]
+  },
+  "classes": [
+    {
+      "id": "class-row-wizard",
+      "class": { "id": "class.wizard", "name": "Wizard" },
+      "levels": 5,
+      "hitDie": 6,
+      "babProgression": "half",
+      "saves": { "fort": "poor", "ref": "poor", "will": "good" },
+      "favored": { "hp": 5, "skillRanks": 0 }
+    }
+  ],
+  "abilities": {
+    "str": { "score": 8 },
+    "dex": { "score": 14 },
+    "con": { "score": 14 },
+    "int": { "score": 18 },
+    "wis": { "score": 10 },
+    "cha": { "score": 12 }
+  },
+  "vitals": {
+    "hpRolled": [6, 4, 4, 4, 4],
+    "currentHp": 37,
+    "tempHp": 0,
+    "nonlethal": 0,
+    "speeds": [{ "kind": "land", "feet": 30 }]
+  },
+  "armorClass": {
+    "armorBonus": 0,
+    "shieldBonus": 0,
+    "natural": 0,
+    "deflection": 0,
+    "dodge": 0,
+    "other": 0,
+    "maxDex": null,
+    "armorCheckPenalty": 0,
+    "notes": "Unarmored"
+  },
+  "combat": {
+    "initiativeMisc": 0,
+    "meleeAttackMisc": 0,
+    "rangedAttackMisc": 0,
+    "cmbMisc": 0,
+    "cmdMisc": 0,
+    "fortMisc": 0,
+    "refMisc": 0,
+    "willMisc": 0
+  },
+  "skills": [
+    { "key": "acrobatics", "name": "Acrobatics", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "appraise", "name": "Appraise", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "bluff", "name": "Bluff", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "climb", "name": "Climb", "ability": "str", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "diplomacy", "name": "Diplomacy", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "disable-device", "name": "Disable Device", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "disguise", "name": "Disguise", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "escape-artist", "name": "Escape Artist", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "fly", "name": "Fly", "ability": "dex", "ranks": 0, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "handle-animal", "name": "Handle Animal", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "heal", "name": "Heal", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "intimidate", "name": "Intimidate", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "linguistics", "name": "Linguistics", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "perception", "name": "Perception", "ability": "wis", "ranks": 5, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "ride", "name": "Ride", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "sense-motive", "name": "Sense Motive", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "sleight-of-hand", "name": "Sleight of Hand", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "spellcraft", "name": "Spellcraft", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "stealth", "name": "Stealth", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "survival", "name": "Survival", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "swim", "name": "Swim", "ability": "str", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "use-magic-device", "name": "Use Magic Device", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-arcana", "name": "Knowledge (arcana)", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-dungeoneering", "name": "Knowledge (dungeoneering)", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-engineering", "name": "Knowledge (engineering)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-geography", "name": "Knowledge (geography)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-history", "name": "Knowledge (history)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-local", "name": "Knowledge (local)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nature", "name": "Knowledge (nature)", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nobility", "name": "Knowledge (nobility)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-planes", "name": "Knowledge (planes)", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-religion", "name": "Knowledge (religion)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 }
+  ],
+  "feats": [
+    {
+      "id": "feat-scribe-scroll",
+      "category": "itemCreation",
+      "feat": { "id": "feat.scribe-scroll", "name": "Scribe Scroll" },
+      "levelGained": 1,
+      "summary": "Wizard bonus feat. Not auto-applied."
+    },
+    {
+      "id": "feat-spell-focus",
+      "category": "general",
+      "feat": { "id": "feat.spell-focus", "name": "Spell Focus (evocation)" },
+      "levelGained": 1,
+      "summary": "Not auto-applied in 0.9."
+    },
+    {
+      "id": "feat-improved-initiative",
+      "category": "combat",
+      "feat": { "id": "feat.improved-initiative", "name": "Improved Initiative" },
+      "levelGained": 3,
+      "summary": "Not auto-applied; initiativeMisc stays 0."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-arcane-bond",
+      "feature": { "id": "class.wizard.arcane-bond", "name": "Arcane Bond" },
+      "levelGained": 1,
+      "summary": "Bond object; no nested familiar sheet in 0.9."
+    }
+  ],
+  "attacks": [
+    {
+      "id": "atk-quarterstaff",
+      "name": "Quarterstaff",
+      "attackType": "melee",
+      "itemId": "item-quarterstaff",
+      "attackAbility": "str",
+      "damageAbility": "str",
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "miscAttack": 0,
+      "miscDamage": 0
+    }
+  ],
+  "spellcasting": [
+    {
+      "id": "cast-wizard",
+      "name": "Wizard",
+      "ability": "int",
+      "classRowId": "class-row-wizard",
+      "casterLevelOverride": null,
+      "slots": [
+        { "spellLevel": 0, "max": 4, "remaining": 4 },
+        { "spellLevel": 1, "max": 5, "remaining": 4 },
+        { "spellLevel": 2, "max": 4, "remaining": 4 },
+        { "spellLevel": 3, "max": 3, "remaining": 2 }
+      ],
+      "cantrips": [
+        {
+          "id": "spell-detect-magic",
+          "spell": { "id": "spell.detect-magic", "name": "Detect Magic" },
+          "spellLevel": 0,
+          "prepared": true
+        },
+        {
+          "id": "spell-light",
+          "spell": { "id": "spell.light", "name": "Light" },
+          "spellLevel": 0,
+          "prepared": true
+        }
+      ],
+      "spells": [
+        {
+          "id": "spell-magic-missile",
+          "spell": { "id": "spell.magic-missile", "name": "Magic Missile" },
+          "spellLevel": 1,
+          "prepared": true
+        },
+        {
+          "id": "spell-fireball",
+          "spell": { "id": "spell.fireball", "name": "Fireball" },
+          "spellLevel": 3,
+          "prepared": true
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "currency": { "cp": 0, "sp": 0, "gp": 80, "pp": 0 },
+    "items": [
+      {
+        "id": "item-quarterstaff",
+        "item": { "id": "weapon.quarterstaff", "name": "Quarterstaff" },
+        "quantity": 1,
+        "pounds": 4,
+        "location": "equipped",
+        "weapon": {
+          "damageDice": "1d6",
+          "damageType": "bludgeoning",
+          "critRange": 20,
+          "critMultiplier": 2
+        }
+      },
+      {
+        "id": "item-spellbook",
+        "item": { "id": "item.spellbook", "name": "Spellbook" },
+        "quantity": 1,
+        "pounds": 3,
+        "location": "carried"
+      }
+    ],
+    "notes": "Light load. Slots max includes INT bonus spells."
+  },
+  "companions": [],
+  "conditions": [],
+  "play": { "dailyResources": [] },
+  "notes": {
+    "appearance": "Golden-test prepared caster.",
+    "personality": "",
+    "campaign": "",
+    "other": "20-point buy + human +2 Int. Unarmored. INT 18 bonus slots 1/1/1 at levels 1–3."
+  },
+  "overrides": {},
+  "extensions": {}
+}
