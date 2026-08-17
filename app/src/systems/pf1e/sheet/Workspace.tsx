@@ -12,6 +12,7 @@ import { FeatsPanel } from './FeatsPanel'
 import { IdentityPanel } from './IdentityPanel'
 import { InventoryPanel } from './InventoryPanel'
 import { PlayPanel } from './PlayPanel'
+import { SpellsPanel } from './SpellsPanel'
 import type { SheetUpdate } from './update'
 
 type TabId =
@@ -20,6 +21,7 @@ type TabId =
   | 'skills'
   | 'combat'
   | 'feats'
+  | 'spells'
   | 'inventory'
   | 'play'
   | 'notes'
@@ -30,6 +32,7 @@ const TABS: Array<{ id: TabId; label: string }> = [
   { id: 'skills', label: 'Skills' },
   { id: 'combat', label: 'Combat' },
   { id: 'feats', label: 'Feats' },
+  { id: 'spells', label: 'Spells' },
   { id: 'inventory', label: 'Inventory' },
   { id: 'play', label: 'Play' },
   { id: 'notes', label: 'Notes' },
@@ -346,6 +349,14 @@ export function Pf1eWorkspace({
 
         {tab === 'feats' && (
           <FeatsPanel character={character} update={update} />
+        )}
+
+        {tab === 'spells' && (
+          <SpellsPanel
+            character={character}
+            derived={derived}
+            update={update}
+          />
         )}
 
         {tab === 'inventory' && (

@@ -2,7 +2,11 @@ export { compute, computeCharacter } from './compute'
 export { abilityModifierFromScore, abilityModifiers } from './abilities'
 export { isOverridden } from './overrides'
 export { signed } from './types'
-export type { DerivedView, AttackDerived } from './types'
+export type { DerivedView, AttackDerived, SpellcastingDerived } from './types'
+export {
+  bonusSpellsFromAbility,
+  spellDc,
+} from './spellcasting'
 export { toDerivedCache } from './types'
 export {
   babFromProgression,

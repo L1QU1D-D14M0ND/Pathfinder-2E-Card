@@ -9,6 +9,7 @@ import {
   stackedBab,
   stackedSave,
 } from './progressions'
+import { spellcastingDerived } from './spellcasting'
 import type { ComputeInput, DerivedView } from './types'
 import {
   deadAtThreshold,
@@ -100,6 +101,19 @@ export function compute(character: ComputeInput): DerivedView {
     heavyLoad: thresholds.heavy,
     loadCategory: loadCategory(carried, thresholds),
     attacks,
+    spellcasting: spellcastingDerived(
+      character.spellcasting,
+      character.classes,
+      {
+        str: character.abilities.str.score,
+        dex: character.abilities.dex.score,
+        con: character.abilities.con.score,
+        int: character.abilities.int.score,
+        wis: character.abilities.wis.score,
+        cha: character.abilities.cha.score,
+      },
+      mods,
+    ),
     overriddenPaths: [],
     ignoredOverridePaths: [],
   }

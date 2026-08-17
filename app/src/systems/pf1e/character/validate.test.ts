@@ -46,10 +46,15 @@ describe('PF1e character JSON Schema validation', () => {
     )
   })
 
-  it('accepts the Fighter 5 golden', () => {
+  it('accepts the Fighter 5 and Wizard 5 goldens', () => {
     expect(() =>
       parseCharacterJson(
         readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),
+      ),
+    ).not.toThrow()
+    expect(() =>
+      parseCharacterJson(
+        readRepoFile('fixtures/characters/golden/pf1e/wizard-5.json'),
       ),
     ).not.toThrow()
   })

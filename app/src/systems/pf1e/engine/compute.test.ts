@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
-import { createEmptyClass } from '../character/createRows'
+import { createEmptyClass, createEmptySpellcasting } from '../character/createRows'
 import { compute } from './compute'
 import { abilityModifierFromScore } from './abilities'
 import { loadThresholds, mediumBipedHeavyLoad } from './encumbrance'
@@ -9,6 +9,7 @@ import {
   iterativeAttacks,
   saveFromProgression,
 } from './progressions'
+import { bonusSpellsFromAbility, spellDc } from './spellcasting'
 
 describe('abilityModifierFromScore', () => {
   it('uses floor((score-10)/2)', () => {
@@ -52,6 +53,50 @@ describe('encumbrance', () => {
   })
 })
 
+describe('spell DC and bonus slots', () => {
+  it('uses 10 + spell level + ability mod', () => {
+    expect(spellDc(0, 4)).toBe(14)
+    expect(spellDc(3, 4)).toBe(17)
+  })
+
+  it('matches the CRB bonus-spells table', () => {
+    expect(bonusSpellsFromAbility(18, 0)).toBe(0)
+    expect(bonusSpellsFromAbility(18, 1)).toBe(1)
+    expect(bonusSpellsFromAbility(18, 4)).toBe(1)
+    expect(bonusSpellsFromAbility(18, 5)).toBe(0)
+    expect(bonusSpellsFromAbility(20, 1)).toBe(2)
+    expect(bonusSpellsFromAbility(10, 1)).toBe(0)
+  })
+
+  it('computes caster level and honors a DC override', () => {
+    const character = createEmptyCharacter()
+    const wizard = createEmptyClass()
+    wizard.id = 'class-row-wizard'
+    wizard.class = { id: 'class.wizard', name: 'Wizard' }
+    wizard.levels = 5
+    wizard.babProgression = 'half'
+    wizard.saves = { fort: 'poor', ref: 'poor', will: 'good' }
+    character.classes = [wizard]
+    character.abilities.int.score = 18
+    const entry = createEmptySpellcasting()
+    entry.id = 'cast-test'
+    entry.classRowId = 'class-row-wizard'
+    character.spellcasting = [entry]
+    const view = compute(character)
+    expect(view.spellcasting['cast-test'].casterLevel).toBe(5)
+    expect(view.spellcasting['cast-test'].dcByLevel[1]).toBe(15)
+
+    character.overrides['derived.spellcasting.cast-test.dcByLevel.1'] = {
+      value: 16,
+    }
+    const overridden = compute(character)
+    expect(overridden.spellcasting['cast-test'].dcByLevel[1]).toBe(16)
+    expect(overridden.overriddenPaths).toContain(
+      'derived.spellcasting.cast-test.dcByLevel.1',
+    )
+  })
+})
+
 describe('compute empty sheet', () => {
   it('uses scores of 10 and no class rows', () => {
     const character = createEmptyCharacter()
@@ -70,6 +115,7 @@ describe('compute empty sheet', () => {
     expect(view.skillTotals.athletics).toBeUndefined()
     expect(view.skillTotals.climb).toBe(0)
     expect(view.loadCategory).toBe('light')
+    expect(view.spellcasting).toEqual({})
   })
 
   it('applies a maxHp override and records the path', () => {
