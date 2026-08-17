@@ -292,11 +292,15 @@
       "properties": {
         "score": {
           "type": "integer",
-          "description": "Final ability score used for the modifier (includes racial). No schema maximum."
+          "description": "Final ability score used for the modifier (includes racial). No schema maximum. Temp score is added on top."
+        },
+        "tempScore": {
+          "type": "integer",
+          "description": "Added to score before floor((score-10)/2) and the bonus-spell table (belts, bull's strength). Does not replace tempModifier."
         },
         "tempModifier": {
           "type": "integer",
-          "description": "Added to the derived modifier after floor((score-10)/2)."
+          "description": "Added to the derived modifier after floor((effectiveScore-10)/2). Does not change bonus slots or carrying capacity."
         }
       }
     },

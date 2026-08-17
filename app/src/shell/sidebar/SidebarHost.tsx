@@ -1,3 +1,4 @@
+import { t } from '../../shared/i18n'
 import type { SidebarTool, SidebarToolContext } from '../types'
 
 export function SidebarHost<Doc, Derived>({
@@ -17,27 +18,24 @@ export function SidebarHost<Doc, Derived>({
 
   if (collapsed) {
     return (
-      <aside className="sidebar-host collapsed" aria-label="Sheet tools">
+      <aside className="sidebar-host collapsed" aria-label={t('shell.toolsAria')}>
         <button type="button" onClick={onToggle}>
-          Tools
+          {t('shell.tools')}
         </button>
       </aside>
     )
   }
 
   return (
-    <aside className="sidebar-host" aria-label="Sheet tools">
+    <aside className="sidebar-host" aria-label={t('shell.toolsAria')}>
       <div className="sidebar-header">
-        <strong>Tools</strong>
+        <strong>{t('shell.tools')}</strong>
         <button type="button" onClick={onToggle}>
-          Hide
+          {t('shell.hide')}
         </button>
       </div>
       {available.length === 0 ? (
-        <p className="muted sidebar-empty">
-          No tools yet. Later: Attack Helper, Actions List, Budget
-          Calculator (no dice roller).
-        </p>
+        <p className="muted sidebar-empty">{t('shell.toolsEmpty')}</p>
       ) : (
         <ul className="sidebar-tool-list">
           {available.map((tool) => (

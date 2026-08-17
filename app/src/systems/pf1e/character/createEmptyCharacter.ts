@@ -1,6 +1,7 @@
 import { newId } from '../../../shared/ids'
 import { APP_VERSION } from '../../../shared/constants'
 import { PF1E_SYSTEM_ID } from '../../../shared/envelope'
+import { emptyCurrency } from '../../../shared/currency'
 import { createStandardSkillEntries } from './standardSkills'
 import type { Abilities, AbilityBlock, CharacterDocument, ContentRef } from './types'
 
@@ -9,7 +10,7 @@ function blankRef(): ContentRef {
 }
 
 function emptyAbility(): AbilityBlock {
-  return { score: 10, tempModifier: 0 }
+  return { score: 10, tempScore: 0, tempModifier: 0 }
 }
 
 function emptyAbilities(): Abilities {
@@ -90,7 +91,7 @@ export function createEmptyCharacter(): CharacterDocument {
     attacks: [],
     spellcasting: [],
     inventory: {
-      currency: { cp: 0, sp: 0, gp: 0, pp: 0 },
+      currency: emptyCurrency(),
       items: [],
       notes: '',
     },

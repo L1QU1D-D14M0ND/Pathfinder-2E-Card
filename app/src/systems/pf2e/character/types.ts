@@ -2,34 +2,28 @@
  * Character document types aligned with schemas/character.schema.json (schemaVersion 1).
  */
 
+import type { AbilityKey } from '../../../shared/abilities'
+import type { ContentRef as ContentRefCore, PublicationRef } from '../../../shared/contentRef'
+import type { Effect } from '../../../shared/effects'
+import type { OverrideValue } from '../../../shared/overrides'
+import type { Currency } from '../../../shared/currency'
+import type { Notes } from '../../../shared/notes'
+
+export type { PublicationRef }
+export type { Effect } from '../../../shared/effects'
+export type { OverrideValue } from '../../../shared/overrides'
+export type { Currency } from '../../../shared/currency'
+export type { Notes } from '../../../shared/notes'
+
 export type RulesetSource = 'remaster' | 'legacy' | 'custom'
 export type PreferredRuleset = 'remaster' | 'legacy'
 export type ProficiencyRank = 'untrained' | 'trained' | 'expert' | 'master' | 'legendary'
-export type AttributeKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha'
+export type AttributeKey = AbilityKey
 export type Size = 'tiny' | 'small' | 'medium' | 'large' | 'huge' | 'gargantuan'
 
-export interface PublicationRef {
-  book?: string
-  page?: number | null
-  rarity?: 'common' | 'uncommon' | 'rare' | 'unique'
-}
-
-export interface ContentRef {
-  id: string | null
-  name: string
+export interface ContentRef extends ContentRefCore {
   rulesetSource?: RulesetSource
   legacyId?: string | null
-  source?: PublicationRef
-}
-
-export interface Effect {
-  type: string
-  selector?: string
-  mode?: 'add' | 'override' | 'downgrade' | 'upgrade' | 'remove' | 'note'
-  value?: unknown
-  predicate?: unknown[]
-  label?: string
-  [key: string]: unknown
 }
 
 export interface ModifierBreakdown {
@@ -40,12 +34,6 @@ export interface ModifierBreakdown {
   ability?: number
   proficiency?: number
   other?: number
-}
-
-export interface OverrideValue {
-  value: unknown
-  reason?: string
-  updatedAt?: string
 }
 
 export interface Meta {
@@ -269,11 +257,10 @@ export interface SpellcastingEntry {
   effects?: Effect[]
 }
 
-export interface Currency {
-  cp: number
-  sp: number
-  gp: number
-  pp: number
+export interface Inventory {
+  currency: Currency
+  items: ItemEntry[]
+  notes?: string
 }
 
 export interface ArmorItemStats {
@@ -389,13 +376,6 @@ export interface PlayState {
     remaining: number
     resetsOn?: 'daily' | 'encounter' | 'refocus' | 'other'
   }>
-}
-
-export interface Notes {
-  appearance?: string
-  personality?: string
-  campaign?: string
-  other?: string
 }
 
 export interface DerivedCache {

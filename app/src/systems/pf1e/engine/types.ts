@@ -30,7 +30,7 @@ export interface DerivedView {
   will: number
   meleeAttack: number
   rangedAttack: number
-  skillTotals: Record<string, number>
+  skillTotals: Record<string, number | null>
   weightUsed: number
   lightLoad: number
   mediumLoad: number
@@ -57,7 +57,11 @@ export function toDerivedCache(view: DerivedView): DerivedCache {
     fortitude: view.fortitude,
     reflex: view.reflex,
     will: view.will,
-    skillTotals: view.skillTotals,
+    skillTotals: Object.fromEntries(
+      Object.entries(view.skillTotals).filter(
+        (entry): entry is [string, number] => entry[1] != null,
+      ),
+    ),
     weightUsed: view.weightUsed,
     computedAt: new Date().toISOString(),
   }

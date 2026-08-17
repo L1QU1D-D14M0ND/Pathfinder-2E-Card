@@ -10,6 +10,7 @@ import {
   saveFromProgression,
 } from './progressions'
 import { bonusSpellsFromAbility, spellDc } from './spellcasting'
+import { ranksExceedLevel } from './vitals'
 
 describe('abilityModifierFromScore', () => {
   it('uses floor((score-10)/2)', () => {
@@ -114,6 +115,8 @@ describe('compute empty sheet', () => {
     expect(view.fortitude).toBe(0)
     expect(view.skillTotals.athletics).toBeUndefined()
     expect(view.skillTotals.climb).toBe(0)
+    expect(view.skillTotals['disable-device']).toBeNull()
+    expect(view.skillTotals.fly).toBeNull()
     expect(view.loadCategory).toBe('light')
     expect(view.spellcasting).toEqual({})
   })
@@ -187,5 +190,99 @@ describe('compute empty sheet', () => {
     expect(overridden.overriddenPaths).toContain(
       'derived.attacks.atk-override.attack',
     )
+  })
+
+  it('blanks untrained-only skills and Fly without a fly speed', () => {
+    const character = createEmptyCharacter()
+    const view = compute(character)
+    expect(view.skillTotals['disable-device']).toBeNull()
+    expect(view.skillTotals['handle-animal']).toBeNull()
+    expect(view.skillTotals['use-magic-device']).toBeNull()
+    expect(view.skillTotals.fly).toBeNull()
+    expect(view.skillTotals.climb).toBe(0)
+    expect(view.skillTotals['knowledge-arcana']).toBe(0)
+  })
+
+  it('shows Fly when a fly speed exists, even at 0 ranks', () => {
+    const character = createEmptyCharacter()
+    character.vitals = {
+      ...character.vitals,
+      speeds: [{ kind: 'fly', feet: 30 }],
+    }
+    character.abilities.dex.score = 14
+    const view = compute(character)
+    expect(view.skillTotals.fly).toBe(2)
+  })
+
+  it('uses tempScore for modifier, bonus slots, and carrying capacity', () => {
+    const character = createEmptyCharacter()
+    character.abilities.int = { score: 18, tempScore: 4, tempModifier: 1 }
+    character.abilities.str = { score: 10, tempScore: 8 }
+    const wizard = createEmptyClass()
+    wizard.id = 'class-row-wizard'
+    wizard.class = { id: 'class.wizard', name: 'Wizard' }
+    wizard.levels = 5
+    wizard.babProgression = 'half'
+    character.classes = [wizard]
+    const entry = createEmptySpellcasting()
+    entry.id = 'cast-temp'
+    entry.classRowId = 'class-row-wizard'
+    character.spellcasting = [entry]
+    const view = compute(character)
+    expect(view.abilityModifiers.int).toBe(7)
+    expect(view.spellcasting['cast-temp'].bonusSlotsByLevel[1]).toBe(2)
+    expect(view.heavyLoad).toBe(300)
+  })
+
+  it('warns when skill ranks exceed character level', () => {
+    expect(ranksExceedLevel(6, 5)).toBe(true)
+    expect(ranksExceedLevel(5, 5)).toBe(false)
+    expect(ranksExceedLevel(1, 0)).toBe(false)
+  })
+
+  it('does not rewrite iteratives when BAB is overridden', () => {
+    const character = createEmptyCharacter()
+    const fighter = createEmptyClass()
+    fighter.levels = 6
+    fighter.babProgression = 'full'
+    character.classes = [fighter]
+    character.overrides['derived.bab'] = { value: 11 }
+    const view = compute(character)
+    expect(view.bab).toBe(11)
+    expect(view.babIteratives).toEqual([6, 1])
+    expect(view.overriddenPaths).toContain('derived.bab')
+    expect(view.overriddenPaths).not.toContain('derived.babIteratives')
+  })
+
+  it('applies a babIteratives override without changing BAB', () => {
+    const character = createEmptyCharacter()
+    const fighter = createEmptyClass()
+    fighter.levels = 6
+    fighter.babProgression = 'full'
+    character.classes = [fighter]
+    character.overrides['derived.babIteratives'] = { value: [8, 3] }
+    const view = compute(character)
+    expect(view.bab).toBe(6)
+    expect(view.babIteratives).toEqual([8, 3])
+    expect(view.overriddenPaths).toContain('derived.babIteratives')
+  })
+
+  it('shows Disable Device once trained', () => {
+    const character = createEmptyCharacter()
+    const skill = character.skills.find((row) => row.key === 'disable-device')
+    expect(skill).toBeDefined()
+    skill!.ranks = 1
+    character.abilities.dex.score = 12
+    const view = compute(character)
+    expect(view.skillTotals['disable-device']).toBe(2)
+  })
+
+  it('blanks Fly without a fly speed even when ranked', () => {
+    const character = createEmptyCharacter()
+    const fly = character.skills.find((row) => row.key === 'fly')
+    expect(fly).toBeDefined()
+    fly!.ranks = 3
+    const view = compute(character)
+    expect(view.skillTotals.fly).toBeNull()
   })
 })

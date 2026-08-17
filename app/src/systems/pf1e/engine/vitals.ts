@@ -166,6 +166,35 @@ export function deadAtThreshold(conScore: number): number {
   return -conScore
 }
 
+/** CRB: cannot be used untrained. Fly also needs a fly speed. */
+export const UNTRAINED_UNUSABLE_SKILLS = new Set([
+  'disable-device',
+  'handle-animal',
+  'use-magic-device',
+])
+
+export function hasFlySpeed(
+  speeds: Array<{ kind: string; feet: number }> | undefined,
+): boolean {
+  return (speeds ?? []).some(
+    (speed) => speed.kind.toLowerCase() === 'fly' && speed.feet > 0,
+  )
+}
+
+export function skillUsableUntrained(
+  key: string,
+  ranks: number,
+  speeds: Array<{ kind: string; feet: number }> | undefined,
+): boolean {
+  if (key === 'fly') return hasFlySpeed(speeds)
+  if (UNTRAINED_UNUSABLE_SKILLS.has(key)) return ranks >= 1
+  return true
+}
+
+export function ranksExceedLevel(ranks: number, characterLevel: number): boolean {
+  return ranks > characterLevel && characterLevel > 0
+}
+
 export function classSkillBonus(trained: boolean, classSkill: boolean): number {
   return trained && classSkill ? 3 : 0
 }

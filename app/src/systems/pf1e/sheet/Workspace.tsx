@@ -5,7 +5,9 @@ import {
 } from '../character'
 import type { AbilityKey } from '../character/types'
 import { signed } from '../../../shared/format'
-import { formatIteratives, type DerivedView } from '../engine'
+import { t } from '../../../shared/i18n'
+import { NotesPanel } from '../../../shared/ui/NotesPanel'
+import { formatIteratives, ranksExceedLevel, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import { CombatPanel } from './CombatPanel'
 import { FeatsPanel } from './FeatsPanel'
@@ -27,22 +29,22 @@ type TabId =
   | 'play'
   | 'notes'
 
-const TABS: Array<{ id: TabId; label: string }> = [
-  { id: 'identity', label: 'Identity' },
-  { id: 'abilities', label: 'Abilities' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'combat', label: 'Combat' },
-  { id: 'feats', label: 'Feats' },
-  { id: 'spells', label: 'Spells' },
-  { id: 'inventory', label: 'Inventory' },
-  { id: 'play', label: 'Play' },
-  { id: 'notes', label: 'Notes' },
+const TAB_IDS: TabId[] = [
+  'identity',
+  'abilities',
+  'skills',
+  'combat',
+  'feats',
+  'spells',
+  'inventory',
+  'play',
+  'notes',
 ]
 
 const ATTRS: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
 function classSummary(character: CharacterDocument): string {
-  if (character.classes.length === 0) return '(no class)'
+  if (character.classes.length === 0) return t('pf1e.strip.noClass')
   return character.classes
     .map((row) => `${row.class.name || 'Class'} ${row.levels}`)
     .join(' / ')
@@ -96,7 +98,7 @@ export function Pf1eWorkspace({
     <div className="pf1e-workspace">
       <section className="identity-strip sheet-grid">
         <label>
-          Character
+          {t('pf1e.strip.character')}
           <input
             value={character.identity.characterName}
             onChange={(e) =>
@@ -108,22 +110,22 @@ export function Pf1eWorkspace({
           />
         </label>
         <label>
-          Level
+          {t('pf1e.strip.level')}
           <DerivedCell
             value={derived.level}
             overridden={derived.overriddenPaths.includes('derived.level')}
           />
         </label>
         <label>
-          Class
+          {t('pf1e.strip.class')}
           <span className="derived">{classSummary(character)}</span>
         </label>
         <label>
-          HP
+          {t('pf1e.strip.hp')}
           <span className="hp-pair">
             <input
               type="number"
-              aria-label="Current HP"
+              aria-label={t('pf1e.strip.currentHp')}
               value={character.vitals.currentHp}
               onChange={(e) =>
                 update((c) => ({
@@ -142,8 +144,8 @@ export function Pf1eWorkspace({
                   ? 'derived overridden hp-max-button'
                   : 'derived hp-max-button'
               }
-              title="Open HP breakdown"
-              aria-label={`Max HP ${derived.maxHp}, open breakdown`}
+              title={t('pf1e.strip.openHpBreakdown')}
+              aria-label={t('pf1e.strip.maxHpBreakdown', { max: derived.maxHp })}
               onClick={() => setHpOpen(true)}
             >
               / {derived.maxHp}
@@ -151,30 +153,32 @@ export function Pf1eWorkspace({
           </span>
         </label>
         <label>
-          AC
+          {t('pf1e.strip.ac')}
           <DerivedCell
             value={derived.ac}
             overridden={derived.overriddenPaths.includes('derived.ac')}
           />
         </label>
         <label>
-          BAB
+          {t('pf1e.strip.bab')}
           <DerivedCell
             value={formatIteratives(derived.babIteratives)}
-            overridden={derived.overriddenPaths.includes('derived.bab')}
+            overridden={derived.overriddenPaths.includes(
+              'derived.babIteratives',
+            )}
           />
         </label>
       </section>
 
       <nav className="tabs" aria-label="Sheet tabs">
-        {TABS.map((t) => (
+        {TAB_IDS.map((id) => (
           <button
-            key={t.id}
+            key={id}
             type="button"
-            className={tab === t.id ? 'active' : ''}
-            onClick={() => setTab(t.id)}
+            className={tab === id ? 'active' : ''}
+            onClick={() => setTab(id)}
           >
-            {t.label}
+            {t(`pf1e.tabs.${id}`)}
           </button>
         ))}
       </nav>
@@ -190,18 +194,15 @@ export function Pf1eWorkspace({
 
         {tab === 'abilities' && (
           <>
-            <p className="muted">
-              Modifier is floor((score − 10) / 2). Temp mod adds to that
-              modifier, not to the score — raise Score for belts or ability
-              increases.
-            </p>
+            <p className="muted">{t('pf1e.abilities.help')}</p>
             <table className="sheet-table">
             <thead>
               <tr>
-                <th>Ability</th>
-                <th>Score</th>
-                <th>Temp mod</th>
-                <th>Modifier</th>
+                <th>{t('pf1e.abilities.ability')}</th>
+                <th>{t('pf1e.abilities.score')}</th>
+                <th>{t('pf1e.abilities.tempScore')}</th>
+                <th>{t('pf1e.abilities.tempMod')}</th>
+                <th>{t('pf1e.abilities.modifier')}</th>
               </tr>
             </thead>
             <tbody>
@@ -222,6 +223,24 @@ export function Pf1eWorkspace({
                               [key]: {
                                 ...c.abilities[key],
                                 score: Number(e.target.value) || 0,
+                              },
+                            },
+                          }))
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        value={block.tempScore ?? 0}
+                        onChange={(e) =>
+                          update((c) => ({
+                            ...c,
+                            abilities: {
+                              ...c.abilities,
+                              [key]: {
+                                ...c.abilities[key],
+                                tempScore: Number(e.target.value) || 0,
                               },
                             },
                           }))
@@ -266,31 +285,34 @@ export function Pf1eWorkspace({
           <>
             <div className="table-toolbar">
               <button type="button" onClick={() => addWildcardSkill('craft')}>
-                Add Craft
+                {t('pf1e.skills.addCraft')}
               </button>
               <button type="button" onClick={() => addWildcardSkill('perform')}>
-                Add Perform
+                {t('pf1e.skills.addPerform')}
               </button>
               <button
                 type="button"
                 onClick={() => addWildcardSkill('profession')}
               >
-                Add Profession
+                {t('pf1e.skills.addProfession')}
               </button>
             </div>
             <table className="sheet-table">
               <thead>
                 <tr>
-                  <th>Skill</th>
-                  <th>Ability</th>
-                  <th>Ranks</th>
-                  <th>Class</th>
-                  <th>Misc</th>
-                  <th>Total</th>
+                  <th>{t('pf1e.skills.skill')}</th>
+                  <th>{t('pf1e.skills.ability')}</th>
+                  <th>{t('pf1e.skills.ranks')}</th>
+                  <th>{t('pf1e.skills.class')}</th>
+                  <th>{t('pf1e.skills.misc')}</th>
+                  <th>{t('pf1e.skills.total')}</th>
                 </tr>
               </thead>
               <tbody>
-                {character.skills.map((skill, index) => (
+                {character.skills.map((skill, index) => {
+                  const total = derived.skillTotals[skill.key]
+                  const overCap = ranksExceedLevel(skill.ranks, derived.level)
+                  return (
                   <tr key={skill.key}>
                     <th>{skill.name}</th>
                     <td>{skill.ability.toUpperCase()}</td>
@@ -299,6 +321,7 @@ export function Pf1eWorkspace({
                         type="number"
                         min={0}
                         value={skill.ranks}
+                        aria-invalid={overCap || undefined}
                         onChange={(e) =>
                           update((c) => {
                             const skills = [...c.skills]
@@ -310,6 +333,11 @@ export function Pf1eWorkspace({
                           })
                         }
                       />
+                      {overCap ? (
+                        <div className="rank-warning">
+                          {t('pf1e.skills.rankCapWarning', { level: derived.level })}
+                        </div>
+                      ) : null}
                     </td>
                     <td>
                       <input
@@ -345,14 +373,19 @@ export function Pf1eWorkspace({
                     </td>
                     <td>
                       <DerivedCell
-                        value={signed(derived.skillTotals[skill.key] ?? 0)}
+                        value={
+                          total == null
+                            ? t('pf1e.skills.unusable')
+                            : signed(total)
+                        }
                         overridden={derived.overriddenPaths.includes(
                           `derived.skillTotals.${skill.key}`,
                         )}
                       />
                     </td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
           </>
@@ -396,34 +429,15 @@ export function Pf1eWorkspace({
         )}
 
         {tab === 'notes' && (
-          <table className="sheet-table">
-            <tbody>
-              {(
-                [
-                  ['Appearance', 'appearance'],
-                  ['Personality', 'personality'],
-                  ['Campaign', 'campaign'],
-                  ['Other', 'other'],
-                ] as const
-              ).map(([label, key]) => (
-                <tr key={key}>
-                  <th>{label}</th>
-                  <td>
-                    <textarea
-                      rows={3}
-                      value={character.notes[key] ?? ''}
-                      onChange={(e) =>
-                        update((c) => ({
-                          ...c,
-                          notes: { ...c.notes, [key]: e.target.value },
-                        }))
-                      }
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <NotesPanel
+            notes={character.notes}
+            onChange={(key, value) =>
+              update((c) => ({
+                ...c,
+                notes: { ...c.notes, [key]: value },
+              }))
+            }
+          />
         )}
       </main>
       <HpBreakdownDialog

@@ -3,7 +3,19 @@
  * (schemaVersion 1). Do not import PF2e character types here.
  */
 
-export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha'
+import type { AbilityKey } from '../../../shared/abilities'
+import type { ContentRef } from '../../../shared/contentRef'
+import type { Effect } from '../../../shared/effects'
+import type { OverrideValue } from '../../../shared/overrides'
+import type { Currency } from '../../../shared/currency'
+import type { Notes } from '../../../shared/notes'
+
+export type { AbilityKey } from '../../../shared/abilities'
+export type { ContentRef, PublicationRef } from '../../../shared/contentRef'
+export type { Effect } from '../../../shared/effects'
+export type { OverrideValue } from '../../../shared/overrides'
+export type { Currency } from '../../../shared/currency'
+export type { Notes } from '../../../shared/notes'
 export type Size =
   | 'fine'
   | 'diminutive'
@@ -28,33 +40,6 @@ export type Alignment =
   | 'chaotic evil'
 export type ItemLocation = 'equipped' | 'carried' | 'stowed' | 'dropped'
 export type LoadCategory = 'light' | 'medium' | 'heavy' | 'overloaded'
-
-export interface PublicationRef {
-  book?: string
-  page?: number | null
-}
-
-export interface ContentRef {
-  id: string | null
-  name: string
-  source?: PublicationRef
-}
-
-export interface Effect {
-  type: string
-  selector?: string
-  mode?: 'add' | 'override' | 'downgrade' | 'upgrade' | 'remove' | 'note'
-  value?: unknown
-  predicate?: unknown[]
-  label?: string
-  [key: string]: unknown
-}
-
-export interface OverrideValue {
-  value: unknown
-  reason?: string
-  updatedAt?: string
-}
 
 export interface Meta {
   createdAt: string
@@ -101,6 +86,9 @@ export interface ClassEntry {
 
 export interface AbilityBlock {
   score: number
+  /** Added to score before the modifier and bonus-spell table (belts, bull's strength). */
+  tempScore?: number
+  /** Check/DC addend after the modifier; does not change bonus slots or carry. */
   tempModifier?: number
 }
 
@@ -218,13 +206,6 @@ export interface SpellcastingEntry {
   effects?: Effect[]
 }
 
-export interface Currency {
-  cp: number
-  sp: number
-  gp: number
-  pp: number
-}
-
 export interface ArmorItemStats {
   acBonus?: number
   maxDex?: number | null
@@ -289,13 +270,6 @@ export interface PlayState {
     remaining: number
     resetsOn?: 'daily' | 'encounter' | 'other'
   }>
-}
-
-export interface Notes {
-  appearance?: string
-  personality?: string
-  campaign?: string
-  other?: string
 }
 
 export interface DerivedCache {
