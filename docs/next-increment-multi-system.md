@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **Phase 3e** (PF1e multiclass golden). Phase **2e** (Wizard 5 + spell DC/slots) is in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List.
+The next **code** increment is **Phase 3c** (minimal PF1e CRB pack) or platform (draft buffer / PWA). Phase **3e** (Fighter 2 / Wizard 3 golden) is in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -37,12 +37,12 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 
 | Area | What exists |
 | --- | --- |
-| Product docs | ADR 0003–0006 + umbrella/PF1e/kernel/sidebar + Attack Helper + Actions List specs |
+| Product docs | ADR 0003–0006 + umbrella/PF1e/kernel/sidebar + Attack Helper + Actions List + Budget Calculator specs |
 | Layout | `app/src/shared`, `shell`, `systems/pf1e`, `systems/pf2e` |
 | Schema | PF2e `character.schema.json`; PF1e `schemas/pf1e/character.schema.json` |
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
-| Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json` |
+| Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
 | Content | No packs |
 
 ---
@@ -85,11 +85,11 @@ Wire the collapsible rail + registry + `SidebarToolContext`. Zero tools is a val
 - Spanish
 - A third game system
 - Full 1E bonus-type stacker or feat automation
-- Named sidebar tools except documenting **Attack Helper** and **Actions List** for later (do not implement them in M/Sb/1e/2e)
+- Named sidebar tools except documenting **Attack Helper**, **Actions List**, and **Budget Calculator** for later (do not implement them in M/Sb/1e/2e/3e)
 
 ### Recommendation
 
-**1e → 2e → 3e**, with T4′ before a large remaining-UI wave. Content pack 3c after (or with) 3e. **Attack Helper** and **Actions List** wait until the character sheet is ~90% done (not during schema/engine work).
+**1e → 2e → 3e**, with T4′ before a large remaining-UI wave. Content pack 3c after (or with) 3e. **Attack Helper**, **Actions List**, and **Budget Calculator** wait until the character sheet is ~90% done (not during schema/engine work).
 
 ---
 
@@ -181,6 +181,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] No fake placeholder tools
 - [ ] Attack Helper implementation (later; spec exists)
 - [ ] Actions List implementation (later; spec exists)
+- [ ] Budget Calculator implementation (later; spec exists)
 
 ### Phase 1e
 
@@ -195,11 +196,16 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Spellcasting editor
 - [x] Wizard 5 golden
 
+### Phase 3e
+
+- [x] Two class rows; stacked BAB/saves
+- [x] Fighter 2 / Wizard 3 golden
+
 ### PF1e 0.9 bar
 
 - [x] Fighter 5 golden
 - [x] Wizard 5 golden
-- [ ] Multiclass golden
+- [x] Multiclass golden
 - [ ] Editors for those domains (no familiar nested sheet)
 - [ ] `en` catalog (no new hardcoded chrome)
 - [ ] PWA install + offline proven once
@@ -232,3 +238,4 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | 2026-08-17 | Phase M/Sb implemented; Attack Helper reserved as later tool |
 | 2026-08-17 | Phase 1e implemented; tools deferred until sheet ~90% done |
 | 2026-08-17 | Phase 2e Wizard 5; Actions List reserved as later tool |
+| 2026-08-17 | Phase 3e Fighter 2 / Wizard 3; Budget Calculator reserved as later tool |

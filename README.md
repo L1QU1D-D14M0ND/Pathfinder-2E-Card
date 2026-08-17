@@ -2,7 +2,7 @@
 
 **TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
-**Current phase:** Phase 2e (PF1e Wizard 5 + spell DC). Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0006](docs/adr/0006-pf1e-character-schema.md), [Attack Helper](docs/sidebar-tools-attack-helper.md), and [Actions List](docs/sidebar-tools-actions-list.md) (later tools, no dice roller).
+**Current phase:** Phase 3e done (PF1e Fighter 2 / Wizard 3). Next: Phase 3c (minimal CRB pack) or platform. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0006](docs/adr/0006-pf1e-character-schema.md), [Attack Helper](docs/sidebar-tools-attack-helper.md), [Actions List](docs/sidebar-tools-actions-list.md), and [Budget Calculator](docs/sidebar-tools-budget-calculator.md) (later tools, no dice roller).
 
 The GitHub repository name is unchanged.
 
@@ -17,9 +17,9 @@ npm run dev
 - React + TypeScript + Vite
 - Save/Load `.json` (Ajv). Missing `system` loads as PF2e; Save writes `"system": "pf1e"` or `"pf2e"`
 - Layout: `app/src/shared` kernel, `app/src/shell` (chrome + empty Tools sidebar), `app/src/systems/pf1e`, `app/src/systems/pf2e`
-- PF1e martial + spell calc (Fighter 5 and Wizard 5 goldens) and PF2e core calc engine (Fighter 5 and Wizard 5 goldens)
+- PF1e martial + spell calc (Fighter 5, Wizard 5, and Fighter 2 / Wizard 3 goldens) and PF2e core calc engine (Fighter 5 and Wizard 5 goldens)
 - Spreadsheet editors per system (PF1e: identity/classes, abilities, skills, combat, spells, inventory, play)
-- **Later:** PF1e multiclass; **Attack Helper** and **Actions List** sidebar tools after the sheet is ~90% done (no dice roller)
+- **Later:** **Attack Helper**, **Actions List**, and **Budget Calculator** sidebar tools after the sheet is ~90% done (no dice roller)
 
 ## Docs
 
@@ -32,6 +32,7 @@ npm run dev
 - [Sidebar host](docs/sidebar-host-design.md)
 - [Attack Helper (later tool)](docs/sidebar-tools-attack-helper.md)
 - [Actions List (later tool)](docs/sidebar-tools-actions-list.md)
+- [Budget Calculator (later tool)](docs/sidebar-tools-budget-calculator.md)
 - [PF1e system design](docs/pf1e-character-sheet-design.md)
 - [PF2e system design](docs/pf2e-dynamic-character-sheet-design.md) (still valid for PF2e documents)
 - [Next increment — multi-system / PF1e](docs/next-increment-multi-system.md)
@@ -53,6 +54,7 @@ npm run dev
 - [`fixtures/characters/golden/wizard-5.json`](fixtures/characters/golden/wizard-5.json) — PF2e Wizard 5
 - [`fixtures/characters/golden/pf1e/fighter-5.json`](fixtures/characters/golden/pf1e/fighter-5.json) — PF1e Fighter 5
 - [`fixtures/characters/golden/pf1e/wizard-5.json`](fixtures/characters/golden/pf1e/wizard-5.json) — PF1e Wizard 5
+- [`fixtures/characters/golden/pf1e/fighter-2-wizard-3.json`](fixtures/characters/golden/pf1e/fighter-2-wizard-3.json) — PF1e Fighter 2 / Wizard 3
 
 ## License
 

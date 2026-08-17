@@ -3,8 +3,8 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-17  
-**Current phase:** **2e in progress** (PF1e Wizard 5 + spell DC / slots). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List.  
-**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster**. Overall ~45% of the new 0.9 definition.
+**Current phase:** **3e done** (PF1e Fighter 2 / Wizard 3 golden). Next code: **3c** (minimal CRB pack) or platform (draft buffer / PWA). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~50% of the new 0.9 definition.
 
 ---
 
@@ -14,7 +14,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 
 **1.0** — Spanish locale; same functional bar as 0.9, called stable.
 
-**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools after the sheet is ~90% done** (Attack Helper and Actions List specified; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
+**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools after the sheet is ~90% done** (Attack Helper, Actions List, and Budget Calculator specified; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
 
 ---
 
@@ -75,7 +75,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 2e — PF1e prepared caster
 
-**Status:** In progress (engine + editor + Wizard 5)
+**Status:** Done (2026-08-17)
 
 - [x] Spell DC + bonus spells from ability in `compute()`
 - [x] Spellcasting entry editor (slots, lists)
@@ -85,10 +85,10 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3e — PF1e multiclass
 
-**Status:** Not started (0%)
+**Status:** Done (2026-08-17)
 
-- [ ] Two (or more) class rows in UI; stacked BAB/saves/HD
-- [ ] Golden: Fighter 2 / Wizard 3 (or equivalent mixed BAB)
+- [x] Two (or more) class rows in UI; stacked BAB/saves/HD
+- [x] Golden: Fighter 2 / Wizard 3 (or equivalent mixed BAB)
 
 ---
 
@@ -114,6 +114,7 @@ Until this pack exists, goldens use `custom` numeric inputs (same as current PF2
 - [x] No named tools required (list specified later)
 - [ ] **Attack Helper** (later — after the sheet is ~90% done) — [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md)
 - [ ] **Actions List** (later — after the sheet is ~90% done) — [`sidebar-tools-actions-list.md`](sidebar-tools-actions-list.md)
+- [ ] **Budget Calculator** (later — after the sheet is ~90% done) — [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md)
 
 See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).
 
@@ -166,7 +167,7 @@ Not started (after PF1e 0.9):
 **Status:** Deferred by design (0%)
 
 - [ ] Remaining PF2e 0.9 leftovers if not already done
-- [ ] Sidebar **tools** (Attack Helper + Actions List specified). Sequence: after the character sheet is ~90% done, dynamic and functional. Candidate also: Spells / Afflictions / Actions **encyclopedia** (rules text, not the PC action menu)
+- [ ] Sidebar **tools** (Attack Helper + Actions List + Budget Calculator specified). Sequence: after the character sheet is ~90% done, dynamic and functional. Candidate also: Spells / Afflictions / Actions **encyclopedia** (rules text, not the PC action menu)
 - [ ] Typed `effects[]` automation
 - [ ] Optional card-oriented play surfaces
 - [ ] Additional systems behind `system`
@@ -218,12 +219,11 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Phase 3e** — Multiclass golden.
-2. **Phase 3c** — Minimal CRB pack.
-3. **Draft buffer + PWA proof** — app 0.9 platform.
-4. **Spanish** — 1.0.
-5. **Only then** leftover PF2e goldens / companion / Remaster packs.
-6. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper** and **Actions List** are the named tools). Do not start tools during schema/engine work.
+1. **Phase 3c** — Minimal CRB pack.
+2. **Draft buffer + PWA proof** — app 0.9 platform.
+3. **Spanish** — 1.0.
+4. **Only then** leftover PF2e goldens / companion / Remaster packs.
+5. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
 ---
 
@@ -252,3 +252,4 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | 2026-08-17 | Phase M kernel/shell + thin sidebar host landed |
 | 2026-08-17 | Phase 1e: PF1e schema (ADR 0006), martial compute, Fighter 5, New→PF1e. Tools deferred until sheet ~90% done |
 | 2026-08-17 | Phase 2e: spell DC + bonus slots + Wizard 5. Reserve Actions List tool |
+| 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden. Reserve Budget Calculator tool |
