@@ -1,11 +1,12 @@
 # Next increment design — options after S1 / S4
 
-**Status:** T1 + T3 executed 2026-08-14 (Wizard 5 slice and form editors; T4 i18n prelude skipped)  
+**Status:** Historical (T1 + T3 executed 2026-08-14). **Not** the current coding sequence.  
+**Current sequencing:** [`next-increment-multi-system.md`](next-increment-multi-system.md) (ADR 0003: PF1e-first multi-system). Leftover PF2e goldens, companion editor, and content packs in §8 are **deprioritized** until the PF1e 0.9 bar.  
 **Date:** 2026-08-14  
 **Audience:** Product / engineering  
-**Depends on:** [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (v1.0 lock), [ADR 0001](adr/0001-product-direction.md), [ADR 0002](adr/0002-character-schema.md), [`schema-design-notes.md`](schema-design-notes.md), [`continuation-design.md`](continuation-design.md) (S1/S4 path, now executed)
+**Depends on:** [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (PF2e system spec), [ADR 0001](adr/0001-product-direction.md) (superseded), [ADR 0002](adr/0002-character-schema.md), [`schema-design-notes.md`](schema-design-notes.md), [`continuation-design.md`](continuation-design.md) (S1/S4 path, now executed)
 
-This document does **not** reopen locked product decisions. It mapped the repo **after** the Fighter 5 slice, listed **options** for the next increment, and recommended T1 (with a T4 prelude). **T1 and T3 landed together; T4 did not.** Treat §3–§7 as the pre-T1 snapshot. Remaining work: Cleric/Bard goldens, companion nested sheet, Champion 5, i18n catalogs, IndexedDB, content packs.
+This document does **not** reopen locked PF2e schema/math decisions. It mapped the repo **after** the Fighter 5 slice, listed **options** for the next increment, and recommended T1 (with a T4 prelude). **T1 and T3 landed together; T4 did not.** Treat §3–§7 as the pre-T1 snapshot. Do not use this file to schedule Cleric/Bard/Champion work ahead of Phase M / 1e.
 
 S1/S4 choices that already landed stay locked unless an option below says otherwise: Vitest, Ajv 2020-12 in-app with reject-on-invalid, `compute(doc) → DerivedView`, boost-sum modifiers, override allow-list, shared row editors (not a generic `SheetTable` yet), Fighter 5 as the martial golden.
 
@@ -426,3 +427,4 @@ That slice proves casters on the same architecture as Fighter 5 without waiting 
 | --- | --- |
 | 2026-08-14 | Options after merging S1/S4 with the Phase 1 continuation design |
 | 2026-08-14 | T1 + T3 executed (Wizard 5, spell attack/DC, form editors); T4 skipped |
+| 2026-08-17 | Marked historical; sequencing moved to `next-increment-multi-system.md` |

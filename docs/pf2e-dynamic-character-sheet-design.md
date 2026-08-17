@@ -1,8 +1,8 @@
 # Pathfinder Second Edition — Dynamic Character Sheet Design
 
-**Status:** Product decisions complete (v1.0 design lock)  
-**Implementation:** Phase 1 in progress — S1 Fighter 5, T1 Wizard 5, T3 form editors, and S4 validation prelude exist; remaining goldens, companion editors, content packs, and i18n catalogs are not started  
-**Next actions / options:** [`next-increment-design.md`](next-increment-design.md) (S1/S4 record: [`continuation-design.md`](continuation-design.md))  
+**Status:** **System specification** for Pathfinder Second Edition (still valid). App-level product direction is [ADR 0003](adr/0003-multi-system-product-direction.md) / [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md): multi-system PWA, **PF1e first**, this PF2e slice **preserved** and remaining PF2e 0.9 goldens/content **deprioritized**.  
+**Implementation:** PF2e Phase 1–2 scaffold exists (S1 Fighter 5, T1 Wizard 5, T3 form editors, S4 validation). Companion editor, leftover goldens, content packs, and i18n catalogs are not started.  
+**Sequencing:** [`next-increment-multi-system.md`](next-increment-multi-system.md) (current). Historical: [`next-increment-design.md`](next-increment-design.md), [`continuation-design.md`](continuation-design.md).  
 **Repo context:** `Pathfinder-2E-Card`  
 **Audience:** Product / engineering  
 **Ruleset target:** Pathfinder Second Edition — **Remaster-first**, legacy fallback when Remaster data is missing or errors
@@ -12,6 +12,8 @@
 ## 1. Purpose
 
 Build a **dynamic character sheet** for **players** that can create, edit, recalculate, and **persist all information needed to play** Pathfinder Second Edition (PF2e) locally on desktop and mobile.
+
+This document is the **PF2e system spec**. The app is a multi-system sheet ([umbrella design](ttrpg-character-sheet-design.md)); PF1e is specified separately.
 
 “Dynamic” means dependent values update when inputs change (level, attributes, proficiency, gear, etc.). “Complete” means the saved character covers player-facing sheet domains needed at the table.
 
@@ -27,7 +29,7 @@ Build a **dynamic character sheet** for **players** that can create, edit, recal
 | 4 | Calc depth (1.0) | **Core calculations only**; architecture expandable to complex feat/spell/mechanic effects |
 | 5 | Content books | **Player Core + Player Core 2** only (player-facing). **No GM-exclusive** content |
 | 5a | Content acquisition | **Hybrid** — curated hand-maintained pack first; optional attributed open/ORC import pipeline later |
-| 5b | Spells UI (later) | Sidebar (post-placeholder) with tabs for **spells**, **afflictions**, and **actions** (e.g. combat maneuvers) |
+| 5b | Sidebar | **Host** on loaded sheet (app-level, ADR 0005). Spells / Afflictions / Actions encyclopedia is a **future tool**, not the host |
 | 6 | Persistence | **One sheet at a time** + **Save sheet** / **Load sheet** (local files). No multi-character library, no cloud |
 | 7 | Character types | **All** player character types in the data model |
 | 8 | Modes | **Build and Play** |
@@ -38,11 +40,11 @@ Build a **dynamic character sheet** for **players** that can create, edit, recal
 | 13 | Stack | **TypeScript + React** |
 | 14 | License | **MIT** |
 | 15 | Campaign / house rules | **Omit** optional flags (e.g. Free Archetype) in 0.9/1.0 — extra feats entered as custom rows if needed |
-| 16 | Golden tests | **Accepted proposed set** (see §12) |
+| 16 | Golden tests | **Fighter 5 and Wizard 5 required regressions.** Remaining proposed set in §12 is **post-PF1e-0.9** |
 | 17 | Save extension | **`.json`** |
-| 18 | App display name | **Pathfinder 2E Character sheet** |
+| 18 | App display name | Chrome still **Pathfinder 2E Character sheet** until Phase M; working product title **TTRPG Character Sheet** |
 
-See also: [`adr/0001-product-direction.md`](adr/0001-product-direction.md).
+See also: [ADR 0001](adr/0001-product-direction.md) (superseded), [ADR 0003](adr/0003-multi-system-product-direction.md) (current).
 
 ---
 
@@ -50,23 +52,28 @@ See also: [`adr/0001-product-direction.md`](adr/0001-product-direction.md).
 
 ### Goals by milestone
 
-**0.9**
+The **app** 0.9/1.0 bars are defined in the [umbrella design](ttrpg-character-sheet-design.md) (PF1e playable + this slice non-regressed). The list below is the **PF2e system** target, including work that is now **later**.
 
-- Installable PWA; English UI.
-- Spreadsheet UI with Save sheet / Load sheet (one active character).
+**PF2e slice that must keep working (app 0.9)**
+
+- Spreadsheet Build + Play for the current editors.
+- Core calcs + Fighter 5 and Wizard 5 goldens.
+- Save / Load of PF2e documents (with `system: "pf2e"` after Phase M).
+
+**Full PF2e 0.9 catalog (after PF1e 0.9)**
+
 - Remaster-first / legacy fallback.
-- Core calcs + full player data model (PC1 + PC2 catalog enough to build).
-- Build + Play resource tracking.
+- Remaining goldens in §12; companion nested editor.
+- Player Core + Player Core 2 catalog enough to rebuild those goldens.
 
-**1.0**
+**1.0 (app)**
 
-- Spanish localization.
-- Same functional bar as 0.9, polished enough to call stable.
-- Still core calcs only (complex automation remains post-1.0 unless pulled forward).
+- Spanish localization (shared catalogs).
+- Still core calcs only.
 
 **Later (design must not block)**
 
-- Reference sidebar: Spells / Afflictions / Actions (combat maneuvers, etc.).
+- **Sidebar tools** when specified. Candidate: Spells / Afflictions / Actions (combat maneuvers, etc.).
 - Typed `effects[]` automation for feats/spells/items.
 - Optional card-oriented play surfaces.
 
@@ -138,7 +145,7 @@ Save **inputs** and **session state**; **derived** fields may be cached but must
 - Cantrips, repertoire / spellbook / prepared lists.
 - Innate spells, rituals; simple charge trackers.
 
-**Later UI:** sidebar browser for spell / affliction / action reference (not required for sheet save format).
+**Later UI:** sidebar **tools** may include a spell / affliction / action reference (not required for sheet save format). The **host** is app chrome ([`sidebar-host-design.md`](sidebar-host-design.md)).
 
 ### 4.8 Inventory & wealth
 
@@ -223,7 +230,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 **Exclude:** GM-exclusive material (e.g. GM-only guidance, NPC building exclusives, hazard design content that players do not need on a sheet).
 
-**Later reference sidebar (not 0.9 blocker):** browsable Spells, Afflictions, Actions (combat maneuvers, etc.) fed from the same catalog where licensing allows.
+**Later reference tool (not 0.9 blocker):** browsable Spells, Afflictions, Actions (combat maneuvers, etc.) fed from the same catalog where licensing allows — registered on the **sidebar host**, not a separate window.
 
 **Acquisition:** **Hybrid** — ship a curated hand-maintained PC1/PC2 player pack for 0.9; keep schema compatible with a later attributed open/ORC dataset import after license review.
 
@@ -281,10 +288,11 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 - Tabs: `Identity`, `Attributes`, `Skills`, `Combat`, `Feats`, `Spells`, `Inventory`, `Play`, `Notes` (names may adjust).
 - Plain inputs; derived cells read-only and visually distinct.
 - Prominent **Save sheet** / **Load sheet** controls.
-- Mobile: wide-table horizontal scroll; Play tab thumb-friendly.
+- **Sidebar host** (app-level): collapsible rail; tools read/write the same document. Tool list TBD; empty host is valid.
+- Mobile: wide-table horizontal scroll; Play tab thumb-friendly; sidebar collapsed by default.
 - No cards, no decorative motion.
 
-**Later:** side panel/drawer for reference tabs (Spells / Afflictions / Actions) without abandoning the sheet grid.
+**Later tools:** reference tabs (Spells / Afflictions / Actions) plug into the host without abandoning the sheet grid.
 
 **i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; add `es` for 1.0. **Not started** — scaffold UI strings are hardcoded English in `app/src/App.tsx`.
 
@@ -298,7 +306,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 | UI | **React** |
 | Styling | Minimal CSS tables/grids; system fonts OK for placeholder |
 | State | One character document in memory; Save/Load `.json` files; optional single draft buffer |
-| App title | **Pathfinder 2E Character sheet** |
+| App title | Chrome: **Pathfinder 2E Character sheet** until Phase M; working product title **TTRPG Character Sheet** |
 | Calcs | Pure functions + golden tests |
 | Content | Planned: static JSON under `/content/remaster` and `/content/legacy` (directories not in the repo yet) |
 | Offline | Service worker caches app shell + content packs |
@@ -308,37 +316,35 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 ## 11. Phased delivery
 
-Live status checkboxes: [`ROADMAP.md`](ROADMAP.md).
+Live status checkboxes: [`ROADMAP.md`](ROADMAP.md). App-level phases (M, 1e, 2e, …) live there. This section is the original PF2e phase map.
 
 ### Phase 0 — Design lock (done)
 
-- Product decisions complete; ADR 0001 accepted.
+- Product decisions complete; ADR 0001 accepted (later superseded by ADR 0003).
 - Schema questions answered; `schemas/character.schema.json` is schemaVersion 1 (ADR 0002).
 
-### Phase 1 — Schema + core calc engine (TypeScript) — in progress
+### Phase 1 — Schema + core calc engine (TypeScript) — martial/caster slice done; leftover goldens deferred
 
 - Done: character JSON schema v1; TypeScript types; empty-sheet factory; Save strips `derived`; Ajv validation on Load/Save; `compute()` for attributes, proficiency, HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides; Fighter 5 and Wizard 5 goldens; React PWA scaffold with derived cells plus identity, feats, spells, inventory, strike, and play editors.
-- Remaining: goldens for Bard/Sorcerer, Cleric, companion user, one PC2 class; companion nested-sheet editor.
-- Content pack stubs (`/content/remaster`, `/content/legacy`) move to Phase 3; they are not in the repo yet.
-- Next increment options: [`next-increment-design.md`](next-increment-design.md).
+- Remaining (after PF1e 0.9): goldens for Bard/Sorcerer, Cleric, companion user, one PC2 class; companion nested-sheet editor.
+- Content pack stubs (`/content/remaster`, `/content/legacy`) stay Phase 3; they are not in the repo yet.
 
-### Phase 2 — PWA spreadsheet shell (0.9 track)
+### Phase 2 — PWA spreadsheet shell
 
-- Tab chrome, Save/Load, derived cells, identity/feats/spells/inventory/strike/play editors exist. Remaining: companion nested sheet; optional IndexedDB draft buffer; English UI strings externalized (currently hardcoded).
-- Build + Play tracking beyond the current HP / hero-point / dying fields.
+- Tab chrome, Save/Load, derived cells, identity/feats/spells/inventory/strike/play editors exist. Remaining: companion nested sheet; optional IndexedDB draft buffer; English UI strings externalized (currently hardcoded; may land during Phase M as T4′).
 
-### Phase 3 — Content fill-out
+### Phase 3 — Content fill-out (after PF1e 0.9)
 
 - PC1 + PC2 player catalog; legacy fallback rows for renames/replacements.
 
 ### Phase 4 — 1.0
 
-- Spanish (`es`) locale.
+- Spanish (`es`) locale (app-level).
 - Stability pass; still core calcs unless scope expands.
 
 ### Phase 5 — Post-1.0
 
-- Reference sidebar (spells / afflictions / actions).
+- Reference encyclopedia as a **sidebar tool** (spells / afflictions / actions), once tools are specified.
 - Complex `effects[]` automation.
 
 ---
@@ -347,8 +353,13 @@ Live status checkboxes: [`ROADMAP.md`](ROADMAP.md).
 
 Engineering fixtures (not necessarily shipped as player samples). Assert core outputs (HP, AC, skills, strikes, spell DC, etc.):
 
-1. Martial — **Fighter 5** (armor + multiple strikes)
-2. Prepared caster — **Wizard 5** or **Witch 5**
+**Required regressions (app 0.9):**
+
+1. Martial — **Fighter 5** (armor + multiple strikes) — exists
+2. Prepared caster — **Wizard 5** — exists
+
+**After PF1e 0.9 (original proposed set, still the PF2e coverage target):**
+
 3. Spontaneous caster — **Bard 5** or **Sorcerer 5**
 4. Divine prepared — **Cleric 5**
 5. Companion user — **Ranger 5** with animal companion **or** Druid with companion
@@ -360,17 +371,13 @@ Exact subclass/spell picks can be chosen during implementation as long as the ro
 
 ## 13. Working product summary
 
-This section is the **locked product target**, not a description of the current scaffold.
+This section is the **PF2e system target**, not the app 0.9 bar (see [umbrella §10](ttrpg-character-sheet-design.md)).
 
-- **Installable PWA**, spreadsheet UI, **TypeScript**, **MIT** license.
-- **One character** loaded; **Save sheet** / **Load sheet**.
-- **Player Core + Player Core 2** (hybrid content acquisition); no GM exclusives.
-- **Remaster-first / legacy fallback**; **core calcs** for 0.9/1.0 with expansion hooks.
-- **No** campaign house-rule flags in 0.9/1.0.
-- **English in 0.9**, **Spanish in 1.0**.
-- **No** dice roller, cloud, or VTT interop.
-- Golden tests use the accepted reference set in §12.
-- Later: reference sidebar for spells / afflictions / actions.
+- PF2e documents: **Remaster-first / legacy fallback**; **core calcs** with expansion hooks.
+- **Player Core + Player Core 2** (hybrid content acquisition); no GM exclusives — pack fill-out after PF1e 0.9.
+- **No** PF2e campaign house-rule flags in 0.9/1.0.
+- Shared app: installable PWA, spreadsheet, one character, Save/Load, English then Spanish, no dice/cloud/VTT.
+- Golden tests: Fighter 5 and Wizard 5 must keep passing; §12 remainder is later.
 
 ---
 
@@ -405,3 +412,5 @@ This section is the **locked product target**, not a description of the current 
 | 2026-08-14 | Point remaining Phase 1+ work at continuation options (`continuation-design.md`) |
 | 2026-08-14 | Record S1/S4 landing; point remaining work at `next-increment-design.md` |
 | 2026-08-15 | Point §11 at operational [`ROADMAP.md`](ROADMAP.md) after T1/T3 merge |
+| 2026-08-17 | Relabel as PF2e **system** spec under ADR 0003; leftover goldens/content after PF1e 0.9 |
+| 2026-08-17 | Sidebar is an app host (ADR 0005); encyclopedia is a future tool |

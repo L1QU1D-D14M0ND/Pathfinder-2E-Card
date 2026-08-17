@@ -1,8 +1,9 @@
 # ADR 0001 — Product direction for PF2e character sheet
 
-**Status:** Accepted  
+**Status:** Superseded  
 **Date:** 2026-08-13  
-**Context:** Stakeholder answered product questions across three rounds; design lock complete.
+**Superseded by:** [ADR 0003](0003-multi-system-product-direction.md) (2026-08-17) — multi-system TTRPG sheet, Pathfinder 1E development priority, PF2e slice preserved. The “Later reference UI” sidebar row is further narrowed by [ADR 0005](0005-sidebar-host.md) (host vs tools; encyclopedia is a future tool).  
+**Context:** Stakeholder answered product questions across three rounds; design lock complete. This ADR remains the historical PF2e-only product lock. PF2e **system** rules still live in the [PF2e design](../pf2e-dynamic-character-sheet-design.md) and [ADR 0002](0002-character-schema.md).
 
 ## Decision
 
@@ -42,5 +43,6 @@ Build a **lightweight installable PWA** Pathfinder Second Edition **player** cha
 
 ## References
 
-- [`../pf2e-dynamic-character-sheet-design.md`](../pf2e-dynamic-character-sheet-design.md)
+- [`0003-multi-system-product-direction.md`](0003-multi-system-product-direction.md) — current product lock
+- [`../pf2e-dynamic-character-sheet-design.md`](../pf2e-dynamic-character-sheet-design.md) — PF2e system spec
 - [`../../LICENSE`](../../LICENSE)

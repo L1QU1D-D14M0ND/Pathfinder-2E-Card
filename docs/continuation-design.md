@@ -1,12 +1,13 @@
 # Continuation design — options to proceed from Phase 1
 
-**Status:** Executed (S1 vertical slice + S4 validation prelude landed 2026-08-14)  
+**Status:** Executed (S1 vertical slice + S4 validation prelude landed 2026-08-14). Historical PF2e sequencing.  
+**Current sequencing:** [`next-increment-multi-system.md`](next-increment-multi-system.md) (ADR 0003).  
 **Date:** 2026-08-14  
 **Audience:** Product / engineering  
-**Depends on:** [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (v1.0 lock), [ADR 0001](adr/0001-product-direction.md), [ADR 0002](adr/0002-character-schema.md), [`schema-design-notes.md`](schema-design-notes.md)  
-**Remaining work:** [`next-increment-design.md`](next-increment-design.md)
+**Depends on:** [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (PF2e system spec), [ADR 0001](adr/0001-product-direction.md) (superseded), [ADR 0002](adr/0002-character-schema.md), [`schema-design-notes.md`](schema-design-notes.md)  
+**Remaining work (historical PF2e increment):** [`next-increment-design.md`](next-increment-design.md)
 
-This document does **not** reopen locked product decisions. It mapped the pre-S1 scaffold to remaining 0.9/1.0 work and recommended S1 + S4. Treat it as the record of those choices. **Do not use §11 as the next coding slice** — use the next-increment design.
+This document does **not** reopen locked PF2e schema/math decisions. It mapped the pre-S1 scaffold to remaining PF2e 0.9/1.0 work and recommended S1 + S4. Treat it as the record of those choices. **Do not use §11 as the next coding slice.** App 0.9 is now PF1e-first.
 
 Sections §3–§11 below are the **pre-S1 snapshot** and are intentionally not rewritten.
 

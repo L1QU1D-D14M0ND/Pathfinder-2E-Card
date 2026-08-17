@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/L1QU1D-D14M0ND/Pathfinder-2E-Card/schemas/character.schema.json",
   "title": "PF2e Character Sheet Document",
-  "description": "Versioned save format for one Pathfinder Second Edition player character (Remaster-first). schemaVersion 1. Inputs and play state are authoritative; derived.* is optional cache and MUST be omitted from Save sheet exports.",
+  "description": "Versioned save format for one Pathfinder Second Edition player character (Remaster-first). schemaVersion 1. Optional `system` is `pf2e` (missing on Load means pf2e). Inputs and play state are authoritative; derived.* is optional cache and MUST be omitted from Save sheet exports.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -32,6 +32,11 @@
       "type": "integer",
       "const": 1,
       "description": "Document schema version. Bump only with a migration path."
+    },
+    "system": {
+      "type": "string",
+      "const": "pf2e",
+      "description": "Rules system discriminator. Optional on Load: omitted files are treated as pf2e. Save sheet always writes pf2e."
     },
     "meta": { "$ref": "#/$defs/Meta" },
     "identity": { "$ref": "#/$defs/Identity" },

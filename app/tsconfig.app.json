@@ -23,6 +23,10 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "../schemas/character.schema.json"],
+  "include": [
+    "src",
+    "../schemas/character.schema.json",
+    "../schemas/pf1e/character.schema.json"
+  ],
   "exclude": ["src/**/*.test.ts", "src/test"]
 }

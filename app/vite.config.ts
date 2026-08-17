@@ -15,10 +15,10 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'Pathfinder 2E Character sheet',
-        short_name: 'PF2e Sheet',
+        name: 'TTRPG Character Sheet',
+        short_name: 'TTRPG Sheet',
         description:
-          'Local Pathfinder Second Edition player character sheet (Build + Play).',
+          'Local player character sheet for Pathfinder 1E and 2E (Build + Play).',
         theme_color: '#1a1a1a',
         background_color: '#ffffff',
         display: 'standalone',

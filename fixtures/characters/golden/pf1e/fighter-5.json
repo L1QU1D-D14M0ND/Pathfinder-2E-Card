@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "system": "pf1e",
+  "meta": {
+    "createdAt": "2026-08-17T12:00:00.000Z",
+    "updatedAt": "2026-08-17T12:00:00.000Z",
+    "appVersion": "0.0.0",
+    "locale": "en",
+    "characterId": "golden-pf1e-fighter-5"
+  },
+  "identity": {
+    "characterName": "Golden Fighter",
+    "playerName": "Fixture",
+    "race": { "id": "race.human", "name": "Human" },
+    "size": "medium",
+    "alignment": "lawful good",
+    "deity": "Iomedae",
+    "xp": 10000,
+    "languages": [
+      { "id": null, "name": "Common" }
+    ]
+  },
+  "classes": [
+    {
+      "id": "class-row-fighter",
+      "class": { "id": "class.fighter", "name": "Fighter" },
+      "levels": 5,
+      "hitDie": 10,
+      "babProgression": "full",
+      "saves": { "fort": "good", "ref": "poor", "will": "poor" },
+      "favored": { "hp": 5, "skillRanks": 0 }
+    }
+  ],
+  "abilities": {
+    "str": { "score": 18 },
+    "dex": { "score": 14 },
+    "con": { "score": 14 },
+    "int": { "score": 10 },
+    "wis": { "score": 12 },
+    "cha": { "score": 8 }
+  },
+  "vitals": {
+    "hpRolled": [10, 6, 6, 6, 6],
+    "currentHp": 49,
+    "tempHp": 0,
+    "nonlethal": 0,
+    "speeds": [{ "kind": "land", "feet": 20 }]
+  },
+  "armorClass": {
+    "armorBonus": 6,
+    "shieldBonus": 0,
+    "natural": 0,
+    "deflection": 0,
+    "dodge": 0,
+    "other": 0,
+    "maxDex": 2,
+    "armorCheckPenalty": -5,
+    "notes": "Chainmail; Armor Training not auto-applied"
+  },
+  "combat": {
+    "initiativeMisc": 0,
+    "meleeAttackMisc": 0,
+    "rangedAttackMisc": 0,
+    "cmbMisc": 0,
+    "cmdMisc": 0,
+    "fortMisc": 0,
+    "refMisc": 0,
+    "willMisc": 0
+  },
+  "skills": [
+    { "key": "acrobatics", "name": "Acrobatics", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "appraise", "name": "Appraise", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "bluff", "name": "Bluff", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "climb", "name": "Climb", "ability": "str", "ranks": 5, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "diplomacy", "name": "Diplomacy", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "disable-device", "name": "Disable Device", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "disguise", "name": "Disguise", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "escape-artist", "name": "Escape Artist", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "fly", "name": "Fly", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "handle-animal", "name": "Handle Animal", "ability": "cha", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "heal", "name": "Heal", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "intimidate", "name": "Intimidate", "ability": "cha", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "linguistics", "name": "Linguistics", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "perception", "name": "Perception", "ability": "wis", "ranks": 5, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "ride", "name": "Ride", "ability": "dex", "ranks": 0, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "sense-motive", "name": "Sense Motive", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "sleight-of-hand", "name": "Sleight of Hand", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "spellcraft", "name": "Spellcraft", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "stealth", "name": "Stealth", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "survival", "name": "Survival", "ability": "wis", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "swim", "name": "Swim", "ability": "str", "ranks": 0, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "use-magic-device", "name": "Use Magic Device", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-arcana", "name": "Knowledge (arcana)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-dungeoneering", "name": "Knowledge (dungeoneering)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-engineering", "name": "Knowledge (engineering)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-geography", "name": "Knowledge (geography)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-history", "name": "Knowledge (history)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-local", "name": "Knowledge (local)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nature", "name": "Knowledge (nature)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nobility", "name": "Knowledge (nobility)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-planes", "name": "Knowledge (planes)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-religion", "name": "Knowledge (religion)", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 }
+  ],
+  "feats": [
+    {
+      "id": "feat-weapon-focus",
+      "category": "combat",
+      "feat": { "id": "feat.weapon-focus", "name": "Weapon Focus (longsword)" },
+      "levelGained": 1,
+      "summary": "Not auto-applied in 0.9."
+    },
+    {
+      "id": "feat-power-attack",
+      "category": "combat",
+      "feat": { "id": "feat.power-attack", "name": "Power Attack" },
+      "levelGained": 1,
+      "summary": "Not auto-applied in 0.9."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-armor-training",
+      "feature": { "id": "class.fighter.armor-training", "name": "Armor Training" },
+      "levelGained": 3,
+      "summary": "User-entered. ACP/max Dex on armorClass are not auto-adjusted."
+    }
+  ],
+  "attacks": [
+    {
+      "id": "atk-longsword",
+      "name": "Longsword",
+      "attackType": "melee",
+      "itemId": "item-longsword",
+      "attackAbility": "str",
+      "damageAbility": "str",
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "miscAttack": 0,
+      "miscDamage": 0
+    }
+  ],
+  "spellcasting": [],
+  "inventory": {
+    "currency": { "cp": 0, "sp": 0, "gp": 175, "pp": 0 },
+    "items": [
+      {
+        "id": "item-chainmail",
+        "item": { "id": "armor.chainmail", "name": "Chainmail" },
+        "quantity": 1,
+        "pounds": 40,
+        "location": "equipped",
+        "armor": {
+          "acBonus": 6,
+          "maxDex": 2,
+          "armorCheckPenalty": -5,
+          "spellFailurePercent": 30
+        }
+      },
+      {
+        "id": "item-longsword",
+        "item": { "id": "weapon.longsword", "name": "Longsword" },
+        "quantity": 1,
+        "pounds": 4,
+        "location": "equipped",
+        "weapon": {
+          "damageDice": "1d8",
+          "damageType": "slashing",
+          "critRange": 19,
+          "critMultiplier": 2
+        }
+      },
+      {
+        "id": "item-dagger",
+        "item": { "id": "weapon.dagger", "name": "Dagger" },
+        "quantity": 1,
+        "pounds": 1,
+        "location": "carried"
+      }
+    ],
+    "notes": "AC numbers live on armorClass; item stats are documentary."
+  },
+  "companions": [],
+  "conditions": [],
+  "play": { "dailyResources": [] },
+  "notes": {
+    "appearance": "Golden-test martial character.",
+    "personality": "",
+    "campaign": "",
+    "other": "20-point buy + human +2 Str. Chainmail, no shield."
+  },
+  "overrides": {},
+  "extensions": {}
+}

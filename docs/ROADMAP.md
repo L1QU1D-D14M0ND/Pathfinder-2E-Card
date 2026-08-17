@@ -1,94 +1,153 @@
 # Roadmap
 
-Operational tracker for Pathfinder 2E Character sheet. Product decisions live in [ADR 0001](adr/0001-product-direction.md) and the [design doc](pf2e-dynamic-character-sheet-design.md). Schema decisions live in [ADR 0002](adr/0002-character-schema.md). Sequencing history: [continuation design](continuation-design.md) (S1/S4 executed), [next increment](next-increment-design.md) (T1/T3 executed).
+Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
-**Status date:** 2026-08-15  
-**Current phase:** 1–2 of 5 — schema, validation, core calcs, Fighter/Wizard goldens, and spreadsheet editors (except companions) are in. Remaining goldens, i18n catalogs, content packs, and companion UI are not started.  
-**0.9 estimate:** ~55% (martial + prepared-caster vertical slices work; full golden set and content packs do not).
+**Status date:** 2026-08-17  
+**Current phase:** **1e in progress** (PF1e schema + martial `compute()` + Fighter 5 + New→PF1e). Sidebar **tools** wait until the character sheet is ~90% done (dynamic and functional).  
+**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial slice**. Overall ~35% of the new 0.9 definition.
 
 ---
 
 ## Target milestones
 
-**0.9** — installable English PWA; spreadsheet Build + Play; Remaster-first / legacy fallback; core calcs; Player Core + Player Core 2 catalog; Save/Load one sheet.
+**0.9** — installable English PWA; spreadsheet Build + Play; **PF1e** core calcs + editors for Fighter 5, Wizard 5, and one multiclass golden; **PF2e** existing slice (Fighter 5, Wizard 5, current editors) still loads and computes; Save/Load one sheet with a `system` discriminator; **sidebar host** may be empty or collapsed (no named tools required).
 
 **1.0** — Spanish locale; same functional bar as 0.9, called stable.
 
-**Later** — reference sidebar (Spells / Afflictions / Actions); typed `effects[]` automation; optional card play surfaces.
+**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools after the sheet is ~90% done** (Attack Helper specified; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
 
 ---
 
-## Phase 0 — Design lock
+## Phase 0 — Original PF2e design lock
 
-**Status:** Done
+**Status:** Done (historical)
 
-- [x] Product decisions locked ([ADR 0001](adr/0001-product-direction.md))
-- [x] Character JSON schema v1 ([`schemas/character.schema.json`](../schemas/character.schema.json), [ADR 0002](adr/0002-character-schema.md))
-- [x] Design doc v1.0 lock ([design doc](pf2e-dynamic-character-sheet-design.md))
-
----
-
-## Phase 1 — Schema + core calc engine
-
-**Status:** Mostly done (~75%)
-
-Done (S4 + S1 + T1):
-
-- [x] Schema v1 covering identity, attributes, proficiencies, vitals, AC, skills, feats, features, actions, strikes, spellcasting, inventory, companions, conditions, play, notes, overrides, extensions, optional `derived`
-- [x] TypeScript types mirrored from the schema (`app/src/character/types.ts`)
-- [x] Empty-sheet factory with 16 auto-seeded standard skills
-- [x] Save serializer strips `derived`
-- [x] Example fixtures (`minimal.example.json`, `new-sheet.example.json`)
-- [x] Validate Load and Save against `schemas/character.schema.json` (Ajv 2020-12)
-- [x] Core calc engine: attribute modifiers, proficiency bonus, Perception / saves / skills / Class DC, max HP, AC, strike attack/damage, spell attack/DC, bulk, investiture
-- [x] Overrides win and are applied last (engine allow-list)
-- [x] Unknown `effects[].type` ignored safely
-- [x] Golden tests: Fighter 5; Wizard 5
-- [x] Vitest + CI (`.github/workflows/ci.yml`)
-
-Remaining (blocks 0.9):
-
-- [ ] Golden tests: Bard or Sorcerer 5; Cleric 5; companion user (Ranger or Druid); one Player Core 2 class at 3 or 5
-- [ ] Override UI (engine works; no cell editor yet)
+- [x] PF2e-only product decisions ([ADR 0001](adr/0001-product-direction.md), superseded)
+- [x] PF2e character JSON schema v1 ([`schemas/character.schema.json`](../schemas/character.schema.json), [ADR 0002](adr/0002-character-schema.md))
+- [x] PF2e design doc v1.0 lock
 
 ---
 
-## Phase 2 — PWA spreadsheet shell
+## Phase 0b — Multi-system product lock
 
-**Status:** Strong progress (~70%)
+**Status:** Done (this documentation change)
 
-Done (scaffold + S1 editors + T3):
-
-- [x] React + Vite app with spreadsheet tab chrome
-- [x] Identity strip: name, level, class, current HP, hero points
-- [x] New / Load / Save sheet (`.json`) with schema validation
-- [x] Derived cells read-only and visually distinct
-- [x] Identity leftovers: XP, subclass, languages, traits, deity, edicts/anathema, speeds, senses, HP bonuses
-- [x] Attributes, skills (+ lore), perception, saves inputs, class DC, armor/weapon proficiencies, AC/armor/shield, strikes
-- [x] Feats / features / actions row editors
-- [x] Spellcasting entry editor (slots, lists, focus)
-- [x] Inventory items (armor/weapon/shield subfields), currency, bulk/invested derived
-- [x] Play: dying track, conditions, daily resources
-- [x] PWA manifest + `vite-plugin-pwa` configured (not separately runtime-tested)
-
-Remaining (blocks 0.9):
-
-- [ ] Companion nested-sheet editor
-- [ ] Externalize English UI strings into message catalogs (currently hardcoded)
-- [ ] Optional IndexedDB single draft buffer (refresh safety; not a character library)
-- [ ] Confirm install + offline after install on desktop and mobile
+- [x] Pivot to a multi-system player sheet; **PF1e development priority**; PF2e slice preserved ([ADR 0003](adr/0003-multi-system-product-direction.md))
+- [x] Umbrella design ([`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md))
+- [x] PF1e system spec + schema target notes
+- [x] Roadmap and next-increment retargeted
+- [x] Shared kernel vs per-system inventory ([ADR 0004](adr/0004-shared-kernel.md))
+- [x] Loaded-sheet sidebar host; tools TBD ([ADR 0005](adr/0005-sidebar-host.md))
+- [x] Working display name in PWA chrome (deferred to Phase M)
 
 ---
 
-## Phase 3 — Content fill-out
+## Phase M — Multi-system refactor
+
+**Status:** Done (2026-08-17)
+
+- [x] Add `system` to saved documents (`pf2e` on Save; missing on Load → `pf2e`)
+- [x] Extract shared kernel (`newId`, strip-derived, Ajv helper, Save/Load wiring, `DerivedCell`) and `SystemModule` registry ([ADR 0004](adr/0004-shared-kernel.md))
+- [x] Isolate PF2e types/engine/panels so a second system can sit beside them (no cross-imports)
+- [x] New sheet still produces a valid PF2e document until PF1e factory exists
+- [x] Existing PF2e goldens and unit tests stay green
+- [x] Leave shell layout room for a sidebar rail (empty/collapsed aside OK)
+- [ ] Optional: extract English chrome (`en.json`) so PF1e UI does not add literals (T4′)
+
+Working display name in chrome is **TTRPG Character Sheet**.
+
+---
+
+## Phase 1e — PF1e schema + martial core
+
+**Status:** In progress (schema + engine + Fighter 5 + editors)
+
+- [x] PF1e JSON Schema + schema ADR (analog of ADR 0002) — [ADR 0006](adr/0006-pf1e-character-schema.md)
+- [x] TypeScript types; empty-sheet factory (seeded PF1e skills)
+- [x] Ajv validate Load/Save for `system: "pf1e"`
+- [x] Core calc: ability modifiers, BAB, saves, HP, AC/touch/FF, CMB/CMD, iteratives, skills, pounds/load
+- [x] Overrides last; unknown `effects[]` ignored
+- [x] Golden: PF1e Fighter 5
+- [x] New sheet: user can choose PF1e
+- [x] Editors enough to enter that Fighter (identity/classes, abilities, skills, combat, inventory subset)
+
+---
+
+## Phase 2e — PF1e prepared caster
 
 **Status:** Not started (0%)
 
-- [ ] Curated Remaster Player Core player catalog under `content/remaster` (directories do not exist yet)
-- [ ] Player Core 2 player catalog (same pack or sibling)
-- [ ] Legacy fallback rows for renames/replacements under `content/legacy`
-- [ ] Content resolver: Remaster id → legacy → stamp `rulesetSource`; isolate failures to the row, never fail whole-sheet load
-- [ ] Enough catalog to build the six golden-test characters
+- [ ] Spell DC + bonus spells from ability in `compute()`
+- [ ] Spellcasting entry editor (slots, lists)
+- [ ] Golden: PF1e Wizard 5
+
+---
+
+## Phase 3e — PF1e multiclass
+
+**Status:** Not started (0%)
+
+- [ ] Two (or more) class rows in UI; stacked BAB/saves/HD
+- [ ] Golden: Fighter 2 / Wizard 3 (or equivalent mixed BAB)
+
+---
+
+## Phase 3c — PF1e content pack
+
+**Status:** Not started (0%)
+
+- [ ] Curated Core Rulebook player catalog (enough ids to rebuild the three goldens)
+- [ ] Resolver: catalog id → custom; isolate row failures
+- [ ] OGL / Product Identity review before shipping copyrighted text
+
+Until this pack exists, goldens use `custom` numeric inputs (same as current PF2e goldens).
+
+---
+
+## Phase Sb — Sidebar host
+
+**Status:** Done (thin host, 2026-08-17). Named tools not started.
+
+- [x] Collapsible rail on the loaded sheet (New or Load)
+- [x] Tool registry + empty state; `SidebarToolContext` (`character`, `derived`, `update`)
+- [x] Mobile collapsed by default (and desktop starts collapsed while the registry is empty)
+- [x] No named tools required (list specified later)
+- [ ] **Attack Helper** (later — after the sheet is ~90% done) — [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md)
+
+See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).
+
+---
+
+## Phase 1–2 leftover (PF2e) — deprioritized
+
+**Status:** Frozen relative to 0.9. Do not schedule ahead of Phase 1e–3e unless the product lock changes.
+
+Already in the repo (kept):
+
+- [x] PF2e schema v1, types, factory, Ajv, `compute()` (HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides)
+- [x] Goldens: PF2e Fighter 5; Wizard 5
+- [x] Spreadsheet editors except companions
+- [x] Vitest + CI
+
+Not started (after PF1e 0.9):
+
+- [ ] PF2e goldens: Bard or Sorcerer 5; Cleric 5; companion user; one Player Core 2 class
+- [ ] Companion nested-sheet editor
+- [ ] Override UI (engine works; no cell editor)
+- [ ] English message catalogs (may land earlier as T4′ during M/1e)
+- [ ] IndexedDB draft buffer
+- [ ] PWA install + offline verification (needed once before calling **app** 0.9 done; not PF2e-specific)
+- [ ] Remaster + legacy content packs
+
+---
+
+## Phase 3 (PF2e content) — deprioritized
+
+**Status:** Not started (0%). Sequenced **after** PF1e 0.9.
+
+- [ ] Curated Remaster Player Core player catalog
+- [ ] Player Core 2 player catalog
+- [ ] Legacy fallback rows; `rulesetSource` stamp
 
 ---
 
@@ -97,7 +156,7 @@ Remaining (blocks 0.9):
 **Status:** Not started (0%)
 
 - [ ] Spanish (`es`) locale catalog
-- [ ] Stability pass; still core calcs only unless scope expands
+- [ ] Stability pass on the 0.9 bar (PF1e playable + PF2e slice); still core calcs only
 
 ---
 
@@ -105,15 +164,35 @@ Remaining (blocks 0.9):
 
 **Status:** Deferred by design (0%)
 
-- [ ] Reference sidebar: Spells / Afflictions / Actions
-- [ ] Typed `effects[]` automation for feats/spells/items
+- [ ] Remaining PF2e 0.9 leftovers if not already done
+- [ ] Sidebar **tools** (list TBD except **Attack Helper**, specified). Sequence: after the character sheet is ~90% done, dynamic and functional. Candidate also: Spells / Afflictions / Actions reference
+- [ ] Typed `effects[]` automation
 - [ ] Optional card-oriented play surfaces
+- [ ] Additional systems behind `system`
 
-Out of scope for 0.9/1.0 (do not pull forward unless product lock changes): dice roller, cloud, VTT interop, house-rule flags (e.g. Free Archetype), GM-exclusive content, multi-character library.
+Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-exclusive content, multi-character library, a third implemented game system.
 
 ---
 
-## Domain coverage (schema vs UI vs calcs)
+## Domain coverage
+
+### PF1e (target)
+
+| Domain | Schema | UI editor | Derived calcs |
+| --- | --- | --- | --- |
+| Identity / race / alignment / `classes[]` | Yes | Yes | Level from class sum |
+| Ability scores | Yes | Yes | Modifiers |
+| BAB, saves, iteratives | Yes | Yes (derived) | Yes |
+| AC / touch / FF, CMB / CMD | Yes | Yes | Yes |
+| HP (HD + Con) | Yes | Yes | Yes |
+| Skills (ranks) | Yes | Yes | Yes |
+| Feats / features | Yes | Yes | n/a (effects ignored) |
+| Inventory (pounds) | Yes | Yes | Weight + load |
+| Spellcasting | Schema hook | No (Phase 2e) | — |
+| Play (negative HP, conditions) | Yes | Yes | Dead-at threshold |
+| Overrides + Save/Load | Yes | Save/Load yes | Overrides applied |
+
+### PF2e (in repo)
 
 | Domain | Schema | UI editor | Derived calcs |
 | --- | --- | --- | --- |
@@ -138,15 +217,17 @@ Out of scope for 0.9/1.0 (do not pull forward unless product lock changes): dice
 
 ## Recommended next work (in order)
 
-1. **Remaining goldens** — Cleric 5, Bard (or Sorcerer) 5, then Champion (PC2) and Ranger+companion (needs companion editor).
-2. **Companion nested-sheet editor** — unblocks the companion golden.
-3. **English message catalogs** — required before 0.9 even though Spanish is 1.0 (T4 was skipped).
-4. **Content packs** (Phase 3) once ids and calcs have a stable consumer.
-5. **IndexedDB draft buffer** and **PWA install/offline verification**.
+1. **Phase 2e** — Wizard 5 + spell editors.
+2. **Phase 3e** — Multiclass golden.
+3. **Phase 3c** — Minimal CRB pack.
+4. **Draft buffer + PWA proof** — app 0.9 platform.
+5. **Spanish** — 1.0.
+6. **Only then** leftover PF2e goldens / companion / Remaster packs.
+7. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper** is the first named tool). Do not start tools during schema/engine work.
 
 ---
 
-## Merged branch history (2026-08-15)
+## Merged branch history
 
 | Branch | Objective | Outcome |
 | --- | --- | --- |
@@ -162,5 +243,11 @@ Out of scope for 0.9/1.0 (do not pull forward unless product lock changes): dice
 
 | Date | Change |
 | --- | --- |
-| 2026-08-13 | First operational roadmap, audited against the repo and design doc §11 |
+| 2026-08-13 | First operational roadmap, audited against the repo and PF2e design doc §11 |
 | 2026-08-15 | Refresh after merging S1/S4/T1/T3 into `main` |
+| 2026-08-17 | Retarget to multi-system / PF1e-first (ADR 0003). PF2e leftover 0.9 work deprioritized |
+| 2026-08-17 | Shared kernel inventory (ADR 0004); Phase M extracts it |
+| 2026-08-17 | Sidebar host (ADR 0005); tools TBD; Phase Sb |
+| 2026-08-17 | Reserve Attack Helper as a later sidebar tool (no in-app dice) |
+| 2026-08-17 | Phase M kernel/shell + thin sidebar host landed |
+| 2026-08-17 | Phase 1e: PF1e schema (ADR 0006), martial compute, Fighter 5, New→PF1e. Tools deferred until sheet ~90% done |

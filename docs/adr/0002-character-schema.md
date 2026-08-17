@@ -1,8 +1,8 @@
 # ADR 0002 — Character document JSON schema v1
 
-**Status:** Accepted  
+**Status:** Accepted (PF2e documents only)  
 **Date:** 2026-08-13  
-**Context:** Product direction locked in ADR 0001; Save/Load format needed before calc engine and UI. Stakeholder answered schema open questions.
+**Context:** Product direction locked in ADR 0001; Save/Load format needed before calc engine and UI. Stakeholder answered schema open questions. [ADR 0003](0003-multi-system-product-direction.md) does **not** retire this schema: it remains the contract for Pathfinder 2E save files. The PF1e schema is [ADR 0006](0006-pf1e-character-schema.md). Do not extend this schema with First Edition fields.
 
 ## Decision
 
@@ -37,6 +37,8 @@ Use `schemas/character.schema.json` as **schemaVersion 1** for a single PC sheet
 - [`../../schemas/character.schema.json`](../../schemas/character.schema.json)
 - [`../../fixtures/characters/minimal.example.json`](../../fixtures/characters/minimal.example.json)
 - [`../schema-design-notes.md`](../schema-design-notes.md)
-- [`0001-product-direction.md`](0001-product-direction.md)
+- [`0001-product-direction.md`](0001-product-direction.md) — superseded product lock
+- [`0003-multi-system-product-direction.md`](0003-multi-system-product-direction.md) — current product lock
 - [`../continuation-design.md`](../continuation-design.md) — S1/S4 implementation options (executed)
-- [`../next-increment-design.md`](../next-increment-design.md) — options after S1/S4
+- [`../next-increment-design.md`](../next-increment-design.md) — historical PF2e options after S1/S4
+- [`../next-increment-multi-system.md`](../next-increment-multi-system.md) — current sequencing
