@@ -1,9 +1,9 @@
-# Character JSON schema — design notes
+# Character JSON schema — design notes (Pathfinder 2E)
 
 **Schema:** [`../schemas/character.schema.json`](../schemas/character.schema.json)  
 **Example:** [`../fixtures/characters/minimal.example.json`](../fixtures/characters/minimal.example.json)  
 **schemaVersion:** `1`  
-**Status:** Schema decisions locked (v1.1 amendments; still `schemaVersion: 1` — not yet released)
+**Status:** Schema decisions locked for **PF2e** documents (v1.1 amendments; still `schemaVersion: 1` — not yet released). Product direction is [ADR 0003](adr/0003-multi-system-product-direction.md). PF1e gets a separate schema; see [`pf1e-schema-design-notes.md`](pf1e-schema-design-notes.md). Phase M may add an optional `system: "pf2e"` field without bumping `schemaVersion`.
 
 ---
 
@@ -62,7 +62,7 @@ lore.warfare
 | --- | --- |
 | UI framework | **React** + TypeScript |
 | Save file extension | **`.json`** |
-| App display name | **Pathfinder 2E Character sheet** |
+| App display name | **Pathfinder 2E Character sheet** in current chrome; working product title is **TTRPG Character Sheet** (ADR 0003) |
 
 ### Soft follow-up (not blocking)
 
@@ -91,7 +91,7 @@ Unknown `type` values must be ignored by the resolver.
 
 ### I5 — No dual-class model
 
-Out of scope; use feats/features/`extensions` if needed.
+PF2e Dual Class (campaign option) remains out of scope; use feats/features/`extensions` if needed. This is **not** PF1e free multiclassing, which is in scope on the PF1e document ([PF1e design](pf1e-character-sheet-design.md)).
 
 ### I6 — Class-specific resources
 
@@ -117,14 +117,26 @@ Legacy rune names map in content fallback, not alternate schema enums.
 
 ## Next implementation steps
 
+PF2e leftover editors/goldens/content are **deprioritized** behind PF1e ([roadmap](ROADMAP.md)). Remaining PF2e notes:
+
 1. ~~TypeScript types mirrored from the schema.~~  
 2. ~~Empty-sheet factory: auto-seed 16 skills; `schemaVersion: 1`.~~  
 3. ~~Save sheet serializer that strips `derived`.~~  
 4. ~~Validate Load and Save against `schemas/character.schema.json`.~~  
-5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5 golden exists; remaining goldens still open.  
-6. Expand spreadsheet editors (identity leftovers, feats, spells, strikes, inventory, conditions exist; companions remain).  
-7. Externalize English UI strings (i18n catalogs; Spanish at 1.0).  
+5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5 golden exists; remaining PF2e goldens deferred.  
+6. Companion nested-sheet editor still missing (after PF1e 0.9).  
+7. Externalize English UI strings (may land as T4′ during Phase M).  
 8. Optional IndexedDB draft buffer for refresh safety.
 
 S1/S4 record: [`continuation-design.md`](continuation-design.md).  
-Options for the next increment: [`next-increment-design.md`](next-increment-design.md).
+Historical PF2e increment: [`next-increment-design.md`](next-increment-design.md).  
+Current sequencing: [`next-increment-multi-system.md`](next-increment-multi-system.md).
+
+---
+
+## Document history
+
+| Date | Change |
+| --- | --- |
+| 2026-08-13 | Schema v1 lock notes |
+| 2026-08-17 | Relabeled PF2e-only; point leftover work at ADR 0003 sequencing |

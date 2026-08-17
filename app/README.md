@@ -1,6 +1,6 @@
-# Pathfinder 2E Character sheet (app)
+# TTRPG Character Sheet (app)
 
-React + TypeScript + Vite PWA for a local PF2e player character sheet.
+React + TypeScript + Vite PWA. Working product title: **TTRPG Character Sheet**. Current chrome and package name are still Pathfinder 2E until Phase M.
 
 ## Scripts
 
@@ -11,16 +11,18 @@ npm test
 npm run build
 ```
 
-## Features in this scaffold
+## Features in this scaffold (PF2e)
 
 - Spreadsheet-style UI with identity, feats, spells, combat, inventory, and play editors
 - New / Load / Save sheet (`.json`), validated against `character.schema.json`
-- Auto-seeded standard skills
+- Auto-seeded standard PF2e skills
 - Core calc engine (`compute`) for attributes, proficiency, HP, AC, skills, strikes, spell attack/DC, bulk, investiture
 - Save export strips `derived`
 - PWA manifest + service worker configured via `vite-plugin-pwa` (not separately runtime-tested)
 - UI strings are hardcoded English; message catalogs are not started
 
-Schema: `../schemas/character.schema.json`
+PF1e types/engine/UI are not in this package yet. Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr/0003-multi-system-product-direction.md).
 
-Golden fixtures: `../fixtures/characters/golden/fighter-5.json`, `../fixtures/characters/golden/wizard-5.json`
+Schema: `../schemas/character.schema.json` (PF2e)
+
+Golden fixtures: `../fixtures/characters/golden/fighter-5.json`, `../fixtures/characters/golden/wizard-5.json` (PF2e)
