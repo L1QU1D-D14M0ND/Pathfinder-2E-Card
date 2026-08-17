@@ -218,7 +218,7 @@ export function IdentityPanel({
           ) : (
             character.classes.map((row, index) => (
               <tr key={row.id}>
-                <td>
+                <td className="class-cell">
                   <select
                     aria-label="CRB class"
                     value={row.class.id ?? ''}

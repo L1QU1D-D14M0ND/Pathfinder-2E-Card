@@ -221,6 +221,17 @@ textarea {
   white-space: nowrap;
 }
 
+.sheet-table.wide select {
+  min-width: 7.5rem;
+}
+
+.class-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 8.5rem;
+}
+
 .nested-stats {
   display: flex;
   flex-wrap: wrap;
