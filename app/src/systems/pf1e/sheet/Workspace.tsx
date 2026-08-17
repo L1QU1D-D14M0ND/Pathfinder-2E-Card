@@ -177,7 +177,13 @@ export function Pf1eWorkspace({
         )}
 
         {tab === 'abilities' && (
-          <table className="sheet-table">
+          <>
+            <p className="muted">
+              Modifier is floor((score − 10) / 2). Temp mod adds to that
+              modifier, not to the score — raise Score for belts or ability
+              increases.
+            </p>
+            <table className="sheet-table">
             <thead>
               <tr>
                 <th>Ability</th>
@@ -241,6 +247,7 @@ export function Pf1eWorkspace({
               })}
             </tbody>
           </table>
+          </>
         )}
 
         {tab === 'skills' && (

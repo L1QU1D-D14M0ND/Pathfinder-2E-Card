@@ -1,5 +1,6 @@
 import type { Abilities, AbilityKey, Size } from '../character/types'
 
+/** CRB Ability Modifiers table: floor((score − 10) / 2). */
 export function abilityModifierFromScore(score: number): number {
   return Math.floor((score - 10) / 2)
 }

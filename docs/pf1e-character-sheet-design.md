@@ -167,7 +167,9 @@ Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 
 
 ## 7. Content pack (Phase 3c)
 
-Curated CRB player catalog under a path such as `content/pf1e/crb/` (directories do not exist yet): races, 11 classes (progression metadata), skills, feats (sheet-useful names/summaries), weapons/armor, spell **metadata** (school, level, short summary) — not full spell text dumps if license review forbids.
+Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
+
+Batch 1 (landed): ability-modifier formula (engine-owned) + BAB/save progression tags for Fighter and Wizard. Identity can apply those tags from a class picker. Remaining classes, skills, race, weapons, and spell metadata wait.
 
 Enough catalog to rebuild the three goldens is the 0.9 content bar. Full CRB spell list can trail.
 
@@ -189,3 +191,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-17 | Share sidebar host with PF2e; PF1e tools optional later |
 | 2026-08-17 | Schema v1 (ADR 0006). Fighter 5 golden uses a single +5 iterative (CRB). |
 | 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden proves stacked BAB/saves. |
+| 2026-08-17 | Phase 3c batch 1: CRB pack process; ability modifiers + BAB/saves. |

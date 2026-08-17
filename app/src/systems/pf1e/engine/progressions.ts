@@ -1,5 +1,9 @@
 import type { BabProgression, ClassEntry, SaveQuality } from '../character/types'
 
+/**
+ * CRB class BAB tables: full = levels; ¾ = floor(levels×3/4); ½ = floor(levels/2).
+ * Stack per class row, then sum (no fractional BAB).
+ */
 export function babFromProgression(
   progression: BabProgression,
   levels: number,
@@ -15,6 +19,7 @@ export function babFromProgression(
   }
 }
 
+/** CRB: good = 2 + floor(levels/2); poor = floor(levels/3). Stack per class row. */
 export function saveFromProgression(
   quality: SaveQuality,
   levels: number,

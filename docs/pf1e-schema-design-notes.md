@@ -123,6 +123,7 @@ condition.sickened
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
 6. ~~Multiclass golden (Phase 3e).~~
+7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batch 1 landed.
 
 Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 
@@ -136,3 +137,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-17 | ADR 0006 + on-disk schema; field names locked |
 | 2026-08-17 | Phase 2e: spell DC + bonus slots in compute |
 | 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden |
+| 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves |

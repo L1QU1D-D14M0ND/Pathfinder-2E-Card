@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-17  
-**Current phase:** **3e done** (PF1e Fighter 2 / Wizard 3 golden). Next code: **3c** (minimal CRB pack) or platform (draft buffer / PWA). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **3c in progress** (CRB pack, batch 1: ability modifiers + BAB/saves). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~50% of the new 0.9 definition.
 
 ---
@@ -94,13 +94,16 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** Not started (0%)
+**Status:** In progress (batch 1 of a slow two-mechanics review)
 
-- [ ] Curated Core Rulebook player catalog (enough ids to rebuild the three goldens)
-- [ ] Resolver: catalog id → custom; isolate row failures
-- [ ] OGL / Product Identity review before shipping copyrighted text
+- [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
+- [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
+- [x] Lookup: catalog id → custom; unknown id does not throw
+- [ ] Remaining CRB character mechanics (batches of 2; see pack design queue)
+- [ ] Catalog enough ids to rebuild the three goldens (race, skills, weapons/armor, remaining classes)
+- [ ] OGL / Product Identity review before shipping copyrighted **text**
 
-Until this pack exists, goldens use `custom` numeric inputs (same as current PF2e goldens).
+Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves when the player picks Fighter or Wizard).
 
 ---
 
@@ -219,7 +222,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Phase 3c** — Minimal CRB pack.
+1. **Phase 3c** — CRB pack in batches of two mechanics (batch 1 landed: ability modifiers + BAB/saves).
 2. **Draft buffer + PWA proof** — app 0.9 platform.
 3. **Spanish** — 1.0.
 4. **Only then** leftover PF2e goldens / companion / Remaster packs.
@@ -253,3 +256,4 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | 2026-08-17 | Phase 1e: PF1e schema (ADR 0006), martial compute, Fighter 5, New→PF1e. Tools deferred until sheet ~90% done |
 | 2026-08-17 | Phase 2e: spell DC + bonus slots + Wizard 5. Reserve Actions List tool |
 | 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden. Reserve Budget Calculator tool |
+| 2026-08-17 | Phase 3c batch 1: CRB ability modifiers + BAB/save progressions; Fighter/Wizard catalog tags |

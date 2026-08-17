@@ -25,7 +25,8 @@ npm run build
 - `system: "pf2e"` written on PF2e Save; files without `system` still load as PF2e
 - `system: "pf1e"` required on PF1e documents
 - Auto-seeded standard skills per system
-- PF1e martial calc (BAB, saves, AC trio, CMB/CMD, iteratives, pounds) and PF2e core calc
+- PF1e martial + spell calc (Fighter 5, Wizard 5, and Fighter 2 / Wizard 3 goldens) and PF2e core calc
+- CRB pack batch 1: Fighter/Wizard HD/BAB/save tags; ability modifier formula reviewed against CRB
 - Save export strips `derived`
 - Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the sheet is ~90% done)
 - PWA manifest + service worker configured via `vite-plugin-pwa` (not separately runtime-tested)

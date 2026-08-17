@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-17  
-**Implementation:** Phase 3e landed (PF1e Fighter 2 / Wizard 3 golden). Next: PF1e CRB pack (3c) or platform. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
+**Implementation:** Phase 3c batch 1 started (ability modifiers + BAB/saves; Fighter/Wizard catalog tags). Next: CRB mechanics in pairs ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -264,3 +264,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-17 | Phase 1e schema (ADR 0006); tools wait until the sheet is ~90% done |
 | 2026-08-17 | Phase 2e Wizard 5; Actions List named as a later tool |
 | 2026-08-17 | Phase 3e Fighter 2 / Wizard 3; Budget Calculator named as a later tool |
+| 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves |
