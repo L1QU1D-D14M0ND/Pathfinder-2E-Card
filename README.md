@@ -24,7 +24,9 @@ npm run dev
 
 - [Roadmap](docs/ROADMAP.md)
 - [ADR 0003 — Multi-system product direction](docs/adr/0003-multi-system-product-direction.md) (current lock)
+- [ADR 0004 — Shared kernel vs per-system modules](docs/adr/0004-shared-kernel.md)
 - [Umbrella design](docs/ttrpg-character-sheet-design.md)
+- [Shared kernel — reuse between editions](docs/shared-kernel-design.md)
 - [PF1e system design](docs/pf1e-character-sheet-design.md)
 - [PF2e system design](docs/pf2e-dynamic-character-sheet-design.md) (still valid for PF2e documents)
 - [Next increment — multi-system / PF1e](docs/next-increment-multi-system.md)

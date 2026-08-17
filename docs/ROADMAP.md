@@ -1,6 +1,6 @@
 # Roadmap
 
-Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
+Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-17  
 **Current phase:** 0b done (docs lock). Code is still the PF2e-only scaffold (old phases 1–2). Next **code** phase is **M** (multi-system refactor), then **1e** (PF1e Fighter 5).  
@@ -36,6 +36,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 - [x] Umbrella design ([`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md))
 - [x] PF1e system spec + schema target notes
 - [x] Roadmap and next-increment retargeted
+- [x] Shared kernel vs per-system inventory ([ADR 0004](adr/0004-shared-kernel.md))
 - [ ] Working display name in PWA chrome (deferred to Phase M)
 
 ---
@@ -45,7 +46,8 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 **Status:** Not started (0%) — **next code work**
 
 - [ ] Add `system` to saved documents (`pf2e` on Save; missing on Load → `pf2e`)
-- [ ] Isolate PF2e types/engine/panels so a second system can sit beside them
+- [ ] Extract shared kernel (`newId`, strip-derived, Ajv helper, Save/Load wiring, `DerivedCell`) and `SystemModule` registry ([ADR 0004](adr/0004-shared-kernel.md))
+- [ ] Isolate PF2e types/engine/panels so a second system can sit beside them (no cross-imports)
 - [ ] New sheet still produces a valid PF2e document until PF1e factory exists
 - [ ] Existing PF2e goldens and unit tests stay green
 - [ ] Optional: extract English chrome (`en.json`) so PF1e UI does not add literals (T4′)
@@ -197,7 +199,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Phase M** — `system` discriminator + isolate PF2e modules; keep goldens green. Optionally extract `en.json`.
+1. **Phase M** — shared kernel + `system` discriminator + isolate PF2e as a `SystemModule`; keep goldens green. Optionally extract `en.json`.
 2. **Phase 1e** — PF1e schema + martial `compute()` + Fighter 5 + New→PF1e.
 3. **Phase 2e** — Wizard 5 + spell editors.
 4. **Phase 3e** — Multiclass golden.
@@ -227,3 +229,4 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | 2026-08-13 | First operational roadmap, audited against the repo and PF2e design doc §11 |
 | 2026-08-15 | Refresh after merging S1/S4/T1/T3 into `main` |
 | 2026-08-17 | Retarget to multi-system / PF1e-first (ADR 0003). PF2e leftover 0.9 work deprioritized |
+| 2026-08-17 | Shared kernel inventory (ADR 0004); Phase M extracts it |

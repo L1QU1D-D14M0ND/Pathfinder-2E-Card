@@ -11,6 +11,7 @@ System-specific specs:
 
 - Pathfinder 1E — [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)
 - Pathfinder 2E — [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md)
+- Shared kernel — [`shared-kernel-design.md`](shared-kernel-design.md) ([ADR 0004](adr/0004-shared-kernel.md))
 
 ---
 
@@ -112,17 +113,18 @@ Shared spreadsheet chrome
 
 Current code lives at `app/src/character`, `app/src/engine`, `app/src/sheet` and is PF2e-only. The refactor increment moves that to a system module without changing PF2e behavior.
 
-Target sketch:
+Target sketch (locked in [ADR 0004](adr/0004-shared-kernel.md) / [`shared-kernel-design.md`](shared-kernel-design.md)):
 
 ```text
 app/src/
-  shell/          # PWA chrome, tabs, Save/Load, New-system picker
+  shell/          # PWA chrome, tabs, Save/Load, New-system picker, registry
+  shared/         # envelope, ids, Ajv helper, overrides apply, DerivedCell, …
   systems/
     pf2e/         # today’s character/ + engine/ (+ PF2e-specific panels)
     pf1e/         # schema types, engine, PF1e-specific panels
 ```
 
-Exact folder names are an implementation detail of the refactor; the constraint is **one engine per system** and **PF2e tests stay green**.
+Exact folder names are an implementation detail of the refactor; the constraint is **one engine per system**, **no cross-imports between systems**, and **PF2e tests stay green**.
 
 ### 4.2 Envelope
 
@@ -137,14 +139,20 @@ PF2e schema file stays [`schemas/character.schema.json`](../schemas/character.sc
 
 ### 4.3 What is shared vs forked
 
-| Shared | Per system |
+Full inventory: [`shared-kernel-design.md`](shared-kernel-design.md) ([ADR 0004](adr/0004-shared-kernel.md)). Short form:
+
+| Shared kernel | Per system |
 | --- | --- |
-| PWA, Vite, React shell, tab chrome | JSON Schema + TypeScript document types |
-| Save/Load + Ajv wiring | `compute(doc) → DerivedView` |
-| Derived-cell styling, override “last wins” idea | Stacking rules, proficiency/BAB, AC, HP, skills, spells |
-| Golden-test harness (Vitest + fixtures) | Fixture files and asserted numbers |
-| i18n catalogs (keys may be system-prefixed) | Default skill lists, class progression tables |
-| Notes panel; generic add/remove row tables | Combat / Spells / Play / Identity fields |
+| PWA, Vite, React shell, tab chrome, spreadsheet CSS | JSON Schema + TypeScript document types |
+| Envelope (`schemaVersion`, `system`, meta timestamps/locale) | `compute(doc) →` that system’s `DerivedView` |
+| `ContentRef` core, `Effect` stub, `OverrideValue`, coins, notes | Stacking, proficiency/BAB, AC, HP formula, skills, spells |
+| Ajv helper, strip `derived`, file Save/Load | Class/skill tables, factories for strikes/spells |
+| `DerivedCell`; later generic row tables | Combat / Spells / Play / Identity panels |
+| Golden-test helper; i18n with `shell.*` / `pf2e.*` / `pf1e.*` keys | Fixture numbers; content packs |
+
+**Do not share:** one `CharacterDocument`, `ProficiencyRank`, typed PF2e bonus stacking, bulk, or a `compute()` that branches on edition.
+
+The shell uses a `SystemModule` interface (validate, createEmpty, compute, tabs). Systems must not import each other.
 
 ---
 
@@ -243,3 +251,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Initial umbrella design from ADR 0003 (PF1e-first multi-system pivot) |
+| 2026-08-17 | Point §4 at shared-kernel inventory (ADR 0004) |

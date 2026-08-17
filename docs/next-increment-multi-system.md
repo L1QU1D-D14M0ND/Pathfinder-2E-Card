@@ -1,7 +1,7 @@
 # Next increment — multi-system refactor, then PF1e
 
 **Status:** Active sequencing document (2026-08-17)  
-**Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
+**Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
 This document **does** change product sequencing: PF1e is first; remaining PF2e 0.9 work waits. It does **not** reopen PF2e schema math (ADR 0002) or authorize deleting the PF2e slice.
@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** question is not “which PF2e golden is next?” It is: **make the shell multi-system without breaking PF2e, then start the PF1e schema/engine.**
+The next **code** question is not “which PF2e golden is next?” It is: **extract a shared kernel and make the shell multi-system without breaking PF2e, then start the PF1e schema/engine.** Reuse boundaries: [`shared-kernel-design.md`](shared-kernel-design.md).
 
 ---
 
@@ -89,15 +89,16 @@ Extract current chrome to `en.json` **before** a large PF1e UI wave. Same ration
 
 ## 5. Work packages
 
-### WP-M — Shell / discriminator
+### WP-M — Shell / discriminator + kernel
 
 | Option | Notes |
 | --- | --- |
-| **M1. Folder move + `system` field** (recommended) | `app/src/systems/pf2e/…`; thin `app/src/shell`. Schema: add optional `system` enum to PF2e schema (`pf2e` only) so current files remain valid; Save writes `system` |
+| **M1. Kernel + folder move + `system` field** (recommended) | `app/src/shared`, `app/src/shell`, `app/src/systems/pf2e`. Lift IDs, signed, Ajv helper, strip-derived, file IO. Schema: add optional `system` enum to PF2e schema (`pf2e` only); Save writes `system`. Register PF2e as the only `SystemModule`. See [shared kernel §12](shared-kernel-design.md). |
 | M2. Wrapper envelope `{ system, character }` | Breaks every fixture; do not |
 | M3. Parallel app / route | Two PWAs; rejects the product |
+| M4. Shared `CharacterDocument` with optional 1E fields | Forbidden by ADR 0004 |
 
-**Action:** keep `schemas/character.schema.json` path for PF2e in this increment (less churn). Add `system` as optional with default documentation; factory writes it.
+**Action:** keep `schemas/character.schema.json` path for PF2e in this increment (less churn). Do **not** extract `SheetTable` or a bonus-type library in M. Genericize `applyOverrides` only if PF2e tests stay green with an allow-list callback; otherwise move it with PF2e and genericize in 1e.
 
 ### WP-1e — PF1e martial slice
 
@@ -126,7 +127,7 @@ After goldens can be typed by hand. Minimal ids for the three goldens.
 | Step | Package | Deliverable |
 | --- | --- | --- |
 | 1 | Docs (this PR) | ADR 0003, umbrella + PF1e designs, roadmap |
-| 2 | WP-M | Multi-system shell; PF2e goldens green; `system` on Save |
+| 2 | WP-M | Shared kernel + multi-system shell; PF2e goldens green; `system` on Save |
 | 3 | WP-F (thin) | Extract existing English chrome |
 | 4 | WP-1e | PF1e schema + martial `compute()` + Fighter 5 + New→PF1e |
 | 5 | WP-2e | Wizard 5 + spells UI |
@@ -149,13 +150,16 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Umbrella + PF1e system spec + PF1e schema notes
 - [x] Roadmap tracks PF1e-first phases
 - [x] PF2e design/schema docs labeled as system specs, not the app 0.9 bar
+- [x] Shared-kernel inventory ([ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md))
 
 ### Phase M
 
 - [ ] `system` on saved PF2e documents
 - [ ] Load without `system` still works (current goldens)
 - [ ] PF2e unit + golden tests pass
-- [ ] Code layout does not import PF2e math from a PF1e module (or vice versa)
+- [ ] `shared/` + `shell/` + `systems/pf2e/` (or equivalent); systems do not import each other
+- [ ] PF2e registered as a `SystemModule`; no edition `if` in math
+- [ ] Kernel includes at least: `newId`, strip-derived, Ajv error format, file Save/Load wiring, `DerivedCell`
 
 ### Phase 1e
 
@@ -179,7 +183,8 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | ID | Risk | Mitigation |
 | --- | --- | --- |
 | M1 | Refactor breaks PF2e goldens | Move first, no math changes; keep tests green |
-| M2 | One shared `CharacterDocument` type grows `#ifdef` fields | Separate types; union at the shell |
+| M2 | One shared `CharacterDocument` type grows `#ifdef` fields | Separate types; union at the shell ([ADR 0004](adr/0004-shared-kernel.md)) |
+| M4 | Over-extracting SheetTable / bonus stacker in Phase M | Kernel §12: only extract what PF2e already needs; second caller in 1e |
 | P2 | 1E bonus-type rabbit hole | Explicit AC fields in 0.9 ([PF1e design §4.3](pf1e-character-sheet-design.md)) |
 | N3 | UI strings proliferate | T4′ before PF1e editor wave |
 | N2 | Content licensing | No scrape; curated CRB; OGL review before shipping text |
@@ -192,3 +197,4 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | First multi-system / PF1e-first increment plan |
+| 2026-08-17 | Phase M includes shared kernel (ADR 0004) |

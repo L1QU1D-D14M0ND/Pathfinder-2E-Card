@@ -44,7 +44,7 @@ Other systems (Starfinder, D&D 5e, etc.) are **architecture-only** for 0.9/1.0: 
 
 ## What does not transfer (why two engines)
 
-PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP strikes, bulk, hero points, and the dying track do not implement PF1e. PF1e needs ability scores (not boosts), per-class BAB and save progressions, skill ranks, three ACs + CMB/CMD, iterative attacks, pounds/encumbrance, spell DCs of `10 + spell level + ability`, and a `classes[]` identity (free multiclass). Shared code is the PWA shell, spreadsheet chrome, Save/Load + Ajv, derived-cell pattern, override machinery, row-editor patterns, i18n, and the golden-fixture approach.
+PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP strikes, bulk, hero points, and the dying track do not implement PF1e. PF1e needs ability scores (not boosts), per-class BAB and save progressions, skill ranks, three ACs + CMB/CMD, iterative attacks, pounds/encumbrance, spell DCs of `10 + spell level + ability`, and a `classes[]` identity (free multiclass). Shared code is the **kernel** in [ADR 0004](0004-shared-kernel.md): PWA shell, spreadsheet chrome, Save/Load + Ajv, derived-cell pattern, generic override *application*, row-editor patterns, i18n, golden-fixture helper — not proficiency math, stacking, or a unified character type.
 
 ## Consequences
 
@@ -54,6 +54,7 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 - GitHub repository name `Pathfinder-2E-Card` is unchanged until a later rename decision.
 - 0.9 is redefined: a playable **PF1e** sheet plus a non-regressed PF2e slice, not “finish every PF2e golden.”
 - Content Phase 3 splits per system; PF1e Core pack is sequenced before the PF2e Remaster pack.
+- Shared vs forked code is locked in [ADR 0004](0004-shared-kernel.md). Phase M extracts the kernel with PF2e as the first consumer.
 - A future ADR will lock the PF1e JSON schema (analog of ADR 0002). Envelope rules in this ADR and [PF1e schema notes](../pf1e-schema-design-notes.md) are the standing defaults until then.
 
 ## Defaults for open questions
@@ -76,9 +77,11 @@ These are **locked for sequencing** unless the stakeholder overrides them. See a
 ## References
 
 - [`../ttrpg-character-sheet-design.md`](../ttrpg-character-sheet-design.md) — umbrella product design
+- [`../shared-kernel-design.md`](../shared-kernel-design.md) — reuse / `SystemModule` (ADR 0004)
 - [`../pf1e-character-sheet-design.md`](../pf1e-character-sheet-design.md) — PF1e system spec
 - [`../pf2e-dynamic-character-sheet-design.md`](../pf2e-dynamic-character-sheet-design.md) — PF2e system spec (still valid)
 - [`../ROADMAP.md`](../ROADMAP.md)
 - [`../next-increment-multi-system.md`](../next-increment-multi-system.md)
 - [`0001-product-direction.md`](0001-product-direction.md) — superseded
 - [`0002-character-schema.md`](0002-character-schema.md) — PF2e schema, still accepted
+- [`0004-shared-kernel.md`](0004-shared-kernel.md) — reuse boundaries

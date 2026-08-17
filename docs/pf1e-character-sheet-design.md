@@ -175,7 +175,7 @@ Enough catalog to rebuild the three goldens is the 0.9 content bar. Full CRB spe
 
 ## 8. Relationship to PF2e
 
-Do not share proficiency math, bulk, hero points, or a single character TypeScript type. Do share the PWA, Ajv Load/Save pattern, Vitest goldens, and spreadsheet habits.
+Reuse is the **kernel**, not the rules. See [`shared-kernel-design.md`](shared-kernel-design.md): PWA, Ajv Load/Save, `ContentRef` core, `Effect` stub, coins, notes, `DerivedCell`, golden helper. Do not share proficiency math, bulk, hero points, `ProficiencyRank`, or a single character TypeScript type.
 
 PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same as PF1e multiclass. PF1e multiclass is in scope here.
 

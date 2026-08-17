@@ -2,6 +2,7 @@
 
 **Status:** Target notes for the future PF1e schema ADR. **No** `schemas/pf1e/` file in the repo yet.  
 **Parent lock:** [ADR 0003](adr/0003-multi-system-product-direction.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
+**Shared envelope / refs:** [`shared-kernel-design.md`](shared-kernel-design.md)  
 **PF2e schema (current on-disk contract):** [`character.schema.json`](../schemas/character.schema.json), [ADR 0002](adr/0002-character-schema.md)
 
 Do not extend the PF2e schema with optional 1E fields. PF1e gets its own document type.
