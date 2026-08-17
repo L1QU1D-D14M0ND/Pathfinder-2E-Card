@@ -74,8 +74,8 @@ User adds `craft-*`, `perform-*`, `profession-*` like PF2e lore.
 
 - Modifier = `floor((score − 10) / 2)` + `tempModifier`.
 - BAB/saves stack **per class row** (do not add levels then apply one table).
-- Iteratives: extra attacks when BAB ≥ 6, −5 steps, max four from BAB. **Fighter 5 is +5 only**, not +5/+0.
-- HP: each `hpRolled` entry contributes `max(1, roll + Con mod)`, plus favored-class HP totals.
+- Iteratives: extra attacks when BAB ≥ 6, −5 steps, max four from BAB. Display as a CRB slash line (`+6/+1`). **Fighter 5 is +5 only**, not +5/+0.
+- HP: each `hpRolled` entry contributes `max(1, roll + Con mod)`, plus favored-class HP totals. The player types each HD result in the Max HP breakdown dialog (physical dice).
 - AC: Dex bonus capped by `maxDex`; Dex **penalties** still apply when flat-footed; dodge is lost when flat-footed.
 - Load: CRB Strength heavy-load table × size multiplier; light/medium = floor(heavy/3) and floor(2×heavy/3).
 - Item armor/weapon subfields are documentary in 0.9; combat numbers come from `armorClass` / `attacks`.
@@ -123,7 +123,7 @@ condition.sickened
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
 6. ~~Multiclass golden (Phase 3e).~~
-7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batch 1 landed.
+7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–2 landed. Next: AC / CMB.
 
 Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 
@@ -138,3 +138,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-17 | Phase 2e: spell DC + bonus slots in compute |
 | 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden |
 | 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves |
+| 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative slash notation |

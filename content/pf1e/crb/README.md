@@ -5,7 +5,7 @@ Curated **mechanics-only** data for the PF1e sheet. Not a copy of the Core Ruleb
 | File | Contents |
 | --- | --- |
 | `pack.json` | Manifest and which review batches have landed |
-| `classes.json` | Class **progression tags** (HD, BAB, saves). Batch 1: Fighter, Wizard |
+| `classes.json` | Class **progression tags** (HD, BAB, saves). Batch 1: Fighter, Wizard. Batch 2 reused those HD sizes for the HP dialog. |
 
 See [`docs/pf1e-crb-pack-design.md`](../../../docs/pf1e-crb-pack-design.md) for the review process and CRB mapping.
 

@@ -2,7 +2,7 @@
 
 **TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
-**Current phase:** Phase 3c batch 1 (CRB ability modifiers + BAB/saves). Next: further CRB mechanics in pairs. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0006](docs/adr/0006-pf1e-character-schema.md), and [CRB pack / batch reviews](docs/pf1e-crb-pack-design.md).
+**Current phase:** Phase 3c batch 2 landed (HP breakdown + iterative attacks). Next: AC / CMB. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0006](docs/adr/0006-pf1e-character-schema.md), and [CRB pack / batch reviews](docs/pf1e-crb-pack-design.md).
 
 The GitHub repository name is unchanged.
 
@@ -56,7 +56,7 @@ npm run dev
 - [`fixtures/characters/golden/pf1e/fighter-5.json`](fixtures/characters/golden/pf1e/fighter-5.json) — PF1e Fighter 5
 - [`fixtures/characters/golden/pf1e/wizard-5.json`](fixtures/characters/golden/pf1e/wizard-5.json) — PF1e Wizard 5
 - [`fixtures/characters/golden/pf1e/fighter-2-wizard-3.json`](fixtures/characters/golden/pf1e/fighter-2-wizard-3.json) — PF1e Fighter 2 / Wizard 3
-- [`content/pf1e/crb/`](content/pf1e/crb/) — PF1e CRB pack (batch 1: Fighter/Wizard progression tags)
+- [`content/pf1e/crb/`](content/pf1e/crb/) — PF1e CRB pack (batches 1–2: Fighter/Wizard tags; HP/iteratives in the engine)
 
 ## License
 

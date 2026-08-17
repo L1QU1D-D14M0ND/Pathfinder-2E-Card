@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Started (2026-08-17). Batch 1 of a slow, two-mechanics-at-a-time review.  
+**Status:** In progress (2026-08-17). Batch 2 landed (HP breakdown + iterative attacks). Next batch: AC / touch / FF + CMB / CMD.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -33,9 +33,9 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 
 | Batch | Mechanics | Status |
 | --- | --- | --- |
-| **1** | Ability scores → modifiers; BAB + save progressions (and how they stack) | **This document** |
-| 2 | Hit points (HD + Con + favored); iterative attacks from BAB | Next |
-| 3 | AC / touch / flat-footed; CMB / CMD | |
+| **1** | Ability scores → modifiers; BAB + save progressions (and how they stack) | Done |
+| **2** | Hit points (HD + Con + favored); iterative attacks from BAB | Done |
+| 3 | AC / touch / flat-footed; CMB / CMD | **Next** |
 | 4 | Skills (ranks, class +3, ACP, max ranks) | |
 | 5 | Size (AC/attack vs CMB/CMD vs carry) | |
 | 6 | Encumbrance (Strength table, light/medium/heavy) | |
@@ -140,7 +140,7 @@ Published class tables (levels 1–20) match these formulas:
 
 Example (golden): Fighter 2 (full BAB +2, Fort good +3, Ref poor +0, Will poor +0) + Wizard 3 (half BAB +1, Fort poor +1, Ref poor +1, Will good +3) → BAB **+3**, base Fort **+4**, base Ref **+1**, base Will **+3**. Ability modifiers are applied **after** that stack (Fort + Con, etc.).
 
-**Iterative attacks** (extra attacks at BAB +6 / +11 / +16, −5 steps) are a **use of BAB**, not the BAB table itself. They are **batch 2**. Already coded; not expanded in this batch.
+**Iterative attacks** (extra attacks at BAB +6 / +11 / +16, −5 steps) are a **use of BAB**, not the BAB table itself. They are **batch 2**.
 
 **App today:**
 
@@ -183,8 +183,55 @@ applyCrbClassProgression(classRow, id) → ClassEntry
 
 ---
 
+## Batch 2 — two mechanics
+
+### 4.3 Hit points (HD + Con + favored)
+
+**CRB (player-facing):** Each class level grants one **hit die**. At **1st character level**, the die is usually taken as **maximum** (d10 fighter → 10). At later levels the player **rolls** that class’s hit die at the table. Constitution modifier is added to **each** HD. A level never grants fewer than **1** HP. **Favored class** may add +1 HP per level in that class (instead of +1 skill rank). The sheet does **not** roll.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Input | `vitals.hpRolled[]` | Die results **before** Con, in class-row order |
+| Engine | `hpFromHitDie` = `max(1, roll + Con)`; `maxHp`; `hpBreakdown` | Missing rolls contribute 0 |
+| Favored | `classes[].favored.hp` | Summed after dice |
+| UI | Click **max HP** (`/ 40`) or Play → Max HP / Enter HD rolls | Dialog: one row per HD, type the physical roll, Con and from-HD, favored lines, total |
+| Goldens | Fighter 5 = 49; Wizard 5 = 37; F2/W3 = 40 | Unchanged |
+
+**Verdict:** The formula matches CRB. 1st-level max is **not auto-written** (the player types 10 or clicks **Max 1st**). HD slots follow `classes[]` order (Fighter 2 then Wizard 3 → two d10 then three d6).
+
+**Gaps:** Toughness and other HP feats are still user-entered favored/misc later, not auto. Temp HP is play-state, not in max. Average-HP optional rule is “type 6 on a d10,” not a second engine.
+
+**Pack slice:** none new (hit die size already on the class catalog from batch 1).
+
+**Tests:** Golden breakdowns; min 1 HP; `setHitDieRoll` fills in order.
+
+### 4.4 Iterative attacks
+
+**CRB (player-facing):** When making a **full-round attack** with a manufactured weapon, extra attacks come from BAB: a second attack at **BAB +6** (at BAB−5), a third at **+11**, a fourth at **+16**. Maximum **four** from BAB. **Fighter 5 is a single +5**, not +5/+0. Haste, two-weapon fighting, and natural attacks are separate (not this batch). No in-app dice.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Engine | `iterativeAttacks(bab)` | `[bab]` then −5 while the next bonus is ≥ +1, max four |
+| Display | Identity BAB; Combat “Iterative attacks”; each attack’s Attack cell | CRB slash line: `+6/+1` |
+| Goldens | Fighter 5 `[5]` / longsword `+9`; Wizard `[2]`; F2/W3 `[3]` | Unchanged |
+
+**Verdict:** Matches the CRB extra-attack table for BAB 1–20.
+
+**Gaps:** Full-round vs standard action is a reminder, not an encounter tracker. Rapid Shot / TWF wait with feat automation.
+
+**Pack slice:** none (pure BAB math).
+
+**Tests:** Full BAB 1–20 iterative lists; `formatIteratives`; Fighter 5 is not +5/+0.
+
+---
+
 ## Appendix — Document history
 
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Phase 3c opened. Batch 1: ability modifiers + BAB/save progressions; Fighter/Wizard catalog tags |
+| 2026-08-17 | Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks |

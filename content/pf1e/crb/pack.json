@@ -3,13 +3,18 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-1",
+  "status": "batch-2",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
       "id": 1,
       "mechanics": ["ability-modifiers", "bab-and-saves"],
       "notes": "Ability modifiers are engine-owned. This pack adds Fighter and Wizard progression tags."
+    },
+    {
+      "id": 2,
+      "mechanics": ["hit-points", "iterative-attacks"],
+      "notes": "HP dialog records physical HD rolls. Iteratives are engine-owned BAB math."
     }
   ]
 }

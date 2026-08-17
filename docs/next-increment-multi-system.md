@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **Phase 3c batch 2** (HP + iterative attacks). Batch 1 (ability modifiers + BAB/saves) is in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **Phase 3c batch 3** (AC / touch / FF + CMB / CMD). Batch 2 (HP breakdown + iterative attacks) is in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batch 1 (Fighter, Wizard progression tags) |
+| Content | `content/pf1e/crb/` batches 1–2 (Fighter, Wizard progression tags; HP/iteratives are engine-owned) |
 
 ---
 
@@ -128,7 +128,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batch 1: ability modifiers (engine) + BAB/save tags (Fighter, Wizard catalog). Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batch 1: ability modifiers (engine) + BAB/save tags (Fighter, Wizard catalog). Batch 2: HP breakdown (manual HD rolls) + iterative slash notation. Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -204,7 +204,8 @@ Steps 2–4 are the **next development increments** after this documentation cha
 ### Phase 3c (in progress)
 
 - [x] Batch 1: ability modifiers + BAB/save progressions (review + Fighter/Wizard tags)
-- [ ] Batch 2: HP + iterative attacks
+- [x] Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks
+- [ ] Batch 3: AC / touch / FF + CMB / CMD
 - [ ] Catalog enough to rebuild the three goldens
 - [ ] OGL review before rules **text**
 
@@ -247,3 +248,4 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | 2026-08-17 | Phase 2e Wizard 5; Actions List reserved as later tool |
 | 2026-08-17 | Phase 3e Fighter 2 / Wizard 3; Budget Calculator reserved as later tool |
 | 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves; CRB pack scaffold |
+| 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative attacks |
