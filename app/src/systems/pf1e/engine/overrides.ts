@@ -154,7 +154,9 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
     if (!isFiniteNumber(value)) return false
     const existing = view.attacks[parts[2]]
     if (!existing) return false
+    const delta = value - existing.attack
     existing.attack = value
+    existing.iteratives = existing.iteratives.map((step) => step + delta)
     return true
   }
 

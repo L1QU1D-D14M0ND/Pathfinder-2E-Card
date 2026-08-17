@@ -59,7 +59,8 @@ export function compute(character: ComputeInput): DerivedView {
       (attack.attackType === 'melee'
         ? character.combat.meleeAttackMisc
         : character.combat.rangedAttackMisc)
-    const dmgMod = dmgKey === null ? 0 : mods[dmgKey] + (attack.miscDamage ?? 0)
+    const abilityDamage = dmgKey === null ? 0 : mods[dmgKey]
+    const dmgMod = abilityDamage + (attack.miscDamage ?? 0)
     const dmgSign = dmgMod === 0 ? '' : dmgMod > 0 ? `+${dmgMod}` : `${dmgMod}`
     attacks[attack.id] = {
       attack: attackBonus,

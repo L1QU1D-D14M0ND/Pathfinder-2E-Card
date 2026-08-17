@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
-import { createEmptyClass, createEmptySpellcasting } from '../character/createRows'
+import { createEmptyAttack, createEmptyClass, createEmptySpellcasting } from '../character/createRows'
 import { compute } from './compute'
 import { abilityModifierFromScore } from './abilities'
 import { loadThresholds, mediumBipedHeavyLoad } from './encumbrance'
@@ -154,5 +154,38 @@ describe('compute empty sheet', () => {
     expect(view.fortitude).toBe(4)
     expect(view.reflex).toBe(1)
     expect(view.will).toBe(3)
+  })
+
+  it('adds miscDamage even when damageAbility is null', () => {
+    const character = createEmptyCharacter()
+    const attack = createEmptyAttack()
+    attack.id = 'atk-no-ability'
+    attack.damageAbility = null
+    attack.miscDamage = 2
+    attack.damageDice = '1d4'
+    character.attacks = [attack]
+    const view = compute(character)
+    expect(view.attacks['atk-no-ability'].damage).toBe('1d4+2')
+  })
+
+  it('shifts attack iteratives when the primary attack is overridden', () => {
+    const character = createEmptyCharacter()
+    const fighter = createEmptyClass()
+    fighter.levels = 6
+    fighter.babProgression = 'full'
+    character.classes = [fighter]
+    const attack = createEmptyAttack()
+    attack.id = 'atk-override'
+    character.attacks = [attack]
+    const base = compute(character)
+    expect(base.attacks['atk-override'].iteratives).toEqual([6, 1])
+
+    character.overrides['derived.attacks.atk-override.attack'] = { value: 8 }
+    const overridden = compute(character)
+    expect(overridden.attacks['atk-override'].attack).toBe(8)
+    expect(overridden.attacks['atk-override'].iteratives).toEqual([8, 3])
+    expect(overridden.overriddenPaths).toContain(
+      'derived.attacks.atk-override.attack',
+    )
   })
 })
