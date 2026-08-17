@@ -26,7 +26,8 @@
   "include": [
     "src",
     "../schemas/character.schema.json",
-    "../schemas/pf1e/character.schema.json"
+    "../schemas/pf1e/character.schema.json",
+    "../content/pf1e/crb/**/*.json"
   ],
   "exclude": ["src/**/*.test.ts", "src/test"]
 }

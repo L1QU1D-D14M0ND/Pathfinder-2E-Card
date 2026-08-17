@@ -37,6 +37,8 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 
 - [`../../schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.json)
 - [`../../fixtures/characters/golden/pf1e/fighter-5.json`](../../fixtures/characters/golden/pf1e/fighter-5.json)
+- [`../../fixtures/characters/golden/pf1e/wizard-5.json`](../../fixtures/characters/golden/pf1e/wizard-5.json)
+- [`../../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json`](../../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json)
 - [`../pf1e-schema-design-notes.md`](../pf1e-schema-design-notes.md)
 - [`../pf1e-character-sheet-design.md`](../pf1e-character-sheet-design.md)
 - [`0002-character-schema.md`](0002-character-schema.md) — PF2e documents only

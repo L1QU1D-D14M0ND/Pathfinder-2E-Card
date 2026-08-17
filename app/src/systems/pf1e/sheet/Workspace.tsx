@@ -5,13 +5,15 @@ import {
 } from '../character'
 import type { AbilityKey } from '../character/types'
 import { signed } from '../../../shared/format'
-import type { DerivedView } from '../engine'
+import { formatIteratives, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import { CombatPanel } from './CombatPanel'
 import { FeatsPanel } from './FeatsPanel'
+import { HpBreakdownDialog } from './HpBreakdownDialog'
 import { IdentityPanel } from './IdentityPanel'
 import { InventoryPanel } from './InventoryPanel'
 import { PlayPanel } from './PlayPanel'
+import { SpellsPanel } from './SpellsPanel'
 import type { SheetUpdate } from './update'
 
 type TabId =
@@ -20,6 +22,7 @@ type TabId =
   | 'skills'
   | 'combat'
   | 'feats'
+  | 'spells'
   | 'inventory'
   | 'play'
   | 'notes'
@@ -30,6 +33,7 @@ const TABS: Array<{ id: TabId; label: string }> = [
   { id: 'skills', label: 'Skills' },
   { id: 'combat', label: 'Combat' },
   { id: 'feats', label: 'Feats' },
+  { id: 'spells', label: 'Spells' },
   { id: 'inventory', label: 'Inventory' },
   { id: 'play', label: 'Play' },
   { id: 'notes', label: 'Notes' },
@@ -56,6 +60,7 @@ export function Pf1eWorkspace({
   setStatus: (message: string) => void
 }) {
   const [tab, setTab] = useState<TabId>('identity')
+  const [hpOpen, setHpOpen] = useState(false)
 
   function addWildcardSkill(kind: 'craft' | 'perform' | 'profession') {
     const raw = window.prompt(`${kind} specialty (e.g. weapons)`)
@@ -118,6 +123,7 @@ export function Pf1eWorkspace({
           <span className="hp-pair">
             <input
               type="number"
+              aria-label="Current HP"
               value={character.vitals.currentHp}
               onChange={(e) =>
                 update((c) => ({
@@ -129,10 +135,19 @@ export function Pf1eWorkspace({
                 }))
               }
             />
-            <DerivedCell
-              value={`/ ${derived.maxHp}`}
-              overridden={derived.overriddenPaths.includes('derived.maxHp')}
-            />
+            <button
+              type="button"
+              className={
+                derived.overriddenPaths.includes('derived.maxHp')
+                  ? 'derived overridden hp-max-button'
+                  : 'derived hp-max-button'
+              }
+              title="Open HP breakdown"
+              aria-label={`Max HP ${derived.maxHp}, open breakdown`}
+              onClick={() => setHpOpen(true)}
+            >
+              / {derived.maxHp}
+            </button>
           </span>
         </label>
         <label>
@@ -145,7 +160,7 @@ export function Pf1eWorkspace({
         <label>
           BAB
           <DerivedCell
-            value={signed(derived.bab)}
+            value={formatIteratives(derived.babIteratives)}
             overridden={derived.overriddenPaths.includes('derived.bab')}
           />
         </label>
@@ -174,7 +189,13 @@ export function Pf1eWorkspace({
         )}
 
         {tab === 'abilities' && (
-          <table className="sheet-table">
+          <>
+            <p className="muted">
+              Modifier is floor((score − 10) / 2). Temp mod adds to that
+              modifier, not to the score — raise Score for belts or ability
+              increases.
+            </p>
+            <table className="sheet-table">
             <thead>
               <tr>
                 <th>Ability</th>
@@ -238,6 +259,7 @@ export function Pf1eWorkspace({
               })}
             </tbody>
           </table>
+          </>
         )}
 
         {tab === 'skills' && (
@@ -348,6 +370,14 @@ export function Pf1eWorkspace({
           <FeatsPanel character={character} update={update} />
         )}
 
+        {tab === 'spells' && (
+          <SpellsPanel
+            character={character}
+            derived={derived}
+            update={update}
+          />
+        )}
+
         {tab === 'inventory' && (
           <InventoryPanel
             character={character}
@@ -361,6 +391,7 @@ export function Pf1eWorkspace({
             character={character}
             derived={derived}
             update={update}
+            onOpenHpBreakdown={() => setHpOpen(true)}
           />
         )}
 
@@ -395,6 +426,12 @@ export function Pf1eWorkspace({
           </table>
         )}
       </main>
+      <HpBreakdownDialog
+        open={hpOpen}
+        onClose={() => setHpOpen(false)}
+        character={character}
+        update={update}
+      />
     </div>
   )
 }

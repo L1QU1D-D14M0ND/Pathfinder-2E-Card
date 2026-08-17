@@ -25,9 +25,10 @@ npm run build
 - `system: "pf2e"` written on PF2e Save; files without `system` still load as PF2e
 - `system: "pf1e"` required on PF1e documents
 - Auto-seeded standard skills per system
-- PF1e martial calc (BAB, saves, AC trio, CMB/CMD, iteratives, pounds) and PF2e core calc
+- PF1e martial + spell calc (Fighter 5, Wizard 5, and Fighter 2 / Wizard 3 goldens) and PF2e core calc
+- CRB pack batches 1–2 landed. Next review: AC / touch / FF + CMB / CMD (two mechanics). Queue: [`../docs/pf1e-crb-pack-design.md`](../docs/pf1e-crb-pack-design.md)
 - Save export strips `derived`
-- Collapsible Tools sidebar (empty registry; Attack Helper waits until the sheet is ~90% done)
+- Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the sheet is ~90% done)
 - PWA manifest + service worker configured via `vite-plugin-pwa` (not separately runtime-tested)
 - UI strings are hardcoded English; message catalogs are not started
 
@@ -35,4 +36,4 @@ Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr
 
 Schemas: `../schemas/character.schema.json` (PF2e), `../schemas/pf1e/character.schema.json` (PF1e)
 
-Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e)
+Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e), `../fixtures/characters/golden/pf1e/wizard-5.json` (PF1e), `../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json` (PF1e)

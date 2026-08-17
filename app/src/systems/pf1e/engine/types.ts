@@ -1,5 +1,8 @@
 import type { AbilityKey, CharacterDocument, DerivedCache } from '../character/types'
 import type { LoadCategory } from '../character/types'
+import type { SpellcastingDerived } from './spellcasting'
+
+export type { SpellcastingDerived } from './spellcasting'
 
 export { signed } from '../../../shared/format'
 
@@ -34,6 +37,7 @@ export interface DerivedView {
   heavyLoad: number
   loadCategory: LoadCategory
   attacks: Record<string, AttackDerived>
+  spellcasting: Record<string, SpellcastingDerived>
   overriddenPaths: string[]
   ignoredOverridePaths: string[]
 }
@@ -73,6 +77,7 @@ export type ComputeInput = Pick<
   | 'combat'
   | 'skills'
   | 'attacks'
+  | 'spellcasting'
   | 'inventory'
   | 'overrides'
 >

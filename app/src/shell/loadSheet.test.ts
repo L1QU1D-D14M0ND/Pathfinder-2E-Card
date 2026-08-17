@@ -27,6 +27,19 @@ describe('parseLoadedSheet', () => {
     }
   })
 
+  it('loads the PF1e multiclass golden as pf1e', () => {
+    const loaded = parseLoadedSheet(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-2-wizard-3.json'),
+    )
+    expect(loaded.system).toBe('pf1e')
+    if (loaded.system === 'pf1e') {
+      expect(loaded.character.classes.map((row) => row.class.id)).toEqual([
+        'class.fighter',
+        'class.wizard',
+      ])
+    }
+  })
+
   it('round-trips empty sheets for both systems', () => {
     const pf1e = parseLoadedSheet(serializePf1e(createPf1e()))
     const pf2e = parseLoadedSheet(serializePf2e(createPf2e()))

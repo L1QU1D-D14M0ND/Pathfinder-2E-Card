@@ -203,6 +203,42 @@ textarea {
   flex: 1;
 }
 
+button.hp-max-button {
+  width: auto;
+  min-width: 2.5rem;
+  background: #e7efe4;
+  border: 1px solid #b7c9b0;
+  padding: 0.3rem 0.45rem;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+button.hp-max-button.overridden {
+  background: #f7edd4;
+  border-color: #c4a35a;
+}
+
+.hp-dialog {
+  border: 2px solid #222;
+  padding: 0.75rem 1rem 1rem;
+  max-width: 52rem;
+  width: calc(100% - 2rem);
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.hp-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.hp-dialog .sheet-table {
+  margin-top: 0.5rem;
+}
+
 .panel-stack {
   display: flex;
   flex-direction: column;
@@ -219,6 +255,17 @@ textarea {
 .sheet-table.wide th {
   width: auto;
   white-space: nowrap;
+}
+
+.sheet-table.wide select {
+  min-width: 7.5rem;
+}
+
+.class-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 8.5rem;
 }
 
 .nested-stats {

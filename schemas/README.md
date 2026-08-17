@@ -18,3 +18,5 @@ Examples:
 - [`../fixtures/characters/golden/fighter-5.json`](../fixtures/characters/golden/fighter-5.json) — PF2e Fighter 5
 - [`../fixtures/characters/golden/wizard-5.json`](../fixtures/characters/golden/wizard-5.json) — PF2e Wizard 5
 - [`../fixtures/characters/golden/pf1e/fighter-5.json`](../fixtures/characters/golden/pf1e/fighter-5.json) — PF1e Fighter 5
+- [`../fixtures/characters/golden/pf1e/wizard-5.json`](../fixtures/characters/golden/pf1e/wizard-5.json) — PF1e Wizard 5
+- [`../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json`](../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json) — PF1e Fighter 2 / Wizard 3

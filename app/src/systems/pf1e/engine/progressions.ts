@@ -1,5 +1,10 @@
 import type { BabProgression, ClassEntry, SaveQuality } from '../character/types'
+import { signed } from '../../../shared/format'
 
+/**
+ * CRB class BAB tables: full = levels; ¾ = floor(levels×3/4); ½ = floor(levels/2).
+ * Stack per class row, then sum (no fractional BAB).
+ */
 export function babFromProgression(
   progression: BabProgression,
   levels: number,
@@ -15,6 +20,7 @@ export function babFromProgression(
   }
 }
 
+/** CRB: good = 2 + floor(levels/2); poor = floor(levels/3). Stack per class row. */
 export function saveFromProgression(
   quality: SaveQuality,
   levels: number,
@@ -47,7 +53,8 @@ export function characterLevel(classes: ClassEntry[]): number {
 
 /**
  * Iterative attack bonuses from BAB (CRB). Extra attacks start at BAB +6,
- * in −5 steps, maximum four from BAB. Fighter 5 is [5], not [5, 0].
+ * then +11 and +16, each −5 from the previous, maximum four from BAB.
+ * Fighter 5 is [5], not [5, 0]. Haste / two-weapon fighting are not included.
  */
 export function iterativeAttacks(bab: number): number[] {
   const attacks = [bab]
@@ -57,4 +64,9 @@ export function iterativeAttacks(bab: number): number[] {
     attacks.push(next)
   }
   return attacks
+}
+
+/** CRB attack-line notation: +6/+1 */
+export function formatIteratives(bonuses: number[]): string {
+  return bonuses.map(signed).join('/')
 }

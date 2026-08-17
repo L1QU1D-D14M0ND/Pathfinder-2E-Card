@@ -1,7 +1,74 @@
 import type { AbilityKey, Vitals, ClassEntry } from '../character/types'
 
+/** One HD from class rows in sheet order (Fighter 2 then Wizard 3 → five slots). */
+export interface HitDieSlot {
+  index: number
+  characterLevel: number
+  classRowId: string
+  className: string
+  hitDie: number
+  classLevel: number
+  firstLevel: boolean
+}
+
+export interface HitDieLine extends HitDieSlot {
+  rolled: number | null
+  conMod: number
+  fromHd: number
+  editable: boolean
+}
+
+export interface FavoredHpLine {
+  classRowId: string
+  className: string
+  hp: number
+}
+
+export interface HpBreakdown {
+  slots: HitDieLine[]
+  extraRolls: Array<{ index: number; rolled: number; conMod: number; fromHd: number }>
+  favored: FavoredHpLine[]
+  fromDice: number
+  fromFavored: number
+  maxHp: number
+  expectedHitDice: number
+}
+
+/** CRB: each HD grants max(1, die result + Con modifier). The app does not roll. */
+export function hpFromHitDie(rolled: number, conMod: number): number {
+  return Math.max(1, rolled + conMod)
+}
+
+export function hitDieSlots(classes: ClassEntry[]): HitDieSlot[] {
+  const slots: HitDieSlot[] = []
+  for (const row of classes) {
+    for (let classLevel = 1; classLevel <= row.levels; classLevel += 1) {
+      const index = slots.length
+      slots.push({
+        index,
+        characterLevel: index + 1,
+        classRowId: row.id,
+        className: row.class.name || 'Class',
+        hitDie: row.hitDie,
+        classLevel,
+        firstLevel: index === 0,
+      })
+    }
+  }
+  return slots
+}
+
+export function favoredHpLines(classes: ClassEntry[]): FavoredHpLine[] {
+  return classes.map((row) => ({
+    classRowId: row.id,
+    className: row.class.name || 'Class',
+    hp: row.favored?.hp ?? 0,
+  }))
+}
+
 /**
- * Max HP = per-HD max(1, rolled + Con) + favored-class HP.
+ * Max HP = per recorded HD max(1, rolled + Con) + favored-class HP.
+ * Missing rolls (fewer entries than class levels) contribute nothing.
  * Constitution applies once per recorded HD, not per class level with a missing roll.
  */
 export function maxHp(
@@ -10,11 +77,89 @@ export function maxHp(
   conMod: number,
 ): number {
   const fromDice = vitals.hpRolled.reduce(
-    (sum, rolled) => sum + Math.max(1, rolled + conMod),
+    (sum, rolled) => sum + hpFromHitDie(rolled, conMod),
     0,
   )
-  const favored = classes.reduce((sum, row) => sum + (row.favored?.hp ?? 0), 0)
-  return fromDice + favored
+  const fromFavored = classes.reduce(
+    (sum, row) => sum + (row.favored?.hp ?? 0),
+    0,
+  )
+  return fromDice + fromFavored
+}
+
+export function hpBreakdown(
+  vitals: Vitals,
+  classes: ClassEntry[],
+  conMod: number,
+): HpBreakdown {
+  const slotsSpec = hitDieSlots(classes)
+  const expectedHitDice = slotsSpec.length
+  const nextIndex = vitals.hpRolled.length
+  const slots: HitDieLine[] = slotsSpec.map((slot) => {
+    const rolled =
+      slot.index < vitals.hpRolled.length ? vitals.hpRolled[slot.index]! : null
+    return {
+      ...slot,
+      rolled,
+      conMod,
+      fromHd: rolled == null ? 0 : hpFromHitDie(rolled, conMod),
+      editable: slot.index <= nextIndex,
+    }
+  })
+  const extraRolls = vitals.hpRolled
+    .slice(expectedHitDice)
+    .map((rolled, offset) => {
+      const index = expectedHitDice + offset
+      return {
+        index,
+        rolled,
+        conMod,
+        fromHd: hpFromHitDie(rolled, conMod),
+      }
+    })
+  const favored = favoredHpLines(classes)
+  const fromFavored = classes.reduce(
+    (sum, row) => sum + (row.favored?.hp ?? 0),
+    0,
+  )
+  const fromDice = vitals.hpRolled.reduce(
+    (sum, rolled) => sum + hpFromHitDie(rolled, conMod),
+    0,
+  )
+  return {
+    slots,
+    extraRolls,
+    favored,
+    fromDice,
+    fromFavored,
+    maxHp: fromDice + fromFavored,
+    expectedHitDice,
+  }
+}
+
+/**
+ * Write one HD roll. Rolls are filled in order (next empty slot or an
+ * already-recorded slot). Clearing is allowed on the last recorded roll only.
+ */
+export function setHitDieRoll(
+  hpRolled: number[],
+  index: number,
+  rolled: number | null,
+): number[] {
+  const next = [...hpRolled]
+  if (rolled == null) {
+    if (index === next.length - 1) next.pop()
+    return next
+  }
+  if (index < next.length) {
+    next[index] = rolled
+    return next
+  }
+  if (index === next.length) {
+    next.push(rolled)
+    return next
+  }
+  return next
 }
 
 export function deadAtThreshold(conScore: number): number {

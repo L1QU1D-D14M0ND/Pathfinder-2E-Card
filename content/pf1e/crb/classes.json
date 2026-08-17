@@ -1,0 +1,18 @@
+[
+  {
+    "id": "class.fighter",
+    "name": "Fighter",
+    "hitDie": 10,
+    "babProgression": "full",
+    "saves": { "fort": "good", "ref": "poor", "will": "poor" },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "class.wizard",
+    "name": "Wizard",
+    "hitDie": 6,
+    "babProgression": "half",
+    "saves": { "fort": "poor", "ref": "poor", "will": "good" },
+    "source": { "book": "CRB" }
+  }
+]

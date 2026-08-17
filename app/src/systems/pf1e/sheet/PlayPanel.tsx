@@ -13,10 +13,12 @@ export function PlayPanel({
   character,
   derived,
   update,
+  onOpenHpBreakdown,
 }: {
   character: CharacterDocument
   derived: DerivedView
   update: SheetUpdate
+  onOpenHpBreakdown: () => void
 }) {
   return (
     <div className="panel-stack">
@@ -44,10 +46,20 @@ export function PlayPanel({
           <tr>
             <th>Max HP</th>
             <td>
-              <DerivedCell
-                value={derived.maxHp}
-                overridden={derived.overriddenPaths.includes('derived.maxHp')}
-              />
+              <button
+                type="button"
+                className={
+                  derived.overriddenPaths.includes('derived.maxHp')
+                    ? 'derived overridden hp-max-button'
+                    : 'derived hp-max-button'
+                }
+                title="Open HP breakdown"
+                aria-label={`Max HP ${derived.maxHp}, open breakdown`}
+                onClick={onOpenHpBreakdown}
+              >
+                {derived.maxHp}
+              </button>
+              <span className="muted"> click for HD breakdown</span>
             </td>
           </tr>
           <tr>
@@ -101,23 +113,11 @@ export function PlayPanel({
           <tr>
             <th>HD rolls</th>
             <td>
-              <input
-                value={character.vitals.hpRolled.join(', ')}
-                onChange={(e) => {
-                  const hpRolled = e.target.value
-                    .split(/[,\s]+/)
-                    .map((part) => part.trim())
-                    .filter((part) => part.length > 0)
-                    .map((part) => Number(part))
-                    .filter((n) => Number.isFinite(n))
-                  update((c) => ({
-                    ...c,
-                    vitals: { ...c.vitals, hpRolled },
-                  }))
-                }}
-              />
+              <button type="button" onClick={onOpenHpBreakdown}>
+                Enter HD rolls…
+              </button>
               <div className="muted">
-                Comma-separated die results before Con (e.g. 10, 6, 6, 6, 6)
+                Physical dice only. Type each HD result in the breakdown.
               </div>
             </td>
           </tr>

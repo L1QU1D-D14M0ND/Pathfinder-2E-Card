@@ -3,6 +3,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { Alignment, Size } from '../character/types'
+import { applyCrbClassProgression, CRB_CLASSES } from '../content'
 import { characterLevel } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { DerivedView } from '../engine'
@@ -210,14 +211,38 @@ export function IdentityPanel({
           {character.classes.length === 0 ? (
             <tr>
               <td colSpan={10} className="muted">
-                No class rows. Add one (Fighter: full BAB, good Fort, d10).
+                No class rows. Add one, then pick Fighter or Wizard from the
+                CRB list (fills HD / BAB / saves).
               </td>
             </tr>
           ) : (
             character.classes.map((row, index) => (
               <tr key={row.id}>
-                <td>
+                <td className="class-cell">
+                  <select
+                    aria-label="CRB class"
+                    value={row.class.id ?? ''}
+                    onChange={(e) => {
+                      const id = e.target.value || null
+                      update((c) => {
+                        const classes = [...c.classes]
+                        classes[index] = applyCrbClassProgression(
+                          classes[index],
+                          id,
+                        )
+                        return { ...c, classes }
+                      })
+                    }}
+                  >
+                    <option value="">Custom</option>
+                    {CRB_CLASSES.map((entry) => (
+                      <option key={entry.id} value={entry.id}>
+                        {entry.name}
+                      </option>
+                    ))}
+                  </select>
                   <input
+                    aria-label="Class name"
                     value={row.class.name}
                     onChange={(e) =>
                       update((c) => {

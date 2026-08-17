@@ -35,8 +35,8 @@ export function SidebarHost<Doc, Derived>({
       </div>
       {available.length === 0 ? (
         <p className="muted sidebar-empty">
-          No tools yet. Later: Attack Helper (weapon + feats, no dice
-          roller).
+          No tools yet. Later: Attack Helper, Actions List, Budget
+          Calculator (no dice roller).
         </p>
       ) : (
         <ul className="sidebar-tool-list">

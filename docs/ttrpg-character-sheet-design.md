@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-17  
-**Implementation:** Phase 1e landed (PF1e schema + martial `compute()` + Fighter 5). PF2e slice preserved. Next: PF1e Wizard 5 (2e). Sidebar tools wait until the sheet is ~90% done.  
+**Implementation:** Phase 3c batches 1–2 landed. **Next: batch 3** — AC / touch / FF + CMB / CMD ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6). Then skills, size, encumbrance; catalog Human / class skills / weapons after the math reviews. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -79,7 +79,7 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 **Later (design must not block)**
 
 - Remaining PF2e goldens, companion editor, Remaster + legacy content packs (the old PF2e 0.9 leftovers).
-- **Sidebar tools** (list unspecified except **Attack Helper**). Sequenced **after the character sheet is ~90% done**. The old Spells / Afflictions / Actions encyclopedia is a candidate tool, not the host ([ADR 0005](adr/0005-sidebar-host.md)). **Attack Helper:** [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md).
+- **Sidebar tools** (Attack Helper + Actions List + Budget Calculator specified). Sequenced **after the character sheet is ~90% done**. Encyclopedia (Spells / Afflictions / Actions **rules text**) is a candidate, distinct from Actions List. [ADR 0005](adr/0005-sidebar-host.md). **Attack Helper:** [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md). **Actions List:** [`sidebar-tools-actions-list.md`](sidebar-tools-actions-list.md). **Budget Calculator:** [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md).
 - Typed `effects[]` automation.
 - Optional card-oriented play surfaces.
 - Additional systems behind the same `system` discriminator.
@@ -261,3 +261,9 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-17 | Initial umbrella design from ADR 0003 (PF1e-first multi-system pivot) |
 | 2026-08-17 | Point §4 at shared-kernel inventory (ADR 0004) |
 | 2026-08-17 | Loaded-sheet sidebar host; tools TBD (ADR 0005) |
+| 2026-08-17 | Phase 1e schema (ADR 0006); tools wait until the sheet is ~90% done |
+| 2026-08-17 | Phase 2e Wizard 5; Actions List named as a later tool |
+| 2026-08-17 | Phase 3e Fighter 2 / Wizard 3; Budget Calculator named as a later tool |
+| 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves |
+| 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative attacks |
+| 2026-08-17 | Annotate CRB batches 3–10; next is AC/CMB |

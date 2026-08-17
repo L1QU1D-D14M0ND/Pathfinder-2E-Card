@@ -321,7 +321,7 @@
         "hpRolled": {
           "type": "array",
           "items": { "type": "integer" },
-          "description": "Hit-die result (or chosen fixed value) per HD, before Constitution. Engine adds Con per entry (minimum 1 HP per HD) plus favored-class HP."
+          "description": "Hit-die result (or chosen fixed value) per HD, before Constitution, in class-row order. Engine adds Con per entry (minimum 1 HP per HD) plus favored-class HP. Edited in the Max HP breakdown dialog; the app does not roll."
         },
         "currentHp": {
           "type": "integer",
