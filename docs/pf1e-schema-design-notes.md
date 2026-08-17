@@ -93,11 +93,13 @@ class.wizard
 feat.power-attack
 spell.fireball
 skill.perception
-knowledge.arcana
+skill.knowledge-arcana
 weapon.longsword
 armor.chainmail
 condition.sickened
 ```
+
+Catalog ids may contain `.` as a namespace separator (`class.fighter`). **Skill keys on the sheet** cannot (`knowledge-arcana`, never `knowledge.arcana`) so `derived.skillTotals.<key>` overrides stay unambiguous. The catalog id for a Knowledge skill is `skill.knowledge-arcana`, matching the sheet key after the `skill.` prefix.
 
 ---
 
@@ -141,3 +143,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves |
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative slash notation |
 | 2026-08-17 | Point next schema/pack work at annotated CRB batches 3–10 |
+| 2026-08-17 | Catalog ids vs skill keys: `skill.knowledge-arcana`, not `knowledge.arcana` |

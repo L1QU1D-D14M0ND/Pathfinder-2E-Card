@@ -34,7 +34,7 @@ Ruleset target: **Core Rulebook**, player-facing. No GM-exclusive bestiary/adven
 | 11 | Encumbrance | Item **pounds**; total weight derived. Light/medium/heavy from Strength table (engine). No PF2e bulk |
 | 12 | Play / dying | Negative HP allowed; dead at −Con (display threshold). **No** PF2e dying/wounded/doomed track, **no** hero points in 0.9 (optional later as a custom resource) |
 | 13 | Alignment | First-class identity field (nine alignments + optional deity) |
-| 14 | Size / race | Race (not ancestry/heritage). Size affects AC, CMB/CMD, skills as in CRB core size table |
+| 14 | Size / race | Race (not ancestry/heritage). Size affects AC, attack, CMB/CMD, and carrying capacity as in the CRB size table. Stealth/Fly size skill modifiers are not auto-applied in 0.9 |
 | 15 | Feats | Structured rows (type: general, combat, metamagic, item creation, …). No auto-application of feat text in 0.9 |
 | 16 | Companions / familiars | Schema hook allowed; **no nested editor in PF1e 0.9** (same deferral as PF2e companions) |
 | 17 | Goldens | Fighter 5; Wizard 5; multiclass Fighter 2 / Wizard 3 (or equivalent mixed BAB) |
@@ -153,7 +153,7 @@ Shared: Notes, generic feat/feature row tables, Save/Load, derived-cell look, **
 
 ## 6. Golden-test characters
 
-Engineering fixtures. Assert core outputs. Until a content pack exists, `rulesetSource: "custom"` with numeric inputs filled in.
+Engineering fixtures. Assert core outputs. Until catalog batches 8–10 land, goldens keep numeric combat/skill inputs on the sheet (PF1e ContentRef has no `rulesetSource`; that field is PF2e-only).
 
 1. **Fighter 5** — full BAB, heavy armor, **one** attack at +5 (iteratives start at BAB +6), Fort good, skill ACP, HP from d10s.
 2. **Wizard 5** — ½ BAB, prepared arcane, INT DCs, bonus spells, cantrips, light load, poor Fort/Ref good Will.
@@ -200,3 +200,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-17 | Phase 3c batch 1: CRB pack process; ability modifiers + BAB/saves. |
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog (manual HD rolls) + iterative slash notation. |
 | 2026-08-17 | Annotate upcoming CRB batches 3–10; next is AC/touch/FF + CMB/CMD. |
+| 2026-08-17 | Size lock is AC/attack/CMB/CMD/carry, not skill size mods. PF1e goldens have no `rulesetSource`. |

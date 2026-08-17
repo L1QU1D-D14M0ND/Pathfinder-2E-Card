@@ -58,6 +58,8 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 - Sidebar **host** (read/write rail when a sheet is loaded; tools unspecified) is locked in [ADR 0005](0005-sidebar-host.md). Empty/collapsed host is enough for 0.9; tool list comes later.
 - A future ADR will lock the PF1e JSON schema (analog of ADR 0002). Envelope rules in this ADR and [PF1e schema notes](../pf1e-schema-design-notes.md) are the standing defaults until then.
 
+**Postscript (2026-08-17):** Phase M, ADR 0006, and Phases 1e–3e / 3c batches 1–2 have landed. The next *code* increment is Phase 3c batch 3 (AC / CMB), not the refactor this ADR originally scheduled. See [`ROADMAP.md`](../ROADMAP.md).
+
 ## Defaults for open questions
 
 These are **locked for sequencing** unless the stakeholder overrides them. See also [the umbrella design](../ttrpg-character-sheet-design.md) § open picks.
