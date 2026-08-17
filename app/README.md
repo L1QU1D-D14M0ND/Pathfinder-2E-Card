@@ -27,7 +27,7 @@ npm run build
 - Auto-seeded standard skills per system
 - PF1e martial calc (BAB, saves, AC trio, CMB/CMD, iteratives, pounds) and PF2e core calc
 - Save export strips `derived`
-- Collapsible Tools sidebar (empty registry; Attack Helper and Actions List wait until the sheet is ~90% done)
+- Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the sheet is ~90% done)
 - PWA manifest + service worker configured via `vite-plugin-pwa` (not separately runtime-tested)
 - UI strings are hardcoded English; message catalogs are not started
 
@@ -35,4 +35,4 @@ Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr
 
 Schemas: `../schemas/character.schema.json` (PF2e), `../schemas/pf1e/character.schema.json` (PF1e)
 
-Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e), `../fixtures/characters/golden/pf1e/wizard-5.json` (PF1e)
+Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e), `../fixtures/characters/golden/pf1e/wizard-5.json` (PF1e), `../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json` (PF1e)

@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "system": "pf1e",
+  "meta": {
+    "createdAt": "2026-08-17T13:30:00.000Z",
+    "updatedAt": "2026-08-17T13:30:00.000Z",
+    "appVersion": "0.0.0",
+    "locale": "en",
+    "characterId": "golden-pf1e-fighter-2-wizard-3"
+  },
+  "identity": {
+    "characterName": "Golden Multiclass",
+    "playerName": "Fixture",
+    "race": { "id": "race.human", "name": "Human" },
+    "size": "medium",
+    "alignment": "lawful neutral",
+    "deity": "",
+    "xp": 10000,
+    "languages": [
+      { "id": null, "name": "Common" }
+    ]
+  },
+  "classes": [
+    {
+      "id": "class-row-fighter",
+      "class": { "id": "class.fighter", "name": "Fighter" },
+      "levels": 2,
+      "hitDie": 10,
+      "babProgression": "full",
+      "saves": { "fort": "good", "ref": "poor", "will": "poor" },
+      "favored": { "hp": 2, "skillRanks": 0 }
+    },
+    {
+      "id": "class-row-wizard",
+      "class": { "id": "class.wizard", "name": "Wizard" },
+      "levels": 3,
+      "hitDie": 6,
+      "babProgression": "half",
+      "saves": { "fort": "poor", "ref": "poor", "will": "good" },
+      "favored": { "hp": 0, "skillRanks": 0 }
+    }
+  ],
+  "abilities": {
+    "str": { "score": 16 },
+    "dex": { "score": 12 },
+    "con": { "score": 14 },
+    "int": { "score": 16 },
+    "wis": { "score": 10 },
+    "cha": { "score": 8 }
+  },
+  "vitals": {
+    "hpRolled": [10, 6, 4, 4, 4],
+    "currentHp": 40,
+    "tempHp": 0,
+    "nonlethal": 0,
+    "speeds": [{ "kind": "land", "feet": 30 }]
+  },
+  "armorClass": {
+    "armorBonus": 4,
+    "shieldBonus": 0,
+    "natural": 0,
+    "deflection": 0,
+    "dodge": 0,
+    "other": 0,
+    "maxDex": 4,
+    "armorCheckPenalty": -2,
+    "notes": "Chain shirt; item stats documentary"
+  },
+  "combat": {
+    "initiativeMisc": 0,
+    "meleeAttackMisc": 0,
+    "rangedAttackMisc": 0,
+    "cmbMisc": 0,
+    "cmdMisc": 0,
+    "fortMisc": 0,
+    "refMisc": 0,
+    "willMisc": 0
+  },
+  "skills": [
+    { "key": "acrobatics", "name": "Acrobatics", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "appraise", "name": "Appraise", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "bluff", "name": "Bluff", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "climb", "name": "Climb", "ability": "str", "ranks": 3, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "diplomacy", "name": "Diplomacy", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "disable-device", "name": "Disable Device", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "disguise", "name": "Disguise", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "escape-artist", "name": "Escape Artist", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "fly", "name": "Fly", "ability": "dex", "ranks": 0, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "handle-animal", "name": "Handle Animal", "ability": "cha", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "heal", "name": "Heal", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "intimidate", "name": "Intimidate", "ability": "cha", "ranks": 2, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "linguistics", "name": "Linguistics", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "perception", "name": "Perception", "ability": "wis", "ranks": 5, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "ride", "name": "Ride", "ability": "dex", "ranks": 0, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "sense-motive", "name": "Sense Motive", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "sleight-of-hand", "name": "Sleight of Hand", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "spellcraft", "name": "Spellcraft", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "stealth", "name": "Stealth", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "survival", "name": "Survival", "ability": "wis", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "swim", "name": "Swim", "ability": "str", "ranks": 0, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "use-magic-device", "name": "Use Magic Device", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-arcana", "name": "Knowledge (arcana)", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-dungeoneering", "name": "Knowledge (dungeoneering)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-engineering", "name": "Knowledge (engineering)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-geography", "name": "Knowledge (geography)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-history", "name": "Knowledge (history)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-local", "name": "Knowledge (local)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nature", "name": "Knowledge (nature)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nobility", "name": "Knowledge (nobility)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-planes", "name": "Knowledge (planes)", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-religion", "name": "Knowledge (religion)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 }
+  ],
+  "feats": [
+    {
+      "id": "feat-scribe-scroll",
+      "category": "itemCreation",
+      "feat": { "id": "feat.scribe-scroll", "name": "Scribe Scroll" },
+      "levelGained": 1,
+      "summary": "Wizard bonus feat. Not auto-applied."
+    },
+    {
+      "id": "feat-power-attack",
+      "category": "combat",
+      "feat": { "id": "feat.power-attack", "name": "Power Attack" },
+      "levelGained": 1,
+      "summary": "Not auto-applied."
+    }
+  ],
+  "features": [],
+  "attacks": [
+    {
+      "id": "atk-longsword",
+      "name": "Longsword",
+      "attackType": "melee",
+      "itemId": "item-longsword",
+      "attackAbility": "str",
+      "damageAbility": "str",
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "miscAttack": 0,
+      "miscDamage": 0
+    }
+  ],
+  "spellcasting": [
+    {
+      "id": "cast-wizard",
+      "name": "Wizard",
+      "ability": "int",
+      "classRowId": "class-row-wizard",
+      "casterLevelOverride": null,
+      "slots": [
+        { "spellLevel": 0, "max": 4, "remaining": 4 },
+        { "spellLevel": 1, "max": 3, "remaining": 2 },
+        { "spellLevel": 2, "max": 2, "remaining": 2 }
+      ],
+      "cantrips": [
+        {
+          "id": "spell-detect-magic",
+          "spell": { "id": "spell.detect-magic", "name": "Detect Magic" },
+          "spellLevel": 0,
+          "prepared": true
+        }
+      ],
+      "spells": [
+        {
+          "id": "spell-magic-missile",
+          "spell": { "id": "spell.magic-missile", "name": "Magic Missile" },
+          "spellLevel": 1,
+          "prepared": true
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "currency": { "cp": 0, "sp": 0, "gp": 90, "pp": 0 },
+    "items": [
+      {
+        "id": "item-chain-shirt",
+        "item": { "id": "armor.chain-shirt", "name": "Chain shirt" },
+        "quantity": 1,
+        "pounds": 25,
+        "location": "equipped",
+        "armor": {
+          "acBonus": 4,
+          "maxDex": 4,
+          "armorCheckPenalty": -2,
+          "spellFailurePercent": 20
+        }
+      },
+      {
+        "id": "item-longsword",
+        "item": { "id": "weapon.longsword", "name": "Longsword" },
+        "quantity": 1,
+        "pounds": 4,
+        "location": "equipped",
+        "weapon": {
+          "damageDice": "1d8",
+          "damageType": "slashing",
+          "critRange": 19,
+          "critMultiplier": 2
+        }
+      },
+      {
+        "id": "item-spellbook",
+        "item": { "id": "item.spellbook", "name": "Spellbook" },
+        "quantity": 1,
+        "pounds": 3,
+        "location": "carried"
+      }
+    ],
+    "notes": "Stacked BAB/saves from Fighter 2 + Wizard 3."
+  },
+  "companions": [],
+  "conditions": [],
+  "play": { "dailyResources": [] },
+  "notes": {
+    "appearance": "Golden-test multiclass. Proves classes[] stacking.",
+    "personality": "",
+    "campaign": "",
+    "other": "20-point buy + human +2 Str. Chain shirt. Wizard 3 table 4/2/1 + INT 16 bonus 1st/2nd = 4/3/2."
+  },
+  "overrides": {},
+  "extensions": {}
+}

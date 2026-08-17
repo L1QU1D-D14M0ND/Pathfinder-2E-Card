@@ -188,3 +188,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-17 | Initial PF1e system spec under ADR 0003 |
 | 2026-08-17 | Share sidebar host with PF2e; PF1e tools optional later |
 | 2026-08-17 | Schema v1 (ADR 0006). Fighter 5 golden uses a single +5 iterative (CRB). |
+| 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden proves stacked BAB/saves. |

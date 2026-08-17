@@ -122,9 +122,9 @@ condition.sickened
 3. ~~`compute()` for abilities, BAB, saves, HP, AC trio, CMB/CMD, iteratives, skills, weight.~~
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
-6. Multiclass golden (Phase 3e).
+6. ~~Multiclass golden (Phase 3e).~~
 
-Sidebar **tools** (Attack Helper, Actions List) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
+Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 
 ---
 
@@ -135,3 +135,4 @@ Sidebar **tools** (Attack Helper, Actions List) wait until the character sheet i
 | 2026-08-17 | Initial target notes (no on-disk schema yet) |
 | 2026-08-17 | ADR 0006 + on-disk schema; field names locked |
 | 2026-08-17 | Phase 2e: spell DC + bonus slots in compute |
+| 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden |
