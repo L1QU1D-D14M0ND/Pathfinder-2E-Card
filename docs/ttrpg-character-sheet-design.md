@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-17  
-**Implementation:** Phase M + thin sidebar host landed. PF2e still the only computing system (Fighter 5 / Wizard 5). Next: PF1e schema (1e).  
+**Implementation:** Phase 1e landed (PF1e schema + martial `compute()` + Fighter 5). PF2e slice preserved. Next: PF1e Wizard 5 (2e). Sidebar tools wait until the sheet is ~90% done.  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -9,7 +9,7 @@
 
 System-specific specs:
 
-- Pathfinder 1E — [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)
+- Pathfinder 1E — [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) ([ADR 0006](adr/0006-pf1e-character-schema.md))
 - Pathfinder 2E — [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md)
 - Shared kernel — [`shared-kernel-design.md`](shared-kernel-design.md) ([ADR 0004](adr/0004-shared-kernel.md))
 - Sidebar host — [`sidebar-host-design.md`](sidebar-host-design.md) ([ADR 0005](adr/0005-sidebar-host.md))
@@ -79,7 +79,7 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 **Later (design must not block)**
 
 - Remaining PF2e goldens, companion editor, Remaster + legacy content packs (the old PF2e 0.9 leftovers).
-- **Sidebar tools** (list unspecified except **Attack Helper**). The old Spells / Afflictions / Actions encyclopedia is a candidate tool, not the host ([ADR 0005](adr/0005-sidebar-host.md)). **Attack Helper:** [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md).
+- **Sidebar tools** (list unspecified except **Attack Helper**). Sequenced **after the character sheet is ~90% done**. The old Spells / Afflictions / Actions encyclopedia is a candidate tool, not the host ([ADR 0005](adr/0005-sidebar-host.md)). **Attack Helper:** [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md).
 - Typed `effects[]` automation.
 - Optional card-oriented play surfaces.
 - Additional systems behind the same `system` discriminator.

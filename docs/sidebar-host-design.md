@@ -115,7 +115,7 @@ The old “reference sidebar” (Spells / Afflictions / Actions) remains a possi
 | Docs (now) | This file + ADR 0005 |
 | **M** | Done — empty collapsed `<aside>` in the shell |
 | **Sb** | Done (thin host: collapse, registry, empty state, context wired) |
-| **Tools** (later) | First real tools; **Attack Helper** is specified; encyclopedia is a candidate |
+| **Tools** (later) | After the character sheet is **~90% done** (dynamic and functional). **Attack Helper** is specified; encyclopedia is a candidate |
 | 0.9 | PF1e bar does **not** wait on tools. Empty/collapsed host is fine |
 | 1.0 | Same; Spanish includes `shell.sidebar.*` if the host shipped |
 
@@ -146,3 +146,4 @@ Import rule unchanged: PF1e tools must not import PF2e modules.
 | --- | --- |
 | 2026-08-17 | Initial host lock; tools left unspecified (ADR 0005) |
 | 2026-08-17 | Reserve **Attack Helper** as a later named tool (no in-app dice) |
+| 2026-08-17 | Tools sequenced after the sheet is ~90% done; not during schema/engine work |

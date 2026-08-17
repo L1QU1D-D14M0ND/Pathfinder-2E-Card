@@ -318,7 +318,7 @@ Use this table when naming fields so we do not “standardize” the wrong thing
 - `SheetTable`.
 - Shared spell-slot or feat TypeScript interfaces used by both (PF1e types do not exist yet).
 - Moving goldens on disk.
-- PF1e schema (Phase 1e).
+- PF1e schema (Phase 1e) — done: [ADR 0006](adr/0006-pf1e-character-schema.md).
 - Named sidebar **tools** (Phase Sb host, then a tools increment). Empty rail is OK.
 - Full override-kernel generic if the PF2e allow-list move is riskier than copying `applyOverrides` once — **prefer one generic apply with a callback** if it stays under ~80 lines and PF2e tests pass; otherwise move the current function with PF2e and genericize in 1e.
 

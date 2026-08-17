@@ -3,8 +3,8 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-17  
-**Current phase:** **M + Sb host done.** Next **code** phase is **1e** (PF1e schema + Fighter 5). Attack Helper is a later sidebar tool.  
-**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~0%**. Overall ~25% of the new 0.9 definition.
+**Current phase:** **1e in progress** (PF1e schema + martial `compute()` + Fighter 5 + New→PF1e). Sidebar **tools** wait until the character sheet is ~90% done (dynamic and functional).  
+**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial slice**. Overall ~35% of the new 0.9 definition.
 
 ---
 
@@ -14,7 +14,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 
 **1.0** — Spanish locale; same functional bar as 0.9, called stable.
 
-**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools** (Attack Helper specified; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
+**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools after the sheet is ~90% done** (Attack Helper specified; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
 
 ---
 
@@ -60,16 +60,16 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 1e — PF1e schema + martial core
 
-**Status:** Not started (0%)
+**Status:** In progress (schema + engine + Fighter 5 + editors)
 
-- [ ] PF1e JSON Schema + schema ADR (analog of ADR 0002)
-- [ ] TypeScript types; empty-sheet factory (seeded PF1e skills)
-- [ ] Ajv validate Load/Save for `system: "pf1e"`
-- [ ] Core calc: ability modifiers, BAB, saves, HP, AC/touch/FF, CMB/CMD, iteratives, skills, pounds/load
-- [ ] Overrides last; unknown `effects[]` ignored
-- [ ] Golden: PF1e Fighter 5
-- [ ] New sheet: user can choose PF1e
-- [ ] Editors enough to enter that Fighter (identity/classes, abilities, skills, combat, inventory subset)
+- [x] PF1e JSON Schema + schema ADR (analog of ADR 0002) — [ADR 0006](adr/0006-pf1e-character-schema.md)
+- [x] TypeScript types; empty-sheet factory (seeded PF1e skills)
+- [x] Ajv validate Load/Save for `system: "pf1e"`
+- [x] Core calc: ability modifiers, BAB, saves, HP, AC/touch/FF, CMB/CMD, iteratives, skills, pounds/load
+- [x] Overrides last; unknown `effects[]` ignored
+- [x] Golden: PF1e Fighter 5
+- [x] New sheet: user can choose PF1e
+- [x] Editors enough to enter that Fighter (identity/classes, abilities, skills, combat, inventory subset)
 
 ---
 
@@ -112,7 +112,7 @@ Until this pack exists, goldens use `custom` numeric inputs (same as current PF2
 - [x] Tool registry + empty state; `SidebarToolContext` (`character`, `derived`, `update`)
 - [x] Mobile collapsed by default (and desktop starts collapsed while the registry is empty)
 - [x] No named tools required (list specified later)
-- [ ] **Attack Helper** (later) — [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md)
+- [ ] **Attack Helper** (later — after the sheet is ~90% done) — [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md)
 
 See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).
 
@@ -165,7 +165,7 @@ Not started (after PF1e 0.9):
 **Status:** Deferred by design (0%)
 
 - [ ] Remaining PF2e 0.9 leftovers if not already done
-- [ ] Sidebar **tools** (list TBD except **Attack Helper**, specified). Candidate also: Spells / Afflictions / Actions reference
+- [ ] Sidebar **tools** (list TBD except **Attack Helper**, specified). Sequence: after the character sheet is ~90% done, dynamic and functional. Candidate also: Spells / Afflictions / Actions reference
 - [ ] Typed `effects[]` automation
 - [ ] Optional card-oriented play surfaces
 - [ ] Additional systems behind `system`
@@ -180,17 +180,17 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 | Domain | Schema | UI editor | Derived calcs |
 | --- | --- | --- | --- |
-| Identity / race / alignment / `classes[]` | Notes only | No | — |
-| Ability scores | Notes only | No | — |
-| BAB, saves, iteratives | Notes only | No | — |
-| AC / touch / FF, CMB / CMD | Notes only | No | — |
-| HP (HD + Con) | Notes only | No | — |
-| Skills (ranks) | Notes only | No | — |
-| Feats / features | Notes only | No | — |
-| Inventory (pounds) | Notes only | No | — |
-| Spellcasting | Notes only | No | — |
-| Play (negative HP, conditions) | Notes only | No | — |
-| Overrides + Save/Load | Envelope planned | PF2e Save/Load only | — |
+| Identity / race / alignment / `classes[]` | Yes | Yes | Level from class sum |
+| Ability scores | Yes | Yes | Modifiers |
+| BAB, saves, iteratives | Yes | Yes (derived) | Yes |
+| AC / touch / FF, CMB / CMD | Yes | Yes | Yes |
+| HP (HD + Con) | Yes | Yes | Yes |
+| Skills (ranks) | Yes | Yes | Yes |
+| Feats / features | Yes | Yes | n/a (effects ignored) |
+| Inventory (pounds) | Yes | Yes | Weight + load |
+| Spellcasting | Schema hook | No (Phase 2e) | — |
+| Play (negative HP, conditions) | Yes | Yes | Dead-at threshold |
+| Overrides + Save/Load | Yes | Save/Load yes | Overrides applied |
 
 ### PF2e (in repo)
 
@@ -217,13 +217,13 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Phase 1e** — PF1e schema + martial `compute()` + Fighter 5 + New→PF1e.
-2. **Phase 2e** — Wizard 5 + spell editors.
-3. **Phase 3e** — Multiclass golden.
-4. **Phase 3c** — Minimal CRB pack.
-5. **Draft buffer + PWA proof** — app 0.9 platform.
-6. **Spanish** — 1.0.
-7. **Only then** leftover PF2e goldens / companion / Remaster packs, and **sidebar tools** when built (**Attack Helper** is the first named tool).
+1. **Phase 2e** — Wizard 5 + spell editors.
+2. **Phase 3e** — Multiclass golden.
+3. **Phase 3c** — Minimal CRB pack.
+4. **Draft buffer + PWA proof** — app 0.9 platform.
+5. **Spanish** — 1.0.
+6. **Only then** leftover PF2e goldens / companion / Remaster packs.
+7. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper** is the first named tool). Do not start tools during schema/engine work.
 
 ---
 
@@ -250,3 +250,4 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | 2026-08-17 | Sidebar host (ADR 0005); tools TBD; Phase Sb |
 | 2026-08-17 | Reserve Attack Helper as a later sidebar tool (no in-app dice) |
 | 2026-08-17 | Phase M kernel/shell + thin sidebar host landed |
+| 2026-08-17 | Phase 1e: PF1e schema (ADR 0006), martial compute, Fighter 5, New→PF1e. Tools deferred until sheet ~90% done |

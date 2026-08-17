@@ -1,15 +1,15 @@
 # PF1e character JSON schema — design notes
 
-**Status:** Target notes for the future PF1e schema ADR. **No** `schemas/pf1e/` file in the repo yet.  
+**Status:** Implemented. Contract: [ADR 0006](adr/0006-pf1e-character-schema.md), [`schemas/pf1e/character.schema.json`](../schemas/pf1e/character.schema.json).  
 **Parent lock:** [ADR 0003](adr/0003-multi-system-product-direction.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Shared envelope / refs:** [`shared-kernel-design.md`](shared-kernel-design.md)  
-**PF2e schema (current on-disk contract):** [`character.schema.json`](../schemas/character.schema.json), [ADR 0002](adr/0002-character-schema.md)
+**PF2e schema (unchanged):** [`character.schema.json`](../schemas/character.schema.json), [ADR 0002](adr/0002-character-schema.md)
 
-Do not extend the PF2e schema with optional 1E fields. PF1e gets its own document type.
+Do not extend the PF2e schema with optional 1E fields. PF1e has its own document type.
 
 ---
 
-## Envelope (shared with PF2e after refactor)
+## Envelope
 
 ```json
 {
@@ -19,7 +19,7 @@ Do not extend the PF2e schema with optional 1E fields. PF1e gets its own documen
 }
 ```
 
-- `system` is `"pf1e"`.
+- `system` is required `"pf1e"`.
 - `schemaVersion` is the **PF1e** document version (starts at 1). Independent of PF2e’s `schemaVersion`.
 - Save omits `derived`.
 - `overrides` map for manual totals; `extensions` bag for experiments.
@@ -28,82 +28,35 @@ Do not extend the PF2e schema with optional 1E fields. PF1e gets its own documen
 
 ## Design principles
 
-1. **One file = one PC.** Familiars/companions later as nested subsets (not in 0.9 UI).
+1. **One file = one PC.** Familiars/companions are a stub array (not in 0.9 UI).
 2. **Inputs + play state are authoritative.**
-3. **Multiclass is normal.** Identity is `classes[]`, not a single `identity.class`.
-4. **User-entered where tables are large** (spells per day, HD rolled). **Engine-owned where tables are small** (11 CRB BAB/save/HD types, ability modifiers, iterative steps, bonus-spells-from-ability, encumbrance thresholds).
+3. **Multiclass is normal.** Identity is `classes[]`, not a single `identity.class`. `identity.level` is **not stored**; level is derived from the class sum.
+4. **User-entered where tables are large** (spells per day, HD rolled). **Engine-owned where tables are small** (BAB/save/HD types, ability modifiers, iterative steps, encumbrance thresholds).
 5. **`effects[]` on rows** for later automation; unknown `type` ignored.
 6. **No campaign-options block** in 0.9.
 
 ---
 
-## Sketch (not a schema)
+## Locked field names (schema v1)
 
-Illustrative only; field names will be locked in the schema ADR.
+See the JSON Schema for types. Summary:
 
-```json
-{
-  "schemaVersion": 1,
-  "system": "pf1e",
-  "identity": {
-    "name": "",
-    "race": { "id": "race.human", "name": "Human" },
-    "size": "medium",
-    "alignment": "lawful good",
-    "deity": "",
-    "xp": 0
-  },
-  "classes": [
-    {
-      "id": "row-1",
-      "class": { "id": "class.fighter", "name": "Fighter" },
-      "levels": 2,
-      "hitDie": 10,
-      "babProgression": "full",
-      "saves": { "fort": "good", "ref": "poor", "will": "poor" },
-      "favored": { "hp": 2, "skillRanks": 0 }
-    },
-    {
-      "id": "row-2",
-      "class": { "id": "class.wizard", "name": "Wizard" },
-      "levels": 3,
-      "hitDie": 6,
-      "babProgression": "half",
-      "saves": { "fort": "poor", "ref": "poor", "will": "good" }
-    }
-  ],
-  "abilities": {
-    "str": { "score": 16 },
-    "dex": { "score": 12 },
-    "con": { "score": 14 },
-    "int": { "score": 16 },
-    "wis": { "score": 10 },
-    "cha": { "score": 8 }
-  },
-  "vitals": { "hpRolled": [10, 6, 4, 5, 3], "currentHp": 28, "tempHp": 0 },
-  "armorClass": {
-    "armorBonus": 6,
-    "shieldBonus": 0,
-    "natural": 0,
-    "deflection": 0,
-    "dodge": 0,
-    "other": 0
-  },
-  "skills": [],
-  "feats": [],
-  "features": [],
-  "attacks": [],
-  "spellcasting": [],
-  "inventory": { "items": [], "currency": { "gp": 0 } },
-  "conditions": [],
-  "play": { "dailyResources": [] },
-  "notes": {},
-  "overrides": {},
-  "extensions": {}
-}
-```
+| Area | Fields |
+| --- | --- |
+| Identity | `characterName`, `playerName`, `race`, `size` (includes Fine/Diminutive/Colossal), `alignment`, `deity` (string), `xp`, `languages` |
+| Classes | `id`, `class` ContentRef, `levels`, `hitDie`, `babProgression` (`full` / `threeQuarter` / `half`), `saves` good/poor, `favored.hp` / `favored.skillRanks` |
+| Abilities | `score` + optional `tempModifier` per key |
+| Vitals | `hpRolled[]` (before Con), `currentHp` (may be negative), `tempHp`, `nonlethal`, speeds/senses |
+| AC | explicit `armorBonus`, `shieldBonus`, `natural`, `deflection`, `dodge`, `other`, `maxDex` (null = no cap), `armorCheckPenalty` (≤ 0) |
+| Combat misc | initiative / melee / ranged / CMB / CMD / save misc |
+| Skills | `key` kebab **without dots**, `ranks`, `classSkill`, `armorPenaltyApplies`, `misc` |
+| Attacks | snapshot rows; engine adds BAB + ability + size |
+| Inventory | `pounds`, location `equipped\|carried\|stowed\|dropped` (dropped excluded from weight) |
+| Play | `dailyResources` only — no hero points, no dying track |
 
-`identity.level` is **derived** (sum of `classes[].levels`), not a competing input. If a document also stores a display level, the engine trusts the class sum unless overridden.
+ContentRef is `{ id, name }` plus optional `source`. No Remaster/legacy fields.
+
+Skill keys must match `^[a-z0-9]+(?:-[a-z0-9]+)*$` so `derived.skillTotals.<key>` overrides parse (use `knowledge-arcana`, not `knowledge.arcana`).
 
 ---
 
@@ -113,7 +66,20 @@ Seed CRB skills that are not wildcard Craft/Perform/Profession:
 
 `acrobatics`, `appraise`, `bluff`, `climb`, `diplomacy`, `disable-device`, `disguise`, `escape-artist`, `fly`, `handle-animal`, `heal`, `intimidate`, `linguistics`, `perception`, `ride`, `sense-motive`, `sleight-of-hand`, `spellcraft`, `stealth`, `survival`, `swim`, `use-magic-device`, plus Knowledge (`arcana`, `dungeoneering`, `engineering`, `geography`, `history`, `local`, `nature`, `nobility`, `planes`, `religion`).
 
-User adds `craft:*`, `perform:*`, `profession:*` (and extra Knowledges if needed) like PF2e lore.
+User adds `craft-*`, `perform-*`, `profession-*` like PF2e lore.
+
+---
+
+## Engine notes (0.9 martial)
+
+- Modifier = `floor((score − 10) / 2)` + `tempModifier`.
+- BAB/saves stack **per class row** (do not add levels then apply one table).
+- Iteratives: extra attacks when BAB ≥ 6, −5 steps, max four from BAB. **Fighter 5 is +5 only**, not +5/+0.
+- HP: each `hpRolled` entry contributes `max(1, roll + Con mod)`, plus favored-class HP totals.
+- AC: Dex bonus capped by `maxDex`; Dex **penalties** still apply when flat-footed; dodge is lost when flat-footed.
+- Load: CRB Strength heavy-load table × size multiplier; light/medium = floor(heavy/3) and floor(2×heavy/3).
+- Item armor/weapon subfields are documentary in 0.9; combat numbers come from `armorClass` / `attacks`.
+- Unknown `effects[]` are ignored (not read).
 
 ---
 
@@ -149,26 +115,16 @@ condition.sickened
 
 ---
 
-## Risks
+## Next implementation steps
 
-| ID | Risk | Mitigation |
-| --- | --- | --- |
-| P1 | Copying PF2e field names that mean different math | Separate types; do not reuse `ProficiencyRank` |
-| P2 | Under-specified bonus types | Explicit AC fields for 0.9; full stacker later |
-| P3 | Prestige / custom classes | User-picked progressions on the class row |
-| P4 | HD vs average vs max | Store the number that went into HP; engine sums |
-| P5 | OGL / Product Identity | Curated pack; license review before shipping text |
+1. ~~Schema ADR + `schemas/pf1e/character.schema.json` + TypeScript types.~~
+2. ~~Empty-sheet factory with seeded skills.~~
+3. ~~`compute()` for abilities, BAB, saves, HP, AC trio, CMB/CMD, iteratives, skills, weight.~~
+4. ~~Fighter 5 golden.~~
+5. Spell DC + slots editor + Wizard 5 golden (Phase 2e).
+6. Multiclass golden (Phase 3e).
 
----
-
-## Next implementation steps (after Phase M)
-
-1. Schema ADR + `schemas/pf1e/character.schema.json` + TypeScript types.
-2. Empty-sheet factory with seeded skills and zero class rows (or one empty class row).
-3. `compute()` for abilities, BAB, saves, HP, AC trio, CMB/CMD, iteratives, skills, weight.
-4. Fighter 5 golden.
-5. Spell DC + slots editor + Wizard 5 golden.
-6. Multiclass golden.
+Sidebar **tools** (Attack Helper) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 
 ---
 
@@ -177,3 +133,4 @@ condition.sickened
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Initial target notes (no on-disk schema yet) |
+| 2026-08-17 | ADR 0006 + on-disk schema; field names locked |

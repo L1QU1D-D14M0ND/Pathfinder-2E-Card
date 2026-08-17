@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **Phase 1e** (PF1e schema + Fighter 5). Phase M (kernel + `system` + PF2e module) and a thin sidebar host are in the repo. Reuse boundaries: [`shared-kernel-design.md`](shared-kernel-design.md).
+The next **code** increment is **Phase 2e** (PF1e Wizard 5 + spell editors). Phase **1e** (schema + martial `compute()` + Fighter 5 + New→PF1e) is in the repo. Sidebar **tools** wait until the character sheet is ~90% done.
 
 ---
 
@@ -37,14 +37,13 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 
 | Area | What exists |
 | --- | --- |
-| Product docs | ADR 0003–0005 + umbrella/PF1e/kernel/sidebar + Attack Helper spec |
-| Layout | `app/src/shared`, `shell`, `systems/pf2e` |
-| Schema | PF2e `character.schema.json`; optional `system: "pf2e"` |
-| Engine | PF2e under `systems/pf2e/engine` |
-| UI | PF2e workspace + empty Tools sidebar |
-| Goldens | `fighter-5.json`, `wizard-5.json` (PF2e; load without `system`) |
+| Product docs | ADR 0003–0006 + umbrella/PF1e/kernel/sidebar + Attack Helper spec |
+| Layout | `app/src/shared`, `shell`, `systems/pf1e`, `systems/pf2e` |
+| Schema | PF2e `character.schema.json`; PF1e `schemas/pf1e/character.schema.json` |
+| Engine | PF1e martial core; PF2e under `systems/pf2e/engine` |
+| UI | PF1e + PF2e workspaces; empty Tools sidebar |
+| Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json` |
 | Content | No packs |
-| PF1e | Docs only |
 
 ---
 
@@ -90,7 +89,7 @@ Wire the collapsible rail + registry + `SidebarToolContext`. Zero tools is a val
 
 ### Recommendation
 
-**1e → 2e → 3e**, with T4′ before a large PF1e UI wave. Content pack 3c after (or with) 3e. **Attack Helper** after that (sidebar tools).
+**1e → 2e → 3e**, with T4′ before a large remaining-UI wave. Content pack 3c after (or with) 3e. **Attack Helper** and other sidebar tools **after the character sheet is ~90% done** (not during schema/engine work).
 
 ---
 
@@ -184,10 +183,10 @@ Steps 2–4 are the **next development increments** after this documentation cha
 
 ### Phase 1e
 
-- [ ] PF1e schema validates Load/Save
-- [ ] `compute()` for martial core
-- [ ] Fighter 5 golden
-- [ ] New sheet can create PF1e
+- [x] PF1e schema validates Load/Save
+- [x] `compute()` for martial core
+- [x] Fighter 5 golden
+- [x] New sheet can create PF1e
 
 ### PF1e 0.9 bar
 
@@ -222,3 +221,4 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | 2026-08-17 | Phase M includes shared kernel (ADR 0004) |
 | 2026-08-17 | Sidebar host (ADR 0005); tools unspecified |
 | 2026-08-17 | Phase M/Sb implemented; Attack Helper reserved as later tool |
+| 2026-08-17 | Phase 1e implemented; tools deferred until sheet ~90% done |

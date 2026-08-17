@@ -5,7 +5,8 @@ React + TypeScript + Vite PWA. Working product title: **TTRPG Character Sheet**.
 Layout:
 
 - `src/shared` — ids, signed, Ajv helper, file IO, `DerivedCell`
-- `src/shell` — chrome, Save/Load, empty Tools sidebar
+- `src/shell` — chrome, Save/Load dispatch by `system`, empty Tools sidebar
+- `src/systems/pf1e` — PF1e schema types, martial `compute()`, spreadsheet workspace
 - `src/systems/pf2e` — PF2e schema types, `compute()`, spreadsheet workspace
 
 ## Scripts
@@ -19,18 +20,19 @@ npm run build
 
 ## Features
 
-- Spreadsheet-style UI with identity, feats, spells, combat, inventory, and play editors
-- New / Load / Save sheet (`.json`), validated against `character.schema.json`
-- `system: "pf2e"` written on Save; files without `system` still load as PF2e
-- Auto-seeded standard PF2e skills
-- Core calc engine (`compute`) for attributes, proficiency, HP, AC, skills, strikes, spell attack/DC, bulk, investiture
+- Spreadsheet-style UI per system (PF1e: classes/abilities/skills/combat; PF2e: existing editors)
+- New / Load / Save sheet (`.json`). New sheet asks PF1e vs PF2e. Load dispatches on `system`
+- `system: "pf2e"` written on PF2e Save; files without `system` still load as PF2e
+- `system: "pf1e"` required on PF1e documents
+- Auto-seeded standard skills per system
+- PF1e martial calc (BAB, saves, AC trio, CMB/CMD, iteratives, pounds) and PF2e core calc
 - Save export strips `derived`
-- Collapsible Tools sidebar (empty registry; Attack Helper is a later tool)
+- Collapsible Tools sidebar (empty registry; Attack Helper waits until the sheet is ~90% done)
 - PWA manifest + service worker configured via `vite-plugin-pwa` (not separately runtime-tested)
 - UI strings are hardcoded English; message catalogs are not started
 
-PF1e types/engine/UI are not in this package yet. Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr/0003-multi-system-product-direction.md).
+Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr/0003-multi-system-product-direction.md). PF1e schema: [`../docs/adr/0006-pf1e-character-schema.md`](../docs/adr/0006-pf1e-character-schema.md).
 
-Schema: `../schemas/character.schema.json` (PF2e)
+Schemas: `../schemas/character.schema.json` (PF2e), `../schemas/pf1e/character.schema.json` (PF1e)
 
-Golden fixtures: `../fixtures/characters/golden/fighter-5.json`, `../fixtures/characters/golden/wizard-5.json` (PF2e)
+Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e)

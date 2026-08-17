@@ -2,7 +2,7 @@
 
 **Status:** Accepted (PF2e documents only)  
 **Date:** 2026-08-13  
-**Context:** Product direction locked in ADR 0001; Save/Load format needed before calc engine and UI. Stakeholder answered schema open questions. [ADR 0003](0003-multi-system-product-direction.md) does **not** retire this schema: it remains the contract for Pathfinder 2E save files. A later ADR will lock the PF1e schema and the shared `system` envelope ([target notes](../pf1e-schema-design-notes.md)). Do not extend this schema with First Edition fields.
+**Context:** Product direction locked in ADR 0001; Save/Load format needed before calc engine and UI. Stakeholder answered schema open questions. [ADR 0003](0003-multi-system-product-direction.md) does **not** retire this schema: it remains the contract for Pathfinder 2E save files. The PF1e schema is [ADR 0006](0006-pf1e-character-schema.md). Do not extend this schema with First Edition fields.
 
 ## Decision
 

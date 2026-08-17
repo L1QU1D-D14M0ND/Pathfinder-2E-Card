@@ -2,7 +2,7 @@
 
 **Status:** System specification locked for 0.9 sequencing (ADR 0003) — 2026-08-17  
 **Parent:** [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md)  
-**Schema notes (no schema file yet):** [`pf1e-schema-design-notes.md`](pf1e-schema-design-notes.md)  
+**Schema:** [ADR 0006](adr/0006-pf1e-character-schema.md), [`pf1e-schema-design-notes.md`](pf1e-schema-design-notes.md), [`../schemas/pf1e/character.schema.json`](../schemas/pf1e/character.schema.json)  
 **Priority:** **First** system to take to a playable 0.9 bar (ahead of remaining PF2e work)
 
 This is the PF1e analog of the PF2e design doc. It does not replace the umbrella product lock.
@@ -155,7 +155,7 @@ Shared: Notes, generic feat/feature row tables, Save/Load, derived-cell look, **
 
 Engineering fixtures. Assert core outputs. Until a content pack exists, `rulesetSource: "custom"` with numeric inputs filled in.
 
-1. **Fighter 5** — full BAB, heavy armor, multiple attacks (BAB +5 → +5/+0), Fort good, skill ACP, HP from d10s.
+1. **Fighter 5** — full BAB, heavy armor, **one** attack at +5 (iteratives start at BAB +6), Fort good, skill ACP, HP from d10s.
 2. **Wizard 5** — ½ BAB, prepared arcane, INT DCs, bonus spells, cantrips, light load, poor Fort/Ref good Will.
 3. **Multiclass** — **Fighter 2 / Wizard 3** (or same level split). Assert **stacked** BAB and mixed saves. This is the fixture that proves `classes[]` is not a single-class afterthought.
 
@@ -187,3 +187,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | --- | --- |
 | 2026-08-17 | Initial PF1e system spec under ADR 0003 |
 | 2026-08-17 | Share sidebar host with PF2e; PF1e tools optional later |
+| 2026-08-17 | Schema v1 (ADR 0006). Fighter 5 golden uses a single +5 iterative (CRB). |
