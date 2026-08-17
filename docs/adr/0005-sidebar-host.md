@@ -16,7 +16,7 @@ When a character document is in memory (New or Load), the shell shows a **sideba
 - **One document.** Tools read `character` + `derived` and write only through the same `update(mutator)` path as sheet tabs. No parallel copy, no bypass of Ajv on Save, no private undo stack that diverges from the sheet.
 - **Registry, not a hard-coded encyclopedia.** The host is a slot. Tools register (shared and/or per `SystemModule`). Unspecified tools must be addable without redesigning chrome or forking persistence.
 - **Sheet stays primary.** Spreadsheet tabs remain the full editor. The sidebar is companion chrome, not a second character sheet. Mobile: collapsed by default; sheet stays usable full-width.
-- **Tool implementations are not specified** except two named later tools: **Attack Helper** ([`../sidebar-tools-attack-helper.md`](../sidebar-tools-attack-helper.md)) — weapon + feat preview, **no dice** — and **Actions List** ([`../sidebar-tools-actions-list.md`](../sidebar-tools-actions-list.md)) — what the PC can do now, with unavailable actions **greyed out** and a one-word / short-sentence reason. Neither is on the PF1e 0.9 critical path; both wait until the **character sheet is ~90% done**. Pulling a tool that contradicts a non-goal (in-app dice, VTT, cloud) still needs its own lock.
+- **Tool implementations are not specified** except three named later tools: **Attack Helper** ([`../sidebar-tools-attack-helper.md`](../sidebar-tools-attack-helper.md)) — weapon + feat preview, **no dice**; **Actions List** ([`../sidebar-tools-actions-list.md`](../sidebar-tools-actions-list.md)) — what the PC can do now, with unavailable actions **greyed out** and a one-word / short-sentence reason; and **Budget Calculator** ([`../sidebar-tools-budget-calculator.md`](../sidebar-tools-budget-calculator.md)) — buy vs craft cost, time, DC, and requirements. None is on the PF1e 0.9 critical path; all wait until the **character sheet is ~90% done**. Pulling a tool that contradicts a non-goal (in-app dice, VTT, cloud) still needs its own lock.
 - **UI chrome only for tool layout.** Which tool is open / whether the rail is collapsed is **session UI state**, not a save-file field, unless a specific tool must persist something — then it writes through `update` into the character (`extensions` or a later schema field).
 
 ## Consequences
@@ -25,6 +25,7 @@ When a character document is in memory (New or Load), the shell shows a **sideba
 - Phase **Sb** (sidebar host) follows M; it does **not** block Phase 1e. 0.9 may ship with an empty or collapsed host.
 - **Attack Helper** is a named later tool: weapon + feat preview; physical dice only.
 - **Actions List** is a named later tool: current action menu; grey-out + short reason from conditions.
+- **Budget Calculator** is a named later tool: shopping list with buy vs craft totals, craft time/DC/requirements, and short reasons when the PC cannot craft a line.
 - ADR 0001’s Spells / Afflictions / Actions browser is a candidate **encyclopedia** tool (rules text), distinct from Actions List (this PC, right now).
 - Sidebar strings go through i18n (`shell.sidebar.*`, tool keys under `shell.*` or `pf1e.*` / `pf2e.*`).
 
@@ -43,6 +44,7 @@ When a character document is in memory (New or Load), the shell shows a **sideba
 - [`../sidebar-host-design.md`](../sidebar-host-design.md)
 - [`../sidebar-tools-attack-helper.md`](../sidebar-tools-attack-helper.md)
 - [`../sidebar-tools-actions-list.md`](../sidebar-tools-actions-list.md)
+- [`../sidebar-tools-budget-calculator.md`](../sidebar-tools-budget-calculator.md)
 - [`../ttrpg-character-sheet-design.md`](../ttrpg-character-sheet-design.md)
 - [`../shared-kernel-design.md`](../shared-kernel-design.md)
 - [`../ROADMAP.md`](../ROADMAP.md)

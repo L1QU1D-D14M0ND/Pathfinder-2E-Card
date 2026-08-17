@@ -118,6 +118,7 @@ Do not share one “is this legal?” function across editions.
 | --- | --- |
 | **Actions List** (this) | “What can I do **now**?” — availability under current conditions |
 | **Attack Helper** | “I’m making **this** attack” — to-hit / damage expression, feat toggles |
+| **Budget Calculator** | “What does this shopping list **cost** if I buy vs craft?” — downtime, not in-combat actions. Spec: [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md) |
 | Encyclopedia (candidate) | Browse **rules** text for spells / afflictions / actions — not the PC’s current menu |
 
 Clicking an attack in Actions List **may** later deep-link into Attack Helper (`focusTab` / shared session). That is optional; do not block the first slice on it.
@@ -139,3 +140,4 @@ Clicking an attack in Actions List **may** later deep-link into Attack Helper (`
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Named later tool: Actions List; grey-out + short reason from conditions |
+| 2026-08-17 | Cross-link Budget Calculator (downtime craft vs this combat menu) |

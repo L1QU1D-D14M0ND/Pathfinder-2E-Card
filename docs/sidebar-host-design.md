@@ -94,6 +94,7 @@ Do not stub these in the registry until their increment. Reserved ids:
 | --- | --- | --- |
 | `shell.attack-helper` | **Attack Helper** | [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md) — pick a weapon + applicable feats; show mechanical triggers/inflicts and to-hit/damage **expressions**. **No dice roller** (physical dice at the table). |
 | `shell.actions-list` | **Actions List** | [`sidebar-tools-actions-list.md`](sidebar-tools-actions-list.md) — what this PC can do now (attacks, maneuvers, movement, skills, aptitudes). Unavailable rows are **greyed out** with a one-word or short-sentence reason (`grappled`, `dazed`, `immobilized`, …). |
+| `shell.budget-calculator` | **Budget Calculator** | [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md) — shopping list of priced gear/magic items; compare **buy** vs **craft** (some or all lines). Show craft **cost**, **time**, **DC**, and **requirements**; unmet reqs as short reasons. **No dice roller**. |
 
 The old “reference sidebar” (Spells / Afflictions / Actions) remains a possible future **encyclopedia** tool group, catalog-fed, still license-gated. It is not the host and it is not Actions List (the PC’s current menu).
 
@@ -116,7 +117,7 @@ The old “reference sidebar” (Spells / Afflictions / Actions) remains a possi
 | Docs (now) | This file + ADR 0005 |
 | **M** | Done — empty collapsed `<aside>` in the shell |
 | **Sb** | Done (thin host: collapse, registry, empty state, context wired) |
-| **Tools** (later) | After the character sheet is **~90% done** (dynamic and functional). **Attack Helper** and **Actions List** are specified; encyclopedia is a candidate |
+| **Tools** (later) | After the character sheet is **~90% done** (dynamic and functional). **Attack Helper**, **Actions List**, and **Budget Calculator** are specified; encyclopedia is a candidate |
 | 0.9 | PF1e bar does **not** wait on tools. Empty/collapsed host is fine |
 | 1.0 | Same; Spanish includes `shell.sidebar.*` if the host shipped |
 
@@ -149,3 +150,4 @@ Import rule unchanged: PF1e tools must not import PF2e modules.
 | 2026-08-17 | Reserve **Attack Helper** as a later named tool (no in-app dice) |
 | 2026-08-17 | Tools sequenced after the sheet is ~90% done; not during schema/engine work |
 | 2026-08-17 | Reserve **Actions List** (grey-out + short reason) |
+| 2026-08-17 | Reserve **Budget Calculator** (buy vs craft cost, time, DC, requirements) |

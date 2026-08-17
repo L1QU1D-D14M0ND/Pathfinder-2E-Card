@@ -2,7 +2,7 @@
 
 **Status:** Named future tool — **not implemented**. Host lock: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).  
 **Id (reserved):** `shell.attack-helper` (shared entry; per-system math behind it).  
-**Sequencing:** after the character sheet is **~90% done** (same window as [Actions List](sidebar-tools-actions-list.md)). Not on the PF1e 0.9 critical path.
+**Sequencing:** after the character sheet is **~90% done** (same window as [Actions List](sidebar-tools-actions-list.md) and [Budget Calculator](sidebar-tools-budget-calculator.md)). Not on the PF1e 0.9 critical path.
 
 ---
 
@@ -84,7 +84,17 @@ Until content packs exist, mechanical lines come from user-entered `summary` / t
 
 ---
 
-## 7. Out of scope for the first tools increment
+## 7. Relationship to other tools
+
+| Tool | Relationship |
+| --- | --- |
+| **Attack Helper** (this) | Resolve **this** swing: expressions only |
+| **Actions List** | Whether an attack is available **now** |
+| **Budget Calculator** | Buying or crafting the weapon **before** play. Spec: [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md) |
+
+---
+
+## 8. Out of scope for the first tools increment
 
 - Targeting a creature / NPC AC (no encounter tracker).
 - Automating feat legality (prereqs, “you already used this this turn”).
@@ -98,3 +108,4 @@ Until content packs exist, mechanical lines come from user-entered `summary` / t
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Named later tool: Attack Helper; table dice only |
+| 2026-08-17 | Cross-link Budget Calculator (shop/craft the weapon first) |
