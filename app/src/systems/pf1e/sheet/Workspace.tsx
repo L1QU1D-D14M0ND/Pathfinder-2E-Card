@@ -5,10 +5,11 @@ import {
 } from '../character'
 import type { AbilityKey } from '../character/types'
 import { signed } from '../../../shared/format'
-import type { DerivedView } from '../engine'
+import { formatIteratives, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import { CombatPanel } from './CombatPanel'
 import { FeatsPanel } from './FeatsPanel'
+import { HpBreakdownDialog } from './HpBreakdownDialog'
 import { IdentityPanel } from './IdentityPanel'
 import { InventoryPanel } from './InventoryPanel'
 import { PlayPanel } from './PlayPanel'
@@ -59,6 +60,7 @@ export function Pf1eWorkspace({
   setStatus: (message: string) => void
 }) {
   const [tab, setTab] = useState<TabId>('identity')
+  const [hpOpen, setHpOpen] = useState(false)
 
   function addWildcardSkill(kind: 'craft' | 'perform' | 'profession') {
     const raw = window.prompt(`${kind} specialty (e.g. weapons)`)
@@ -121,6 +123,7 @@ export function Pf1eWorkspace({
           <span className="hp-pair">
             <input
               type="number"
+              aria-label="Current HP"
               value={character.vitals.currentHp}
               onChange={(e) =>
                 update((c) => ({
@@ -132,10 +135,19 @@ export function Pf1eWorkspace({
                 }))
               }
             />
-            <DerivedCell
-              value={`/ ${derived.maxHp}`}
-              overridden={derived.overriddenPaths.includes('derived.maxHp')}
-            />
+            <button
+              type="button"
+              className={
+                derived.overriddenPaths.includes('derived.maxHp')
+                  ? 'derived overridden hp-max-button'
+                  : 'derived hp-max-button'
+              }
+              title="Open HP breakdown"
+              aria-label={`Max HP ${derived.maxHp}, open breakdown`}
+              onClick={() => setHpOpen(true)}
+            >
+              / {derived.maxHp}
+            </button>
           </span>
         </label>
         <label>
@@ -148,7 +160,7 @@ export function Pf1eWorkspace({
         <label>
           BAB
           <DerivedCell
-            value={signed(derived.bab)}
+            value={formatIteratives(derived.babIteratives)}
             overridden={derived.overriddenPaths.includes('derived.bab')}
           />
         </label>
@@ -379,6 +391,7 @@ export function Pf1eWorkspace({
             character={character}
             derived={derived}
             update={update}
+            onOpenHpBreakdown={() => setHpOpen(true)}
           />
         )}
 
@@ -413,6 +426,12 @@ export function Pf1eWorkspace({
           </table>
         )}
       </main>
+      <HpBreakdownDialog
+        open={hpOpen}
+        onClose={() => setHpOpen(false)}
+        character={character}
+        update={update}
+      />
     </div>
   )
 }

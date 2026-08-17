@@ -2,7 +2,7 @@ import {
   createEmptyAttack,
   type CharacterDocument,
 } from '../character'
-import { signed, type DerivedView } from '../engine'
+import { formatIteratives, signed, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { SheetUpdate } from './update'
 
@@ -40,14 +40,17 @@ export function CombatPanel({
       <table className="sheet-table">
         <tbody>
           <tr>
-            <th>BAB / iteratives</th>
+            <th>Iterative attacks</th>
             <td>
               <DerivedCell
-                value={`${signed(derived.bab)} (${derived.babIteratives
-                  .map(signed)
-                  .join('/')})`}
+                value={formatIteratives(derived.babIteratives)}
                 overridden={derived.overriddenPaths.includes('derived.bab')}
               />
+              <div className="muted">
+                Extra attacks at BAB +6, +11, and +16 (−5 steps). Full-round
+                attack. No dice roller. Haste / two-weapon fighting are not
+                included.
+              </div>
             </td>
           </tr>
           <tr>
@@ -319,7 +322,7 @@ export function CombatPanel({
                     <DerivedCell
                       value={
                         derivedAttack
-                          ? signed(derivedAttack.attack)
+                          ? formatIteratives(derivedAttack.iteratives)
                           : '—'
                       }
                       overridden={derived.overriddenPaths.includes(
