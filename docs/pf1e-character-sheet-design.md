@@ -173,7 +173,9 @@ Batch 1 (landed): ability-modifier formula (engine-owned) + BAB/save progression
 
 Batch 2 (landed): click **max HP** to open a per-HD breakdown; the player types physical HD rolls (the app does not roll). BAB and each attack show CRB iterative slash notation (`+6/+1`). Fighter 5 stays a single +5.
 
-Remaining classes, skills, race, weapons, and spell metadata wait.
+**Next (batch 3):** AC / touch / FF + CMB / CMD — engine review of formulas already in `compute()`, no new catalog, no typed-bonus stacker. Then batch 4 skills, 5 size, 6 encumbrance. Catalog (Human, Fighter/Wizard class skills + skill points, weapons/armor ids) is batches 8–10 after those math reviews. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+
+Remaining CRB classes, feats, and spell metadata wait until the three goldens can be rebuilt from ids.
 
 Enough catalog to rebuild the three goldens is the 0.9 content bar. Full CRB spell list can trail.
 
@@ -197,3 +199,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-17 | Phase 3e: Fighter 2 / Wizard 3 golden proves stacked BAB/saves. |
 | 2026-08-17 | Phase 3c batch 1: CRB pack process; ability modifiers + BAB/saves. |
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog (manual HD rolls) + iterative slash notation. |
+| 2026-08-17 | Annotate upcoming CRB batches 3–10; next is AC/touch/FF + CMB/CMD. |

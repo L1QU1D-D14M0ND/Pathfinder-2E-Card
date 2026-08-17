@@ -1,13 +1,13 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-17). Batch 2 landed (HP breakdown + iterative attacks). Next batch: AC / touch / FF + CMB / CMD.  
+**Status:** In progress (2026-08-17). Batches 1–2 landed. **Next PR: batch 3** (AC / touch / FF + CMB / CMD).  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
 
 This is not a dump of the Core Rulebook. Each batch takes **two character-creation / core-math mechanics**, checks the CRB procedure, maps it onto the sheet (or records the intended implementation), and only then adds the smallest catalog slice those mechanics need.
 
-No class flavor text, no spell descriptions, no Product Identity. This batch ships **numeric progression metadata** and **engine formulas**.
+No class flavor text, no spell descriptions, no Product Identity. Landed batches ship **engine formulas** and, when needed, **numeric catalog tags** (Fighter/Wizard HD/BAB/saves).
 
 ---
 
@@ -29,21 +29,25 @@ Resolver rule (locked): missing catalog id → treat as **custom**; isolate to t
 
 ## 2. Mechanic queue (character basics)
 
-Order is CRB character-build order, not encyclopedia order. Sidebar tools stay out.
+Order is CRB character-build order, not encyclopedia order. Sidebar tools stay out. **Two mechanics per PR** — do not start the following pair in the same change.
 
-| Batch | Mechanics | Status |
-| --- | --- | --- |
-| **1** | Ability scores → modifiers; BAB + save progressions (and how they stack) | Done |
-| **2** | Hit points (HD + Con + favored); iterative attacks from BAB | Done |
-| 3 | AC / touch / flat-footed; CMB / CMD | **Next** |
-| 4 | Skills (ranks, class +3, ACP, max ranks) | |
-| 5 | Size (AC/attack vs CMB/CMD vs carry) | |
-| 6 | Encumbrance (Strength table, light/medium/heavy) | |
-| 7 | Spell DC; bonus spells from ability | Already in engine; pack review later |
-| 8 | Race (Human first — golden) | Catalog |
-| 9 | Class skills + skill points per level (Fighter, Wizard) | Catalog |
-| 10 | Weapons / armor on the three goldens | Catalog |
-| … | Feats, spells metadata, remaining 9 CRB classes | After goldens can be rebuilt from ids |
+**How to pick the next PR:** take the first row whose status is **Next**. Engine-owned rows review formulas and UI honesty; catalog rows add ids. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here.
+
+| Batch | Mechanics | Why this pair | Kind | Status |
+| --- | --- | --- | --- | --- |
+| **1** | Ability scores → modifiers; BAB + save progressions (and how they stack) | Scores feed every later total; BAB/saves are the class-table core | Engine + Fighter/Wizard tags | Done |
+| **2** | Hit points (HD + Con + favored); iterative attacks from BAB | HD uses class hit die from batch 1; iteratives are a use of BAB | Engine + HP dialog / slash line | Done |
+| **3** | AC / touch / flat-footed; CMB / CMD | Same Combat block; Dex, size, dodge, and deflection are shared | Engine review (no new catalog) | **Next** |
+| **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | After 3 |
+| **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | After 3 |
+| **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | After 5 |
+| **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
+| **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | After math 3–6 |
+| **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | After 4 |
+| **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | After 3; recommended after 3–6 |
+| … | Feats, spells metadata, remaining 9 CRB classes | After the three goldens can be rebuilt from ids | Catalog | After 8–10 |
+
+Annotations for batches 3–10 (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
 
 ---
 
@@ -229,9 +233,98 @@ applyCrbClassProgression(classRow, id) → ClassEntry
 
 ---
 
+## 6. Recommended upcoming batches
+
+These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
+
+### Batch 3 — AC / touch / FF + CMB / CMD (**next**)
+
+**Pairing:** Both are Combat-tab derived totals. They share Dex (capped by `maxDex`), size (AC/attack modifier vs special CMB size), dodge, and deflection. Reviewing them together keeps the three ACs honest against CMD.
+
+**Already in the app (do not rewrite from scratch):**
+
+| Total | Formula in `engine/ac.ts` / `compute.ts` |
+| --- | --- |
+| AC | `10 + armor + shield + cappedDex + size + natural + deflection + dodge + other` |
+| Touch | `10 + cappedDex + size + deflection + dodge + other` (no armor, shield, or natural) |
+| Flat-footed | Like AC, but Dex **bonus** and dodge drop; Dex **penalties** still apply |
+| CMB | `BAB + STR + special size + cmbMisc` |
+| CMD | `10 + BAB + STR + DEX + special size + dodge + deflection + cmdMisc` |
+
+Special size for CMB/CMD is the negation of the AC/attack size modifier (`engine/abilities.ts`). Goldens are Medium (size 0): Fighter 5 AC 18 / touch 12 / FF 16, CMB +9, CMD 21.
+
+Armor **max Dex** caps Dex on AC and touch, **not** on CMD (CMD uses the full Dex modifier). Do not “fix” CMD to use `cappedDexBonus`.
+
+**In this batch:** CRB procedure in our own words; table tests beyond the three goldens (Dex cap, negative Dex on FF, touch omits armor); Combat UI labels if a total is easy to misread; document that armor/shield/natural/deflection fields are **user-responsible** (no typed-bonus stacker — risk P2).
+
+**Out:** Item-granted AC from inventory; max Dex from an armor catalog (batch 10); size table expansion (batch 5 — already applied, Medium-only in goldens); Combat Expertise / fighting defensively; shield bash; CMD vs specific maneuvers.
+
+**Pack slice:** none (engine-owned).
+
+**Tests:** Golden AC trio + CMB/CMD stay; add Dex-cap and FF-penalty cases. Do **not** start batch 4 in the same PR.
+
+### Batch 4 — Skills (ranks, class +3, ACP) + max ranks
+
+**Pairing:** The skill total and the rank cap are the two player-facing skill rules on the sheet. Class-skill *lists* and skill points per level are catalog (batch 9).
+
+**Already in the app:** `skillTotal` = ranks + ability + (trained and class skill → +3) + ACP (if the skill flags it) + misc. Factory seeds the CRB skill list. Favored-class **skill ranks** are stored on the class row but not auto-applied to a skill.
+
+**In this batch:** Confirm +3 only when ranks ≥ 1; ACP only on flagged skills (Climb, not Diplomacy); max ranks = **character level** (CRB; no 3.5 cross-class half ranks). UI or engine honesty if ranks can exceed level today.
+
+**Out:** Stamping Fighter/Wizard class-skill checkboxes from the pack (batch 9); armor-load penalties stacking on top of typed ACP (batch 6); Craft/Perform/Profession catalogs.
+
+**Pack slice:** none.
+
+**Depends on:** batch 3 only in the sense of “Combat ACP field already exists.” May follow 3 immediately.
+
+### Batch 5 — Size (AC/attack vs CMB/CMD vs carry)
+
+**Pairing:** One CRB size row drives three modifiers already wired: AC/attack, special CMB/CMD (opposite sign), carrying-capacity multiplier.
+
+**Already in the app:** Fine … Colossal tables in `sizeAcAttackModifier`, `sizeCmbModifier`, `sizeCarryMultiplier`. Identity size select. Goldens are Medium.
+
+**In this batch:** Publish the three tables as tests (not a JSON copy of every size). Confirm Small is +1 AC/attack, −1 CMB/CMD, ×3/4 carry; Large is the inverse on combat and ×2 carry.
+
+**Out:** Race catalog (batch 8); quadruped carry; swallow-whole / grapple size special cases.
+
+**Pack slice:** none.
+
+**Depends on:** batch 3 so AC/CMB consumers are already reviewed. Do not wait for 4.
+
+### Batch 6 — Encumbrance (Strength table; light / medium / heavy)
+
+**Pairing:** Heavy load from the Strength table, then light = floor(heavy/3) and medium = floor(2×heavy/3), is one CRB procedure. Load *category* is the second mechanic (thresholds vs carried pounds).
+
+**Already in the app:** `mediumBipedHeavyLoad`, `loadThresholds` (× size multiplier), `weightUsed` (dropped items excluded), `loadCategory` including overloaded.
+
+**In this batch:** Strength 1–29 (or the published Medium biped column) as tests; Medium STR 14 / 18 spot checks; document that medium/heavy **penalties** (max Dex, ACP, speed) are **not** auto-written onto `armorClass` in 0.9 — the player types ACP / max Dex.
+
+**Out:** Quadruped / powerful build; inventory auto-sum from armor catalog (batch 10).
+
+**Pack slice:** none.
+
+**Depends on:** batch 5 (size multiplier).
+
+### Batch 7 — Spell DC + bonus spells (review later)
+
+Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. **Do not insert this before batches 3–6.** Pack review when spell metadata lands.
+
+### Batches 8–10 — catalog (after the math reviews)
+
+| Batch | Add | Do not add |
+| --- | --- | --- |
+| **8** Race | `race.human` id + name; Human +2 any stays typed into the score | Full racial trait text; other races |
+| **9** Class skills + skill points | Fighter/Wizard class-skill flags and skill points per level; Identity or Skills can stamp checkboxes | All 11 CRB classes; auto-spend favored skill ranks |
+| **10** Weapons / armor | Ids for the three goldens (longsword, chainmail, …); still documentary — AC and attack numbers stay on sheet fields | Auto-fill AC from equipped items; priced treasure; magic weapons |
+
+**After 8–10:** remaining 9 CRB classes, feats, spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
+
+---
+
 ## Appendix — Document history
 
 | Date | Change |
 | --- | --- |
 | 2026-08-17 | Phase 3c opened. Batch 1: ability modifiers + BAB/save progressions; Fighter/Wizard catalog tags |
 | 2026-08-17 | Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks |
+| 2026-08-17 | Annotated upcoming batches 3–10 (next PR is AC/touch/FF + CMB/CMD) |

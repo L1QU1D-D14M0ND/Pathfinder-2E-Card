@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-17  
-**Implementation:** Phase 3c batch 2 landed (HP breakdown + iterative attacks). Next: AC / CMB ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
+**Implementation:** Phase 3c batches 1–2 landed. **Next: batch 3** — AC / touch / FF + CMB / CMD ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6). Then skills, size, encumbrance; catalog Human / class skills / weapons after the math reviews. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -266,3 +266,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-17 | Phase 3e Fighter 2 / Wizard 3; Budget Calculator named as a later tool |
 | 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves |
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative attacks |
+| 2026-08-17 | Annotate CRB batches 3–10; next is AC/CMB |
