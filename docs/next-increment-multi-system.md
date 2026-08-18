@@ -231,11 +231,11 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Fighter 5 golden
 - [x] Wizard 5 golden
 - [x] Multiclass golden
-- [ ] Editors for those domains (no familiar nested sheet)
+- [x] Editors for those domains (no familiar nested sheet)
 - [x] `en` catalog for shell chrome + PF1e Combat/Abilities/Skills/tabs (PF2e panel literals remain)
 - [x] PWA install + offline proven once
-- [ ] PF2e Fighter 5 / Wizard 5 still pass
-- [ ] Sidebar host may be empty; named tools not required
+- [x] PF2e Fighter 5 / Wizard 5 still pass
+- [x] Sidebar host may be empty; named tools not required
 
 ---
 
@@ -259,7 +259,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Decisions (implemented on local `main`):** 1A New-sheet picker with Cancel abort (boot stays PF2e). 2B `tempScore` + keep `tempModifier`. 3A last-wins BAB; Combat flags BAB vs iteratives separately. 4A one `other` field; Combat states it applies to all three ACs. 5A warn when ranks > level (no clamp). 6B blank Disable Device / UMD / Handle Animal at 0 ranks; blank Fly without a fly speed. 7B full attack-row fields. 8C no extra CMD/max-Dex copy. 9B `en.json` + `t()` for chrome (shell, tabs, PF1e Combat/Abilities/Skills, Notes). 10B shared `ContentRef`/`Effect`/`applyOverrides`/`Notes`/`Currency`.
 
-**Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
+**Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). Local `main` (0.9 bar + APG slice 1) is the publish tip.
 
 **Still sequenced (next code is fused overlay):**
 
@@ -305,3 +305,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | IndexedDB draft + PWA verify landed; next is OGL then 1.0 |
 | 2026-08-18 | OGL / PI review landed (ADR 0007); next code is 1.0 |
 | 2026-08-18 | APG slice 1: Summoner catalog + Synthesist name; next is evolutions + fused overlay |
+| 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; publishing local main to origin |

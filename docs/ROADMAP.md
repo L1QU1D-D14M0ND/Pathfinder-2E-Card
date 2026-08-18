@@ -4,7 +4,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 
 **Status date:** 2026-08-18  
 **Current phase:** **1.0 in progress** — APG slice 1 landed (Summoner catalog + Synthesist name). **Next:** documentary evolution names + fused overlay. Spanish is a separate 1.0 track. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
-**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
+**0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
 
@@ -135,7 +135,7 @@ See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-hos
 
 ## Phase 1–2 leftover (PF2e) — deprioritized
 
-**Status:** Frozen relative to 0.9. Do not schedule ahead of Phase 1e–3e unless the product lock changes.
+**Status:** Frozen relative to PF1e 0.9 (that bar has landed). Do not schedule ahead of remaining **1.0** Synthesist / Spanish work.
 
 Already in the repo (kept):
 
@@ -158,7 +158,7 @@ Not started (after PF1e 0.9):
 
 ## Phase 3 (PF2e content) — deprioritized
 
-**Status:** Not started (0%). Sequenced **after** PF1e 0.9.
+**Status:** Not started (0%). Sequenced **after** PF1e 1.0.
 
 - [ ] Curated Remaster Player Core player catalog
 - [ ] Player Core 2 player catalog
@@ -242,7 +242,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 2. **Only then** leftover PF2e goldens / companion / Remaster packs.
 3. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
-Housekeeping (not a product increment): local `main` is ahead of `origin/main`. Push when ready. Do not merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
+Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
 
 ---
 
@@ -295,3 +295,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | IndexedDB one-key draft + PWA build verify; next is OGL review then 1.0 |
 | 2026-08-18 | OGL / PI review landed (ADR 0007); pack stays mechanics-only; next is 1.0 |
 | 2026-08-18 | 1.0 APG slice 1: Summoner catalog + Synthesist name; next is evolutions + fused overlay |
+| 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; local `main` published to origin |

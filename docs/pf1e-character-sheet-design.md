@@ -1,6 +1,6 @@
 # Pathfinder First Edition — Character sheet (system spec)
 
-**Status:** System specification locked for 0.9 sequencing (ADR 0003) — 2026-08-17  
+**Status:** System specification locked (ADR 0003). PF1e **0.9 bar landed**. **1.0** Synthesist in progress (APG slice 1).  
 **Parent:** [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md)  
 **Schema:** [ADR 0006](adr/0006-pf1e-character-schema.md), [`pf1e-schema-design-notes.md`](pf1e-schema-design-notes.md), [`../schemas/pf1e/character.schema.json`](../schemas/pf1e/character.schema.json)  
 **Priority:** **First** system to take to a playable 0.9 bar (ahead of remaining PF2e work)
@@ -214,3 +214,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | App draft buffer + PWA proof landed. Next is OGL then 1.0. |
 | 2026-08-18 | OGL / PI review landed (ADR 0007). Next is 1.0 Synthesist + Spanish. |
 | 2026-08-18 | APG slice 1: Summoner catalog + Synthesist name. Next is evolutions + fused overlay. |
+| 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; 1.0 in progress. |

@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
-**Status:** Product direction lock (ADR 0003) — 2026-08-17  
-**Implementation:** Phase 3c batches 1–2 landed. **Next: batch 3** — AC / touch / FF + CMB / CMD ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6). Then skills, size, encumbrance; catalog Human / class skills / weapons after the math reviews. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
+**Status:** Product direction lock (ADR 0003) — 2026-08-18  
+**Implementation:** PF1e **0.9 bar landed**. **1.0 in progress** — APG slice 1 (Summoner catalog + Synthesist name). **Next:** documentary evolution names + fused overlay ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish is a separate 1.0 track. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -270,3 +270,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-18 | 1.0 bar includes playable APG Synthesist Summoner (CRB 0.9 unchanged) |
 | 2026-08-18 | Content licensing review (ADR 0007): mechanics-only pack until rules text |
 | 2026-08-18 | 1.0 APG slice 1: Summoner catalog + Synthesist name stamp |
+| 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; 1.0 Synthesist in progress |
