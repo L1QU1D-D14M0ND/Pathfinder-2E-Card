@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–6 and 8–12 landed. **Next code: spell metadata** on the goldens. Batch 7 (spell DC) stays later. APG Synthesist Summoner is a **1.0** bar, not this pack.  
+**Status:** In progress (2026-08-18). Batches 1–6 and 8–13 landed. **Next code: Batch 7 pack review** (spell DC / bonus slots already in the engine). APG Synthesist Summoner is a **1.0** bar, not this pack.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -41,13 +41,13 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | Done |
 | **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | Done |
 | **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | Done |
-| **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
+| **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review | **Next** |
 | **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | Done |
 | **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | Done |
 | **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | Done |
 | **11** | Remaining 9 CRB classes (progressions + class skills) | Same catalog row as Fighter/Wizard; Identity select already lists `CRB_CLASSES` | Catalog | Done |
 | **12** | Feats on the three goldens | Documentary feat ids; Combat math stays typed | Catalog | Done |
-| … | Spell metadata | After the golden feat ids | Catalog | **Next** |
+| **13** | Spell metadata on the goldens | Documentary spell ids; slots/DCs/prepared stay typed | Catalog | Done |
 
 Annotations for remaining batches (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
 
@@ -63,6 +63,7 @@ content/pf1e/crb/
   races.json         # race id + name (batch 8: human)
   items.json         # weapon/armor/gear ids (batch 10: golden rows only)
   feats.json         # feat id + name + category (batch 12: golden rows only)
+  spells.json        # spell id + name + spellLevel (batch 13: golden rows only)
 ```
 
 A class catalog row in this phase is **not** a class description. It is:
@@ -646,27 +647,53 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 13 — two mechanics
+
+### 4.23 Spell catalog ids on the goldens
+
+**CRB (player-facing):** Spells are chosen by name (Detect Magic, Light, Magic Missile, Fireball). The player writes them on the prepared list; the catalog does not fill a spellbook.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `content/pf1e/crb/spells.json` | Golden ids only |
+| Lookup | `lookupCrbSpell` | Unknown or empty id → `null` (custom). Never throws |
+| Apply | `applyCrbSpell` | Stamps spell id, catalog name, source, and `spellLevel`. Does **not** rewrite prepared, summary, uses, slots, or DCs |
+| UI | Spells tab select | Catalog or Custom, plus a typed name |
+| Goldens | Wizard 5 / F2/W3 | Already stored those ids; Fighter 5 has no spells. Load does not re-apply |
+
+**Verdict:** The golden spell ids resolve. Three goldens can be rebuilt from race / class / item / feat / spell ids.
+
+**Gaps:** Remaining CRB spells; spell descriptions (OGL first); auto-prepared spellbook.
+
+**Pack slice:** four spell ids.
+
+**Tests:** Catalog lists golden ids; unknown id (`spell.mage-armor`) is null; goldens resolve.
+
+### 4.24 Spell slots, DCs, and prepared stay typed
+
+**CRB (player-facing):** A Wizard prepares spells into slots. DC is 10 + spell level + ability. Bonus slots come from a high ability score. The sheet does not fill those from a catalog pick in 0.9.
+
+**App today / this batch:** Applying a catalog spell leaves `slots`, `prepared`, and summaries unchanged. `compute()` still derives DC and bonus slots from the spellcasting ability. Batch 7 reviews that engine math.
+
+**Gaps:** Auto-filling slots from class level; adding bonus slots into max; remaining CRB spell text.
+
+**Pack slice:** none beyond the spell rows.
+
+**Tests:** Empty Wizard-shaped entry still has slots 0 and Fireball DC 13 after apply (INT 10); Wizard 5 still has typed 3rd-level slots 2/1 and Fireball DC 17.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
 
-### Batch 7 — Spell DC + bonus spells (review later)
+### Batch 7 — Spell DC + bonus spells (**next**)
 
-Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review when spell metadata lands.
+Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review now that spell metadata has landed.
 
-### Spell metadata (**next**)
-
-**Pairing:** Catalog ids for spells already named on the Wizard / multiclass goldens (Detect Magic, Magic Missile, …). Spell text stays out; slots and DCs stay on the spellcasting entry.
-
-**Already in the app:** Spell list rows with `spell.id` / name; DC and bonus slots derived.
-
-**In this batch:** Smallest spells.json slice those goldens need. Do not auto-prepare a spellbook.
-
-**Out:** Spell descriptions; remaining CRB spell list; Synthesist / Summoner list (that is **1.0**, APG pack).
-
-**Pack slice:** spell ids for the goldens only.
-
-**After CRB 0.9:** OGL / Product Identity review before any **rules text**. **1.0** adds a playable APG Synthesist Summoner (separate pack; do not add Summoner to this CRB folder). Sidebar tools still wait until the sheet is ~90% done.
+**Out of this pack / later:** Remaining CRB spell list; OGL / Product Identity review before any **rules text**. **1.0** adds a playable APG Synthesist Summoner (separate pack; do not add Summoner to this CRB folder). Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -689,3 +716,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 10: documentary weapons/armor ids; AC/attacks stay typed; next is remaining 9 CRB classes |
 | 2026-08-18 | Batch 11: remaining 9 CRB classes reuse the Fighter/Wizard catalog row; next is feat ids |
 | 2026-08-18 | Batch 12: documentary feat ids; Combat math stays typed; next is spell metadata. 1.0 bar includes Synthesist Summoner (APG, not this pack) |
+| 2026-08-18 | Batch 13: documentary spell ids; slots/DCs/prepared stay typed; next is Batch 7 pack review |

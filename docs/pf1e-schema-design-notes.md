@@ -127,7 +127,7 @@ Catalog ids may contain `.` as a namespace separator (`class.fighter`). **Skill 
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
 6. ~~Multiclass golden (Phase 3e).~~
-7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–6 and 8–12 landed. **Next: spell metadata.** **1.0:** playable APG Synthesist Summoner (not the CRB pack).
+7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–6 and 8–13 landed. **Next: Batch 7 pack review.** **1.0:** playable APG Synthesist Summoner (not the CRB pack).
 
 Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 
@@ -147,3 +147,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-17 | Catalog ids vs skill keys: `skill.knowledge-arcana`, not `knowledge.arcana` |
 | 2026-08-17 | Optional `tempScore` (score addend); `tempModifier` remains a check/DC addend |
 | 2026-08-18 | Optional `ignoreWeight`; load category may be `ignored` |
+| 2026-08-18 | Phase 3c batch 13: golden spell catalog ids; slots/DCs stay typed |

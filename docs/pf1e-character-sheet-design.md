@@ -170,9 +170,9 @@ Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–6 and 8–12 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed). Load penalties, equipped-item AC, class features, and feat combat math are not auto-written.
+Batch 1–6 and 8–13 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed). Load penalties, equipped-item AC, class features, feat combat math, and auto-filled spellbooks are not auto-written.
 
-**Next:** Spell metadata on the goldens. Batch 7 (spell DC / bonus slots) is already in the engine.
+**Next:** Batch 7 pack review (spell DC / bonus slots already in the engine).
 
 **1.0 (not this CRB pack):** Playable APG Synthesist Summoner. Do not add `class.summoner` to `content/pf1e/crb/`.
 
@@ -209,3 +209,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Batch 10 documentary weapons/armor ids landed. Next pack work is remaining 9 CRB classes. |
 | 2026-08-18 | Batch 11 remaining 9 CRB classes landed. Next pack work is feat catalog ids. |
 | 2026-08-18 | Batch 12 documentary feat ids landed. 1.0 bar includes playable Synthesist Summoner. |
+| 2026-08-18 | Batch 13 documentary spell ids landed. Next pack work is Batch 7 pack review. |

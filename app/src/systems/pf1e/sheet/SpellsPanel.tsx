@@ -4,6 +4,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { AbilityKey, SpellListEntry, SpellcastingEntry } from '../character/types'
+import { applyCrbSpell, CRB_SPELLS } from '../content'
 import type { DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { SheetUpdate } from './update'
@@ -37,7 +38,9 @@ export function SpellsPanel({
     <div className="panel-stack">
       <p className="muted">
         Slots are user-entered. DC is 10 + spell level + ability. Bonus slots
-        from ability are derived (add them into max yourself in 0.9).
+        from ability are derived (add them into max yourself in 0.9). Catalog
+        spells stamp name and level only — they do not fill slots or a
+        spellbook.
       </p>
       <div className="table-toolbar">
         <strong>Spellcasting entries</strong>
@@ -324,14 +327,33 @@ function SpellListTable({
           {rows.length === 0 ? (
             <tr>
               <td colSpan={4} className="muted">
-                No spells in this list.
+                No spells in this list. Catalog stamps name and level; prepared
+                stays typed.
               </td>
             </tr>
           ) : (
             rows.map((row, index) => (
               <tr key={row.id}>
-                <td>
+                <td className="spell-cell">
+                  <select
+                    aria-label="CRB spell"
+                    value={row.spell.id ?? ''}
+                    onChange={(e) => {
+                      const id = e.target.value || null
+                      const next = [...rows]
+                      next[index] = applyCrbSpell(next[index], id)
+                      onChange(next)
+                    }}
+                  >
+                    <option value="">Custom</option>
+                    {CRB_SPELLS.map((entry) => (
+                      <option key={entry.id} value={entry.id}>
+                        {entry.name}
+                      </option>
+                    ))}
+                  </select>
                   <input
+                    aria-label="Spell name"
                     value={row.spell.name}
                     onChange={(e) => {
                       const next = [...rows]

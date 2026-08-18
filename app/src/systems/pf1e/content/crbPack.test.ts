@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
-import { createEmptyClass, createEmptyFeat, createEmptyItem } from '../character/createRows'
+import {
+  createEmptyClass,
+  createEmptyFeat,
+  createEmptyItem,
+  createEmptySpellListEntry,
+} from '../character/createRows'
 import { STANDARD_SKILLS } from '../character/standardSkills'
 import { parseCharacterJson } from '../character/saveLoad'
 import {
@@ -8,16 +13,19 @@ import {
   applyCrbFeat,
   applyCrbItem,
   applyCrbRace,
+  applyCrbSpell,
   classSkillKeySet,
   lookupCrbClass,
   lookupCrbFeat,
   lookupCrbItem,
   lookupCrbRace,
+  lookupCrbSpell,
   stampClassSkills,
   CRB_CLASSES,
   CRB_FEATS,
   CRB_ITEMS,
   CRB_RACES,
+  CRB_SPELLS,
 } from './crbPack'
 import { readRepoFile, readRepoJson } from '../../../test/readRepoFile'
 import {
@@ -108,14 +116,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–6 and 8–12', () => {
+  it('pack manifest records batches 1–6 and 8–13', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batch-12')
+    expect(pack.status).toBe('batch-13')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12,
+      1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13,
     ])
   })
 })
@@ -529,5 +537,80 @@ describe('CRB pack batch 12: feat catalog', () => {
     }
     expect(lookupCrbFeat(fighter.feats[0]?.feat.id)?.id).toBe('feat.weapon-focus')
     expect(lookupCrbFeat(wizard.feats[1]?.feat.id)?.id).toBe('feat.spell-focus')
+  })
+})
+
+describe('CRB pack batch 13: spell catalog', () => {
+  it('lists the golden spell ids', () => {
+    expect(CRB_SPELLS.map((row) => row.id)).toEqual([
+      'spell.detect-magic',
+      'spell.fireball',
+      'spell.light',
+      'spell.magic-missile',
+    ])
+    expect(lookupCrbSpell('spell.fireball')).toMatchObject({
+      name: 'Fireball',
+      spellLevel: 3,
+    })
+    expect(lookupCrbSpell('spell.detect-magic')?.spellLevel).toBe(0)
+    expect(lookupCrbSpell('spell.magic-missile')?.spellLevel).toBe(1)
+  })
+
+  it('returns null for an unknown spell id', () => {
+    expect(lookupCrbSpell('spell.mage-armor')).toBeNull()
+    expect(lookupCrbSpell(null)).toBeNull()
+    expect(lookupCrbSpell('')).toBeNull()
+  })
+
+  it('stamps id, name, and level without changing prepared or summary', () => {
+    const row = createEmptySpellListEntry(1)
+    row.prepared = true
+    row.summary = 'Keep this'
+    row.usesPerDay = 2
+    const fireball = applyCrbSpell(row, 'spell.fireball')
+    expect(fireball.prepared).toBe(true)
+    expect(fireball.summary).toBe('Keep this')
+    expect(fireball.usesPerDay).toBe(2)
+    expect(fireball.spell.id).toBe('spell.fireball')
+    expect(fireball.spell.name).toBe('Fireball')
+    expect(fireball.spellLevel).toBe(3)
+  })
+
+  it('unknown apply clears id and leaves the typed name and level', () => {
+    const row = applyCrbSpell(createEmptySpellListEntry(), 'spell.fireball')
+    row.spell.name = 'Fireball (empower)'
+    const custom = applyCrbSpell(row, 'spell.mage-armor')
+    expect(custom.spell.id).toBeNull()
+    expect(custom.spell.name).toBe('Fireball (empower)')
+    expect(custom.spellLevel).toBe(3)
+  })
+
+  it('goldens use catalog ids that resolve', () => {
+    const fighter = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),
+    )
+    const wizard = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/wizard-5.json'),
+    )
+    const mixed = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-2-wizard-3.json'),
+    )
+    expect(fighter.spellcasting).toEqual([])
+    for (const character of [wizard, mixed]) {
+      for (const entry of character.spellcasting) {
+        for (const row of [...entry.cantrips, ...entry.spells]) {
+          expect(lookupCrbSpell(row.spell.id)).not.toBeNull()
+        }
+      }
+    }
+    expect(lookupCrbSpell(wizard.spellcasting[0]?.cantrips[0]?.spell.id)?.id).toBe(
+      'spell.detect-magic',
+    )
+    expect(lookupCrbSpell(wizard.spellcasting[0]?.spells[1]?.spell.id)?.id).toBe(
+      'spell.fireball',
+    )
+    expect(lookupCrbSpell(mixed.spellcasting[0]?.spells[0]?.spell.id)?.id).toBe(
+      'spell.magic-missile',
+    )
   })
 })

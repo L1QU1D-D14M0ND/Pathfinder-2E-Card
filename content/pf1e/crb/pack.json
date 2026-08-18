@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-12",
+  "status": "batch-13",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -60,6 +60,11 @@
       "id": 12,
       "mechanics": ["feats-goldens", "feat-math-stays-typed"],
       "notes": "Documentary catalog ids for the golden feats. Stamps name and category. Does not write Combat math or summaries."
+    },
+    {
+      "id": 13,
+      "mechanics": ["spells-goldens", "spell-slots-stay-typed"],
+      "notes": "Documentary catalog ids for the golden spells. Stamps name and spell level. Does not write slots, DCs, or prepared flags."
     }
   ]
 }

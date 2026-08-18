@@ -1,0 +1,26 @@
+[
+  {
+    "id": "spell.detect-magic",
+    "name": "Detect Magic",
+    "spellLevel": 0,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "spell.fireball",
+    "name": "Fireball",
+    "spellLevel": 3,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "spell.light",
+    "name": "Light",
+    "spellLevel": 0,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "spell.magic-missile",
+    "name": "Magic Missile",
+    "spellLevel": 1,
+    "source": { "book": "CRB" }
+  }
+]

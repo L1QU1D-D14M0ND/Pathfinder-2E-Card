@@ -7,19 +7,21 @@ import type {
   Identity,
   ItemEntry,
   SkillEntry,
+  SpellListEntry,
 } from '../character/types'
 import { STANDARD_SKILLS } from '../character/standardSkills'
 import classesJson from '../../../../../content/pf1e/crb/classes.json'
 import racesJson from '../../../../../content/pf1e/crb/races.json'
 import itemsJson from '../../../../../content/pf1e/crb/items.json'
 import featsJson from '../../../../../content/pf1e/crb/feats.json'
+import spellsJson from '../../../../../content/pf1e/crb/spells.json'
 
 const STANDARD_SKILL_KEYS = new Set(STANDARD_SKILLS.map((row) => row.key))
 const STANDARD_SKILL_ORDER = new Map(
   STANDARD_SKILLS.map((row, index) => [row.key, index]),
 )
 
-/** Unknown or empty id → null. Shared by class / race / item / feat catalogs. */
+/** Unknown or empty id → null. Shared by class / race / item / feat / spell catalogs. */
 function lookupById<T extends { id: string }>(
   rows: readonly T[],
   id: string | null | undefined,
@@ -265,5 +267,51 @@ export function applyCrbFeat(row: FeatEntry, id: string | null): FeatEntry {
       source: found.source,
     },
     category: found.category,
+  }
+}
+
+export interface CrbSpell {
+  id: string
+  name: string
+  spellLevel: number
+  source?: ContentRef['source']
+}
+
+export const CRB_SPELLS: CrbSpell[] = spellsJson.map((row) => ({
+  id: row.id,
+  name: row.name,
+  spellLevel: row.spellLevel,
+  source: row.source,
+}))
+
+/** Unknown or empty id → null. Never throws. */
+export function lookupCrbSpell(id: string | null | undefined): CrbSpell | null {
+  return lookupById(CRB_SPELLS, id)
+}
+
+/**
+ * Stamp catalog id, name, source, and spell level.
+ * Does not rewrite prepared flags, summaries, slots, or DCs.
+ * Unknown id clears `spell.id` and leaves the rest of the row.
+ */
+export function applyCrbSpell(
+  row: SpellListEntry,
+  id: string | null,
+): SpellListEntry {
+  const found = lookupCrbSpell(id)
+  if (!found) {
+    return {
+      ...row,
+      spell: { ...row.spell, id: null },
+    }
+  }
+  return {
+    ...row,
+    spell: {
+      id: found.id,
+      name: found.name,
+      source: found.source,
+    },
+    spellLevel: found.spellLevel,
   }
 }

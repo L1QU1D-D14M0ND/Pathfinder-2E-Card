@@ -3,16 +3,25 @@ export {
   applyCrbFeat,
   applyCrbItem,
   applyCrbRace,
+  applyCrbSpell,
   classSkillKeySet,
   lookupCrbClass,
   lookupCrbFeat,
   lookupCrbItem,
   lookupCrbRace,
+  lookupCrbSpell,
   skillPointsPerLevelFor,
   stampClassSkills,
   CRB_CLASSES,
   CRB_FEATS,
   CRB_ITEMS,
   CRB_RACES,
+  CRB_SPELLS,
 } from './crbPack'
-export type { CrbClassProgression, CrbFeat, CrbItem, CrbRace } from './crbPack'
+export type {
+  CrbClassProgression,
+  CrbFeat,
+  CrbItem,
+  CrbRace,
+  CrbSpell,
+} from './crbPack'
