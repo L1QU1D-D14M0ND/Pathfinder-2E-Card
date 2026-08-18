@@ -1,7 +1,7 @@
 # Next increment — multi-system refactor, then PF1e
 
 **Status:** Active sequencing document (2026-08-18)  
-**Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
+**Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [ADR 0007](adr/0007-content-licensing.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
 This document **does** change product sequencing: PF1e is first; remaining PF2e 0.9 work waits. It does **not** reopen PF2e schema math (ADR 0002) or authorize deleting the PF2e slice.
@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **1.0** (Spanish plus a playable APG Synthesist Summoner), after an **OGL / Product Identity review** before any rules text. Batches 1–13 and the IndexedDB draft / PWA proof are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **1.0** (Spanish plus a playable APG Synthesist Summoner). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)): the CRB pack stays mechanics-only until a later increment ships rules text. Batches 1–13 and the IndexedDB draft / PWA proof are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -37,13 +37,13 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 
 | Area | What exists |
 | --- | --- |
-| Product docs | ADR 0003–0006 + umbrella/PF1e/kernel/sidebar + Attack Helper + Actions List + Budget Calculator specs |
+| Product docs | ADR 0003–0007 + umbrella/PF1e/kernel/sidebar + Attack Helper + Actions List + Budget Calculator specs |
 | Layout | `app/src/shared`, `shell`, `systems/pf1e`, `systems/pf2e` |
 | Schema | PF2e `character.schema.json`; PF1e `schemas/pf1e/character.schema.json` |
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batches 1–13 landed (including Batch 7). Draft + PWA proof landed. Next: OGL then 1.0 Synthesist |
+| Content | `content/pf1e/crb/` batches 1–13 landed. OGL/PI review: mechanics-only. Next: 1.0 Synthesist (APG pack) |
 
 ---
 
@@ -128,7 +128,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. **Next: OGL review, then 1.0 Synthesist.** Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). **Next: 1.0 Synthesist (APG pack) + Spanish.** Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -201,7 +201,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Two class rows; stacked BAB/saves
 - [x] Fighter 2 / Wizard 3 golden
 
-### Phase 3c (mechanic batches done; OGL remains)
+### Phase 3c (mechanic batches done; OGL review landed)
 
 - [x] Batch 1: ability modifiers + BAB/save progressions (review + Fighter/Wizard tags)
 - [x] Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks
@@ -217,7 +217,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] **Batch 13:** spell catalog ids
 - [x] **Batch 7:** spell DC / bonus slots (table tests; slots stay typed)
 - [x] IndexedDB one-key draft + PWA build verify
-- [ ] OGL review before rules **text**
+- [x] OGL / Product Identity review (mechanics-only pack; [ADR 0007](adr/0007-content-licensing.md))
 
 ### PF1e 0.9 bar
 
@@ -241,7 +241,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | M4 | Over-extracting SheetTable / bonus stacker in Phase M | Kernel §12: only extract what PF2e already needs; second caller in 1e |
 | P2 | 1E bonus-type rabbit hole | Explicit AC fields in 0.9 ([PF1e design §4.3](pf1e-character-sheet-design.md)) |
 | N3 | UI strings proliferate | T4′ before PF1e editor wave |
-| N2 | Content licensing | No scrape; curated CRB; OGL review before shipping text |
+| N2 | Content licensing | No scrape; ADR 0007 mechanics-only pack; OGL notice in the same PR as rules text |
 | S1 | Repo still named Pathfinder-2E-Card | Working title in docs/chrome; rename is a later decision |
 
 ---
@@ -254,13 +254,13 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
 
-**Still sequenced (next is OGL review, then 1.0):**
+**Still sequenced (next code is 1.0):**
 
 | Item | Disposition |
 | --- | --- |
-| OGL / Product Identity review | Before any rules **text** |
-| Playable APG Synthesist Summoner | **1.0** (separate pack; not CRB) |
+| Playable APG Synthesist Summoner | **1.0** (separate pack; not CRB; mechanics-only first) |
 | Spanish (`es`) catalog | **1.0** |
+| OGL notice + Section 15 | Same PR as first pack **rules text** |
 | `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
 | Remaining PF2e panel literals | Extract when those panels next change |
 
@@ -295,3 +295,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | Batch 13 documentary spell ids landed; next is Batch 7 pack review |
 | 2026-08-18 | Batch 7 spell DC + bonus-spells table tests landed; next is PWA proof |
 | 2026-08-18 | IndexedDB draft + PWA verify landed; next is OGL then 1.0 |
+| 2026-08-18 | OGL / PI review landed (ADR 0007); next code is 1.0 |

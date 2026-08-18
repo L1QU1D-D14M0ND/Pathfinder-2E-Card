@@ -60,6 +60,8 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 
 **Postscript (2026-08-18):** Phase 3c continues through CRB feat/spell catalog ids. **1.0** is Spanish **plus** a playable APG **Synthesist Summoner** (fused eidolon). 0.9 stays Core Rulebook goldens. Summoner does not go in the CRB pack. See [`pf1e-character-sheet-design.md`](../pf1e-character-sheet-design.md) decision 20.
 
+**Postscript (2026-08-18, licensing):** Content licensing review is [ADR 0007](0007-content-licensing.md). The CRB pack stays mechanics-only (no OGL notice until rules text). 1.0 APG pack follows the same bar.
+
 ## Defaults for open questions
 
 These are **locked for sequencing** unless the stakeholder overrides them. See also [the umbrella design](../ttrpg-character-sheet-design.md) § open picks.

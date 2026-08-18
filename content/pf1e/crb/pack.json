@@ -5,6 +5,8 @@
   "schemaVersion": 1,
   "status": "batch-7",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
+  "contentKind": "mechanics-only",
+  "oglNoticeRequired": false,
   "batches": [
     {
       "id": 1,

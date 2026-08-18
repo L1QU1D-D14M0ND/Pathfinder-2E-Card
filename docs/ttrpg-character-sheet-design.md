@@ -197,7 +197,7 @@ One active character. Switching system on an existing document is **not** suppor
 ## 7. Content and licensing
 
 - **App code:** MIT.
-- **PF1e pack:** curated Core Rulebook **player-facing** stats and short summaries. Open Game Content may be used under OGL 1.0a after a license-text review; do not paste Product Identity or GM-only adventure text. No third-party dump (d20pfsrd scrape, Hero Lab, etc.) as the ship pack.
+- **PF1e pack:** curated Core Rulebook **player-facing mechanic metadata** (ids, names, numbers). Open Game Content **prose** may be used under OGL 1.0a only after attaching the license and Section 15 in the same change ([ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md)). Do not paste Product Identity or GM-only adventure text. No third-party dump (d20pfsrd scrape, Hero Lab, etc.) as the ship pack.
 - **PF2e pack:** still Remaster Player Core + Player Core 2, hybrid curated-first, optional attributed ORC import later. **Sequenced after** the PF1e 0.9 bar.
 - Isolate content-resolve failures to the row; never fail whole-sheet load for one bad id.
 
@@ -268,3 +268,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-17 | Annotate CRB batches 3–10; next is AC/CMB |
 | 2026-08-17 | Layout §4.1 matches extracted kernel; PF1e goldens are not `rulesetSource` |
 | 2026-08-18 | 1.0 bar includes playable APG Synthesist Summoner (CRB 0.9 unchanged) |
+| 2026-08-18 | Content licensing review (ADR 0007): mechanics-only pack until rules text |

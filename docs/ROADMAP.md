@@ -1,9 +1,9 @@
 # Roadmap
 
-Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
+Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-18  
-**Current phase:** **App 0.9 platform landed** (draft buffer + PWA artifacts). CRB mechanic batches 1–13 done. **Next: OGL / Product Identity review**, then **1.0** (Spanish **and** playable APG Synthesist Summoner). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **OGL / Product Identity review landed** (mechanics-only pack; no rules text). **Next: 1.0** (Spanish **and** playable APG Synthesist Summoner). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
@@ -94,7 +94,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** Mechanic batches done (1–13, including Batch 7). OGL review before rules text remains.
+**Status:** Mechanic batches done (1–13, including Batch 7). OGL / PI review landed.
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
@@ -111,7 +111,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 - [x] **Batch 12:** feat catalog ids on the three goldens — documentary stamp only; Combat math stays typed
 - [x] **Batch 13:** spell catalog ids on the Wizard / multiclass goldens — documentary stamp only; slots/DCs stay typed
 - [x] **Batch 7:** spell DC / bonus slots — CRB table tests; slots stay user-entered; Spell Focus does not change DC
-- [ ] OGL / Product Identity review before shipping copyrighted **text**
+- [x] OGL / Product Identity review — pack stays mechanics-only; no OGL notice until rules text ([ADR 0007](adr/0007-content-licensing.md))
 
 Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name when they pick Human, documentary item fields when they pick a catalog weapon or armor, feat name/category when they pick a catalog feat, and spell name/level when they pick a catalog spell).
 
@@ -233,10 +233,9 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **OGL / Product Identity review (next)** — before any copyrighted **rules text**.
-2. **1.0** — Spanish **and** playable APG Synthesist Summoner (fused eidolon). Keep CRB pack CRB-only.
-3. **Only then** leftover PF2e goldens / companion / Remaster packs.
-4. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
+1. **1.0 (next code)** — Spanish locale **and** playable APG Synthesist Summoner (fused eidolon). Keep CRB pack CRB-only; first APG slice is mechanics-only until an OGL increment adds rules text.
+2. **Only then** leftover PF2e goldens / companion / Remaster packs.
+3. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
 Housekeeping (not a product increment): local `main` is ahead of `origin/main`. Push when ready. Do not merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
 
@@ -289,3 +288,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | Phase 3c batch 13: documentary spell ids; slots/DCs stay typed; next is Batch 7 pack review |
 | 2026-08-18 | Phase 3c batch 7: spell DC + bonus-spells table tests; next is PWA proof |
 | 2026-08-18 | IndexedDB one-key draft + PWA build verify; next is OGL review then 1.0 |
+| 2026-08-18 | OGL / PI review landed (ADR 0007); pack stays mechanics-only; next is 1.0 |

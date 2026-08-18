@@ -2,7 +2,7 @@
 
 **TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
-**Current phase:** Phase 3c mechanic batches 1–13 done. **Next: 1.0** (Spanish + playable APG Synthesist Summoner). OGL review before any rules text. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0006](docs/adr/0006-pf1e-character-schema.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
+**Current phase:** OGL / Product Identity review landed. **Next: 1.0** (Spanish + playable APG Synthesist Summoner). Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0007](docs/adr/0007-content-licensing.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
 
 The GitHub repository name is unchanged.
 
@@ -42,6 +42,8 @@ npm run dev
 - [ADR 0001 — PF2e-only product direction (superseded)](docs/adr/0001-product-direction.md)
 - [ADR 0002 — PF2e character JSON schema](docs/adr/0002-character-schema.md)
 - [ADR 0006 — PF1e character JSON schema](docs/adr/0006-pf1e-character-schema.md)
+- [ADR 0007 — Content licensing (OGL / PI)](docs/adr/0007-content-licensing.md)
+- [Content licensing review](docs/content-licensing.md)
 - [PF2e schema design notes](docs/schema-design-notes.md)
 - [PF1e schema design notes](docs/pf1e-schema-design-notes.md)
 

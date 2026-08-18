@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–13 landed (Batch 7 last). Draft buffer + PWA proof are app platform, not this pack. **Next: OGL / Product Identity review** before any rules text. APG Synthesist Summoner is a **1.0** bar, not this pack.  
+**Status:** Mechanic batches 1–13 landed (Batch 7 last). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)): pack stays mechanics-only; no OGL notice until rules text. **Next: 1.0** (Spanish + playable APG Synthesist). APG Synthesist is not this pack.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -85,10 +85,13 @@ Features, spells/day, and proficiency lists wait for later batches. Craft/Perfor
 
 ## 4. License (this folder)
 
+Review landed 2026-08-18: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md).
+
 - **App code:** MIT.
-- **This pack:** curated **game mechanics numbers** (formulas and class HD/BAB/save tags). No Paizo logos, no setting names beyond the mechanical class names already used as catalog ids, no copied prose.
+- **This pack:** curated **game mechanics numbers** (ids, names, HD/BAB/save tags, pounds, documentary weapon/armor fields, spell level). No Paizo logos, no Golarion gazetteer, no copied feat/spell/class **prose**.
 - Do not scrape d20pfsrd / Archives of Nethys / Hero Lab as the ship pack.
-- Full OGL 1.0a Section 15 / Product Identity review happens before any **rules text** or **spell summaries** land. Batch 1 does not need that text.
+- **OGL 1.0a / Section 15 is not in the repo yet.** Add it in the same change that first ships Open Game Content **rules text**. `pack.json` has `contentKind: mechanics-only` and `oglNoticeRequired: false`.
+- Vitest [`licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) scans entity JSON for forbidden prose keys and a short Product Identity word list. `class.summoner` is not in this folder.
 
 ---
 
@@ -739,7 +742,7 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** OGL / Product Identity review before any **rules text**, then **1.0** (Spanish + playable APG Synthesist). Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
+**Next product work:** **1.0** — Spanish locale plus a playable APG Synthesist Summoner (separate pack; do **not** add Summoner to this CRB folder). First APG slice stays mechanics-only until an OGL increment adds rules text. Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -765,3 +768,4 @@ The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the ne
 | 2026-08-18 | Batch 13: documentary spell ids; slots/DCs/prepared stay typed; next is Batch 7 pack review |
 | 2026-08-18 | Batch 7: spell DC + bonus-spells table; slots stay typed; next is PWA proof |
 | 2026-08-18 | App draft + PWA proof landed; this pack’s next gate is OGL before rules text |
+| 2026-08-18 | OGL / PI review: mechanics-only pack; no Section 15 until rules text; next is 1.0 |
