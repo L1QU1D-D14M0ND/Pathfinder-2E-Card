@@ -38,9 +38,9 @@ export function SpellsPanel({
     <div className="panel-stack">
       <p className="muted">
         Slots are user-entered. DC is 10 + spell level + ability. Bonus slots
-        from ability are derived (add them into max yourself in 0.9). Catalog
-        spells stamp name and level only — they do not fill slots or a
-        spellbook.
+        from ability are derived (add them into max yourself in 0.9). Spell
+        Focus does not change DC. Catalog spells stamp name and level only —
+        they do not fill slots or a spellbook.
       </p>
       <div className="table-toolbar">
         <strong>Spellcasting entries</strong>

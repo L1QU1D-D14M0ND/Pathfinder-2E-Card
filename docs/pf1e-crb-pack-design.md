@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–6 and 8–13 landed. **Next code: Batch 7 pack review** (spell DC / bonus slots already in the engine). APG Synthesist Summoner is a **1.0** bar, not this pack.  
+**Status:** In progress (2026-08-18). Batches 1–13 landed (Batch 7 pack review last). **Next product work: draft buffer + PWA proof.** OGL / Product Identity review before any rules text. APG Synthesist Summoner is a **1.0** bar, not this pack.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -31,7 +31,7 @@ Resolver rule (locked): missing catalog id → treat as **custom**; isolate to t
 
 Order is CRB character-build order, not encyclopedia order. Sidebar tools stay out. **Two mechanics per PR** — do not start the following pair in the same change.
 
-**How to pick the next PR:** take the first row whose status is **Next**. Engine-owned rows review formulas and UI honesty; catalog rows add ids. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here.
+**How to pick the next PR:** take the first row whose status is **Next**. Engine-owned rows review formulas and UI honesty; catalog rows add ids. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here. The 0.9 character-basics queue below is complete; remaining work is outside this table.
 
 | Batch | Mechanics | Why this pair | Kind | Status |
 | --- | --- | --- | --- | --- |
@@ -41,7 +41,7 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | Done |
 | **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | Done |
 | **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | Done |
-| **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review | **Next** |
+| **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine review (no new catalog) | Done |
 | **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | Done |
 | **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | Done |
 | **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | Done |
@@ -49,7 +49,7 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **12** | Feats on the three goldens | Documentary feat ids; Combat math stays typed | Catalog | Done |
 | **13** | Spell metadata on the goldens | Documentary spell ids; slots/DCs/prepared stay typed | Catalog | Done |
 
-Annotations for remaining batches (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
+The 0.9 character-basics write-ups are in §4. Remaining work after this table is in [§6](#6-recommended-upcoming-work).
 
 ---
 
@@ -685,15 +685,63 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
-## 6. Recommended upcoming batches
+## Batch 7 — two mechanics
 
-These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
+### 4.25 Spell DC
 
-### Batch 7 — Spell DC + bonus spells (**next**)
+**CRB (player-facing):** A spell’s saving-throw DC is **10 + the spell’s level + the caster’s ability modifier** (Intelligence for a Wizard). Cantrips are level 0, so DC is 10 + modifier. A Dexterity or Intelligence **penalty** lowers DC the same way a bonus raises it.
 
-Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review now that spell metadata has landed.
+Spell Focus and similar feats raise DC for a school. They are a player choice, not this formula.
 
-**Out of this pack / later:** Remaining CRB spell list; OGL / Product Identity review before any **rules text**. **1.0** adds a playable APG Synthesist Summoner (separate pack; do not add Summoner to this CRB folder). Sidebar tools still wait until the sheet is ~90% done.
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Engine | `spellDc`, `dcByLevel` in `engine/spellcasting.ts` | `10 + spell level + ability modifier` for levels 0–9 |
+| Ability | `abilityModifiers` | `tempScore` is in the score before the modifier; `tempModifier` is a DC addend |
+| UI | Spells tab derived DC column | Override per level; muted note that Spell Focus does not change DC |
+| Goldens | Wizard 5 INT +4 → 14 / 15 / 17 (0 / 1 / 3); F2/W3 INT +3 → 13 / 14 / 15 | Unchanged |
+
+**Verdict:** The formula matches CRB. Wizard 5 Spell Focus (evocation) does **not** add +1 to Fireball.
+
+**Gaps:** Auto-applying Spell Focus / Greater Spell Focus; school-specific DC; concentration; spell resistance.
+
+**Pack slice:** none (engine-owned). Catalog spell rows from batch 13 do not write DC.
+
+**Tests:** 10 + level + mod including a penalty; Wizard 5 and F2/W3 snapshots; Spell Focus leaves Fireball at 17; `tempModifier` raises DC without changing bonus slots.
+
+### 4.26 Bonus spells from ability
+
+**CRB (player-facing):** A high spellcasting ability grants **bonus spells per day** from the Ability Modifiers and Bonus Spells table. Cantrips (level 0) never receive bonus slots. A score of 10–11 grants none. 12–13 grants +1 1st; 18–19 grants +1 at 1st through 4th; 20–21 grants +2 1st and +1 at 2nd through 5th. Odd and even scores in a pair share a row. You only receive a bonus slot of a level you can already cast.
+
+Those bonus slots are added to the class table’s spells per day. In 0.9 the player types the total into **Max**.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Engine | `bonusSpellsFromAbility`, `bonusSlotsByLevel` | Table from the ability **score** (`tempScore` included; `tempModifier` is not) |
+| Input | `spellcasting[].slots[].max` / `remaining` | User-entered. Compute does not add bonus into max |
+| UI | Spells tab Bonus slots column (derived) next to Max / Left | Note: add them into max yourself |
+| Goldens | Wizard 5 INT 18 → bonus `[0, 1, 1, 1, 1]`; typed max 4/4/3/2 is class 4/3/2/1 plus those bonuses | Unchanged |
+
+**Verdict:** The table matches CRB for scores 10–30. Empty INT 18 still shows bonus 1st-level +1 with slot max 0.
+
+**Gaps:** Auto-adding bonus into max; class spells-per-day table; specialist/domain extra slots; “only if you can cast that level.”
+
+**Pack slice:** none.
+
+**Tests:** Published bonus columns for 10–30 (odd scores share the even score below); no bonus cantrips at INT 30; Wizard 5 bonus 1/1/1/1 with typed max 4 at 1st; empty INT 18 leaves max 0; `tempScore` +2 (score 20) grants two bonus 1sts.
+
+---
+
+## 6. Recommended upcoming work
+
+The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+
+**Next product work:** draft buffer + PWA install/offline proof (app 0.9).
+
+**Still later / not this pack:** Remaining CRB spell list; OGL / Product Identity review before any **rules text**. **1.0** adds a playable APG Synthesist Summoner (separate pack; do not add Summoner to this CRB folder). Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -717,3 +765,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 11: remaining 9 CRB classes reuse the Fighter/Wizard catalog row; next is feat ids |
 | 2026-08-18 | Batch 12: documentary feat ids; Combat math stays typed; next is spell metadata. 1.0 bar includes Synthesist Summoner (APG, not this pack) |
 | 2026-08-18 | Batch 13: documentary spell ids; slots/DCs/prepared stay typed; next is Batch 7 pack review |
+| 2026-08-18 | Batch 7: spell DC + bonus-spells table; slots stay typed; next is PWA proof |

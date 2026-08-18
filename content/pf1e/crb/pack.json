@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-13",
+  "status": "batch-7",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -35,6 +35,11 @@
       "id": 6,
       "mechanics": ["strength-heavy-load", "load-category"],
       "notes": "Encumbrance is engine-owned. Medium/heavy penalties are not auto-written. ignoreWeight opts out of load category."
+    },
+    {
+      "id": 7,
+      "mechanics": ["spell-dc", "bonus-spells-from-ability"],
+      "notes": "Spell DC and bonus slots are engine-owned. Slots stay user-entered. Spell Focus does not change DC. Bonus slots are not added into max."
     },
     {
       "id": 8,
