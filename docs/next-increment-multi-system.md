@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **feat catalog ids** on the goldens. Batches 1–6 and 8–11 are in the repo. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **spell metadata** on the goldens. Batches 1–6 and 8–12 are in the repo. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. **1.0** (not next code): Spanish plus a playable APG Synthesist Summoner. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batches 1–6 and 8–11 landed. Next code: feat catalog ids |
+| Content | `content/pf1e/crb/` batches 1–6 and 8–12 landed. Next code: spell metadata. 1.0: APG Synthesist |
 
 ---
 
@@ -128,7 +128,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–6 and 8–11 landed. **Next: feat catalog ids.** Batch 7 stays later. Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–6 and 8–12 landed. **Next: spell metadata.** Batch 7 stays later. **1.0** pulls APG Synthesist Summoner (separate pack). Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -146,7 +146,7 @@ After goldens can be typed by hand. Review CRB character mechanics **two at a ti
 | 7b | WP-Sb | Sidebar host (empty registry); after M, not blocking 1e |
 | 8 | Platform | IndexedDB draft; PWA install/offline proof |
 | 9 | 0.9 | English; PF1e bar; PF2e slice still works; sidebar host may be empty |
-| 10 | Phase 4 | `es`; stability = 1.0 |
+| 10 | Phase 4 | `es` + playable APG Synthesist = 1.0 |
 | 11 | Later | Leftover PF2e goldens/content; **sidebar tools** when specified; more systems |
 
 Steps 2–4 are the **next development increments** after this documentation change.
@@ -213,9 +213,9 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Batch 9: Fighter/Wizard class skills + skill points
 - [x] **Batch 10:** weapons/armor ids
 - [x] **Batch 11:** remaining 9 CRB classes (same catalog row as Fighter/Wizard)
-- [ ] Feat catalog ids on the goldens (next)
+- [x] **Batch 12:** feat catalog ids
+- [ ] Spell metadata catalog ids (next)
 - [ ] Batch 7 (spell DC / bonus slots): already in engine; pack review later
-- [ ] Spell metadata catalog ids
 - [ ] OGL review before rules **text**
 
 ### PF1e 0.9 bar
@@ -253,12 +253,12 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
 
-**Still sequenced (next code is feat catalog ids only):**
+**Still sequenced (next code is spell metadata only):**
 
 | Item | Disposition |
 | --- | --- |
-| Feat catalog ids on the goldens | Next pack increment |
-| Spell metadata catalog ids | After feats |
+| Spell metadata catalog ids on the goldens | Next pack increment |
+| Playable APG Synthesist Summoner | **1.0** (separate pack; not CRB) |
 | `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
 | Remaining PF2e panel literals | Extract when those panels next change |
 
@@ -289,3 +289,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | Batch 9 class skills + skill-point pool landed; next code is batch 10 weapons/armor |
 | 2026-08-18 | Batch 10 documentary weapons/armor ids landed; next code is remaining 9 CRB classes |
 | 2026-08-18 | Batch 11 remaining 9 CRB classes landed (reuse Fighter/Wizard catalog); next is feat ids |
+| 2026-08-18 | Batch 12 documentary feat ids landed; 1.0 bar includes Synthesist Summoner |

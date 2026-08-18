@@ -1,18 +1,21 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
-import { createEmptyClass, createEmptyItem } from '../character/createRows'
+import { createEmptyClass, createEmptyFeat, createEmptyItem } from '../character/createRows'
 import { STANDARD_SKILLS } from '../character/standardSkills'
 import { parseCharacterJson } from '../character/saveLoad'
 import {
   applyCrbClassProgression,
+  applyCrbFeat,
   applyCrbItem,
   applyCrbRace,
   classSkillKeySet,
   lookupCrbClass,
+  lookupCrbFeat,
   lookupCrbItem,
   lookupCrbRace,
   stampClassSkills,
   CRB_CLASSES,
+  CRB_FEATS,
   CRB_ITEMS,
   CRB_RACES,
 } from './crbPack'
@@ -105,14 +108,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–6 and 8–11', () => {
+  it('pack manifest records batches 1–6 and 8–12', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batch-11')
+    expect(pack.status).toBe('batch-12')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 8, 9, 10, 11,
+      1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12,
     ])
   })
 })
@@ -463,5 +466,68 @@ describe('CRB pack batch 11: remaining CRB classes', () => {
     expect(keys.has('climb')).toBe(true)
     expect(keys.has('disable-device')).toBe(true)
     expect(keys.has('spellcraft')).toBe(false)
+  })
+})
+
+describe('CRB pack batch 12: feat catalog', () => {
+  it('lists the golden feat ids', () => {
+    expect(CRB_FEATS.map((row) => row.id)).toEqual([
+      'feat.improved-initiative',
+      'feat.power-attack',
+      'feat.scribe-scroll',
+      'feat.spell-focus',
+      'feat.weapon-focus',
+    ])
+    expect(lookupCrbFeat('feat.power-attack')).toMatchObject({
+      name: 'Power Attack',
+      category: 'combat',
+    })
+    expect(lookupCrbFeat('feat.scribe-scroll')?.category).toBe('itemCreation')
+  })
+
+  it('returns null for an unknown feat id', () => {
+    expect(lookupCrbFeat('feat.extra-evolution')).toBeNull()
+    expect(lookupCrbFeat(null)).toBeNull()
+    expect(lookupCrbFeat('')).toBeNull()
+  })
+
+  it('stamps id, name, and category without changing level or summary', () => {
+    const row = createEmptyFeat()
+    row.levelGained = 3
+    row.summary = 'Keep this'
+    const power = applyCrbFeat(row, 'feat.power-attack')
+    expect(power.levelGained).toBe(3)
+    expect(power.summary).toBe('Keep this')
+    expect(power.feat.id).toBe('feat.power-attack')
+    expect(power.feat.name).toBe('Power Attack')
+    expect(power.category).toBe('combat')
+  })
+
+  it('unknown apply clears id and leaves the typed name', () => {
+    const row = applyCrbFeat(createEmptyFeat(), 'feat.weapon-focus')
+    row.feat.name = 'Weapon Focus (longsword)'
+    const custom = applyCrbFeat(row, 'feat.extra-evolution')
+    expect(custom.feat.id).toBeNull()
+    expect(custom.feat.name).toBe('Weapon Focus (longsword)')
+    expect(custom.category).toBe('combat')
+  })
+
+  it('goldens use catalog ids that resolve', () => {
+    const fighter = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),
+    )
+    const wizard = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/wizard-5.json'),
+    )
+    const mixed = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-2-wizard-3.json'),
+    )
+    for (const character of [fighter, wizard, mixed]) {
+      for (const row of character.feats) {
+        expect(lookupCrbFeat(row.feat.id)).not.toBeNull()
+      }
+    }
+    expect(lookupCrbFeat(fighter.feats[0]?.feat.id)?.id).toBe('feat.weapon-focus')
+    expect(lookupCrbFeat(wizard.feats[1]?.feat.id)?.id).toBe('feat.spell-focus')
   })
 })

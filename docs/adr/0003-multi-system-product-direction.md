@@ -23,7 +23,7 @@ Other systems (Starfinder, D&D 5e, etc.) are **architecture-only** for 0.9/1.0: 
 | Systems in 0.9/1.0 | **PF1e** (priority to complete) + **PF2e** (existing slice preserved) |
 | System discriminator | Top-level `system` on every save file (`pf1e` \| `pf2e`); missing field on existing files means `pf2e` |
 | Engines | One calc engine **per system**; shared shell, persistence, and golden-test harness |
-| PF1e ruleset | Core Rulebook player-facing; no GM exclusives |
+| PF1e ruleset | **0.9** Core Rulebook player-facing. **1.0** also a playable APG Synthesist Summoner. No GM exclusives |
 | PF2e ruleset | Unchanged from ADR 0001: Remaster-first; legacy fallback; Player Core + Player Core 2 (deferred fill-out) |
 | Content acquisition | Hybrid — curated pack first per system; optional attributed open-data import later (OGL 1.0a for PF1e Open Game Content; ORC for PF2e Remaster) after license review |
 | Calc depth (0.9/1.0) | Core math only; `effects[]` / automation later |
@@ -58,7 +58,7 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 - Sidebar **host** (read/write rail when a sheet is loaded; tools unspecified) is locked in [ADR 0005](0005-sidebar-host.md). Empty/collapsed host is enough for 0.9; tool list comes later.
 - A future ADR will lock the PF1e JSON schema (analog of ADR 0002). Envelope rules in this ADR and [PF1e schema notes](../pf1e-schema-design-notes.md) are the standing defaults until then.
 
-**Postscript (2026-08-17):** Phase M, ADR 0006, and Phases 1e–3e / 3c batches 1–2 have landed. The next *code* increment is Phase 3c batch 3 (AC / CMB), not the refactor this ADR originally scheduled. See [`ROADMAP.md`](../ROADMAP.md).
+**Postscript (2026-08-18):** Phase 3c continues through CRB feat/spell catalog ids. **1.0** is Spanish **plus** a playable APG **Synthesist Summoner** (fused eidolon). 0.9 stays Core Rulebook goldens. Summoner does not go in the CRB pack. See [`pf1e-character-sheet-design.md`](../pf1e-character-sheet-design.md) decision 20.
 
 ## Defaults for open questions
 
@@ -70,6 +70,7 @@ These are **locked for sequencing** unless the stakeholder overrides them. See a
 | Repo / npm package rename | Not in 0.9 | Stakeholder wants a rename PR |
 | How broad in 0.9/1.0 | PF1e + PF2e only; other `system` ids reserved | A third system is explicitly pulled in |
 | PF1e books for 0.9 | Core Rulebook, player-facing | APG (traits, extra classes) is pulled in |
+| PF1e books for 1.0 | 0.9 CRB bar **plus** APG Summoner / Synthesist far enough to play | Broader APG (all base classes, Magical Child, etc.) |
 | PF1e goldens | Fighter 5; Wizard 5; Fighter 2 / Wizard 3 (or equivalent BAB mix) | Cleric/familiar is needed sooner |
 | Resume remaining PF2e goldens | After PF1e 0.9 | Stakeholder wants PF2e finished first after all |
 | Missing `system` on Load | Treat as `pf2e` | Never; would break current fixtures |

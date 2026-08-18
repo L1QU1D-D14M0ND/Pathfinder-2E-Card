@@ -1,0 +1,32 @@
+[
+  {
+    "id": "feat.improved-initiative",
+    "name": "Improved Initiative",
+    "category": "combat",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "feat.power-attack",
+    "name": "Power Attack",
+    "category": "combat",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "feat.scribe-scroll",
+    "name": "Scribe Scroll",
+    "category": "itemCreation",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "feat.spell-focus",
+    "name": "Spell Focus",
+    "category": "general",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "feat.weapon-focus",
+    "name": "Weapon Focus",
+    "category": "combat",
+    "source": { "book": "CRB" }
+  }
+]

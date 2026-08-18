@@ -3,6 +3,7 @@ import type {
   ClassEntry,
   ClassSaves,
   ContentRef,
+  FeatEntry,
   Identity,
   ItemEntry,
   SkillEntry,
@@ -11,13 +12,14 @@ import { STANDARD_SKILLS } from '../character/standardSkills'
 import classesJson from '../../../../../content/pf1e/crb/classes.json'
 import racesJson from '../../../../../content/pf1e/crb/races.json'
 import itemsJson from '../../../../../content/pf1e/crb/items.json'
+import featsJson from '../../../../../content/pf1e/crb/feats.json'
 
 const STANDARD_SKILL_KEYS = new Set(STANDARD_SKILLS.map((row) => row.key))
 const STANDARD_SKILL_ORDER = new Map(
   STANDARD_SKILLS.map((row, index) => [row.key, index]),
 )
 
-/** Unknown or empty id → null. Shared by class / race / item catalogs. */
+/** Unknown or empty id → null. Shared by class / race / item / feat catalogs. */
 function lookupById<T extends { id: string }>(
   rows: readonly T[],
   id: string | null | undefined,
@@ -218,5 +220,50 @@ export function applyCrbItem(row: ItemEntry, id: string | null): ItemEntry {
         : undefined,
     armor:
       found.kind === 'armor' && found.armor ? { ...found.armor } : undefined,
+  }
+}
+
+export type CrbFeatCategory = FeatEntry['category']
+
+export interface CrbFeat {
+  id: string
+  name: string
+  category: CrbFeatCategory
+  source?: ContentRef['source']
+}
+
+export const CRB_FEATS: CrbFeat[] = featsJson.map((row) => ({
+  id: row.id,
+  name: row.name,
+  category: row.category as CrbFeatCategory,
+  source: row.source,
+}))
+
+/** Unknown or empty id → null. Never throws. */
+export function lookupCrbFeat(id: string | null | undefined): CrbFeat | null {
+  return lookupById(CRB_FEATS, id)
+}
+
+/**
+ * Stamp catalog id, name, category, and source.
+ * Does not rewrite level gained, summary, combat math, or effects.
+ * Unknown id clears `feat.id` and leaves the rest of the row.
+ */
+export function applyCrbFeat(row: FeatEntry, id: string | null): FeatEntry {
+  const found = lookupCrbFeat(id)
+  if (!found) {
+    return {
+      ...row,
+      feat: { ...row.feat, id: null },
+    }
+  }
+  return {
+    ...row,
+    feat: {
+      id: found.id,
+      name: found.name,
+      source: found.source,
+    },
+    category: found.category,
   }
 }

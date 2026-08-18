@@ -4,6 +4,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { FeatEntry } from '../character/types'
+import { applyCrbFeat, CRB_FEATS } from '../content'
 import type { SheetUpdate } from './update'
 
 const FEAT_CATEGORIES: FeatEntry['category'][] = [
@@ -48,14 +49,35 @@ export function FeatsPanel({
           {character.feats.length === 0 ? (
             <tr>
               <td colSpan={5} className="muted">
-                No feats yet. Effects are stored but not applied.
+                No feats yet. Catalog stamps name and category only — Combat
+                numbers and summaries stay typed. Effects are not applied.
               </td>
             </tr>
           ) : (
             character.feats.map((feat, index) => (
               <tr key={feat.id}>
-                <td>
+                <td className="feat-cell">
+                  <select
+                    aria-label="CRB feat"
+                    value={feat.feat.id ?? ''}
+                    onChange={(e) => {
+                      const id = e.target.value || null
+                      update((c) => {
+                        const feats = [...c.feats]
+                        feats[index] = applyCrbFeat(feats[index], id)
+                        return { ...c, feats }
+                      })
+                    }}
+                  >
+                    <option value="">Custom</option>
+                    {CRB_FEATS.map((entry) => (
+                      <option key={entry.id} value={entry.id}>
+                        {entry.name}
+                      </option>
+                    ))}
+                  </select>
                   <input
+                    aria-label="Feat name"
                     value={feat.feat.name}
                     onChange={(e) =>
                       update((c) => {

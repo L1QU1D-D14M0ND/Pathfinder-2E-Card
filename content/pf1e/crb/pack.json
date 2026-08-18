@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-11",
+  "status": "batch-12",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -55,6 +55,11 @@
       "id": 11,
       "mechanics": ["remaining-class-progressions", "remaining-class-skills"],
       "notes": "Same class catalog row as Fighter/Wizard for the other 9 CRB base classes. Apply/stamp/pool reuse batch 1 and 9. No class features or spell lists."
+    },
+    {
+      "id": 12,
+      "mechanics": ["feats-goldens", "feat-math-stays-typed"],
+      "notes": "Documentary catalog ids for the golden feats. Stamps name and category. Does not write Combat math or summaries."
     }
   ]
 }

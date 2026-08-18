@@ -13,7 +13,7 @@ This is the PF1e analog of the PF2e design doc. It does not replace the umbrella
 
 Let a player **build and play** a Pathfinder First Edition character on the shared spreadsheet PWA: identity (including multiclass), abilities, skills, combat (BAB, saves, AC/touch/FF, CMB/CMD, iteratives), feats, spells, inventory (pounds), and session state (HP, conditions, daily resources).
 
-Ruleset target: **Core Rulebook**, player-facing. No GM-exclusive bestiary/adventure text. Advanced Player’s Guide (traits, extra classes) is **out of 0.9** unless a later ADR pulls it in; extra traits can be custom feat/feature rows.
+Ruleset target: **Core Rulebook**, player-facing, for **0.9**. No GM-exclusive bestiary/adventure text. Advanced Player’s Guide is **out of 0.9** (traits and extra classes as custom rows). **1.0** pulls APG far enough that a player can **build and play a Synthesist Summoner** (fused eidolon). Summoner stays out of the CRB pack.
 
 ---
 
@@ -36,10 +36,11 @@ Ruleset target: **Core Rulebook**, player-facing. No GM-exclusive bestiary/adven
 | 13 | Alignment | First-class identity field (nine alignments + optional deity) |
 | 14 | Size / race | Race (not ancestry/heritage). Size affects AC, attack, CMB/CMD, and carrying capacity as in the CRB size table. Stealth/Fly size skill modifiers are not auto-applied in 0.9 |
 | 15 | Feats | Structured rows (type: general, combat, metamagic, item creation, …). No auto-application of feat text in 0.9 |
-| 16 | Companions / familiars | Schema hook allowed; **no nested editor in PF1e 0.9** (same deferral as PF2e companions) |
-| 17 | Goldens | Fighter 5; Wizard 5; multiclass Fighter 2 / Wizard 3 (or equivalent mixed BAB) |
+| 16 | Companions / familiars | Schema hook allowed; **no nested editor in PF1e 0.9**. **1.0 Synthesist** uses an extended companion stub (fused overlay), not a second character file |
+| 17 | Goldens | 0.9: Fighter 5; Wizard 5; Fighter 2 / Wizard 3. **1.0:** add a Synthesist Summoner golden |
 | 18 | House rules | No ABP, no Mythic, no Elephant in the Room in 0.9. Custom rows if a table uses them |
 | 19 | Content ids | Kebab-case paths (`class.fighter`, `feat.power-attack`, `spell.fireball`, `skill.perception`, `race.human`) |
+| 20 | 1.0 APG slice | Playable **Synthesist Summoner**: separate APG pack; fused STR/DEX/CON overlay; costume HP; evolution rows documentary. Not auto-applied evolutions. |
 
 ---
 
@@ -126,7 +127,7 @@ Unknown effects[] ignored
 - Spellbook legality, domain spell slots auto-granted, school opposition.
 - Magic item generation, charging wands as encyclopedia.
 - Prestige prereq checking.
-- Familiars / animal companions / eidolons as nested sheets.
+- Familiars / animal companions / eidolons as nested sheets. **1.0 Synthesist** is an overlay on the same sheet, not this nested-PC work.
 - Mythic, path of war, 3PP.
 
 ### 4.3 Stacking (pragmatic 0.9)
@@ -161,7 +162,7 @@ Engineering fixtures. Assert core outputs. Until catalog batches 8–10 land, go
 
 Exact ability scores, feats, and spell picks are chosen when writing the fixture. Roles above stay covered.
 
-Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 5 + companion, prestige smoke test.
+Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 5 + companion, prestige smoke test. **1.0 required:** Synthesist Summoner golden.
 
 ---
 
@@ -169,13 +170,11 @@ Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–6 and 8–11 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids (Combat numbers stay typed); remaining 9 CRB classes on the same catalog row. Load penalties, equipped-item AC, and class features are not auto-written.
+Batch 1–6 and 8–12 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed). Load penalties, equipped-item AC, class features, and feat combat math are not auto-written.
 
-**Next:** Feat catalog ids on the goldens. Batch 7 (spell DC / bonus slots) is already in the engine. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+**Next:** Spell metadata on the goldens. Batch 7 (spell DC / bonus slots) is already in the engine.
 
-Spell metadata waits until after those feat ids.
-
-Enough catalog to rebuild the three goldens is the 0.9 content bar. Full CRB spell list can trail.
+**1.0 (not this CRB pack):** Playable APG Synthesist Summoner. Do not add `class.summoner` to `content/pf1e/crb/`.
 
 ---
 
@@ -209,3 +208,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Batch 9 class skills + skill-point pool landed. Next pack work is weapons/armor ids (batch 10). |
 | 2026-08-18 | Batch 10 documentary weapons/armor ids landed. Next pack work is remaining 9 CRB classes. |
 | 2026-08-18 | Batch 11 remaining 9 CRB classes landed. Next pack work is feat catalog ids. |
+| 2026-08-18 | Batch 12 documentary feat ids landed. 1.0 bar includes playable Synthesist Summoner. |

@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–6 and 8–11 landed. **Next code: feat catalog ids** on the goldens. Batch 7 (spell DC) stays later.  
+**Status:** In progress (2026-08-18). Batches 1–6 and 8–12 landed. **Next code: spell metadata** on the goldens. Batch 7 (spell DC) stays later. APG Synthesist Summoner is a **1.0** bar, not this pack.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -46,7 +46,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | Done |
 | **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | Done |
 | **11** | Remaining 9 CRB classes (progressions + class skills) | Same catalog row as Fighter/Wizard; Identity select already lists `CRB_CLASSES` | Catalog | Done |
-| … | Feats, then spell metadata | After the CRB class catalog | Catalog | **Next** (feats first) |
+| **12** | Feats on the three goldens | Documentary feat ids; Combat math stays typed | Catalog | Done |
+| … | Spell metadata | After the golden feat ids | Catalog | **Next** |
 
 Annotations for remaining batches (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
 
@@ -61,6 +62,7 @@ content/pf1e/crb/
   classes.json       # HD/BAB/saves + class skills + skill points (11 CRB base classes)
   races.json         # race id + name (batch 8: human)
   items.json         # weapon/armor/gear ids (batch 10: golden rows only)
+  feats.json         # feat id + name + category (batch 12: golden rows only)
 ```
 
 A class catalog row in this phase is **not** a class description. It is:
@@ -606,6 +608,44 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 12 — two mechanics
+
+### 4.21 Feat catalog ids on the three goldens
+
+**CRB (player-facing):** Feats are chosen by name (Power Attack, Weapon Focus, Scribe Scroll, …). A specialization (Weapon Focus: longsword) is part of the choice, not a second feat.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `content/pf1e/crb/feats.json` | Golden ids only |
+| Lookup | `lookupCrbFeat` | Unknown or empty id → `null` (custom). Never throws |
+| Apply | `applyCrbFeat` | Stamps feat id, catalog name, category, and source. Does **not** rewrite level, summary, or Combat |
+| UI | Feats tab select | Catalog or Custom, plus a typed name (Weapon Focus (longsword) stays typed on the goldens) |
+| Goldens | Fighter 5 / Wizard 5 / F2/W3 | Already stored those ids; Load does not re-apply |
+
+**Verdict:** The golden feat ids resolve. Class features (Armor Training, Arcane Bond) stay on `features[]`, not this catalog.
+
+**Gaps:** Remaining CRB feats; Weapon Focus / Spell Focus school-or-weapon as a structured field.
+
+**Pack slice:** five feat ids.
+
+**Tests:** Catalog lists golden ids; unknown id is null; goldens resolve.
+
+### 4.22 Feat combat math stays typed
+
+**CRB (player-facing):** Power Attack changes the attack/damage numbers the player uses. Improved Initiative adds +4 to initiative. The sheet does not roll or apply those for the player in 0.9.
+
+**App today / this batch:** Applying a catalog feat leaves `combat`, `attacks`, and `initiativeMisc` unchanged. Summaries stay player text. `effects[]` stay ignored.
+
+**Gaps:** Auto-applying Power Attack / Weapon Focus / Improved Initiative.
+
+**Pack slice:** none beyond the feat rows.
+
+**Tests:** Empty sheet melee/initiative stay 0 after Power Attack; Wizard 5 Improved Initiative still has `initiativeMisc` 0 and Dex-only initiative +2.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
@@ -614,19 +654,19 @@ These are **annotations**, not landed reviews. Each future PR still follows §1 
 
 Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review when spell metadata lands.
 
-### Feat catalog ids (**next**)
+### Spell metadata (**next**)
 
-**Pairing:** Documentary catalog ids for feats already named on the three goldens (Power Attack, Weapon Focus, …). Summaries stay typed; `effects[]` stay ignored.
+**Pairing:** Catalog ids for spells already named on the Wizard / multiclass goldens (Detect Magic, Magic Missile, …). Spell text stays out; slots and DCs stay on the spellcasting entry.
 
-**Already in the app:** Feat rows with `feat.id` / name / summary.
+**Already in the app:** Spell list rows with `spell.id` / name; DC and bonus slots derived.
 
-**In this batch:** Smallest feats.json slice those goldens need. Do not auto-apply combat math from feats.
+**In this batch:** Smallest spells.json slice those goldens need. Do not auto-prepare a spellbook.
 
-**Out:** Feat text beyond a short summary; prerequisites engine; remaining CRB feat list.
+**Out:** Spell descriptions; remaining CRB spell list; Synthesist / Summoner list (that is **1.0**, APG pack).
 
-**Pack slice:** feat ids for the goldens only.
+**Pack slice:** spell ids for the goldens only.
 
-**After that:** spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
+**After CRB 0.9:** OGL / Product Identity review before any **rules text**. **1.0** adds a playable APG Synthesist Summoner (separate pack; do not add Summoner to this CRB folder). Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -648,3 +688,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 9: Fighter/Wizard class skills + skill-point pool; next is weapons/armor ids |
 | 2026-08-18 | Batch 10: documentary weapons/armor ids; AC/attacks stay typed; next is remaining 9 CRB classes |
 | 2026-08-18 | Batch 11: remaining 9 CRB classes reuse the Fighter/Wizard catalog row; next is feat ids |
+| 2026-08-18 | Batch 12: documentary feat ids; Combat math stays typed; next is spell metadata. 1.0 bar includes Synthesist Summoner (APG, not this pack) |

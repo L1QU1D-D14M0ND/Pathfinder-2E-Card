@@ -73,7 +73,8 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 **1.0**
 
 - Spanish localization.
-- Same functional bar as 0.9, stable.
+- Same 0.9 CRB bar, stable.
+- **PF1e:** player can build and play an **APG Synthesist Summoner** (fused eidolon on the same sheet).
 - Still core calcs only.
 
 **Later (design must not block)**
@@ -235,7 +236,7 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 3c | PF1e Core content pack (may overlap 2e/3e) |
 | Sb | Sidebar host (registry, collapse, empty state); **not** blocking 1e |
 | 0.9 | English PWA; PF1e playable bar; PF2e slice non-regressed; sidebar host may be empty |
-| 4 | Spanish; stability (**1.0**) |
+| 4 | Spanish + playable APG Synthesist Summoner; stability (**1.0**) |
 | 5 | Leftover PF2e 0.9 work; **sidebar tools** (when specified); `effects[]`; more systems |
 
 ---
@@ -266,3 +267,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative attacks |
 | 2026-08-17 | Annotate CRB batches 3–10; next is AC/CMB |
 | 2026-08-17 | Layout §4.1 matches extracted kernel; PF1e goldens are not `rulesetSource` |
+| 2026-08-18 | 1.0 bar includes playable APG Synthesist Summoner (CRB 0.9 unchanged) |

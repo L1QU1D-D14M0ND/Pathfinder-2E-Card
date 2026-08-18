@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-18  
-**Current phase:** **3c in progress** (batches 1–6 and 8–11 landed). **Next code: feat catalog ids** on the goldens. Batch 7 (spell DC) stays later. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **3c in progress** (batches 1–6 and 8–12 landed). **Next code: spell metadata** on the goldens. Batch 7 (spell DC) stays later. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator. **1.0** adds Spanish **and** a playable APG Synthesist Summoner.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
@@ -12,7 +12,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 
 **0.9** — installable English PWA; spreadsheet Build + Play; **PF1e** core calcs + editors for Fighter 5, Wizard 5, and one multiclass golden; **PF2e** existing slice (Fighter 5, Wizard 5, current editors) still loads and computes; Save/Load one sheet with a `system` discriminator; **sidebar host** may be empty or collapsed (no named tools required).
 
-**1.0** — Spanish locale; same functional bar as 0.9, called stable.
+**1.0** — Spanish locale; same 0.9 bar, called stable; **PF1e player can build and play an APG Synthesist Summoner** (fused eidolon). Still core calcs; no in-app dice.
 
 **Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools after the sheet is ~90% done** (Attack Helper, Actions List, and Budget Calculator specified; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
 
@@ -94,7 +94,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** In progress (batches 1–6 and 8–11 landed; next is feat catalog ids)
+**Status:** In progress (batches 1–6 and 8–12 landed; next is spell metadata)
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
@@ -108,11 +108,11 @@ Working display name in chrome is **TTRPG Character Sheet**.
 - [x] **Batch 9:** Fighter/Wizard class skills + skill points — stamp checkboxes; ranks not auto-spent
 - [x] **Batch 10:** weapons/armor ids on the three goldens — documentary stamp only; AC/attacks stay typed
 - [x] **Batch 11:** remaining 9 CRB classes — same catalog row / apply / stamp / pool as Fighter and Wizard
-- [ ] Feat catalog ids on the goldens (next)
-- [ ] Spell metadata catalog ids
+- [x] **Batch 12:** feat catalog ids on the three goldens — documentary stamp only; Combat math stays typed
+- [ ] Spell metadata catalog ids (next)
 - [ ] OGL / Product Identity review before shipping copyrighted **text**
 
-Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name when they pick Human, and documentary item fields when they pick a catalog weapon or armor).
+Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name when they pick Human, documentary item fields when they pick a catalog weapon or armor, and feat name/category when they pick a catalog feat).
 
 ---
 
@@ -170,7 +170,8 @@ Not started (after PF1e 0.9):
 **Status:** Not started (0%)
 
 - [ ] Spanish (`es`) locale catalog
-- [ ] Stability pass on the 0.9 bar (PF1e playable + PF2e slice); still core calcs only
+- [ ] Stability pass on the 0.9 bar (PF1e CRB goldens + PF2e slice); still core calcs only
+- [ ] **Playable APG Synthesist Summoner** — fused eidolon as a transformation (separate APG pack; do not add Summoner to the CRB catalog). Player can build and play at the table: pilot vs fused physical scores, costume HP, evolution rows, Summoner spells. Not a nested second PC sheet. Not auto-applied evolutions.
 
 ---
 
@@ -231,10 +232,10 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Feat catalog ids (next code)** — Documentary feat ids on the three goldens. Do not auto-apply combat math. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+1. **Spell metadata (next code)** — Documentary spell ids on the Wizard / multiclass goldens. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
 2. **Batch 7 pack review** — Spell DC / bonus slots already in the engine; pack-review later.
 3. **Draft buffer + PWA proof** — app 0.9 platform.
-4. **Spanish** — 1.0.
+4. **1.0** — Spanish **and** playable APG Synthesist Summoner (fused eidolon). Keep CRB pack CRB-only.
 5. **Only then** leftover PF2e goldens / companion / Remaster packs.
 6. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
@@ -285,3 +286,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | Phase 3c batch 9: class skills + skill-point pool; next is weapons/armor ids |
 | 2026-08-18 | Phase 3c batch 10: documentary weapons/armor ids; next is remaining 9 CRB classes |
 | 2026-08-18 | Phase 3c batch 11: remaining 9 CRB classes reuse the Fighter/Wizard catalog; next is feat ids |
+| 2026-08-18 | Phase 3c batch 12: documentary feat ids; 1.0 bar includes playable Synthesist Summoner |
