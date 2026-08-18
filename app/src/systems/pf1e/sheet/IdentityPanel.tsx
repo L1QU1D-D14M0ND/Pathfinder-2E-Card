@@ -3,7 +3,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { Alignment, Size } from '../character/types'
-import { applyCrbClassProgression, applyCrbRace, CRB_CLASSES, CRB_RACES, stampClassSkills } from '../content'
+import { applyCrbClassProgression, applyCrbRace, applyApgArchetype, APG_ARCHETYPES, APG_CLASSES, CRB_CLASSES, CRB_RACES, stampClassSkills } from '../content'
 import { characterLevel } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { DerivedView } from '../engine'
@@ -234,8 +234,8 @@ export function IdentityPanel({
           {character.classes.length === 0 ? (
             <tr>
               <td colSpan={10} className="muted">
-                No class rows. Add one, then pick a CRB class (fills HD / BAB /
-                saves / class skills).
+                No class rows. Add one, then pick a catalog class (fills HD /
+                BAB / saves / class skills). APG Summoner is in this list.
               </td>
             </tr>
           ) : (
@@ -243,7 +243,7 @@ export function IdentityPanel({
               <tr key={row.id}>
                 <td className="class-cell">
                   <select
-                    aria-label="CRB class"
+                    aria-label="Class catalog"
                     value={row.class.id ?? ''}
                     onChange={(e) => {
                       const id = e.target.value || null
@@ -262,11 +262,20 @@ export function IdentityPanel({
                     }}
                   >
                     <option value="">Custom</option>
-                    {CRB_CLASSES.map((entry) => (
-                      <option key={entry.id} value={entry.id}>
-                        {entry.name}
-                      </option>
-                    ))}
+                    <optgroup label="Core Rulebook">
+                      {CRB_CLASSES.map((entry) => (
+                        <option key={entry.id} value={entry.id}>
+                          {entry.name}
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Advanced Player's Guide">
+                      {APG_CLASSES.map((entry) => (
+                        <option key={entry.id} value={entry.id}>
+                          {entry.name}
+                        </option>
+                      ))}
+                    </optgroup>
                   </select>
                   <input
                     aria-label="Class name"
@@ -285,6 +294,50 @@ export function IdentityPanel({
                       })
                     }
                   />
+                  {row.class.id === 'class.summoner' ? (
+                    <>
+                      <select
+                        aria-label="APG archetype"
+                        value={row.archetype?.id ?? ''}
+                        onChange={(e) => {
+                          const id = e.target.value || null
+                          update((c) => {
+                            const classes = [...c.classes]
+                            classes[index] = applyApgArchetype(
+                              classes[index],
+                              id,
+                            )
+                            return { ...c, classes }
+                          })
+                        }}
+                      >
+                        <option value="">No archetype</option>
+                        {APG_ARCHETYPES.map((entry) => (
+                          <option key={entry.id} value={entry.id}>
+                            {entry.name}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        aria-label="Archetype name"
+                        value={row.archetype?.name ?? ''}
+                        onChange={(e) =>
+                          update((c) => {
+                            const classes = [...c.classes]
+                            classes[index] = {
+                              ...classes[index],
+                              archetype: {
+                                id: classes[index].archetype?.id ?? null,
+                                name: e.target.value,
+                                source: classes[index].archetype?.source,
+                              },
+                            }
+                            return { ...c, classes }
+                          })
+                        }
+                      />
+                    </>
+                  ) : null}
                 </td>
                 <td>
                   <input
@@ -435,6 +488,12 @@ export function IdentityPanel({
           )}
         </tbody>
       </table>
+      {character.classes.some((row) => row.class.id === 'class.summoner') ? (
+        <p className="muted">
+          Synthesist stamps the archetype name only. Fused STR/DEX/CON, costume
+          HP, and evolutions stay typed.
+        </p>
+      ) : null}
     </div>
   )
 }

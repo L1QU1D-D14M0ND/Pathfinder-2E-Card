@@ -2,7 +2,7 @@
 
 **TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
-**Current phase:** OGL / Product Identity review landed. **Next: 1.0** (Spanish + playable APG Synthesist Summoner). Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0007](docs/adr/0007-content-licensing.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
+**Current phase:** **1.0 in progress** — APG slice 1 (Summoner catalog + Synthesist name). **Next:** fused overlay + evolution names. Spanish is a separate 1.0 track. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [APG pack](docs/pf1e-apg-pack-design.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
 
 The GitHub repository name is unchanged.
 
@@ -31,6 +31,7 @@ npm run dev
 - [Shared kernel — reuse between editions](docs/shared-kernel-design.md)
 - [Sidebar host](docs/sidebar-host-design.md)
 - [PF1e CRB pack (Phase 3c, batch reviews)](docs/pf1e-crb-pack-design.md)
+- [PF1e APG pack (1.0 Synthesist)](docs/pf1e-apg-pack-design.md)
 - [Attack Helper (later tool)](docs/sidebar-tools-attack-helper.md)
 - [Actions List (later tool)](docs/sidebar-tools-actions-list.md)
 - [Budget Calculator (later tool)](docs/sidebar-tools-budget-calculator.md)

@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–13 landed (Batch 7 last). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)): pack stays mechanics-only; no OGL notice until rules text. **Next: 1.0** (Spanish + playable APG Synthesist). APG Synthesist is not this pack.  
+**Status:** Mechanic batches 1–13 landed (Batch 7 last). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -742,7 +742,7 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** **1.0** — Spanish locale plus a playable APG Synthesist Summoner (separate pack; do **not** add Summoner to this CRB folder). First APG slice stays mechanics-only until an OGL increment adds rules text. Sidebar tools still wait until the sheet is ~90% done.
+**Next product work:** APG pack remaining slices (evolutions + fused overlay), then Spanish. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -769,3 +769,4 @@ The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the ne
 | 2026-08-18 | Batch 7: spell DC + bonus-spells table; slots stay typed; next is PWA proof |
 | 2026-08-18 | App draft + PWA proof landed; this pack’s next gate is OGL before rules text |
 | 2026-08-18 | OGL / PI review: mechanics-only pack; no Section 15 until rules text; next is 1.0 |
+| 2026-08-18 | APG slice 1 landed in a separate pack; this folder stays CRB-only |

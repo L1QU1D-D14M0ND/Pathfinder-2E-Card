@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-18  
-**Current phase:** **OGL / Product Identity review landed** (mechanics-only pack; no rules text). **Next: 1.0** (Spanish **and** playable APG Synthesist Summoner). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **1.0 in progress** — APG slice 1 landed (Summoner catalog + Synthesist name). **Next:** documentary evolution names + fused overlay. Spanish is a separate 1.0 track. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
@@ -168,10 +168,15 @@ Not started (after PF1e 0.9):
 
 ## Phase 4 — 1.0
 
-**Status:** Not started (0%)
+**Status:** In progress (APG slice 1 landed)
 
 - [ ] Spanish (`es`) locale catalog
 - [ ] Stability pass on the 0.9 bar (PF1e CRB goldens + PF2e slice); still core calcs only
+- [x] APG pack scaffold + Summoner class catalog (HD/BAB/saves/class skills) — [`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)
+- [x] Synthesist documentary archetype stamp (name only; no fused math)
+- [ ] Documentary evolution names
+- [ ] Fused STR/DEX/CON overlay + costume HP (not auto-applied evolutions)
+- [ ] Synthesist Summoner golden
 - [ ] **Playable APG Synthesist Summoner** — fused eidolon as a transformation (separate APG pack; do not add Summoner to the CRB catalog). Player can build and play at the table: pilot vs fused physical scores, costume HP, evolution rows, Summoner spells. Not a nested second PC sheet. Not auto-applied evolutions.
 
 ---
@@ -233,7 +238,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **1.0 (next code)** — Spanish locale **and** playable APG Synthesist Summoner (fused eidolon). Keep CRB pack CRB-only; first APG slice is mechanics-only until an OGL increment adds rules text.
+1. **1.0 remaining (next code)** — documentary evolution names + fused STR/DEX/CON overlay (costume HP; evolutions stay typed). Spanish (`es`) is a separate 1.0 track. Keep Summoner out of the CRB pack.
 2. **Only then** leftover PF2e goldens / companion / Remaster packs.
 3. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
@@ -289,3 +294,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | Phase 3c batch 7: spell DC + bonus-spells table tests; next is PWA proof |
 | 2026-08-18 | IndexedDB one-key draft + PWA build verify; next is OGL review then 1.0 |
 | 2026-08-18 | OGL / PI review landed (ADR 0007); pack stays mechanics-only; next is 1.0 |
+| 2026-08-18 | 1.0 APG slice 1: Summoner catalog + Synthesist name; next is evolutions + fused overlay |

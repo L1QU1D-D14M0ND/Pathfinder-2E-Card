@@ -1,0 +1,29 @@
+[
+  {
+    "id": "class.summoner",
+    "name": "Summoner",
+    "hitDie": 8,
+    "babProgression": "threeQuarter",
+    "saves": { "fort": "poor", "ref": "poor", "will": "good" },
+    "skillPointsPerLevel": 2,
+    "classSkills": [
+      "fly",
+      "handle-animal",
+      "linguistics",
+      "ride",
+      "spellcraft",
+      "use-magic-device",
+      "knowledge-arcana",
+      "knowledge-dungeoneering",
+      "knowledge-engineering",
+      "knowledge-geography",
+      "knowledge-history",
+      "knowledge-local",
+      "knowledge-nature",
+      "knowledge-nobility",
+      "knowledge-planes",
+      "knowledge-religion"
+    ],
+    "source": { "book": "APG" }
+  }
+]

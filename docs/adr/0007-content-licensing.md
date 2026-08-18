@@ -20,7 +20,7 @@ The app is MIT. Phase 3c shipped a PF1e Core Rulebook **player catalog** of ids,
 5. **Do not scrape** d20pfsrd, Archives of Nethys, Hero Lab, or Foundry dumps into `content/`.
 6. **Player sheets** (Save files, goldens, IndexedDB draft) may contain campaign words the player typed. That is not the ship pack. Do not treat a golden `homeRegion` as catalog PI.
 7. **Chrome** may identify the system as Pathfinder First / Second Edition. Working title remains **TTRPG Character Sheet**. No official Paizo compatibility logo or Community Use artwork in 0.9/1.0 unless a later ADR says so.
-8. **1.0 APG pack** (`content/pf1e/apg/` later) follows the same mechanics-only bar first: Synthesist / Summoner **ids and numeric tags**, documentary evolution names. **No** class flavor, eidolon prose, or spell text until the OGL notice in (3) is actually added. **Never** put `class.summoner` in the CRB folder.
+8. **1.0 APG pack** (`content/pf1e/apg/`) follows the same mechanics-only bar first: Synthesist / Summoner **ids and numeric tags**, documentary evolution names. **No** class flavor, eidolon prose, or spell text until the OGL notice in (3) is actually added. **Never** put `class.summoner` in the CRB folder. Slice 1 (Summoner tags + Synthesist name) landed 2026-08-18.
 9. **PF2e Remaster packs** wait. Optional ORC import is still post-PF1e-1.0 and needs its own review.
 
 ## Consequences

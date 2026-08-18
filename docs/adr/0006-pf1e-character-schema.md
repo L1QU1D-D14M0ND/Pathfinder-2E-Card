@@ -20,7 +20,7 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 - **`currentHp` may be negative.** No dying/wounded/doomed track. No hero points / focus pool in this document.
 - Spell slots are **user-entered** (max/remaining). Spell DC (`10 + spell level + ability`) and bonus-spells-from-ability are derived in `compute()`; slots themselves are not auto-filled from the class table.
 - Open **`effects[]`** hooks: unknown `type` is ignored. **`extensions`** bag for experiments. No campaign-options block.
-- Nested companions are a **stub array** (no nested sheet in 0.9).
+- Nested companions are a **stub array** (no nested sheet in 0.9). Optional `classes[].archetype` is a documentary ContentRef for 1.0 Synthesist (name stamp only).
 - **No maximum character level** in schema.
 - Content ids: kebab-case paths (`class.fighter`, `feat.power-attack`, `race.human`). `ContentRef` is `{ id, name }` plus optional publication source — **no** Remaster/legacy fields.
 
@@ -32,6 +32,8 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 - New-character factory inserts the CRB skill list that is not a Craft/Perform/Profession wildcard (Knowledges auto-seeded).
 - Iterative attacks follow CRB: extra attacks when BAB ≥ 6, in −5 steps, maximum four from BAB. Fighter 5 is a **single** +5 attack, not +5/+0.
 - Migrations required when PF1e `schemaVersion` increments.
+
+**Postscript (2026-08-18):** Optional `classes[].archetype` ContentRef for documentary APG archetypes (Synthesist). Does not bump `schemaVersion`. Goldens omit the field.
 
 ## References
 

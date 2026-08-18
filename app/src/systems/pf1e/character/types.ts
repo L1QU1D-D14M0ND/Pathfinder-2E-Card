@@ -80,6 +80,8 @@ export interface ClassEntry {
   saves: ClassSaves
   /** Stamped from the catalog when picking Fighter/Wizard. Optional on old saves. */
   skillPointsPerLevel?: number
+  /** Documentary APG archetype (Synthesist). Does not rewrite HD/BAB/saves. */
+  archetype?: ContentRef
   favored?: FavoredClassBonus
   prestige?: boolean
   notes?: string

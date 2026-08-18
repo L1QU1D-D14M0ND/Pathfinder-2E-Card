@@ -58,7 +58,7 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 - Sidebar **host** (read/write rail when a sheet is loaded; tools unspecified) is locked in [ADR 0005](0005-sidebar-host.md). Empty/collapsed host is enough for 0.9; tool list comes later.
 - A future ADR will lock the PF1e JSON schema (analog of ADR 0002). Envelope rules in this ADR and [PF1e schema notes](../pf1e-schema-design-notes.md) are the standing defaults until then.
 
-**Postscript (2026-08-18):** Phase 3c continues through CRB feat/spell catalog ids. **1.0** is Spanish **plus** a playable APG **Synthesist Summoner** (fused eidolon). 0.9 stays Core Rulebook goldens. Summoner does not go in the CRB pack. See [`pf1e-character-sheet-design.md`](../pf1e-character-sheet-design.md) decision 20.
+**Postscript (2026-08-18):** Phase 3c continues through CRB feat/spell catalog ids. **1.0** is Spanish **plus** a playable APG **Synthesist Summoner** (fused eidolon). 0.9 stays Core Rulebook goldens. Summoner does not go in the CRB pack. APG slice 1 (Summoner tags + Synthesist name) landed 2026-08-18. See [`pf1e-apg-pack-design.md`](../pf1e-apg-pack-design.md).
 
 **Postscript (2026-08-18, licensing):** Content licensing review is [ADR 0007](0007-content-licensing.md). The CRB pack stays mechanics-only (no OGL notice until rules text). 1.0 APG pack follows the same bar.
 

@@ -172,9 +172,9 @@ Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Re
 
 Batch 1–13 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed). Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
 
-License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **Next:** 1.0 — Spanish + playable APG Synthesist (separate pack; same bar).
+License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **Next:** documentary evolution names + fused overlay ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish is a separate 1.0 track.
 
-**1.0 (not this CRB pack):** Playable APG Synthesist Summoner. Do not add `class.summoner` to `content/pf1e/crb/`.
+**1.0 (not this CRB pack):** Playable APG Synthesist Summoner. Do not add `class.summoner` to `content/pf1e/crb/`. Slice 1 landed: Summoner HD/BAB/saves/class skills + Synthesist name stamp.
 
 ---
 
@@ -213,3 +213,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Batch 7 spell DC + bonus-spells table tests landed. Next is PWA proof. |
 | 2026-08-18 | App draft buffer + PWA proof landed. Next is OGL then 1.0. |
 | 2026-08-18 | OGL / PI review landed (ADR 0007). Next is 1.0 Synthesist + Spanish. |
+| 2026-08-18 | APG slice 1: Summoner catalog + Synthesist name. Next is evolutions + fused overlay. |

@@ -27,7 +27,7 @@ npm run build
 - `system: "pf1e"` required on PF1e documents
 - Auto-seeded standard skills per system
 - PF1e martial + spell calc (Fighter 5, Wizard 5, and Fighter 2 / Wizard 3 goldens) and PF2e core calc
-- CRB pack batches 1–13 landed (including Batch 7). Mechanics-only ([ADR 0007](../docs/adr/0007-content-licensing.md)). Next product work is 1.0 (Spanish + Synthesist), not more CRB encyclopedia rows.
+- CRB pack batches 1–13 landed (including Batch 7). Mechanics-only ([ADR 0007](../docs/adr/0007-content-licensing.md)). APG slice 1: Summoner + Synthesist name ([`../docs/pf1e-apg-pack-design.md`](../docs/pf1e-apg-pack-design.md)). Next is fused overlay + evolution names, not more CRB encyclopedia rows.
 - Save export strips `derived`
 - Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the sheet is ~90% done)
 - PWA: `npm run build` emits a Workbox service worker + standalone manifest (CI `verify:pwa`). Install/offline checklist below

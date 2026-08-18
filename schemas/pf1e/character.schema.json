@@ -283,6 +283,10 @@
           "minimum": 0,
           "description": "Class skill ranks per level before Intelligence. Stamped from the CRB catalog. Omitted on older saves; compute falls back to the pack."
         },
+        "archetype": {
+          "$ref": "#/$defs/ContentRef",
+          "description": "Optional documentary archetype (e.g. Synthesist). Stamps id and name only. Does not rewrite HD, BAB, saves, fused ability scores, or evolutions."
+        },
         "notes": { "type": "string" },
         "effects": {
           "type": "array",

@@ -13,4 +13,4 @@ Curated **mechanics-only** data for the PF1e sheet. Not a copy of the Core Ruleb
 
 **License:** app is MIT. This folder is **mechanics-only** (ids, names, numbers). No Product Identity, no class flavor, no spell text. OGL 1.0a / Section 15 is **not** attached until a later increment ships Open Game Content prose. See [`docs/content-licensing.md`](../../../docs/content-licensing.md) and [ADR 0007](../../../docs/adr/0007-content-licensing.md). Do not scrape third-party SRDs into this tree.
 
-See [`docs/pf1e-crb-pack-design.md`](../../../docs/pf1e-crb-pack-design.md) for the review process and landed batches (1–13, including Batch 7). **Next is 1.0** (Spanish + APG Synthesist in a separate pack). APG Synthesist Summoner is **not** this CRB folder.
+See [`docs/pf1e-crb-pack-design.md`](../../../docs/pf1e-crb-pack-design.md) for the review process and landed batches (1–13, including Batch 7). APG Summoner lives in [`../apg/`](../apg/). **Never** add `class.summoner` here.

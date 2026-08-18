@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **1.0** (Spanish plus a playable APG Synthesist Summoner). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)): the CRB pack stays mechanics-only until a later increment ships rules text. Batches 1–13 and the IndexedDB draft / PWA proof are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **1.0 remaining work**: documentary evolution names plus a fused STR/DEX/CON overlay. APG slice 1 landed (Summoner catalog + Synthesist name, [ADR 0007](adr/0007-content-licensing.md) mechanics-only). Spanish (`es`) is a separate 1.0 track. Batches 1–13 and the IndexedDB draft / PWA proof are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batches 1–13 landed. OGL/PI review: mechanics-only. Next: 1.0 Synthesist (APG pack) |
+| Content | `content/pf1e/crb/` batches 1–13. `content/pf1e/apg/` slice 1 (Summoner + Synthesist name). Next: evolutions + fused overlay |
 
 ---
 
@@ -128,7 +128,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). **Next: 1.0 Synthesist (APG pack) + Spanish.** Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 1 landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). **Next: documentary evolutions + fused overlay.** Spanish is a separate 1.0 track. Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -219,6 +219,13 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] IndexedDB one-key draft + PWA build verify
 - [x] OGL / Product Identity review (mechanics-only pack; [ADR 0007](adr/0007-content-licensing.md))
 
+### Phase 4 (1.0 in progress)
+
+- [x] APG slice 1: Summoner catalog + Synthesist name ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md))
+- [ ] Documentary evolution names + fused overlay
+- [ ] Synthesist golden
+- [ ] Spanish (`es`) catalog
+
 ### PF1e 0.9 bar
 
 - [x] Fighter 5 golden
@@ -254,12 +261,13 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
 
-**Still sequenced (next code is 1.0):**
+**Still sequenced (next code is fused overlay):**
 
 | Item | Disposition |
 | --- | --- |
-| Playable APG Synthesist Summoner | **1.0** (separate pack; not CRB; mechanics-only first) |
-| Spanish (`es`) catalog | **1.0** |
+| Documentary evolution names + fused overlay | **Next** (same sheet; not auto-applied evolutions) |
+| Synthesist golden | After overlay |
+| Spanish (`es`) catalog | **1.0** (separate track) |
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
 | Remaining PF2e panel literals | Extract when those panels next change |
@@ -296,3 +304,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | Batch 7 spell DC + bonus-spells table tests landed; next is PWA proof |
 | 2026-08-18 | IndexedDB draft + PWA verify landed; next is OGL then 1.0 |
 | 2026-08-18 | OGL / PI review landed (ADR 0007); next code is 1.0 |
+| 2026-08-18 | APG slice 1: Summoner catalog + Synthesist name; next is evolutions + fused overlay |

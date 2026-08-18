@@ -18,6 +18,13 @@ export {
   CRB_RACES,
   CRB_SPELLS,
 } from './crbPack'
+export {
+  applyApgArchetype,
+  lookupApgArchetype,
+  lookupApgClass,
+  APG_ARCHETYPES,
+  APG_CLASSES,
+} from './apgPack'
 export type {
   CrbClassProgression,
   CrbFeat,
@@ -25,3 +32,4 @@ export type {
   CrbRace,
   CrbSpell,
 } from './crbPack'
+export type { ApgArchetype, ApgClassProgression } from './apgPack'

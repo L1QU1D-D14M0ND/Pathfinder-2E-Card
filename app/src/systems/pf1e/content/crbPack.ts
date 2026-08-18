@@ -10,6 +10,8 @@ import type {
   SpellListEntry,
 } from '../character/types'
 import { STANDARD_SKILLS } from '../character/standardSkills'
+import { lookupApgClass } from './apgPack'
+import { lookupById, seededClassSkills } from './catalogLookup'
 import classesJson from '../../../../../content/pf1e/crb/classes.json'
 import racesJson from '../../../../../content/pf1e/crb/races.json'
 import itemsJson from '../../../../../content/pf1e/crb/items.json'
@@ -17,26 +19,6 @@ import featsJson from '../../../../../content/pf1e/crb/feats.json'
 import spellsJson from '../../../../../content/pf1e/crb/spells.json'
 
 const STANDARD_SKILL_KEYS = new Set(STANDARD_SKILLS.map((row) => row.key))
-const STANDARD_SKILL_ORDER = new Map(
-  STANDARD_SKILLS.map((row, index) => [row.key, index]),
-)
-
-/** Unknown or empty id → null. Shared by class / race / item / feat / spell catalogs. */
-function lookupById<T extends { id: string }>(
-  rows: readonly T[],
-  id: string | null | undefined,
-): T | null {
-  if (!id) return null
-  return rows.find((row) => row.id === id) ?? null
-}
-
-function seededClassSkills(keys: readonly string[]): string[] {
-  return [...keys].sort((left, right) => {
-    const a = STANDARD_SKILL_ORDER.get(left) ?? Number.MAX_SAFE_INTEGER
-    const b = STANDARD_SKILL_ORDER.get(right) ?? Number.MAX_SAFE_INTEGER
-    return a - b
-  })
-}
 
 export interface CrbClassProgression {
   id: string
@@ -65,20 +47,28 @@ export function lookupCrbClass(id: string | null | undefined): CrbClassProgressi
   return lookupById(CRB_CLASSES, id)
 }
 
+function lookupClassProgression(
+  id: string | null | undefined,
+): CrbClassProgression | null {
+  return lookupCrbClass(id) ?? lookupApgClass(id)
+}
+
 /**
- * Stamp HD / BAB / saves from the CRB class catalog.
+ * Stamp HD / BAB / saves from the CRB or APG class catalog.
  * Leaves levels and favored-class totals unchanged.
  * Unknown id clears `class.id` and does not rewrite progressions.
+ * Leaving Summoner clears a stamped Synthesist archetype.
  */
 export function applyCrbClassProgression(
   row: ClassEntry,
   id: string | null,
 ): ClassEntry {
-  const found = lookupCrbClass(id)
+  const found = lookupClassProgression(id)
   if (!found) {
     return {
       ...row,
       class: { ...row.class, id: null },
+      archetype: undefined,
     }
   }
   return {
@@ -92,6 +82,7 @@ export function applyCrbClassProgression(
     babProgression: found.babProgression,
     saves: { ...found.saves },
     skillPointsPerLevel: found.skillPointsPerLevel,
+    archetype: found.id === 'class.summoner' ? row.archetype : undefined,
   }
 }
 
@@ -99,7 +90,7 @@ export function applyCrbClassProgression(
 export function classSkillKeySet(classes: ClassEntry[]): Set<string> {
   const keys = new Set<string>()
   for (const row of classes) {
-    const found = lookupCrbClass(row.class.id)
+    const found = lookupClassProgression(row.class.id)
     if (!found) continue
     for (const key of found.classSkills) keys.add(key)
   }
@@ -165,7 +156,7 @@ export function applyCrbRace(identity: Identity, id: string | null): Identity {
 /** Row field if present; otherwise catalog; otherwise 0. */
 export function skillPointsPerLevelFor(row: ClassEntry): number {
   if (row.skillPointsPerLevel != null) return row.skillPointsPerLevel
-  return lookupCrbClass(row.class.id)?.skillPointsPerLevel ?? 0
+  return lookupClassProgression(row.class.id)?.skillPointsPerLevel ?? 0
 }
 
 export type CrbItemKind = 'weapon' | 'armor' | 'item'

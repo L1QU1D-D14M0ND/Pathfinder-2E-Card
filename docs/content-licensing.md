@@ -73,10 +73,11 @@ Do not scrape third-party SRD sites into `content/` even after that PR. Curate b
 
 ---
 
-## 6. 1.0 APG pack (not started)
+## 6. 1.0 APG pack
 
-- New folder `content/pf1e/apg/`. **Never** `class.summoner` inside `content/pf1e/crb/`.
-- First slice: documentary ids/names and numeric tags (HD/BAB/saves, skill list, evolution **names**). Same honesty as CRB feats/spells: apply does not auto-write fused STR/DEX/CON or evolution math.
+Slice 1 landed: `content/pf1e/apg/` with Summoner progression tags and a Synthesist **name** stamp. **Never** `class.summoner` inside `content/pf1e/crb/`.
+
+- Next slice: documentary evolution **names**, then fused STR/DEX/CON overlay + costume HP. Apply does not auto-write fused scores or evolution math.
 - Evolution and eidolon **rules text** wait for the OGL increment in §4.
 - Magical Child / other APG classes stay out until a later pack slice.
 
@@ -93,3 +94,4 @@ No Remaster encyclopedia in this review. ORC import remains later (ADR 0003). PF
 | Date | Change |
 | --- | --- |
 | 2026-08-18 | First review. CRB pack is mechanics-only; OGL notice deferred until rules text; 1.0 APG pack same bar |
+| 2026-08-18 | APG slice 1 landed (Summoner tags + Synthesist name) |

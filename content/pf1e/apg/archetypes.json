@@ -1,0 +1,8 @@
+[
+  {
+    "id": "archetype.synthesist",
+    "name": "Synthesist",
+    "classId": "class.summoner",
+    "source": { "book": "APG" }
+  }
+]

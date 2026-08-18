@@ -269,3 +269,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-17 | Layout §4.1 matches extracted kernel; PF1e goldens are not `rulesetSource` |
 | 2026-08-18 | 1.0 bar includes playable APG Synthesist Summoner (CRB 0.9 unchanged) |
 | 2026-08-18 | Content licensing review (ADR 0007): mechanics-only pack until rules text |
+| 2026-08-18 | 1.0 APG slice 1: Summoner catalog + Synthesist name stamp |
