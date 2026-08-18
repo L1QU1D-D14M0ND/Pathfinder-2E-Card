@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-18  
-**Current phase:** **3c in progress** (batches 1–6 and 8–10 landed). **Next code: remaining 9 CRB classes.** Batch 7 (spell DC) stays later. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **3c in progress** (batches 1–6 and 8–11 landed). **Next code: feat catalog ids** on the goldens. Batch 7 (spell DC) stays later. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
@@ -94,7 +94,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** In progress (batches 1–6 and 8–10 landed; next is remaining 9 CRB classes)
+**Status:** In progress (batches 1–6 and 8–11 landed; next is feat catalog ids)
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
@@ -107,11 +107,12 @@ Working display name in chrome is **TTRPG Character Sheet**.
 - [x] **Batch 8:** Human race catalog id — +2 stays typed into scores
 - [x] **Batch 9:** Fighter/Wizard class skills + skill points — stamp checkboxes; ranks not auto-spent
 - [x] **Batch 10:** weapons/armor ids on the three goldens — documentary stamp only; AC/attacks stay typed
-- [ ] Remaining 9 CRB classes (next)
-- [ ] Catalog remaining golden ids (feats, spell metadata)
+- [x] **Batch 11:** remaining 9 CRB classes — same catalog row / apply / stamp / pool as Fighter and Wizard
+- [ ] Feat catalog ids on the goldens (next)
+- [ ] Spell metadata catalog ids
 - [ ] OGL / Product Identity review before shipping copyrighted **text**
 
-Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks Fighter or Wizard, race id/name when they pick Human, and documentary item fields when they pick a catalog weapon or armor).
+Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name when they pick Human, and documentary item fields when they pick a catalog weapon or armor).
 
 ---
 
@@ -230,7 +231,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Remaining 9 CRB classes (next code)** — Progression tags for the CRB classes the goldens do not use. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+1. **Feat catalog ids (next code)** — Documentary feat ids on the three goldens. Do not auto-apply combat math. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
 2. **Batch 7 pack review** — Spell DC / bonus slots already in the engine; pack-review later.
 3. **Draft buffer + PWA proof** — app 0.9 platform.
 4. **Spanish** — 1.0.
@@ -283,3 +284,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | Phase 3c batch 8: Human race catalog; next is class skills |
 | 2026-08-18 | Phase 3c batch 9: class skills + skill-point pool; next is weapons/armor ids |
 | 2026-08-18 | Phase 3c batch 10: documentary weapons/armor ids; next is remaining 9 CRB classes |
+| 2026-08-18 | Phase 3c batch 11: remaining 9 CRB classes reuse the Fighter/Wizard catalog; next is feat ids |

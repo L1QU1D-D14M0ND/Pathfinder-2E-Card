@@ -12,6 +12,28 @@ import classesJson from '../../../../../content/pf1e/crb/classes.json'
 import racesJson from '../../../../../content/pf1e/crb/races.json'
 import itemsJson from '../../../../../content/pf1e/crb/items.json'
 
+const STANDARD_SKILL_KEYS = new Set(STANDARD_SKILLS.map((row) => row.key))
+const STANDARD_SKILL_ORDER = new Map(
+  STANDARD_SKILLS.map((row, index) => [row.key, index]),
+)
+
+/** Unknown or empty id → null. Shared by class / race / item catalogs. */
+function lookupById<T extends { id: string }>(
+  rows: readonly T[],
+  id: string | null | undefined,
+): T | null {
+  if (!id) return null
+  return rows.find((row) => row.id === id) ?? null
+}
+
+function seededClassSkills(keys: readonly string[]): string[] {
+  return [...keys].sort((left, right) => {
+    const a = STANDARD_SKILL_ORDER.get(left) ?? Number.MAX_SAFE_INTEGER
+    const b = STANDARD_SKILL_ORDER.get(right) ?? Number.MAX_SAFE_INTEGER
+    return a - b
+  })
+}
+
 export interface CrbClassProgression {
   id: string
   name: string
@@ -30,14 +52,13 @@ export const CRB_CLASSES: CrbClassProgression[] = classesJson.map((row) => ({
   babProgression: row.babProgression as BabProgression,
   saves: row.saves as ClassSaves,
   skillPointsPerLevel: row.skillPointsPerLevel,
-  classSkills: [...row.classSkills],
+  classSkills: seededClassSkills(row.classSkills),
   source: row.source,
 }))
 
 /** Unknown or empty id → null. Never throws (isolate to the row). */
 export function lookupCrbClass(id: string | null | undefined): CrbClassProgression | null {
-  if (!id) return null
-  return CRB_CLASSES.find((entry) => entry.id === id) ?? null
+  return lookupById(CRB_CLASSES, id)
 }
 
 /**
@@ -69,8 +90,6 @@ export function applyCrbClassProgression(
     skillPointsPerLevel: found.skillPointsPerLevel,
   }
 }
-
-const STANDARD_SKILL_KEYS = new Set(STANDARD_SKILLS.map((row) => row.key))
 
 /** Union of catalog class-skill keys for the given class rows. */
 export function classSkillKeySet(classes: ClassEntry[]): Set<string> {
@@ -113,8 +132,7 @@ export const CRB_RACES: CrbRace[] = racesJson.map((row) => ({
 
 /** Unknown or empty id → null. Never throws. */
 export function lookupCrbRace(id: string | null | undefined): CrbRace | null {
-  if (!id) return null
-  return CRB_RACES.find((entry) => entry.id === id) ?? null
+  return lookupById(CRB_RACES, id)
 }
 
 /**
@@ -170,8 +188,7 @@ export const CRB_ITEMS: CrbItem[] = itemsJson.map((row) => ({
 
 /** Unknown or empty id → null. Never throws. */
 export function lookupCrbItem(id: string | null | undefined): CrbItem | null {
-  if (!id) return null
-  return CRB_ITEMS.find((entry) => entry.id === id) ?? null
+  return lookupById(CRB_ITEMS, id)
 }
 
 /**

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
 import { createEmptyClass, createEmptyItem } from '../character/createRows'
+import { STANDARD_SKILLS } from '../character/standardSkills'
 import { parseCharacterJson } from '../character/saveLoad'
 import {
   applyCrbClassProgression,
@@ -22,9 +23,18 @@ import {
 } from '../engine/progressions'
 
 describe('CRB pack batch 1: class progression catalog', () => {
-  it('lists Fighter and Wizard only', () => {
+  it('lists the 11 CRB base classes in chapter order', () => {
     expect(CRB_CLASSES.map((row) => row.id)).toEqual([
+      'class.barbarian',
+      'class.bard',
+      'class.cleric',
+      'class.druid',
       'class.fighter',
+      'class.monk',
+      'class.paladin',
+      'class.ranger',
+      'class.rogue',
+      'class.sorcerer',
       'class.wizard',
     ])
   })
@@ -49,7 +59,7 @@ describe('CRB pack batch 1: class progression catalog', () => {
   })
 
   it('returns null for an unknown class id (isolate the row)', () => {
-    expect(lookupCrbClass('class.rogue')).toBeNull()
+    expect(lookupCrbClass('class.alchemist')).toBeNull()
     expect(lookupCrbClass(null)).toBeNull()
     expect(lookupCrbClass('')).toBeNull()
   })
@@ -73,7 +83,7 @@ describe('CRB pack batch 1: class progression catalog', () => {
     const row = createEmptyClass()
     row.hitDie = 12
     row.babProgression = 'full'
-    const custom = applyCrbClassProgression(row, 'class.rogue')
+    const custom = applyCrbClassProgression(row, 'class.alchemist')
     expect(custom.class.id).toBeNull()
     expect(custom.hitDie).toBe(12)
     expect(custom.babProgression).toBe('full')
@@ -95,14 +105,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–6 and 8–10', () => {
+  it('pack manifest records batches 1–6 and 8–11', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batch-10')
+    expect(pack.status).toBe('batch-11')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 8, 9, 10,
+      1, 2, 3, 4, 5, 6, 8, 9, 10, 11,
     ])
   })
 })
@@ -171,11 +181,11 @@ describe('CRB pack batch 9: class skills', () => {
       'climb',
       'handle-animal',
       'intimidate',
-      'knowledge-dungeoneering',
-      'knowledge-engineering',
       'ride',
       'survival',
       'swim',
+      'knowledge-dungeoneering',
+      'knowledge-engineering',
     ])
     expect(wizard?.classSkills).toContain('spellcraft')
     expect(wizard?.classSkills).toContain('knowledge-arcana')
@@ -332,5 +342,126 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
     expect(lookupCrbItem(mixed.inventory.items[0]?.item.id)?.id).toBe(
       'armor.chain-shirt',
     )
+  })
+})
+
+const STANDARD_SKILL_KEY_SET = new Set(STANDARD_SKILLS.map((row) => row.key))
+
+describe('CRB pack batch 11: remaining CRB classes', () => {
+  it('uses the same progression tags as the CRB class tables', () => {
+    const table = [
+      {
+        id: 'class.barbarian',
+        hitDie: 12,
+        babProgression: 'full',
+        saves: { fort: 'good', ref: 'poor', will: 'poor' },
+        skillPointsPerLevel: 4,
+      },
+      {
+        id: 'class.bard',
+        hitDie: 8,
+        babProgression: 'threeQuarter',
+        saves: { fort: 'poor', ref: 'good', will: 'good' },
+        skillPointsPerLevel: 6,
+      },
+      {
+        id: 'class.cleric',
+        hitDie: 8,
+        babProgression: 'threeQuarter',
+        saves: { fort: 'good', ref: 'poor', will: 'good' },
+        skillPointsPerLevel: 2,
+      },
+      {
+        id: 'class.druid',
+        hitDie: 8,
+        babProgression: 'threeQuarter',
+        saves: { fort: 'good', ref: 'poor', will: 'good' },
+        skillPointsPerLevel: 4,
+      },
+      {
+        id: 'class.monk',
+        hitDie: 8,
+        babProgression: 'threeQuarter',
+        saves: { fort: 'good', ref: 'good', will: 'good' },
+        skillPointsPerLevel: 4,
+      },
+      {
+        id: 'class.paladin',
+        hitDie: 10,
+        babProgression: 'full',
+        saves: { fort: 'good', ref: 'poor', will: 'good' },
+        skillPointsPerLevel: 2,
+      },
+      {
+        id: 'class.ranger',
+        hitDie: 10,
+        babProgression: 'full',
+        saves: { fort: 'good', ref: 'good', will: 'poor' },
+        skillPointsPerLevel: 6,
+      },
+      {
+        id: 'class.rogue',
+        hitDie: 8,
+        babProgression: 'threeQuarter',
+        saves: { fort: 'poor', ref: 'good', will: 'poor' },
+        skillPointsPerLevel: 8,
+      },
+      {
+        id: 'class.sorcerer',
+        hitDie: 6,
+        babProgression: 'half',
+        saves: { fort: 'poor', ref: 'poor', will: 'good' },
+        skillPointsPerLevel: 2,
+      },
+    ] as const
+
+    for (const expected of table) {
+      const found = lookupCrbClass(expected.id)
+      expect(found).toMatchObject(expected)
+      expect(babFromProgression(found!.babProgression, 5)).toBe(
+        expected.babProgression === 'full'
+          ? 5
+          : expected.babProgression === 'threeQuarter'
+            ? 3
+            : 2,
+      )
+      expect(saveFromProgression(found!.saves.fort, 5)).toBe(
+        expected.saves.fort === 'good' ? 4 : 1,
+      )
+    }
+  })
+
+  it('keeps class-skill keys on the seeded skill list', () => {
+    for (const row of CRB_CLASSES) {
+      expect(row.classSkills.length).toBeGreaterThan(0)
+      expect(new Set(row.classSkills).size).toBe(row.classSkills.length)
+      for (const key of row.classSkills) {
+        expect(STANDARD_SKILL_KEY_SET.has(key)).toBe(true)
+      }
+    }
+  })
+
+  it('stamps Rogue class skills through the existing apply/stamp path', () => {
+    const character = createEmptyCharacter()
+    const row = applyCrbClassProgression(createEmptyClass(), 'class.rogue')
+    const skills = stampClassSkills(character.skills, [row])
+    const flagged = skills
+      .filter((skill) => skill.classSkill)
+      .map((skill) => skill.key)
+    expect(flagged).toContain('disable-device')
+    expect(flagged).toContain('stealth')
+    expect(flagged).not.toContain('spellcraft')
+    expect(skills.every((skill) => skill.ranks === 0)).toBe(true)
+    expect(row.hitDie).toBe(8)
+    expect(row.skillPointsPerLevel).toBe(8)
+  })
+
+  it('unions a new CRB class with Fighter using the same checkbox stamp', () => {
+    const fighter = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
+    const rogue = applyCrbClassProgression(createEmptyClass(), 'class.rogue')
+    const keys = classSkillKeySet([fighter, rogue])
+    expect(keys.has('climb')).toBe(true)
+    expect(keys.has('disable-device')).toBe(true)
+    expect(keys.has('spellcraft')).toBe(false)
   })
 })

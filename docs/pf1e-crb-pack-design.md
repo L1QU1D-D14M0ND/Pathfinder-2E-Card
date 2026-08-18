@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–6 and 8–10 landed. **Next code: remaining 9 CRB classes.** Batch 7 (spell DC) stays later.  
+**Status:** In progress (2026-08-18). Batches 1–6 and 8–11 landed. **Next code: feat catalog ids** on the goldens. Batch 7 (spell DC) stays later.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -45,7 +45,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | Done |
 | **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | Done |
 | **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | Done |
-| … | Remaining 9 CRB classes; then feats and spell metadata | After the three goldens can be rebuilt from ids | Catalog | **Next** (classes first) |
+| **11** | Remaining 9 CRB classes (progressions + class skills) | Same catalog row as Fighter/Wizard; Identity select already lists `CRB_CLASSES` | Catalog | Done |
+| … | Feats, then spell metadata | After the CRB class catalog | Catalog | **Next** (feats first) |
 
 Annotations for remaining batches (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
 
@@ -57,7 +58,7 @@ Annotations for remaining batches (intent, already in the app, in/out, tests) ar
 content/pf1e/crb/
   README.md          # license / what is in this folder
   pack.json          # manifest + which batches have landed
-  classes.json       # HD/BAB/saves (batch 1); class skills + skill points (batch 9)
+  classes.json       # HD/BAB/saves + class skills + skill points (11 CRB base classes)
   races.json         # race id + name (batch 8: human)
   items.json         # weapon/armor/gear ids (batch 10: golden rows only)
 ```
@@ -66,12 +67,12 @@ A class catalog row in this phase is **not** a class description. It is:
 
 | Field | Why |
 | --- | --- |
-| `id` | `class.fighter`, `class.wizard` |
+| `id` | `class.fighter`, `class.rogue`, … |
 | `name` | Display label |
 | `hitDie` | d10 / d6 / … (HP batch will use this; stored now because it is on the class table) |
 | `babProgression` | `full` / `threeQuarter` / `half` |
 | `saves.fort/ref/will` | `good` / `poor` |
-| `skillPointsPerLevel` | Ranks per level before Int (batch 9: Fighter 2, Wizard 2) |
+| `skillPointsPerLevel` | Ranks per level before Int (all 11 CRB classes) |
 | `classSkills` | Seeded skill keys that stamp checkboxes (batch 9) |
 | `source.book` | `"CRB"` — page omitted until we cite without copying tables as images |
 
@@ -318,7 +319,7 @@ Pathfinder 1st Edition does **not** use 3.5’s cross-class half ranks. Every ra
 
 **Verdict:** The formula matches CRB. Fighter 5 Swim is a class skill at 0 ranks and does **not** get +3 (total −1 from Str +4 and ACP −5).
 
-**Gaps:** Spellcraft and Linguistics are also unusable untrained in the CRB; 0.9 blanks only Disable Device, UMD, Handle Animal, and Fly-without-speed (decision 6B). Favored-class skill ranks are stored on the class row and not auto-spent (batch 9 adds them to the pool). Class-skill checkboxes stamp from the pack when the player picks Fighter or Wizard (batch 9).
+**Gaps:** Spellcraft and Linguistics are also unusable untrained in the CRB; 0.9 blanks only Disable Device, UMD, Handle Animal, and Fly-without-speed (decision 6B). Favored-class skill ranks are stored on the class row and not auto-spent (batch 9 adds them to the pool). Class-skill checkboxes stamp from the pack when the player picks a CRB class.
 
 **Pack slice:** none.
 
@@ -559,6 +560,52 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 11 — two mechanics
+
+### 4.19 Remaining CRB class progression tags
+
+**CRB (player-facing):** Each base class has a **Hit Die**, **BAB** column (full / ¾ / ½), and **Fort / Ref / Will** (good or poor). The eleven CRB classes are Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard.
+
+**App today / this batch:** Those nine missing classes are extra rows in the **same** `classes.json` / `CrbClassProgression` catalog as Fighter and Wizard. `lookupCrbClass`, `applyCrbClassProgression`, and the Identity class select already consume `CRB_CLASSES` — no second apply path. Unknown ids (e.g. Alchemist) still resolve to custom.
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `classes.json` | Chapter order. Same fields as batch 1 |
+| Apply | existing `applyCrbClassProgression` | Stamps HD / BAB / saves / skill-point table. Leaves levels and favored totals |
+| Engine | existing `babFromProgression` / `stackedBab` | Paladin 2 + Rogue 3 is BAB **+4** |
+| Goldens | Fighter / Wizard ids | Unchanged; still resolve |
+
+**Verdict:** Level-5 published numbers match: Rogue BAB +3, Monk all good saves +4, Barbarian d12 / full BAB.
+
+**Gaps:** Class features, weapon/armor proficiencies, spell lists, prestige and APG classes.
+
+**Pack slice:** nine class ids with HD/BAB/saves.
+
+**Tests:** Table of nine tags against CRB HD/BAB/save/skill-point columns; unknown `class.alchemist` is null; goldens still resolve Fighter/Wizard.
+
+### 4.20 Remaining class skills and skill points
+
+**CRB (player-facing):** Skill ranks per level are on the class table (Rogue **8**, Bard/Ranger **6**, Barbarian/Druid/Monk **4**, Cleric/Paladin/Sorcerer **2**, plus Int, min 1). Class-skill lists come from the skill summary table. Craft / Perform / Profession stay wildcards.
+
+**App today / this batch:** The new rows fill `skillPointsPerLevel` and `classSkills` on the **same** catalog type as batch 9. `stampClassSkills` and `skillRanksBudget` are unchanged. Seeded keys are sorted to `STANDARD_SKILLS` order on load.
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `classSkills` / `skillPointsPerLevel` | Seeded keys only; no Craft/Perform/Profession |
+| Apply | existing `stampClassSkills` on class pick | Union of whatever classes are on the sheet |
+| Pool | existing `skillRanksBudget` | Rogue 5 Human Int 10 → **45 / 0** until the player types ranks |
+| Honesty | empty sheet + Rogue | No feat, feature, or spell rows; Combat AC stays 10 |
+
+**Verdict:** Picking Rogue reuses the Fighter stamp path. Multiclass Fighter+Rogue unions Climb with Disable Device.
+
+**Gaps:** Auto-spend of the pool; wildcard Craft/Perform/Profession rows; class features.
+
+**Pack slice:** class-skill lists and skill-point table for the nine classes.
+
+**Tests:** Every catalog class-skill key is a seeded skill; Rogue stamp; Fighter+Rogue union; Rogue pool without auto-spend; Paladin 2 / Rogue 3 stacked saves.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
@@ -567,19 +614,19 @@ These are **annotations**, not landed reviews. Each future PR still follows §1 
 
 Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review when spell metadata lands.
 
-### Remaining 9 CRB classes (**next**)
+### Feat catalog ids (**next**)
 
-**Pairing:** Progression tags (and later class skills / skill points) for the CRB classes the goldens do not use.
+**Pairing:** Documentary catalog ids for feats already named on the three goldens (Power Attack, Weapon Focus, …). Summaries stay typed; `effects[]` stay ignored.
 
-**Already in the app:** Fighter and Wizard catalog rows; stacked multiclass math.
+**Already in the app:** Feat rows with `feat.id` / name / summary.
 
-**In this batch:** Smallest catalog slice for those nine classes (HD / BAB / saves first, matching batch 1). Do not start feats or spell text.
+**In this batch:** Smallest feats.json slice those goldens need. Do not auto-apply combat math from feats.
 
-**Out:** Class flavor; prestige classes; APG classes.
+**Out:** Feat text beyond a short summary; prerequisites engine; remaining CRB feat list.
 
-**Pack slice:** ids for the remaining CRB base classes.
+**Pack slice:** feat ids for the goldens only.
 
-**After that:** feats, spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
+**After that:** spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -600,3 +647,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 8: Human race catalog id; +2 stays typed; next is class skills |
 | 2026-08-18 | Batch 9: Fighter/Wizard class skills + skill-point pool; next is weapons/armor ids |
 | 2026-08-18 | Batch 10: documentary weapons/armor ids; AC/attacks stay typed; next is remaining 9 CRB classes |
+| 2026-08-18 | Batch 11: remaining 9 CRB classes reuse the Fighter/Wizard catalog row; next is feat ids |

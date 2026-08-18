@@ -5,10 +5,10 @@ Curated **mechanics-only** data for the PF1e sheet. Not a copy of the Core Ruleb
 | File | Contents |
 | --- | --- |
 | `pack.json` | Manifest and which review batches have landed |
-| `classes.json` | Class **progression tags** (HD, BAB, saves) plus **class skills** and **skill points per level**. Batch 1: Fighter, Wizard tags. Batch 9: class-skill lists + 2 ranks/level. |
+| `classes.json` | Class **progression tags** (HD, BAB, saves) plus **class skills** and **skill points per level**. All 11 CRB base classes. Same row shape; Identity select lists the catalog. |
 | `races.json` | Race **id + name**. Batch 8: Human. Ability adjustments stay typed into scores. |
 | `items.json` | Item **id, name, pounds**, plus documentary weapon/armor stats. Batch 10: golden weapons, armor, and spellbook. Combat numbers stay on `armorClass` / `attacks`. |
 
-See [`docs/pf1e-crb-pack-design.md`](../../../docs/pf1e-crb-pack-design.md) for the review process, landed batches, and **annotated upcoming batches** (next is remaining 9 CRB classes).
+See [`docs/pf1e-crb-pack-design.md`](../../../docs/pf1e-crb-pack-design.md) for the review process, landed batches, and **annotated upcoming batches** (next is feat catalog ids).
 
 **License:** app is MIT. This folder contains numeric game-mechanic metadata (formulas live in the engine). No Product Identity, no class flavor, no spell text. Do not scrape third-party SRDs into this tree.

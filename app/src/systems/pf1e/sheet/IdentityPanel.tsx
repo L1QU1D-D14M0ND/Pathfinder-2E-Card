@@ -234,8 +234,8 @@ export function IdentityPanel({
           {character.classes.length === 0 ? (
             <tr>
               <td colSpan={10} className="muted">
-                No class rows. Add one, then pick Fighter or Wizard from the
-                CRB list (fills HD / BAB / saves / class skills).
+                No class rows. Add one, then pick a CRB class (fills HD / BAB /
+                saves / class skills).
               </td>
             </tr>
           ) : (
