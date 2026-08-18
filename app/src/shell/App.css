@@ -274,11 +274,16 @@ button.hp-max-button.overridden {
   min-width: 7.5rem;
 }
 
-.class-cell {
+.class-cell,
+.race-cell {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   min-width: 8.5rem;
+}
+
+.race-cell .muted {
+  margin: 0;
 }
 
 .nested-stats {

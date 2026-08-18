@@ -169,9 +169,9 @@ Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–6 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out). Load penalties are not auto-written.
+Batch 1–6 and 8 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); Human race catalog (ability +2 stays typed). Load penalties are not auto-written.
 
-**Next (batch 8):** Human race catalog id. Then class skills (9) and weapons/armor ids (10). Batch 7 (spell DC / bonus slots) is already in the engine. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+**Next (batch 9):** Fighter/Wizard class skills + skill points per level. Then weapons/armor ids (10). Batch 7 (spell DC / bonus slots) is already in the engine. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
 
 Remaining CRB classes, feats, and spell metadata wait until the three goldens can be rebuilt from ids.
 
@@ -205,3 +205,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Batch 4 skill review landed. Next pack work is size tables (batch 5). |
 | 2026-08-18 | Batch 5 size review landed. Next pack work is encumbrance (batch 6). |
 | 2026-08-18 | Batch 6 encumbrance review landed (Ignore weight opt-out). Next pack work is Human catalog (batch 8). |
+| 2026-08-18 | Batch 8 Human catalog landed. Next pack work is class skills (batch 9). |

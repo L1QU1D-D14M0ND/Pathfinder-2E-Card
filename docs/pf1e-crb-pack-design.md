@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–6 landed. **Next code: batch 8** — Human race catalog id.  
+**Status:** In progress (2026-08-18). Batches 1–6 and 8 landed. **Next code: batch 9** — Fighter/Wizard class skills + skill points.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -42,8 +42,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | Done |
 | **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | Done |
 | **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
-| **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | **Next** |
-| **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | After 4 |
+| **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | Done |
+| **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | **Next** |
 | **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | After 3; recommended after 3–6 |
 | … | Feats, spells metadata, remaining 9 CRB classes | After the three goldens can be rebuilt from ids | Catalog | After 8–10 |
 
@@ -58,6 +58,7 @@ content/pf1e/crb/
   README.md          # license / what is in this folder
   pack.json          # manifest + which batches have landed
   classes.json       # progression metadata only (batch 1: fighter, wizard)
+  races.json         # race id + name (batch 8: human)
 ```
 
 A class catalog row in this phase is **not** a class description. It is:
@@ -116,7 +117,7 @@ Temporary bonuses that **increase the score** (belt of giant strength, *bull’s
 | --- | --- |
 | `tempModifier` is a modifier addend, not a score increase | A +4 belt should be entered as score 18→22 (modifier +6), not temp +4 (which would yield modifier +8 on a 18). Documented on the Abilities tab. A later “ability score bonus” field could exist; do not silently treat temp as a score bump. |
 | No point-buy / 4d6 helper | User types the final score. Out of 0.9 core calc. |
-| No racial ability adjustments as catalog | Human +2 any is entered in the score. Race pack is batch 8. |
+| No racial ability adjustments as catalog | Human +2 any is entered in the score. Batch 8 stamps `race.human` id/name only. |
 | Score 0 / negative | Formula still applies (`0` → −5). CON 0 as “dead” is play-state later, not this formula. |
 | Ability damage / drain | CRB lowers the score. User lowers `score`. No separate track in 0.9. |
 
@@ -174,16 +175,19 @@ Example (golden): Fighter 2 (full BAB +2, Fort good +3, Ref poor +0, Will poor +
 
 ---
 
-## 5. Resolver (batch 1)
+## 5. Resolver (batch 1; race in batch 8)
 
 ```ts
 lookupCrbClass(id) → CrbClassProgression | null
 applyCrbClassProgression(classRow, id) → ClassEntry
+lookupCrbRace(id) → CrbRace | null
+applyCrbRace(identity, id) → Identity
 ```
 
-- Known id → fill `class` ref, `hitDie`, `babProgression`, `saves`. Leave `levels` and favored-class totals alone.
-- Unknown or empty id → `null` / custom (`class.id` cleared). Do not throw.
-- Load of an existing sheet **does not** re-apply the catalog (the saved row is authoritative). Apply is a UI action when the player picks a class.
+- Known class id → fill `class` ref, `hitDie`, `babProgression`, `saves`. Leave `levels` and favored-class totals alone.
+- Known race id → fill `race` id, name, and source. Do **not** rewrite size or ability scores.
+- Unknown or empty id → `null` / custom (`class.id` or `race.id` cleared). Do not throw.
+- Load of an existing sheet **does not** re-apply the catalog (the saved row is authoritative). Apply is a UI action when the player picks a class or race.
 
 ---
 
@@ -350,7 +354,7 @@ CMB and CMD use a **special size modifier** with the **opposite sign** of that A
 
 **Verdict:** The published Fine–Colossal row matches the engine. Empty-sheet Small is AC 11 / attack +1 / CMB −1 / CMD 9; Large is the inverse on those combat numbers.
 
-**Gaps:** Racial size from a race catalog waits for batch 8 (Human is Medium). Stealth/Fly size skill modifiers stay player-typed (PF1e design §14). Quadruped / powerful-build carry is batch 6 out-of-scope.
+**Gaps:** Size stays on `identity.size` (Human goldens are Medium; batch 8 does not stamp size). Stealth/Fly size skill modifiers stay player-typed (PF1e design §14). Quadruped / powerful-build carry is batch 6 out-of-scope.
 
 **Pack slice:** none (engine-owned).
 
@@ -418,6 +422,44 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 8 — two mechanics
+
+### 4.13 Human catalog id
+
+**CRB (player-facing):** Race is chosen at character creation. The three goldens are **Human**.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `content/pf1e/crb/races.json` | One row: `race.human` / Human / source CRB |
+| Lookup | `lookupCrbRace` | Unknown or empty id → `null` (custom). Never throws |
+| Apply | `applyCrbRace` | Stamps `identity.race` id, name, and source. Does **not** rewrite size or languages |
+| UI | Identity Race select | Human or Custom, plus a typed name |
+| Goldens | All three PF1e goldens | Already stored `race.human`; Load does not re-apply the catalog |
+
+**Verdict:** The golden id resolves. Custom races stay a free name with `id` cleared.
+
+**Gaps:** Other CRB races; extra feat / extra skill rank / bonus language as catalog traits.
+
+**Pack slice:** Human only.
+
+**Tests:** Catalog lists Human; unknown id is null; goldens resolve `race.human`.
+
+### 4.14 Ability adjustments stay on the score
+
+**CRB (player-facing):** A Human gets **+2 to one ability score** of the player’s choice.
+
+**App today / this batch:** That +2 is **already in the typed score** on the goldens (Fighter STR 18, Wizard INT 18). `applyCrbRace` does not add +2 to any ability. Identity shows a muted note.
+
+**Gaps:** Auto-stamping +2 (which ability?) waits; bonus feat and extra skill rank wait with feat/skill catalog work.
+
+**Pack slice:** none beyond the Human row.
+
+**Tests:** Applying `race.human` leaves size and ability scores unchanged; unknown apply clears id and keeps the typed name.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
@@ -426,23 +468,22 @@ These are **annotations**, not landed reviews. Each future PR still follows §1 
 
 Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review when spell metadata lands.
 
-### Batch 8 — Race (Human) (**next**)
+### Batch 9 — Class skills + skill points (Fighter, Wizard) (**next**)
 
-**Pairing:** Catalog id for the golden race. Human +2 any ability stays typed into the score (not auto-applied from the pack).
+**Pairing:** Which skills are class skills for Fighter vs Wizard, and how many skill ranks per level those classes grant. Batch 4 already computes totals from checkboxes and typed ranks.
 
-**Already in the app:** Goldens store `race.human` as a ContentRef name; Identity has a race field. No `content/pf1e/crb/races.json` yet.
+**Already in the app:** Skills tab checkboxes; goldens have class-skill flags typed by hand. Pack has no class-skill lists yet.
 
-**In this batch:** Add a Human catalog row (id + name). Lookup unknown race id → custom, same resolver as classes.
+**In this batch:** Catalog flags + skill points per level for Fighter and Wizard. Identity or Skills can stamp the checkboxes when the player picks the class (same apply pattern as HD/BAB). Do not auto-spend favored skill ranks.
 
-**Out:** Full racial trait text; other races; automatic ability-score stamps.
+**Out:** The other 9 CRB classes; Craft/Perform/Profession lists; auto-spend of the skill-point pool.
 
-**Pack slice:** `races.json` (or equivalent) with Human only.
+**Pack slice:** class-skill lists and `skillPointsPerLevel` on the existing Fighter/Wizard class rows.
 
-### Batches 9–10 — catalog (after Human)
+### Batch 10 — Weapons / armor on the three goldens
 
 | Batch | Add | Do not add |
 | --- | --- | --- |
-| **9** Class skills + skill points | Fighter/Wizard class-skill flags and skill points per level; Identity or Skills can stamp checkboxes | All 11 CRB classes; auto-spend favored skill ranks |
 | **10** Weapons / armor | Ids for the three goldens (longsword, chainmail, …); still documentary — AC and attack numbers stay on sheet fields | Auto-fill AC from equipped items; priced treasure; magic weapons |
 
 **After 8–10:** remaining 9 CRB classes, feats, spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
@@ -463,3 +504,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 4: skill totals + max ranks; next is size tables |
 | 2026-08-18 | Batch 5: size AC/attack/CMB/CMD + carry multiplier; next is encumbrance |
 | 2026-08-18 | Batch 6: Strength heavy-load + load category; Ignore weight opt-out; next is Human catalog |
+| 2026-08-18 | Batch 8: Human race catalog id; +2 stays typed; next is class skills |

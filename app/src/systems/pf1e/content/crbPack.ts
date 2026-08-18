@@ -3,8 +3,10 @@ import type {
   ClassEntry,
   ClassSaves,
   ContentRef,
+  Identity,
 } from '../character/types'
 import classesJson from '../../../../../content/pf1e/crb/classes.json'
+import racesJson from '../../../../../content/pf1e/crb/races.json'
 
 export interface CrbClassProgression {
   id: string
@@ -56,5 +58,46 @@ export function applyCrbClassProgression(
     hitDie: found.hitDie,
     babProgression: found.babProgression,
     saves: { ...found.saves },
+  }
+}
+
+export interface CrbRace {
+  id: string
+  name: string
+  source?: ContentRef['source']
+}
+
+export const CRB_RACES: CrbRace[] = racesJson.map((row) => ({
+  id: row.id,
+  name: row.name,
+  source: row.source,
+}))
+
+/** Unknown or empty id → null. Never throws. */
+export function lookupCrbRace(id: string | null | undefined): CrbRace | null {
+  if (!id) return null
+  return CRB_RACES.find((entry) => entry.id === id) ?? null
+}
+
+/**
+ * Stamp race id + name from the CRB catalog.
+ * Does not rewrite size, languages, or ability scores.
+ * Unknown id clears `race.id` and leaves the typed name.
+ */
+export function applyCrbRace(identity: Identity, id: string | null): Identity {
+  const found = lookupCrbRace(id)
+  if (!found) {
+    return {
+      ...identity,
+      race: { ...identity.race, id: null },
+    }
+  }
+  return {
+    ...identity,
+    race: {
+      id: found.id,
+      name: found.name,
+      source: found.source,
+    },
   }
 }

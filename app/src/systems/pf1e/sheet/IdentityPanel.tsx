@@ -3,7 +3,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { Alignment, Size } from '../character/types'
-import { applyCrbClassProgression, CRB_CLASSES } from '../content'
+import { applyCrbClassProgression, applyCrbRace, CRB_CLASSES, CRB_RACES } from '../content'
 import { characterLevel } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { DerivedView } from '../engine'
@@ -71,8 +71,27 @@ export function IdentityPanel({
           </tr>
           <tr>
             <th>Race</th>
-            <td>
+            <td className="race-cell">
+              <select
+                aria-label="CRB race"
+                value={character.identity.race.id ?? ''}
+                onChange={(e) => {
+                  const id = e.target.value || null
+                  update((c) => ({
+                    ...c,
+                    identity: applyCrbRace(c.identity, id),
+                  }))
+                }}
+              >
+                <option value="">Custom</option>
+                {CRB_RACES.map((entry) => (
+                  <option key={entry.id} value={entry.id}>
+                    {entry.name}
+                  </option>
+                ))}
+              </select>
               <input
+                aria-label="Race name"
                 value={character.identity.race.name}
                 onChange={(e) =>
                   update((c) => ({
@@ -84,6 +103,10 @@ export function IdentityPanel({
                   }))
                 }
               />
+              <p className="muted">
+                Human +2 any ability is typed into the score, not stamped from
+                the catalog.
+              </p>
             </td>
           </tr>
           <tr>
