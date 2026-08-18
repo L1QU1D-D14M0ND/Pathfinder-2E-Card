@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–2 landed. Combat/Skills UI honesty from the audit is on local `main`. **Next code: batch 3** — AC / touch / FF + CMB / CMD **formula table tests** (not a rewrite).  
+**Status:** In progress (2026-08-18). Batches 1–3 landed. **Next code: batch 4** — skills (ranks, class +3, ACP). Rank-cap warning and untrained blanks already landed.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -37,8 +37,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | --- | --- | --- | --- | --- |
 | **1** | Ability scores → modifiers; BAB + save progressions (and how they stack) | Scores feed every later total; BAB/saves are the class-table core | Engine + Fighter/Wizard tags | Done |
 | **2** | Hit points (HD + Con + favored); iterative attacks from BAB | HD uses class hit die from batch 1; iteratives are a use of BAB | Engine + HP dialog / slash line | Done |
-| **3** | AC / touch / flat-footed; CMB / CMD | Same Combat block; Dex, size, dodge, and deflection are shared | Engine review (no new catalog) | **Next** |
-| **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | After 3 |
+| **3** | AC / touch / flat-footed; CMB / CMD | Same Combat block; Dex, size, dodge, and deflection are shared | Engine review (no new catalog) | Done |
+| **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | **Next** |
 | **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | After 3 |
 | **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | After 5 |
 | **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
@@ -233,44 +233,69 @@ applyCrbClassProgression(classRow, id) → ClassEntry
 
 ---
 
+## Batch 3 — two mechanics
+
+### 4.5 Armor class, touch, and flat-footed
+
+**CRB (player-facing):** Armor Class starts at **10**. Add armor bonus, shield bonus, Dexterity modifier (not more than the armor’s **maximum Dex bonus**), size modifier, natural armor, deflection, dodge, and any other AC bonuses the player is tracking. A Dexterity **penalty** is not limited by max Dex.
+
+**Touch** AC is the total without armor, shield, or natural armor (those require hitting the armor, not the creature). Dex, size, deflection, dodge, and similar still apply.
+
+**Flat-footed** AC loses the Dexterity **bonus** and **dodge**. Dexterity **penalties** still apply. Uncanny Dodge and similar exceptions are not this batch.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Input | `armorClass.*` | Armor, shield, natural, deflection, dodge, other, `maxDex` (blank = none), ACP |
+| Engine | `cappedDexBonus`, `flatFootedDex`, `armorClassValues` in `engine/ac.ts` | `other` is on all three totals; dodge is not on flat-footed |
+| UI | Combat AC inputs + AC / touch / FF derived cell | Override flag lights if any of the three paths is overridden; muted note that Other applies to all three |
+| Goldens | Fighter 5 **18 / 12 / 16**; Wizard 5 **12 / 12 / 10**; F2/W3 **15 / 11 / 14** | Unchanged |
+
+**Verdict:** The three formulas match CRB for Medium goldens and the Dex-cap / Dex-penalty cases below. Armor/shield/natural/deflection stacking is **user-responsible** (no typed-bonus stacker — risk P2).
+
+**Gaps:**
+
+| Gap | Why it waits |
+| --- | --- |
+| Item-granted AC from equipped inventory | Batch 10 documentary ids; numbers stay on `armorClass` |
+| Armor Training raising chainmail max Dex | Fighter 5 golden notes it is not auto-applied (`maxDex` 2 with Dex +2) |
+| Uncanny Dodge keeping Dex when flat-footed | Feat automation later |
+| Size table beyond a Small spot check | Batch 5 |
+
+**Pack slice:** none (engine-owned).
+
+**Tests:** Fighter 5 chainmail snapshot; touch omits armor/shield/natural; other on all three; dodge not on FF; Dex penalty on FF; maxDex caps AC/touch.
+
+### 4.6 CMB and CMD
+
+**CRB (player-facing):** **CMB** is BAB + Strength modifier + the **special size modifier** (opposite sign of the AC/attack size modifier) + miscellaneous. **CMD** is 10 + BAB + Strength + Dexterity + special size + dodge + deflection + miscellaneous. Armor, shield, and natural armor do **not** add to CMD. Armor **max Dex does not cap** the Dexterity used for CMD.
+
+One CMD number in 0.9. Maneuver-specific CMD and being flat-footed for CMD wait.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Engine | `compute.ts`: CMB = BAB + STR + special size + `cmbMisc`; CMD adds uncapped DEX, dodge, deflection, `cmdMisc` | `armorClass.other` is **not** added to CMD (use `cmdMisc`) |
+| UI | Combat CMB / CMD cell | No extra “CMD vs max Dex” copy (decision 8C) |
+| Goldens | Fighter 5 CMB **+9** / CMD **21**; Wizard 5 **+1** / **13**; F2/W3 **+6** / **17** | Unchanged |
+
+**Verdict:** Matches CRB for the goldens and the maxDex / dodge-deflection cases. Special size vs AC is locked with a Small spot check; full size tables are batch 5.
+
+**Gaps:** Ranged CMB (Dex); Combat Expertise; CMD vs trip/grapple separately; load penalties auto-written onto max Dex (batch 6, document only).
+
+**Pack slice:** none.
+
+**Tests:** Empty sheet 0 / 10; Fighter 5 9 / 21; maxDex does not lower CMD; dodge and deflection add to CMD not CMB; `other` stays off CMD; Small AC +1 and CMB −1.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
 
-### Batch 3 — AC / touch / FF + CMB / CMD (**next**)
-
-**Pairing:** Both are Combat-tab derived totals. They share Dex (capped by `maxDex`), size (AC/attack modifier vs special CMB size), dodge, and deflection. Reviewing them together keeps the three ACs honest against CMD.
-
-**Already in the app (do not rewrite from scratch):**
-
-| Total | Formula in `engine/ac.ts` / `compute.ts` |
-| --- | --- |
-| AC | `10 + armor + shield + cappedDex + size + natural + deflection + dodge + other` |
-| Touch | `10 + cappedDex + size + deflection + dodge + other` (no armor, shield, or natural) |
-| Flat-footed | Like AC, but Dex **bonus** and dodge drop; Dex **penalties** still apply |
-| CMB | `BAB + STR + special size + cmbMisc` |
-| CMD | `10 + BAB + STR + DEX + special size + dodge + deflection + cmdMisc` |
-
-Special size for CMB/CMD is the negation of the AC/attack size modifier (`engine/abilities.ts`). Goldens are Medium (size 0): Fighter 5 AC 18 / touch 12 / FF 16, CMB +9, CMD 21.
-
-Armor **max Dex** caps Dex on AC and touch, **not** on CMD (CMD uses the full Dex modifier). Do not “fix” CMD to use `cappedDexBonus`.
-
-**In this batch:** CRB procedure in our own words (§4 style, written when landing); table tests beyond the three goldens (Dex cap on AC/touch, CMD still uncapped, negative Dex on FF, touch omits armor/shield/natural). Combat UI honesty for these totals already landed (1A–10B) — do not redo unless a test finds a mislabel. Document that armor/shield/natural/deflection fields are **user-responsible** (no typed-bonus stacker — risk P2).
-
-UI honesty already noticed (partially landed; remaining work is formula table tests):
-
-- AC / touch / FF derived cell flags any of the three override paths.
-- Combat shows BAB (flags `derived.bab`) and iteratives (flags `derived.babIteratives`) separately. Overriding BAB does not rewrite the slash line.
-- `armorClass.other` applies to touch and flat-footed (dodge does not apply to FF). Combat tab states this. User-responsible.
-- CMD uses **uncapped** Dex; AC/touch use `maxDex`. No extra copy (decision 8C).
-
-**Out:** Item-granted AC from inventory; max Dex from an armor catalog (batch 10); size table expansion (batch 5 — already applied, Medium-only in goldens); Combat Expertise / fighting defensively; shield bash; CMD vs specific maneuvers.
-
-**Pack slice:** none (engine-owned).
-
-**Tests:** Golden AC trio + CMB/CMD stay; add Dex-cap and FF-penalty cases. Do **not** start batch 4 in the same PR.
-
-### Batch 4 — Skills (ranks, class +3, ACP) + max ranks
+### Batch 4 — Skills (ranks, class +3, ACP) + max ranks (**next**)
 
 **Pairing:** The skill total and the rank cap are the two player-facing skill rules on the sheet. Class-skill *lists* and skill points per level are catalog (batch 9).
 
@@ -282,7 +307,7 @@ UI honesty already noticed (partially landed; remaining work is formula table te
 
 **Pack slice:** none.
 
-**Depends on:** batch 3 only in the sense of “Combat ACP field already exists.” May follow 3 immediately.
+**Depends on:** Combat ACP field already exists. Rank-cap warning and untrained blanks already landed; this batch is the formula review.
 
 ### Batch 5 — Size (AC/attack vs CMB/CMD vs carry)
 
@@ -338,3 +363,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-17 | Batch 3 UI-honesty notes; typo Encumberance → Encumbrance |
 | 2026-08-17 | Skill warn/blank and Combat honesty landed early; batch 3 formula table tests still next |
 | 2026-08-18 | Audit merged on local `main`; batch 3 remains the next code change |
+| 2026-08-18 | Batch 3: AC/touch/FF + CMB/CMD table tests; next is skills |

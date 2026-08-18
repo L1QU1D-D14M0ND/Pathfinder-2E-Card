@@ -1,5 +1,6 @@
 export { compute, computeCharacter } from './compute'
 export { abilityModifierFromScore, abilityModifiers, effectiveAbilityScore } from './abilities'
+export { armorClassValues, cappedDexBonus, flatFootedDex } from './ac'
 export { isOverridden } from './overrides'
 export { signed } from './types'
 export type { DerivedView, AttackDerived, SpellcastingDerived } from './types'

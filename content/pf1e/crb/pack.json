@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-2",
+  "status": "batch-3",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -15,6 +15,11 @@
       "id": 2,
       "mechanics": ["hit-points", "iterative-attacks"],
       "notes": "HP dialog records physical HD rolls. Iteratives are engine-owned BAB math."
+    },
+    {
+      "id": 3,
+      "mechanics": ["armor-class", "cmb-cmd"],
+      "notes": "AC/touch/FF and CMB/CMD are engine-owned. No catalog. CMD uses uncapped Dex."
     }
   ]
 }
