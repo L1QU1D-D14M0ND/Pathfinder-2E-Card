@@ -22,15 +22,32 @@ npm run build
 
 - Spreadsheet-style UI per system (PF1e: classes/abilities/skills/combat; PF2e: existing editors)
 - New / Load / Save sheet (`.json`). New sheet asks PF1e vs PF2e. Load dispatches on `system`
+- One IndexedDB draft (refresh restore). Not a character library
 - `system: "pf2e"` written on PF2e Save; files without `system` still load as PF2e
 - `system: "pf1e"` required on PF1e documents
 - Auto-seeded standard skills per system
 - PF1e martial + spell calc (Fighter 5, Wizard 5, and Fighter 2 / Wizard 3 goldens) and PF2e core calc
-- CRB pack batches 1–2 landed. Next review: AC / touch / FF + CMB / CMD (two mechanics). Queue: [`../docs/pf1e-crb-pack-design.md`](../docs/pf1e-crb-pack-design.md)
+- CRB pack batches 1–13 landed (including Batch 7). Next product work is 1.0 (Spanish + Synthesist), not more CRB encyclopedia rows. Queue: [`../docs/pf1e-crb-pack-design.md`](../docs/pf1e-crb-pack-design.md)
 - Save export strips `derived`
 - Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the sheet is ~90% done)
-- PWA manifest + service worker configured via `vite-plugin-pwa` (not separately runtime-tested)
-- UI strings are hardcoded English; message catalogs are not started
+- PWA: `npm run build` emits a Workbox service worker + standalone manifest (CI `verify:pwa`). Install/offline checklist below
+- UI chrome uses `en.json` + `t()`; PF2e panel literals remain
+
+## PWA proof (0.9)
+
+CI runs `npm run build` then `npm run verify:pwa` (standalone manifest, 192/512 PNG icons, Workbox SW that precaches `index.html`).
+
+Manual once on a preview URL:
+
+```bash
+cd app
+npm run build && npm run verify:pwa && npm run preview
+```
+
+1. Open the preview origin (localhost is treated as secure).
+2. Install (browser install / “Add to Home Screen”).
+3. Go offline and reload — the app shell should still load.
+4. Save/Load `.json` still works; the IndexedDB draft is one sheet, not a library.
 
 Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr/0003-multi-system-product-direction.md). PF1e schema: [`../docs/adr/0006-pf1e-character-schema.md`](../docs/adr/0006-pf1e-character-schema.md).
 

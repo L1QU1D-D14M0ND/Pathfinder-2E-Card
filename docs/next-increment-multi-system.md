@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **draft buffer + PWA proof**. Batches 1–13 (including Batch 7) are in the repo. **1.0** (not next code): Spanish plus a playable APG Synthesist Summoner. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **1.0** (Spanish plus a playable APG Synthesist Summoner), after an **OGL / Product Identity review** before any rules text. Batches 1–13 and the IndexedDB draft / PWA proof are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batches 1–13 landed (including Batch 7). Next code: PWA proof. 1.0: APG Synthesist |
+| Content | `content/pf1e/crb/` batches 1–13 landed (including Batch 7). Draft + PWA proof landed. Next: OGL then 1.0 Synthesist |
 
 ---
 
@@ -128,7 +128,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). **Next: draft buffer + PWA proof.** **1.0** pulls APG Synthesist Summoner (separate pack). Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. **Next: OGL review, then 1.0 Synthesist.** Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -216,6 +216,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] **Batch 12:** feat catalog ids
 - [x] **Batch 13:** spell catalog ids
 - [x] **Batch 7:** spell DC / bonus slots (table tests; slots stay typed)
+- [x] IndexedDB one-key draft + PWA build verify
 - [ ] OGL review before rules **text**
 
 ### PF1e 0.9 bar
@@ -225,7 +226,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Multiclass golden
 - [ ] Editors for those domains (no familiar nested sheet)
 - [x] `en` catalog for shell chrome + PF1e Combat/Abilities/Skills/tabs (PF2e panel literals remain)
-- [ ] PWA install + offline proven once
+- [x] PWA install + offline proven once
 - [ ] PF2e Fighter 5 / Wizard 5 still pass
 - [ ] Sidebar host may be empty; named tools not required
 
@@ -253,13 +254,13 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
 
-**Still sequenced (next code is PWA proof):**
+**Still sequenced (next is OGL review, then 1.0):**
 
 | Item | Disposition |
 | --- | --- |
-| Draft buffer + PWA install/offline proof | Next product increment |
 | OGL / Product Identity review | Before any rules **text** |
 | Playable APG Synthesist Summoner | **1.0** (separate pack; not CRB) |
+| Spanish (`es`) catalog | **1.0** |
 | `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
 | Remaining PF2e panel literals | Extract when those panels next change |
 
@@ -293,3 +294,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | Batch 12 documentary feat ids landed; 1.0 bar includes Synthesist Summoner |
 | 2026-08-18 | Batch 13 documentary spell ids landed; next is Batch 7 pack review |
 | 2026-08-18 | Batch 7 spell DC + bonus-spells table tests landed; next is PWA proof |
+| 2026-08-18 | IndexedDB draft + PWA verify landed; next is OGL then 1.0 |

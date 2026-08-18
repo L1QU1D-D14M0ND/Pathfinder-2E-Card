@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-18  
-**Current phase:** **3c mechanic batches done** (1–13, including Batch 7). **Next code: draft buffer + PWA proof.** OGL / Product Identity review before any rules text. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator. **1.0** adds Spanish **and** a playable APG Synthesist Summoner.  
+**Current phase:** **App 0.9 platform landed** (draft buffer + PWA artifacts). CRB mechanic batches 1–13 done. **Next: OGL / Product Identity review**, then **1.0** (Spanish **and** playable APG Synthesist Summoner). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
@@ -150,8 +150,8 @@ Not started (after PF1e 0.9):
 - [ ] Companion nested-sheet editor
 - [ ] Override UI (engine works; no cell editor)
 - [ ] English message catalogs (may land earlier as T4′ during M/1e)
-- [ ] IndexedDB draft buffer
-- [ ] PWA install + offline verification (needed once before calling **app** 0.9 done; not PF2e-specific)
+- [x] IndexedDB draft buffer
+- [x] PWA install + offline verification (needed once before calling **app** 0.9 done; not PF2e-specific)
 - [ ] Remaster + legacy content packs
 
 ---
@@ -233,11 +233,10 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Draft buffer + PWA proof (next code)** — app 0.9 platform.
-2. **OGL / Product Identity review** — before any copyrighted **rules text**.
-3. **1.0** — Spanish **and** playable APG Synthesist Summoner (fused eidolon). Keep CRB pack CRB-only.
-4. **Only then** leftover PF2e goldens / companion / Remaster packs.
-5. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
+1. **OGL / Product Identity review (next)** — before any copyrighted **rules text**.
+2. **1.0** — Spanish **and** playable APG Synthesist Summoner (fused eidolon). Keep CRB pack CRB-only.
+3. **Only then** leftover PF2e goldens / companion / Remaster packs.
+4. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
 Housekeeping (not a product increment): local `main` is ahead of `origin/main`. Push when ready. Do not merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
 
@@ -289,3 +288,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | Phase 3c batch 12: documentary feat ids; 1.0 bar includes playable Synthesist Summoner |
 | 2026-08-18 | Phase 3c batch 13: documentary spell ids; slots/DCs stay typed; next is Batch 7 pack review |
 | 2026-08-18 | Phase 3c batch 7: spell DC + bonus-spells table tests; next is PWA proof |
+| 2026-08-18 | IndexedDB one-key draft + PWA build verify; next is OGL review then 1.0 |

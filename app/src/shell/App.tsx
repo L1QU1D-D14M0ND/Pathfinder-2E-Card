@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { APP_DISPLAY_NAME } from '../shared/constants'
 import { t } from '../shared/i18n'
 import { CharacterSaveError, readTextFile } from '../shared/saveLoad'
@@ -10,7 +10,10 @@ import { Pf2eWorkspace } from '../systems/pf2e/sheet/Workspace'
 import type { CharacterDocument as Pf1eDocument } from '../systems/pf1e/character'
 import type { CharacterDocument as Pf2eDocument } from '../systems/pf2e/character'
 import { parseLoadedSheet, type LoadedSheet } from './loadSheet'
+import { parseDraft, serializeSheet } from './draft'
+import { clearDraft, readDraft, writeDraft } from './draftStore'
 import { NewSheetDialog } from './NewSheetDialog'
+import { RestoreDraftDialog } from './RestoreDraftDialog'
 import { SidebarHost } from './sidebar/SidebarHost'
 import './App.css'
 
@@ -113,17 +116,62 @@ export default function App() {
   const [status, setStatus] = useState(t('shell.newReady'))
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   const [newOpen, setNewOpen] = useState(false)
+  const [draftGate, setDraftGate] = useState<'boot' | 'prompt' | 'ready'>(
+    'boot',
+  )
+  const [restoreSheet, setRestoreSheet] = useState<LoadedSheet | null>(null)
+  const [autosave, setAutosave] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   const module = sheet.system === 'pf1e' ? pf1eModule : pf2eModule
+
+  function commitSheet(next: LoadedSheet, message: string) {
+    setSheet(next)
+    setStatus(message)
+    setAutosave(true)
+    setDraftGate('ready')
+  }
+
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      const restored = parseDraft(await readDraft())
+      if (cancelled) return
+      if (!restored) {
+        setDraftGate('ready')
+        return
+      }
+      setRestoreSheet(restored)
+      setDraftGate('prompt')
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (draftGate !== 'ready' || !autosave) return
+    const handle = window.setTimeout(() => {
+      try {
+        void writeDraft(serializeSheet(sheet))
+      } catch {
+        // Invalid in-memory sheet: keep the last good draft.
+      }
+    }, 400)
+    return () => window.clearTimeout(handle)
+  }, [sheet, draftGate, autosave])
 
   function onChooseNew(system: SystemId) {
     setNewOpen(false)
     if (system === 'pf1e') {
-      setSheet({ system: 'pf1e', character: pf1eModule.createEmpty() })
-      setStatus(t('shell.newCreated', { system: t('pf1e.displayName') }))
+      commitSheet(
+        { system: 'pf1e', character: pf1eModule.createEmpty() },
+        t('shell.newCreated', { system: t('pf1e.displayName') }),
+      )
     } else {
-      setSheet({ system: 'pf2e', character: pf2eModule.createEmpty() })
-      setStatus(t('shell.newCreated', { system: t('pf2e.displayName') }))
+      commitSheet(
+        { system: 'pf2e', character: pf2eModule.createEmpty() },
+        t('shell.newCreated', { system: t('pf2e.displayName') }),
+      )
     }
   }
 
@@ -133,8 +181,10 @@ export default function App() {
     if (!file) return
     try {
       const loaded = parseLoadedSheet(await readTextFile(file))
-      setSheet(loaded)
-      setStatus(t('shell.loaded', { name: file.name, system: loaded.system }))
+      commitSheet(
+        loaded,
+        t('shell.loaded', { name: file.name, system: loaded.system }),
+      )
     } catch (err) {
       setStatus(err instanceof Error ? err.message : t('shell.loadFailed'))
     }
@@ -198,13 +248,14 @@ export default function App() {
         {sheet.system === 'pf1e' ? (
           <Pf1eSession
             character={sheet.character}
-            setCharacter={(mutator) =>
+            setCharacter={(mutator) => {
+              setAutosave(true)
               setSheet((prev) =>
                 prev.system === 'pf1e'
                   ? { system: 'pf1e', character: mutator(prev.character) }
                   : prev,
               )
-            }
+            }}
             setStatus={setStatus}
             sidebarCollapsed={sidebarCollapsed}
             setSidebarCollapsed={setSidebarCollapsed}
@@ -212,13 +263,14 @@ export default function App() {
         ) : (
           <Pf2eSession
             character={sheet.character}
-            setCharacter={(mutator) =>
+            setCharacter={(mutator) => {
+              setAutosave(true)
               setSheet((prev) =>
                 prev.system === 'pf2e'
                   ? { system: 'pf2e', character: mutator(prev.character) }
                   : prev,
               )
-            }
+            }}
             setStatus={setStatus}
             sidebarCollapsed={sidebarCollapsed}
             setSidebarCollapsed={setSidebarCollapsed}
@@ -231,6 +283,20 @@ export default function App() {
         open={newOpen}
         onCancel={() => setNewOpen(false)}
         onChoose={onChooseNew}
+      />
+      <RestoreDraftDialog
+        open={draftGate === 'prompt'}
+        onRestore={() => {
+          if (!restoreSheet) return
+          commitSheet(restoreSheet, t('shell.draftRestored'))
+          setRestoreSheet(null)
+        }}
+        onDiscard={() => {
+          void clearDraft()
+          setRestoreSheet(null)
+          setDraftGate('ready')
+          setStatus(t('shell.draftDiscarded'))
+        }}
       />
     </div>
   )

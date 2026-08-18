@@ -9,6 +9,11 @@ describe('t()', () => {
     )
   })
 
+  it('resolves draft-restore chrome keys', () => {
+    expect(t('shell.draftRestore')).toBe('Restore draft')
+    expect(t('shell.draftDiscard')).toBe('Discard draft')
+  })
+
   it('returns the key when missing', () => {
     expect(t('does.not.exist')).toBe('does.not.exist')
   })

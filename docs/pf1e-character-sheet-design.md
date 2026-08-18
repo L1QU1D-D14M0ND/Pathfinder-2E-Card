@@ -172,7 +172,7 @@ Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Re
 
 Batch 1–13 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed). Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
 
-**Next:** Draft buffer + PWA proof. OGL review before rules text.
+**Next:** OGL review before rules text, then 1.0 (Spanish + Synthesist).
 
 **1.0 (not this CRB pack):** Playable APG Synthesist Summoner. Do not add `class.summoner` to `content/pf1e/crb/`.
 
@@ -211,3 +211,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Batch 12 documentary feat ids landed. 1.0 bar includes playable Synthesist Summoner. |
 | 2026-08-18 | Batch 13 documentary spell ids landed. Next pack work is Batch 7 pack review. |
 | 2026-08-18 | Batch 7 spell DC + bonus-spells table tests landed. Next is PWA proof. |
+| 2026-08-18 | App draft buffer + PWA proof landed. Next is OGL then 1.0. |

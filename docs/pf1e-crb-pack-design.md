@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–13 landed (Batch 7 pack review last). **Next product work: draft buffer + PWA proof.** OGL / Product Identity review before any rules text. APG Synthesist Summoner is a **1.0** bar, not this pack.  
+**Status:** Mechanic batches 1–13 landed (Batch 7 last). Draft buffer + PWA proof are app platform, not this pack. **Next: OGL / Product Identity review** before any rules text. APG Synthesist Summoner is a **1.0** bar, not this pack.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -739,9 +739,7 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** draft buffer + PWA install/offline proof (app 0.9).
-
-**Still later / not this pack:** Remaining CRB spell list; OGL / Product Identity review before any **rules text**. **1.0** adds a playable APG Synthesist Summoner (separate pack; do not add Summoner to this CRB folder). Sidebar tools still wait until the sheet is ~90% done.
+**Next product work:** OGL / Product Identity review before any **rules text**, then **1.0** (Spanish + playable APG Synthesist). Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -766,3 +764,4 @@ The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the ne
 | 2026-08-18 | Batch 12: documentary feat ids; Combat math stays typed; next is spell metadata. 1.0 bar includes Synthesist Summoner (APG, not this pack) |
 | 2026-08-18 | Batch 13: documentary spell ids; slots/DCs/prepared stay typed; next is Batch 7 pack review |
 | 2026-08-18 | Batch 7: spell DC + bonus-spells table; slots stay typed; next is PWA proof |
+| 2026-08-18 | App draft + PWA proof landed; this pack’s next gate is OGL before rules text |

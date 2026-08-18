@@ -2,7 +2,7 @@
 
 **TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
-**Current phase:** Phase 3c batches 1–2 landed. **Next: batch 3** (AC / touch / FF + CMB / CMD), then skills, size, encumbrance — two mechanics per PR. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0006](docs/adr/0006-pf1e-character-schema.md), and [CRB pack / annotated batch queue](docs/pf1e-crb-pack-design.md).
+**Current phase:** Phase 3c mechanic batches 1–13 done. **Next: 1.0** (Spanish + playable APG Synthesist Summoner). OGL review before any rules text. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [ADR 0006](docs/adr/0006-pf1e-character-schema.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
 
 The GitHub repository name is unchanged.
 
