@@ -78,6 +78,8 @@ export interface ClassEntry {
   hitDie: number
   babProgression: BabProgression
   saves: ClassSaves
+  /** Stamped from the catalog when picking Fighter/Wizard. Optional on old saves. */
+  skillPointsPerLevel?: number
   favored?: FavoredClassBonus
   prestige?: boolean
   notes?: string

@@ -284,6 +284,21 @@ export function Pf1eWorkspace({
         {tab === 'skills' && (
           <>
             <div className="table-toolbar">
+              <div>
+                <strong>
+                  {t('pf1e.skills.ranksBudget', {
+                    spent: derived.skillRanksSpent,
+                    budget: derived.skillRanksBudget,
+                  })}
+                </strong>
+                {derived.skillRanksSpent > derived.skillRanksBudget &&
+                derived.skillRanksBudget > 0 ? (
+                  <div className="rank-warning">
+                    {t('pf1e.skills.ranksBudgetOver')}
+                  </div>
+                ) : null}
+                <p className="muted">{t('pf1e.skills.ranksBudgetHelp')}</p>
+              </div>
               <button type="button" onClick={() => addWildcardSkill('craft')}>
                 {t('pf1e.skills.addCraft')}
               </button>

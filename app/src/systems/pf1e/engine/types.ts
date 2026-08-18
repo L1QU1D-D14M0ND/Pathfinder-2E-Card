@@ -36,6 +36,8 @@ export interface DerivedView {
   mediumLoad: number
   heavyLoad: number
   loadCategory: LoadCategory
+  skillRanksSpent: number
+  skillRanksBudget: number
   attacks: Record<string, AttackDerived>
   spellcasting: Record<string, SpellcastingDerived>
   overriddenPaths: string[]

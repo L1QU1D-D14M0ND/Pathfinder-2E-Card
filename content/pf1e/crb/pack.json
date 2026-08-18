@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-8",
+  "status": "batch-9",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -40,6 +40,11 @@
       "id": 8,
       "mechanics": ["race-human", "ability-adjustments-typed"],
       "notes": "Human catalog id and name only. Ability adjustments stay typed into scores. Size is not stamped."
+    },
+    {
+      "id": 9,
+      "mechanics": ["class-skills", "skill-points-per-level"],
+      "notes": "Fighter/Wizard class-skill lists and 2 skill points per level. Checkboxes stamp on class pick. Ranks are not auto-spent. Human +1/level is in the pool when race.human."
     }
   ]
 }

@@ -3,7 +3,7 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { Alignment, Size } from '../character/types'
-import { applyCrbClassProgression, applyCrbRace, CRB_CLASSES, CRB_RACES } from '../content'
+import { applyCrbClassProgression, applyCrbRace, CRB_CLASSES, CRB_RACES, stampClassSkills } from '../content'
 import { characterLevel } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { DerivedView } from '../engine'
@@ -235,7 +235,7 @@ export function IdentityPanel({
             <tr>
               <td colSpan={10} className="muted">
                 No class rows. Add one, then pick Fighter or Wizard from the
-                CRB list (fills HD / BAB / saves).
+                CRB list (fills HD / BAB / saves / class skills).
               </td>
             </tr>
           ) : (
@@ -253,7 +253,11 @@ export function IdentityPanel({
                           classes[index],
                           id,
                         )
-                        return { ...c, classes }
+                        return {
+                          ...c,
+                          classes,
+                          skills: stampClassSkills(c.skills, classes),
+                        }
                       })
                     }}
                   >
@@ -411,10 +415,16 @@ export function IdentityPanel({
                   <button
                     type="button"
                     onClick={() =>
-                      update((c) => ({
-                        ...c,
-                        classes: c.classes.filter((item) => item.id !== row.id),
-                      }))
+                      update((c) => {
+                        const classes = c.classes.filter(
+                          (item) => item.id !== row.id,
+                        )
+                        return {
+                          ...c,
+                          classes,
+                          skills: stampClassSkills(c.skills, classes),
+                        }
+                      })
                     }
                   >
                     Remove

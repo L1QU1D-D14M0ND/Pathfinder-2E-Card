@@ -218,6 +218,40 @@ export function skillTotal(args: {
   )
 }
 
+/** Ranks granted by one class row: levels × max(1, class table + Int). */
+export function skillRanksFromClassLevel(
+  levels: number,
+  skillPointsPerLevel: number,
+  intMod: number,
+): number {
+  return levels * Math.max(1, skillPointsPerLevel + intMod)
+}
+
+export function skillRanksSpent(skills: Array<{ ranks: number }>): number {
+  return skills.reduce((sum, skill) => sum + skill.ranks, 0)
+}
+
+export function skillRanksBudget(args: {
+  classes: Array<{
+    levels: number
+    skillPointsPerLevel: number
+    favoredSkillRanks: number
+  }>
+  intMod: number
+  humanBonusLevels: number
+}): number {
+  let total = args.humanBonusLevels
+  for (const row of args.classes) {
+    total += skillRanksFromClassLevel(
+      row.levels,
+      row.skillPointsPerLevel,
+      args.intMod,
+    )
+    total += row.favoredSkillRanks
+  }
+  return total
+}
+
 export function defaultAttackAbility(
   attackType: 'melee' | 'ranged',
 ): AbilityKey {

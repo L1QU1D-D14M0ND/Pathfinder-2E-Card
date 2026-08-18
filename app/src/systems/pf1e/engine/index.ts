@@ -26,4 +26,7 @@ export {
   skillTotal,
   skillUsableUntrained,
   classSkillBonus,
+  skillRanksBudget,
+  skillRanksFromClassLevel,
+  skillRanksSpent,
 } from './vitals'

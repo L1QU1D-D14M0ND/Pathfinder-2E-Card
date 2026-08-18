@@ -1,4 +1,5 @@
 import type { CharacterDocument } from '../character/types'
+import { skillPointsPerLevelFor } from '../content'
 import { abilityModifiers, effectiveAbilityScore, sizeAcAttackModifier, sizeCmbModifier } from './abilities'
 import { armorClassValues } from './ac'
 import { effectiveLoadCategory, loadThresholds, weightUsed } from './encumbrance'
@@ -15,6 +16,8 @@ import {
   deadAtThreshold,
   defaultAttackAbility,
   maxHp,
+  skillRanksBudget,
+  skillRanksSpent,
   skillTotal,
   skillUsableUntrained,
 } from './vitals'
@@ -119,6 +122,17 @@ export function compute(character: ComputeInput): DerivedView {
       thresholds,
       character.inventory.ignoreWeight === true,
     ),
+    skillRanksSpent: skillRanksSpent(character.skills),
+    skillRanksBudget: skillRanksBudget({
+      classes: character.classes.map((row) => ({
+        levels: row.levels,
+        skillPointsPerLevel: skillPointsPerLevelFor(row),
+        favoredSkillRanks: row.favored?.skillRanks ?? 0,
+      })),
+      intMod: mods.int,
+      humanBonusLevels:
+        character.identity.race.id === 'race.human' ? level : 0,
+    }),
     attacks,
     spellcasting: spellcastingDerived(
       character.spellcasting,

@@ -5,6 +5,17 @@
     "hitDie": 10,
     "babProgression": "full",
     "saves": { "fort": "good", "ref": "poor", "will": "poor" },
+    "skillPointsPerLevel": 2,
+    "classSkills": [
+      "climb",
+      "handle-animal",
+      "intimidate",
+      "knowledge-dungeoneering",
+      "knowledge-engineering",
+      "ride",
+      "survival",
+      "swim"
+    ],
     "source": { "book": "CRB" }
   },
   {
@@ -13,6 +24,23 @@
     "hitDie": 6,
     "babProgression": "half",
     "saves": { "fort": "poor", "ref": "poor", "will": "good" },
+    "skillPointsPerLevel": 2,
+    "classSkills": [
+      "appraise",
+      "fly",
+      "linguistics",
+      "spellcraft",
+      "knowledge-arcana",
+      "knowledge-dungeoneering",
+      "knowledge-engineering",
+      "knowledge-geography",
+      "knowledge-history",
+      "knowledge-local",
+      "knowledge-nature",
+      "knowledge-nobility",
+      "knowledge-planes",
+      "knowledge-religion"
+    ],
     "source": { "book": "CRB" }
   }
 ]

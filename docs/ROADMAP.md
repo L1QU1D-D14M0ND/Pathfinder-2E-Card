@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-18  
-**Current phase:** **3c in progress** (batches 1–6 and 8 landed). **Next code: batch 9** — Fighter/Wizard class skills + skill points. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **3c in progress** (batches 1–6, 8, and 9 landed). **Next code: batch 10** — weapons/armor ids on the three goldens. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
@@ -94,7 +94,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** In progress (batches 1–6 and 8 landed; next is batch 9)
+**Status:** In progress (batches 1–6, 8, and 9 landed; next is batch 10)
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
@@ -105,13 +105,13 @@ Working display name in chrome is **TTRPG Character Sheet**.
 - [x] **Batch 5:** size tables (AC/attack vs CMB/CMD vs carry) — goldens stay Medium
 - [x] **Batch 6:** encumbrance (Strength heavy-load table; light / medium / heavy) — Ignore weight opt-out; penalties not auto-written
 - [x] **Batch 8:** Human race catalog id — +2 stays typed into scores
-- [ ] **Batch 9 (next):** Fighter/Wizard class skills + skill points
-- [ ] Batch 10: weapons/armor ids on the three goldens
+- [x] **Batch 9:** Fighter/Wizard class skills + skill points — stamp checkboxes; ranks not auto-spent
+- [ ] **Batch 10 (next):** weapons/armor ids on the three goldens
 - [ ] Remaining CRB character mechanics after that (see pack design queue)
 - [ ] Catalog enough ids to rebuild the three goldens (race, skills, weapons/armor, remaining classes)
 - [ ] OGL / Product Identity review before shipping copyrighted **text**
 
-Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves when the player picks Fighter or Wizard, and race id/name when they pick Human).
+Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks Fighter or Wizard, and race id/name when they pick Human).
 
 ---
 
@@ -230,8 +230,8 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Phase 3c batch 9 (next code)** — Fighter/Wizard class-skill flags and skill points per level. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
-2. **Catalog 10** — weapon/armor ids on the three goldens. Batch 7 (spell DC / bonus slots) is already in the engine; pack-review later.
+1. **Phase 3c batch 10 (next code)** — Documentary weapon/armor ids on the three goldens. Combat numbers stay on `armorClass` / `attacks`. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+2. **Batch 7 pack review** — Spell DC / bonus slots already in the engine; pack-review later.
 3. **Draft buffer + PWA proof** — app 0.9 platform.
 4. **Spanish** — 1.0.
 5. **Only then** leftover PF2e goldens / companion / Remaster packs.
@@ -281,3 +281,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | Phase 3c batch 5: size AC/attack/CMB/CMD + carry multiplier; next is encumbrance |
 | 2026-08-18 | Phase 3c batch 6: Strength heavy-load + load category; Ignore weight; next is Human catalog |
 | 2026-08-18 | Phase 3c batch 8: Human race catalog; next is class skills |
+| 2026-08-18 | Phase 3c batch 9: class skills + skill-point pool; next is weapons/armor ids |

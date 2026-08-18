@@ -4,7 +4,9 @@ import type {
   ClassSaves,
   ContentRef,
   Identity,
+  SkillEntry,
 } from '../character/types'
+import { STANDARD_SKILLS } from '../character/standardSkills'
 import classesJson from '../../../../../content/pf1e/crb/classes.json'
 import racesJson from '../../../../../content/pf1e/crb/races.json'
 
@@ -14,6 +16,8 @@ export interface CrbClassProgression {
   hitDie: number
   babProgression: BabProgression
   saves: ClassSaves
+  skillPointsPerLevel: number
+  classSkills: string[]
   source?: ContentRef['source']
 }
 
@@ -23,6 +27,8 @@ export const CRB_CLASSES: CrbClassProgression[] = classesJson.map((row) => ({
   hitDie: row.hitDie,
   babProgression: row.babProgression as BabProgression,
   saves: row.saves as ClassSaves,
+  skillPointsPerLevel: row.skillPointsPerLevel,
+  classSkills: [...row.classSkills],
   source: row.source,
 }))
 
@@ -58,7 +64,37 @@ export function applyCrbClassProgression(
     hitDie: found.hitDie,
     babProgression: found.babProgression,
     saves: { ...found.saves },
+    skillPointsPerLevel: found.skillPointsPerLevel,
   }
+}
+
+const STANDARD_SKILL_KEYS = new Set(STANDARD_SKILLS.map((row) => row.key))
+
+/** Union of catalog class-skill keys for the given class rows. */
+export function classSkillKeySet(classes: ClassEntry[]): Set<string> {
+  const keys = new Set<string>()
+  for (const row of classes) {
+    const found = lookupCrbClass(row.class.id)
+    if (!found) continue
+    for (const key of found.classSkills) keys.add(key)
+  }
+  return keys
+}
+
+/**
+ * Stamp class-skill checkboxes from the catalog union.
+ * Standard CRB skills are overwritten. Craft/Perform/Profession extras keep
+ * their current checkbox. Does not change ranks.
+ */
+export function stampClassSkills(
+  skills: SkillEntry[],
+  classes: ClassEntry[],
+): SkillEntry[] {
+  const keys = classSkillKeySet(classes)
+  return skills.map((skill) => {
+    if (!STANDARD_SKILL_KEYS.has(skill.key)) return skill
+    return { ...skill, classSkill: keys.has(skill.key) }
+  })
 }
 
 export interface CrbRace {
@@ -100,4 +136,10 @@ export function applyCrbRace(identity: Identity, id: string | null): Identity {
       source: found.source,
     },
   }
+}
+
+/** Row field if present; otherwise catalog; otherwise 0. */
+export function skillPointsPerLevelFor(row: ClassEntry): number {
+  if (row.skillPointsPerLevel != null) return row.skillPointsPerLevel
+  return lookupCrbClass(row.class.id)?.skillPointsPerLevel ?? 0
 }

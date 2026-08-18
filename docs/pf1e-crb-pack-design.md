@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–6 and 8 landed. **Next code: batch 9** — Fighter/Wizard class skills + skill points.  
+**Status:** In progress (2026-08-18). Batches 1–6, 8, and 9 landed. **Next code: batch 10** — weapons/armor ids on the three goldens.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -43,8 +43,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | Done |
 | **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
 | **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | Done |
-| **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | **Next** |
-| **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | After 3; recommended after 3–6 |
+| **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | Done |
+| **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | **Next** |
 | … | Feats, spells metadata, remaining 9 CRB classes | After the three goldens can be rebuilt from ids | Catalog | After 8–10 |
 
 Annotations for remaining batches (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
@@ -57,7 +57,7 @@ Annotations for remaining batches (intent, already in the app, in/out, tests) ar
 content/pf1e/crb/
   README.md          # license / what is in this folder
   pack.json          # manifest + which batches have landed
-  classes.json       # progression metadata only (batch 1: fighter, wizard)
+  classes.json       # HD/BAB/saves (batch 1); class skills + skill points (batch 9)
   races.json         # race id + name (batch 8: human)
 ```
 
@@ -70,9 +70,11 @@ A class catalog row in this phase is **not** a class description. It is:
 | `hitDie` | d10 / d6 / … (HP batch will use this; stored now because it is on the class table) |
 | `babProgression` | `full` / `threeQuarter` / `half` |
 | `saves.fort/ref/will` | `good` / `poor` |
+| `skillPointsPerLevel` | Ranks per level before Int (batch 9: Fighter 2, Wizard 2) |
+| `classSkills` | Seeded skill keys that stamp checkboxes (batch 9) |
 | `source.book` | `"CRB"` — page omitted until we cite without copying tables as images |
 
-Class skills, features, spells/day, and proficiency lists wait for later batches.
+Features, spells/day, and proficiency lists wait for later batches. Craft/Perform/Profession wildcards are not in `classSkills`.
 
 ---
 
@@ -184,7 +186,7 @@ lookupCrbRace(id) → CrbRace | null
 applyCrbRace(identity, id) → Identity
 ```
 
-- Known class id → fill `class` ref, `hitDie`, `babProgression`, `saves`. Leave `levels` and favored-class totals alone.
+- Known class id → fill `class` ref, `hitDie`, `babProgression`, `saves`, `skillPointsPerLevel`. Leave `levels` and favored-class totals alone. Identity also **stamps** class-skill checkboxes from the union of catalog lists (`stampClassSkills`). Ranks are not spent.
 - Known race id → fill `race` id, name, and source. Do **not** rewrite size or ability scores.
 - Unknown or empty id → `null` / custom (`class.id` or `race.id` cleared). Do not throw.
 - Load of an existing sheet **does not** re-apply the catalog (the saved row is authoritative). Apply is a UI action when the player picks a class or race.
@@ -301,7 +303,7 @@ One CMD number in 0.9. Maneuver-specific CMD and being flat-footed for CMD wait.
 
 **CRB (player-facing):** A skill check is **ranks + ability modifier + miscellaneous**. If the skill is a **class skill** and the character has **at least 1 rank**, add **+3**. Armor check penalty applies to Climb, Swim, and the other Dex/Str skills the CRB marks; it does **not** apply to Diplomacy, Perception, Spellcraft, or Knowledge.
 
-Pathfinder 1st Edition does **not** use 3.5’s cross-class half ranks. Every rank spent is a full rank. Skill points per level and which skills are class skills for Fighter vs Wizard wait for **batch 9**.
+Pathfinder 1st Edition does **not** use 3.5’s cross-class half ranks. Every rank spent is a full rank. Skill points per level and Fighter/Wizard class-skill lists landed in **batch 9**.
 
 **App today / this batch:**
 
@@ -315,7 +317,7 @@ Pathfinder 1st Edition does **not** use 3.5’s cross-class half ranks. Every ra
 
 **Verdict:** The formula matches CRB. Fighter 5 Swim is a class skill at 0 ranks and does **not** get +3 (total −1 from Str +4 and ACP −5).
 
-**Gaps:** Spellcraft and Linguistics are also unusable untrained in the CRB; 0.9 blanks only Disable Device, UMD, Handle Animal, and Fly-without-speed (decision 6B). Favored-class skill ranks are stored on the class row and not auto-spent. Class-skill checkboxes are not stamped from the pack (batch 9).
+**Gaps:** Spellcraft and Linguistics are also unusable untrained in the CRB; 0.9 blanks only Disable Device, UMD, Handle Animal, and Fly-without-speed (decision 6B). Favored-class skill ranks are stored on the class row and not auto-spent (batch 9 adds them to the pool). Class-skill checkboxes stamp from the pack when the player picks Fighter or Wizard (batch 9).
 
 **Pack slice:** none.
 
@@ -327,7 +329,7 @@ Pathfinder 1st Edition does **not** use 3.5’s cross-class half ranks. Every ra
 
 **App today / this batch:** `ranksExceedLevel` is true when `ranks > level` and `level > 0`. The Skills tab **warns** and does **not** clamp. `compute()` still adds the typed ranks.
 
-**Gaps:** Skill points per level (batch 9) so the player can see an unspent pool. No schema maximum.
+**Gaps:** Skill-point pool display landed in batch 9. No schema maximum. Ranks are not auto-spent.
 
 **Pack slice:** none.
 
@@ -452,11 +454,60 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **App today / this batch:** That +2 is **already in the typed score** on the goldens (Fighter STR 18, Wizard INT 18). `applyCrbRace` does not add +2 to any ability. Identity shows a muted note.
 
-**Gaps:** Auto-stamping +2 (which ability?) waits; bonus feat and extra skill rank wait with feat/skill catalog work.
+**Gaps:** Auto-stamping +2 (which ability?) waits; bonus feat waits with feat catalog. Human extra skill rank per level is in the skill-point **pool** (batch 9) when `race.human`, not auto-spent.
 
 **Pack slice:** none beyond the Human row.
 
 **Tests:** Applying `race.human` leaves size and ability scores unchanged; unknown apply clears id and keeps the typed name.
+
+---
+
+## Batch 9 — two mechanics
+
+### 4.15 Class skills (Fighter, Wizard)
+
+**CRB (player-facing):** Each class has a **class skill** list. If you have at least one level in a class that lists a skill, that skill is a class skill (and the +3 from batch 4 applies once trained). Multiclass **unions** the lists. Craft, Profession (Fighter and Wizard) and Perform are wildcards — not this batch.
+
+**Fighter (seeded skills):** Climb, Handle Animal, Intimidate, Knowledge (dungeoneering), Knowledge (engineering), Ride, Survival, Swim.
+
+**Wizard (seeded skills):** Appraise, Fly, Linguistics, Spellcraft, and all Knowledge skills.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `classes.json` `classSkills` | Keys matching the Skills tab |
+| Apply | `stampClassSkills` when Identity picks or removes a CRB class | Standard skills overwritten from the union; Craft/Perform/Profession extras keep their checkbox; **ranks unchanged** |
+| Goldens | Fighter 5 / Wizard 5 / F2/W3 flags | Already matched the lists; Load does not re-stamp |
+
+**Verdict:** Catalog lists match the CRB seeded skills. Stamping a Fighter 5 sheet reproduces the golden checkboxes.
+
+**Gaps:** Other 9 CRB classes; Craft/Profession as automatic class skills when the player adds a wildcard row.
+
+**Pack slice:** `classSkills` on Fighter and Wizard.
+
+**Tests:** Lists and 2 skill points; Fighter stamp; F+W union; wildcard extras preserved; golden flags after stamp.
+
+### 4.16 Skill points per level
+
+**CRB (player-facing):** Each class grants a number of skill ranks per level (**Fighter 2**, **Wizard 2**) plus the Intelligence modifier, **minimum 1** per class level. A Human gains **+1 skill rank per character level**. Favored-class skill ranks are extra and chosen by the player. Pathfinder does **not** ×4 ranks at 1st level.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `skillPointsPerLevel` | 2 for Fighter and Wizard; stamped onto the class row on apply |
+| Engine | `skillRanksFromClassLevel`, `skillRanksBudget` | Sum of class contributions + favored `skillRanks` + Human +1×level when `race.human` |
+| UI | Skills tab | `spent / budget`; warn if over; ranks stay typed |
+| Goldens | Fighter 5 **15/15**; Wizard 5 **35/35**; F2/W3 **30/30** | Unchanged |
+
+**Verdict:** The three Human goldens spend exactly the pool. Picking Fighter does not spend ranks.
+
+**Gaps:** Auto-spend of the pool; other classes’ tables (Rogue 8, …). INT tempScore affects the modifier used for the pool (same as other Int-based math).
+
+**Pack slice:** `skillPointsPerLevel` on Fighter/Wizard. Optional `classes[].skillPointsPerLevel` on the sheet (old saves omit; compute falls back to the pack).
+
+**Tests:** Min 1 with Int penalty; Human and favored add to the pool; three golden budgets; stamp does not spend ranks.
 
 ---
 
@@ -468,23 +519,17 @@ These are **annotations**, not landed reviews. Each future PR still follows §1 
 
 Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review when spell metadata lands.
 
-### Batch 9 — Class skills + skill points (Fighter, Wizard) (**next**)
+### Batch 10 — Weapons / armor on the three goldens (**next**)
 
-**Pairing:** Which skills are class skills for Fighter vs Wizard, and how many skill ranks per level those classes grant. Batch 4 already computes totals from checkboxes and typed ranks.
+**Pairing:** Documentary catalog ids for the weapons and armor already named on the three goldens (longsword, chainmail, chain shirt, …). Combat numbers stay on `armorClass` / `attacks`.
 
-**Already in the app:** Skills tab checkboxes; goldens have class-skill flags typed by hand. Pack has no class-skill lists yet.
+**Already in the app:** Inventory item names and pounds; AC and attack bonuses typed on Combat.
 
-**In this batch:** Catalog flags + skill points per level for Fighter and Wizard. Identity or Skills can stamp the checkboxes when the player picks the class (same apply pattern as HD/BAB). Do not auto-spend favored skill ranks.
+**In this batch:** Ids such as `weapon.longsword` and `armor.chainmail` on those rows (and a small items catalog if needed). Do not auto-fill AC from equipped items.
 
-**Out:** The other 9 CRB classes; Craft/Perform/Profession lists; auto-spend of the skill-point pool.
+**Out:** Priced treasure; magic weapons; auto-sum of item AC/ACP/max Dex.
 
-**Pack slice:** class-skill lists and `skillPointsPerLevel` on the existing Fighter/Wizard class rows.
-
-### Batch 10 — Weapons / armor on the three goldens
-
-| Batch | Add | Do not add |
-| --- | --- | --- |
-| **10** Weapons / armor | Ids for the three goldens (longsword, chainmail, …); still documentary — AC and attack numbers stay on sheet fields | Auto-fill AC from equipped items; priced treasure; magic weapons |
+**Pack slice:** item ids for the goldens only.
 
 **After 8–10:** remaining 9 CRB classes, feats, spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
 
@@ -505,3 +550,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 5: size AC/attack/CMB/CMD + carry multiplier; next is encumbrance |
 | 2026-08-18 | Batch 6: Strength heavy-load + load category; Ignore weight opt-out; next is Human catalog |
 | 2026-08-18 | Batch 8: Human race catalog id; +2 stays typed; next is class skills |
+| 2026-08-18 | Batch 9: Fighter/Wizard class skills + skill-point pool; next is weapons/armor ids |

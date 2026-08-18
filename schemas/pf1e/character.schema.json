@@ -278,6 +278,11 @@
           }
         },
         "prestige": { "type": "boolean" },
+        "skillPointsPerLevel": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Class skill ranks per level before Intelligence. Stamped from the CRB catalog. Omitted on older saves; compute falls back to the pack."
+        },
         "notes": { "type": "string" },
         "effects": {
           "type": "array",

@@ -49,7 +49,7 @@ See the JSON Schema for types. Summary:
 | Vitals | `hpRolled[]` (before Con), `currentHp` (may be negative), `tempHp`, `nonlethal`, speeds/senses |
 | AC | explicit `armorBonus`, `shieldBonus`, `natural`, `deflection`, `dodge`, `other`, `maxDex` (null = no cap), `armorCheckPenalty` (≤ 0) |
 | Combat misc | initiative / melee / ranged / CMB / CMD / save misc |
-| Skills | `key` kebab **without dots**, `ranks`, `classSkill`, `armorPenaltyApplies`, `misc` |
+| Skills | `key` kebab **without dots**, `ranks`, `classSkill`, `armorPenaltyApplies`, `misc`. Optional `classes[].skillPointsPerLevel` (catalog fallback). |
 | Attacks | snapshot rows; engine adds BAB + ability + size |
 | Inventory | `pounds`, location `equipped\|carried\|stowed\|dropped` (dropped excluded from weight), optional `ignoreWeight` |
 | Play | `dailyResources` only — no hero points, no dying track |
@@ -127,7 +127,7 @@ Catalog ids may contain `.` as a namespace separator (`class.fighter`). **Skill 
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
 6. ~~Multiclass golden (Phase 3e).~~
-7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–6 and 8 landed. **Next: batch 9** class skills + skill points. Then weapons/armor ids.
+7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–6, 8, and 9 landed. **Next: batch 10** weapons/armor ids.
 
 Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 

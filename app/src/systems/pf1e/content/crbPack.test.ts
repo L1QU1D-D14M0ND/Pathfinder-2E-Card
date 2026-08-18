@@ -5,8 +5,10 @@ import { parseCharacterJson } from '../character/saveLoad'
 import {
   applyCrbClassProgression,
   applyCrbRace,
+  classSkillKeySet,
   lookupCrbClass,
   lookupCrbRace,
+  stampClassSkills,
   CRB_CLASSES,
   CRB_RACES,
 } from './crbPack'
@@ -61,6 +63,7 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(fighter.saves).toEqual({ fort: 'good', ref: 'poor', will: 'poor' })
     expect(fighter.class.id).toBe('class.fighter')
     expect(fighter.class.name).toBe('Fighter')
+    expect(fighter.skillPointsPerLevel).toBe(2)
   })
 
   it('unknown apply clears id and leaves progressions', () => {
@@ -89,13 +92,15 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1 through 6 and 8', () => {
+  it('pack manifest records batches 1–6, 8, and 9', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batch-8')
-    expect(pack.batches.map((batch) => batch.id)).toEqual([1, 2, 3, 4, 5, 6, 8])
+    expect(pack.status).toBe('batch-9')
+    expect(pack.batches.map((batch) => batch.id)).toEqual([
+      1, 2, 3, 4, 5, 6, 8, 9,
+    ])
   })
 })
 
@@ -150,5 +155,85 @@ describe('CRB pack batch 8: Human race catalog', () => {
     expect(lookupCrbRace(mixed.identity.race.id)?.id).toBe('race.human')
     expect(fighter.abilities.str.score).toBe(18)
     expect(wizard.abilities.int.score).toBe(18)
+  })
+})
+
+describe('CRB pack batch 9: class skills', () => {
+  it('lists Fighter and Wizard class skills and 2 skill points per level', () => {
+    const fighter = lookupCrbClass('class.fighter')
+    const wizard = lookupCrbClass('class.wizard')
+    expect(fighter?.skillPointsPerLevel).toBe(2)
+    expect(wizard?.skillPointsPerLevel).toBe(2)
+    expect(fighter?.classSkills).toEqual([
+      'climb',
+      'handle-animal',
+      'intimidate',
+      'knowledge-dungeoneering',
+      'knowledge-engineering',
+      'ride',
+      'survival',
+      'swim',
+    ])
+    expect(wizard?.classSkills).toContain('spellcraft')
+    expect(wizard?.classSkills).toContain('knowledge-arcana')
+    expect(wizard?.classSkills).not.toContain('climb')
+    expect(fighter?.classSkills).not.toContain('spellcraft')
+  })
+
+  it('stamps Fighter class-skill checkboxes and leaves ranks alone', () => {
+    const character = createEmptyCharacter()
+    const row = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
+    const skills = stampClassSkills(character.skills, [row])
+    const flagged = skills.filter((skill) => skill.classSkill).map((skill) => skill.key)
+    expect(flagged).toEqual([
+      'climb',
+      'handle-animal',
+      'intimidate',
+      'ride',
+      'survival',
+      'swim',
+      'knowledge-dungeoneering',
+      'knowledge-engineering',
+    ])
+    expect(skills.every((skill) => skill.ranks === 0)).toBe(true)
+  })
+
+  it('unions Fighter and Wizard class skills', () => {
+    const fighter = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
+    const wizard = applyCrbClassProgression(createEmptyClass(), 'class.wizard')
+    const keys = classSkillKeySet([fighter, wizard])
+    expect(keys.has('climb')).toBe(true)
+    expect(keys.has('spellcraft')).toBe(true)
+    expect(keys.has('perception')).toBe(false)
+  })
+
+  it('does not rewrite Craft/Perform/Profession extras', () => {
+    const character = createEmptyCharacter()
+    character.skills.push({
+      key: 'craft-weapons',
+      name: 'Craft (weapons)',
+      ability: 'int',
+      ranks: 1,
+      classSkill: true,
+      armorPenaltyApplies: false,
+      misc: 0,
+    })
+    const row = applyCrbClassProgression(createEmptyClass(), 'class.wizard')
+    const skills = stampClassSkills(character.skills, [row])
+    const craft = skills.find((skill) => skill.key === 'craft-weapons')
+    expect(craft?.classSkill).toBe(true)
+    expect(craft?.ranks).toBe(1)
+    expect(skills.find((skill) => skill.key === 'climb')?.classSkill).toBe(false)
+  })
+
+  it('matches golden class-skill flags after a stamp', () => {
+    const fighter = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),
+    )
+    const stamped = stampClassSkills(fighter.skills, fighter.classes)
+    for (const skill of fighter.skills) {
+      const next = stamped.find((row) => row.key === skill.key)
+      expect(next?.classSkill).toBe(skill.classSkill)
+    }
   })
 })

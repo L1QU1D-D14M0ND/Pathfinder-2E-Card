@@ -31,6 +31,8 @@ const SCALAR_KEYS = new Set([
   'lightLoad',
   'mediumLoad',
   'heavyLoad',
+  'skillRanksSpent',
+  'skillRanksBudget',
 ])
 
 function setScalar(
@@ -95,6 +97,12 @@ function setScalar(
       return true
     case 'heavyLoad':
       view.heavyLoad = value
+      return true
+    case 'skillRanksSpent':
+      view.skillRanksSpent = value
+      return true
+    case 'skillRanksBudget':
+      view.skillRanksBudget = value
       return true
     default:
       return false

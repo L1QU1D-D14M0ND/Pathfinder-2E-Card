@@ -72,7 +72,10 @@
       "misc": "Misc",
       "total": "Total",
       "unusable": "—",
-      "rankCapWarning": "Ranks exceed character level ({level})."
+      "rankCapWarning": "Ranks exceed character level ({level}).",
+      "ranksBudget": "Skill ranks {spent} / {budget}",
+      "ranksBudgetHelp": "Pool is class skill points + Int (minimum 1 per class level), plus Human +1 per level when race is Human, plus favored ranks. Ranks are not auto-spent.",
+      "ranksBudgetOver": "Spent ranks exceed the pool."
     },
     "combat": {
       "bab": "BAB",
