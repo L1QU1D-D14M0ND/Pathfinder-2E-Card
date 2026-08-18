@@ -81,12 +81,12 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1 through 3', () => {
+  it('pack manifest records batches 1 through 4', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batch-3')
-    expect(pack.batches.map((batch) => batch.id)).toEqual([1, 2, 3])
+    expect(pack.status).toBe('batch-4')
+    expect(pack.batches.map((batch) => batch.id)).toEqual([1, 2, 3, 4])
   })
 })

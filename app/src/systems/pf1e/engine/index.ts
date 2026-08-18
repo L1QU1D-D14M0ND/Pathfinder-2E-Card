@@ -23,5 +23,7 @@ export {
   maxHp,
   ranksExceedLevel,
   setHitDieRoll,
+  skillTotal,
   skillUsableUntrained,
+  classSkillBonus,
 } from './vitals'

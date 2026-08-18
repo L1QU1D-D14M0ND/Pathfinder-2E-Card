@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-3",
+  "status": "batch-4",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -20,6 +20,11 @@
       "id": 3,
       "mechanics": ["armor-class", "cmb-cmd"],
       "notes": "AC/touch/FF and CMB/CMD are engine-owned. No catalog. CMD uses uncapped Dex."
+    },
+    {
+      "id": 4,
+      "mechanics": ["skill-totals", "max-ranks"],
+      "notes": "Skill total is engine-owned. Class-skill lists wait for batch 9. Over-cap ranks warn and are not clamped."
     }
   ]
 }

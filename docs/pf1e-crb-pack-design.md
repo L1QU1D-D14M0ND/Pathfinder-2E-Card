@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–3 landed. **Next code: batch 4** — skills (ranks, class +3, ACP). Rank-cap warning and untrained blanks already landed.  
+**Status:** In progress (2026-08-18). Batches 1–4 landed. **Next code: batch 5** — size tables (AC/attack, CMB/CMD, carry).  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -38,8 +38,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **1** | Ability scores → modifiers; BAB + save progressions (and how they stack) | Scores feed every later total; BAB/saves are the class-table core | Engine + Fighter/Wizard tags | Done |
 | **2** | Hit points (HD + Con + favored); iterative attacks from BAB | HD uses class hit die from batch 1; iteratives are a use of BAB | Engine + HP dialog / slash line | Done |
 | **3** | AC / touch / flat-footed; CMB / CMD | Same Combat block; Dex, size, dodge, and deflection are shared | Engine review (no new catalog) | Done |
-| **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | **Next** |
-| **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | After 3 |
+| **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | Done |
+| **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | **Next** |
 | **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | After 5 |
 | **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
 | **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | After math 3–6 |
@@ -291,25 +291,51 @@ One CMD number in 0.9. Maneuver-specific CMD and being flat-footed for CMD wait.
 
 ---
 
+## Batch 4 — two mechanics
+
+### 4.7 Skill totals (ranks, class +3, ACP)
+
+**CRB (player-facing):** A skill check is **ranks + ability modifier + miscellaneous**. If the skill is a **class skill** and the character has **at least 1 rank**, add **+3**. Armor check penalty applies to Climb, Swim, and the other Dex/Str skills the CRB marks; it does **not** apply to Diplomacy, Perception, Spellcraft, or Knowledge.
+
+Pathfinder 1st Edition does **not** use 3.5’s cross-class half ranks. Every rank spent is a full rank. Skill points per level and which skills are class skills for Fighter vs Wizard wait for **batch 9**.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Input | `skills[].ranks`, `classSkill`, `misc`, `armorPenaltyApplies` | Factory seeds the CRB list (Knowledge subtypes included; Craft/Perform/Profession added in UI) |
+| Engine | `skillTotal`, `classSkillBonus` | +3 only when `ranks ≥ 1` and class skill; ACP only if the row flags it |
+| ACP source | `armorClass.armorCheckPenalty` | Typed by the player (load penalties not auto-written — batch 6) |
+| UI | Skills tab | Total derived; Disable Device / UMD / Handle Animal show **—** at 0 ranks; Fly **—** without a fly speed |
+| Goldens | Fighter 5 Climb **+7**, Intimidate **+7**, Perception **+6**, Swim **−1**; Wizard 5 Spellcraft **+12** | Unchanged |
+
+**Verdict:** The formula matches CRB. Fighter 5 Swim is a class skill at 0 ranks and does **not** get +3 (total −1 from Str +4 and ACP −5).
+
+**Gaps:** Spellcraft and Linguistics are also unusable untrained in the CRB; 0.9 blanks only Disable Device, UMD, Handle Animal, and Fly-without-speed (decision 6B). Favored-class skill ranks are stored on the class row and not auto-spent. Class-skill checkboxes are not stamped from the pack (batch 9).
+
+**Pack slice:** none.
+
+**Tests:** +3 only when trained and class; ACP on Climb not Diplomacy; factory ACP flags match the CRB armor-check list; Fighter 5 and Wizard 5 golden totals.
+
+### 4.8 Maximum ranks
+
+**CRB (player-facing):** You cannot have more ranks in a skill than your **character level** (total Hit Dice). There is no 3.5 cross-class rank cap of level/2.
+
+**App today / this batch:** `ranksExceedLevel` is true when `ranks > level` and `level > 0`. The Skills tab **warns** and does **not** clamp. `compute()` still adds the typed ranks.
+
+**Gaps:** Skill points per level (batch 9) so the player can see an unspent pool. No schema maximum.
+
+**Pack slice:** none.
+
+**Tests:** Warn at 6 ranks on a 5th-level character; 5 on 5 is fine; over-cap Climb still totals 9 (6 + class +3) rather than clamping to 5.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
 
-### Batch 4 — Skills (ranks, class +3, ACP) + max ranks (**next**)
-
-**Pairing:** The skill total and the rank cap are the two player-facing skill rules on the sheet. Class-skill *lists* and skill points per level are catalog (batch 9).
-
-**Already in the app:** `skillTotal` = ranks + ability + (trained and class skill → +3) + ACP (if the skill flags it) + misc. Factory seeds the CRB skill list. Favored-class **skill ranks** are stored on the class row but not auto-applied to a skill.
-
-**In this batch:** Confirm +3 only when ranks ≥ 1; ACP only on flagged skills (Climb, not Diplomacy); max ranks = **character level** (CRB; no 3.5 cross-class half ranks). UI warns when ranks exceed level (no clamp). Disable Device, Use Magic Device, and Handle Animal show **—** at 0 ranks; Fly shows **—** without a fly speed.
-
-**Out:** Stamping Fighter/Wizard class-skill checkboxes from the pack (batch 9); armor-load penalties stacking on top of typed ACP (batch 6); Craft/Perform/Profession catalogs.
-
-**Pack slice:** none.
-
-**Depends on:** Combat ACP field already exists. Rank-cap warning and untrained blanks already landed; this batch is the formula review.
-
-### Batch 5 — Size (AC/attack vs CMB/CMD vs carry)
+### Batch 5 — Size (AC/attack vs CMB/CMD vs carry) (**next**)
 
 **Pairing:** One CRB size row drives three modifiers already wired: AC/attack, special CMB/CMD (opposite sign), carrying-capacity multiplier.
 
@@ -321,7 +347,7 @@ These are **annotations**, not landed reviews. Each future PR still follows §1 
 
 **Pack slice:** none.
 
-**Depends on:** batch 3 so AC/CMB consumers are already reviewed. Do not wait for 4.
+**Depends on:** batch 3 AC/CMB consumers are already reviewed.
 
 ### Batch 6 — Encumbrance (Strength table; light / medium / heavy)
 
@@ -364,3 +390,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-17 | Skill warn/blank and Combat honesty landed early; batch 3 formula table tests still next |
 | 2026-08-18 | Audit merged on local `main`; batch 3 remains the next code change |
 | 2026-08-18 | Batch 3: AC/touch/FF + CMB/CMD table tests; next is skills |
+| 2026-08-18 | Batch 4: skill totals + max ranks; next is size tables |
