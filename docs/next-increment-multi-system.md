@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **Phase 3c batch 5** (size tables: AC/attack, CMB/CMD, carry). Batches 1–4 are in the repo. After 5: encumbrance (6), then catalog Human / class skills / weapons (8–10). Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **Phase 3c batch 6** (encumbrance: Strength heavy-load table; light / medium / heavy). Batches 1–5 are in the repo. After 6: catalog Human / class skills / weapons (8–10). Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batches 1–4 landed; upcoming batches annotated in the pack design (§6). Next code: batch 5 size tables |
+| Content | `content/pf1e/crb/` batches 1–5 landed; upcoming batches annotated in the pack design (§6). Next code: batch 6 encumbrance |
 
 ---
 
@@ -207,8 +207,8 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks
 - [x] Batch 3: AC / touch / FF + CMB / CMD (CRB write-up + table tests)
 - [x] Batch 4: skills (ranks, class +3, ACP) + max ranks
-- [ ] **Batch 5 (next):** size tables (AC/attack vs CMB/CMD vs carry)
-- [ ] Batch 6: encumbrance (Strength table; light / medium / heavy)
+- [x] Batch 5: size tables (AC/attack vs CMB/CMD vs carry)
+- [ ] **Batch 6 (next):** encumbrance (Strength table; light / medium / heavy)
 - [ ] Batches 8–10: Human; Fighter/Wizard class skills + skill points; weapons/armor ids
 - [ ] Batch 7 (spell DC / bonus slots): already in engine; pack review later
 - [ ] Catalog enough to rebuild the three goldens
@@ -249,13 +249,12 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
 
-**Still sequenced (next code is batch 5 only):**
+**Still sequenced (next code is batch 6 only):**
 
 | Item | Disposition |
 | --- | --- |
-| Size tables beyond the Small spot check | Batch 5 |
+| Strength heavy-load table + load category; penalties not auto-written | Batch 6 |
 | Class-skill lists / skill points catalog | Batch 9 |
-| Load penalties onto ACP / max Dex | Batch 6 (document only) |
 | `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
 | Remaining PF2e panel literals | Extract when those panels next change |
 
@@ -280,3 +279,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | Local `main` merge of audit + branch audit; next code remains batch 3 table tests |
 | 2026-08-18 | Batch 3 AC/CMB table tests landed; next code is batch 4 skills |
 | 2026-08-18 | Batch 4 skill totals + max ranks landed; next code is batch 5 size |
+| 2026-08-18 | Batch 5 size tables landed; next code is batch 6 encumbrance |

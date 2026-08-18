@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-4",
+  "status": "batch-5",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -25,6 +25,11 @@
       "id": 4,
       "mechanics": ["skill-totals", "max-ranks"],
       "notes": "Skill total is engine-owned. Class-skill lists wait for batch 9. Over-cap ranks warn and are not clamped."
+    },
+    {
+      "id": 5,
+      "mechanics": ["size-ac-attack-cmb", "size-carry-multiplier"],
+      "notes": "Size tables are engine-owned. Goldens stay Medium. Quadruped carry waits."
     }
   ]
 }

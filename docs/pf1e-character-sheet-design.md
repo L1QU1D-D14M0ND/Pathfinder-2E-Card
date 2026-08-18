@@ -205,3 +205,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Audit 1A–10B on local `main`. Next pack work is still batch 3 table tests. |
 | 2026-08-18 | Batch 3 AC/CMB review landed. Next pack work is skills (batch 4). |
 | 2026-08-18 | Batch 4 skill review landed. Next pack work is size tables (batch 5). |
+| 2026-08-18 | Batch 5 size review landed. Next pack work is encumbrance (batch 6). |

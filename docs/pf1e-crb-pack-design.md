@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–4 landed. **Next code: batch 5** — size tables (AC/attack, CMB/CMD, carry).  
+**Status:** In progress (2026-08-18). Batches 1–5 landed. **Next code: batch 6** — encumbrance (Strength heavy-load table; light / medium / heavy).  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -39,8 +39,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **2** | Hit points (HD + Con + favored); iterative attacks from BAB | HD uses class hit die from batch 1; iteratives are a use of BAB | Engine + HP dialog / slash line | Done |
 | **3** | AC / touch / flat-footed; CMB / CMD | Same Combat block; Dex, size, dodge, and deflection are shared | Engine review (no new catalog) | Done |
 | **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | Done |
-| **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | **Next** |
-| **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | After 5 |
+| **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | Done |
+| **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | **Next** |
 | **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
 | **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | After math 3–6 |
 | **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | After 4 |
@@ -261,7 +261,7 @@ applyCrbClassProgression(classRow, id) → ClassEntry
 | Item-granted AC from equipped inventory | Batch 10 documentary ids; numbers stay on `armorClass` |
 | Armor Training raising chainmail max Dex | Fighter 5 golden notes it is not auto-applied (`maxDex` 2 with Dex +2) |
 | Uncanny Dodge keeping Dex when flat-footed | Feat automation later |
-| Size table beyond a Small spot check | Batch 5 |
+| Size table beyond a Small spot check | Landed in batch 5 |
 
 **Pack slice:** none (engine-owned).
 
@@ -281,7 +281,7 @@ One CMD number in 0.9. Maneuver-specific CMD and being flat-footed for CMD wait.
 | UI | Combat CMB / CMD cell | No extra “CMD vs max Dex” copy (decision 8C) |
 | Goldens | Fighter 5 CMB **+9** / CMD **21**; Wizard 5 **+1** / **13**; F2/W3 **+6** / **17** | Unchanged |
 
-**Verdict:** Matches CRB for the goldens and the maxDex / dodge-deflection cases. Special size vs AC is locked with a Small spot check; full size tables are batch 5.
+**Verdict:** Matches CRB for the goldens and the maxDex / dodge-deflection cases. Special size vs AC is locked with a Small spot check; full size tables landed in batch 5.
 
 **Gaps:** Ranged CMB (Dex); Combat Expertise; CMD vs trip/grapple separately; load penalties auto-written onto max Dex (batch 6, document only).
 
@@ -331,25 +331,52 @@ Pathfinder 1st Edition does **not** use 3.5’s cross-class half ranks. Every ra
 
 ---
 
+## Batch 5 — two mechanics
+
+### 4.9 Size modifier to AC, attack, CMB, and CMD
+
+**CRB (player-facing):** A creature’s **size** adds a modifier to Armor Class and attack rolls. Fine is **+8**, then Diminutive +4, Tiny +2, Small +1, Medium +0, Large **−1**, Huge −2, Gargantuan −4, Colossal **−8**.
+
+CMB and CMD use a **special size modifier** with the **opposite sign** of that AC/attack number (Small −1 CMB/CMD; Large +1). Swallow-whole and other grapple special cases are not this batch.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Input | `identity.size` | Fine … Colossal select; factory and goldens are Medium |
+| Engine | `sizeAcAttackModifier`, `sizeCmbModifier` | AC/attack uses the table; CMB/CMD uses the negated table |
+| Consumers | `armorClassValues`; `compute()` melee/ranged and CMB/CMD | Same modifier on AC, touch, and FF; same special size on CMB and CMD |
+| Goldens | All three PF1e goldens | Stay Medium (size modifier 0) |
+
+**Verdict:** The published Fine–Colossal row matches the engine. Empty-sheet Small is AC 11 / attack +1 / CMB −1 / CMD 9; Large is the inverse on those combat numbers.
+
+**Gaps:** Racial size from a race catalog waits for batch 8 (Human is Medium). Stealth/Fly size skill modifiers stay player-typed (PF1e design §14). Quadruped / powerful-build carry is batch 6 out-of-scope.
+
+**Pack slice:** none (engine-owned).
+
+**Tests:** Full AC/attack table; special size is always the opposite sign; Small and Large empty-sheet combat deltas; Fighter 5 remains Medium with size 0 on melee and CMB.
+
+### 4.10 Carrying-capacity size multiplier
+
+**CRB (player-facing):** Carrying capacity is the Medium biped Strength table multiplied by a **size factor**: Fine ×1/8, Diminutive ×1/4, Tiny ×1/2, Small ×3/4, Medium ×1, Large ×2, then ×4 / ×8 / ×16 for Huge / Gargantuan / Colossal.
+
+Light and medium load are still fractions of that heavy load. Strength-table pounds and load *category* are **batch 6**. Quadruped (×1.5) is not this batch.
+
+**App today / this batch:** `sizeCarryMultiplier` feeds `loadThresholds`. Small heavy is `floor(Medium heavy × 3/4)`; Large is Medium ×2.
+
+**Gaps:** Strength 1–29 column and overloaded category review wait for batch 6. Inventory auto-sum from armor catalog waits for batch 10.
+
+**Pack slice:** none.
+
+**Tests:** Full Medium-relative multiplier table; STR 10 Small/Large thresholds scale off the Medium heavy without asserting the Strength column.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
 
-### Batch 5 — Size (AC/attack vs CMB/CMD vs carry) (**next**)
-
-**Pairing:** One CRB size row drives three modifiers already wired: AC/attack, special CMB/CMD (opposite sign), carrying-capacity multiplier.
-
-**Already in the app:** Fine … Colossal tables in `sizeAcAttackModifier`, `sizeCmbModifier`, `sizeCarryMultiplier`. Identity size select. Goldens are Medium.
-
-**In this batch:** Publish the three tables as tests (not a JSON copy of every size). Confirm Small is +1 AC/attack, −1 CMB/CMD, ×3/4 carry; Large is the inverse on combat and ×2 carry.
-
-**Out:** Race catalog (batch 8); quadruped carry; swallow-whole / grapple size special cases.
-
-**Pack slice:** none.
-
-**Depends on:** batch 3 AC/CMB consumers are already reviewed.
-
-### Batch 6 — Encumbrance (Strength table; light / medium / heavy)
+### Batch 6 — Encumbrance (Strength table; light / medium / heavy) (**next**)
 
 **Pairing:** Heavy load from the Strength table, then light = floor(heavy/3) and medium = floor(2×heavy/3), is one CRB procedure. Load *category* is the second mechanic (thresholds vs carried pounds).
 
@@ -391,3 +418,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Audit merged on local `main`; batch 3 remains the next code change |
 | 2026-08-18 | Batch 3: AC/touch/FF + CMB/CMD table tests; next is skills |
 | 2026-08-18 | Batch 4: skill totals + max ranks; next is size tables |
+| 2026-08-18 | Batch 5: size AC/attack/CMB/CMD + carry multiplier; next is encumbrance |
