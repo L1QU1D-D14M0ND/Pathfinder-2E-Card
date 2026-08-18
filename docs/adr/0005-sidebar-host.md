@@ -27,7 +27,7 @@ When a character document is in memory (New or Load), the shell shows a **sideba
 - **Actions List** is a named later tool: current action menu; grey-out + short reason from conditions.
 - **Budget Calculator** is a named later tool: shopping list with buy vs craft totals, craft time/DC/requirements, and short reasons when the PC cannot craft a line.
 - ADR 0001’s Spells / Afflictions / Actions browser is a candidate **encyclopedia** tool (rules text), distinct from Actions List (this PC, right now).
-- Sidebar strings go through i18n (`shell.sidebar.*`, tool keys under `shell.*` or `pf1e.*` / `pf2e.*`).
+- Sidebar strings go through i18n (`shell.tools*`, tool keys under `shell.*` or `pf1e.*` / `pf2e.*`).
 
 ## Defaults
 
@@ -35,7 +35,7 @@ When a character document is in memory (New or Load), the shell shows a **sideba
 | --- | --- | --- |
 | 0.9 tools populated | **No** — host may be empty/collapsed | Attack Helper or another named tool is pulled into 0.9 |
 | Host on New (empty sheet) | **Yes** — any in-memory document |
-| Collapse default (desktop) | Expanded if any tool is registered; else collapsed |
+| Collapse default (desktop) | Collapsed when `tools.length === 0`; otherwise expanded unless the user toggled |
 | Collapse default (narrow) | Collapsed |
 | Dice / VTT in the sidebar | **Out.** Attack Helper shows expressions only; player rolls physical dice |
 

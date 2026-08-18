@@ -4,6 +4,7 @@ import { applyCrbItem, CRB_ITEMS } from '../content'
 import type { DerivedView } from '../engine'
 import { formatLoadSummary } from '../engine/encumbrance'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
+import { useT } from '../../../shared/i18n'
 import type { SheetUpdate } from './update'
 
 const LOCATIONS: ItemLocation[] = ['equipped', 'carried', 'stowed', 'dropped']
@@ -17,6 +18,7 @@ export function InventoryPanel({
   derived: DerivedView
   update: SheetUpdate
 }) {
+  const t = useT()
   return (
     <div className="panel-stack">
       <table className="sheet-table">
@@ -28,6 +30,7 @@ export function InventoryPanel({
                 <input
                   type="number"
                   min={0}
+                  aria-label={coin.toUpperCase()}
                   value={character.inventory.currency[coin]}
                   onChange={(e) =>
                     update((c) => ({
@@ -46,7 +49,7 @@ export function InventoryPanel({
             </tr>
           ))}
           <tr>
-            <th>Weight / load</th>
+            <th>{t('pf1e.inventory.weightLoad')}</th>
             <td>
               <div className="weight-row">
                 <DerivedCell
@@ -76,22 +79,17 @@ export function InventoryPanel({
                     }))
                   }
                 >
-                  Ignore weight
+                  {t('pf1e.inventory.ignoreWeight')}
                 </button>
               </div>
-              <p className="muted">
-                Load does not change ACP, max Dex, or speed. Ignore weight
-                turns off the load category; carried pounds still sum. Catalog
-                items stamp name, pounds, and documentary weapon/armor fields
-                only — AC and attacks stay on Combat.
-              </p>
+              <p className="muted">{t('pf1e.inventory.help')}</p>
             </td>
           </tr>
         </tbody>
       </table>
 
       <div className="table-toolbar">
-        <strong>Items</strong>
+        <strong>{t('pf1e.inventory.items')}</strong>
         <button
           type="button"
           onClick={() =>
@@ -104,16 +102,16 @@ export function InventoryPanel({
             }))
           }
         >
-          Add item
+          {t('pf1e.inventory.addItem')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Qty</th>
-            <th>Lb</th>
-            <th>Location</th>
+            <th>{t('pf1e.inventory.name')}</th>
+            <th>{t('pf1e.inventory.qty')}</th>
+            <th>{t('pf1e.inventory.lb')}</th>
+            <th>{t('pf1e.inventory.location')}</th>
             <th></th>
           </tr>
         </thead>
@@ -121,7 +119,7 @@ export function InventoryPanel({
           {character.inventory.items.length === 0 ? (
             <tr>
               <td colSpan={5} className="muted">
-                No items. Pounds count unless location is dropped.
+                {t('pf1e.inventory.empty')}
               </td>
             </tr>
           ) : (
@@ -129,7 +127,7 @@ export function InventoryPanel({
               <tr key={item.id}>
                 <td className="item-cell">
                   <select
-                    aria-label="CRB item"
+                    aria-label={t('pf1e.inventory.catalog')}
                     value={item.item.id ?? ''}
                     onChange={(e) => {
                       const id = e.target.value || null
@@ -143,7 +141,7 @@ export function InventoryPanel({
                       })
                     }}
                   >
-                    <option value="">Custom</option>
+                    <option value="">{t('pf1e.common.custom')}</option>
                     {CRB_ITEMS.map((entry) => (
                       <option key={entry.id} value={entry.id}>
                         {entry.name}
@@ -151,7 +149,7 @@ export function InventoryPanel({
                     ))}
                   </select>
                   <input
-                    aria-label="Item name"
+                    aria-label={t('pf1e.inventory.itemName')}
                     value={item.item.name}
                     onChange={(e) =>
                       update((c) => {
@@ -172,6 +170,7 @@ export function InventoryPanel({
                   <input
                     type="number"
                     min={0}
+                    aria-label={t('pf1e.inventory.qty')}
                     value={item.quantity}
                     onChange={(e) =>
                       update((c) => {
@@ -193,6 +192,7 @@ export function InventoryPanel({
                     type="number"
                     min={0}
                     step={0.5}
+                    aria-label={t('pf1e.inventory.lb')}
                     value={item.pounds}
                     onChange={(e) =>
                       update((c) => {
@@ -211,6 +211,7 @@ export function InventoryPanel({
                 </td>
                 <td>
                   <select
+                    aria-label={t('pf1e.inventory.location')}
                     value={item.location}
                     onChange={(e) =>
                       update((c) => {
@@ -228,7 +229,7 @@ export function InventoryPanel({
                   >
                     {LOCATIONS.map((loc) => (
                       <option key={loc} value={loc}>
-                        {loc}
+                        {t(`pf1e.inventory.${loc}`)}
                       </option>
                     ))}
                   </select>
@@ -248,7 +249,7 @@ export function InventoryPanel({
                       }))
                     }
                   >
-                    Remove
+                    {t('pf1e.common.remove')}
                   </button>
                 </td>
               </tr>

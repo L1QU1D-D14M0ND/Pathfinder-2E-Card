@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { CharacterDocument } from '../character'
 import { signed } from '../../../shared/format'
+import { useT } from '../../../shared/i18n'
 import { hpBreakdown, setHitDieRoll } from '../engine/vitals'
 import type { SheetUpdate } from './update'
 
@@ -15,6 +16,7 @@ export function HpBreakdownDialog({
   character: CharacterDocument
   update: SheetUpdate
 }) {
+  const t = useT()
   const ref = useRef<HTMLDialogElement>(null)
   const conMod = Math.floor((character.abilities.con.score - 10) / 2)
   const breakdown = hpBreakdown(character.vitals, character.classes, conMod)
@@ -83,29 +85,24 @@ export function HpBreakdownDialog({
       aria-labelledby="hp-dialog-title"
     >
       <div className="table-toolbar">
-        <strong id="hp-dialog-title">Max HP breakdown</strong>
+        <strong id="hp-dialog-title">{t('pf1e.hp.title')}</strong>
         <button type="button" onClick={onClose}>
-          Close
+          {t('pf1e.hp.close')}
         </button>
       </div>
-      <p className="muted">
-        Roll hit dice at the table (the app does not roll). Type each result
-        before Constitution. 1st character level is usually the die maximum;
-        later levels you roll. Each HD adds max(1, roll + Con). Favored-class
-        HP is a separate +1 per chosen level.
-      </p>
+      <p className="muted">{t('pf1e.hp.help')}</p>
       {breakdown.slots.length === 0 ? (
-        <p className="muted">Add a class on Identity to create HD slots.</p>
+        <p className="muted">{t('pf1e.hp.noSlots')}</p>
       ) : (
         <table className="sheet-table wide">
           <thead>
             <tr>
-              <th>HD</th>
-              <th>Class</th>
-              <th>Die</th>
-              <th>Your roll</th>
-              <th>Con</th>
-              <th>From this HD</th>
+              <th>{t('pf1e.hp.hd')}</th>
+              <th>{t('pf1e.hp.class')}</th>
+              <th>{t('pf1e.hp.die')}</th>
+              <th>{t('pf1e.hp.yourRoll')}</th>
+              <th>{t('pf1e.hp.con')}</th>
+              <th>{t('pf1e.hp.fromThisHd')}</th>
               <th></th>
             </tr>
           </thead>
@@ -124,11 +121,11 @@ export function HpBreakdownDialog({
                     max={slot.hitDie}
                     disabled={!slot.editable}
                     value={slot.rolled ?? ''}
-                    placeholder={slot.editable ? 'roll' : ''}
+                    placeholder={slot.editable ? t('pf1e.hp.rollPlaceholder') : ''}
                     title={
-                      slot.editable ? undefined : 'Enter earlier HD first'
+                      slot.editable ? undefined : t('pf1e.hp.enterEarlier')
                     }
-                    aria-label={`HD ${slot.characterLevel} roll`}
+                    aria-label={t('pf1e.hp.hdRoll', { level: slot.characterLevel })}
                     onChange={(e) => writeRoll(slot.index, e.target.value)}
                   />
                 </td>
@@ -143,7 +140,7 @@ export function HpBreakdownDialog({
                         writeRoll(slot.index, String(slot.hitDie))
                       }
                     >
-                      Max 1st
+                      {t('pf1e.hp.maxFirst')}
                     </button>
                   ) : null}
                 </td>
@@ -154,15 +151,13 @@ export function HpBreakdownDialog({
       )}
       {breakdown.extraRolls.length > 0 ? (
         <>
-          <p className="muted">
-            Extra HD rolls beyond class levels still count until removed.
-          </p>
+          <p className="muted">{t('pf1e.hp.extraHelp')}</p>
           <table className="sheet-table wide">
             <thead>
               <tr>
-                <th>Extra</th>
-                <th>Roll</th>
-                <th>From HD</th>
+                <th>{t('pf1e.hp.extra')}</th>
+                <th>{t('pf1e.hp.roll')}</th>
+                <th>{t('pf1e.hp.fromHd')}</th>
                 <th></th>
               </tr>
             </thead>
@@ -175,7 +170,7 @@ export function HpBreakdownDialog({
                       type="number"
                       min={1}
                       value={row.rolled}
-                      aria-label={`Extra HD roll ${row.index + 1}`}
+                      aria-label={t('pf1e.hp.extraRoll', { n: row.index + 1 })}
                       onChange={(e) => writeRoll(row.index, e.target.value)}
                     />
                   </td>
@@ -185,7 +180,7 @@ export function HpBreakdownDialog({
                       type="button"
                       onClick={() => dropExtra(row.index)}
                     >
-                      Remove
+                      {t('pf1e.common.remove')}
                     </button>
                   </td>
                 </tr>
@@ -198,8 +193,8 @@ export function HpBreakdownDialog({
         <table className="sheet-table">
           <thead>
             <tr>
-              <th>Favored class HP</th>
-              <th>Bonus</th>
+              <th>{t('pf1e.hp.favoredTitle')}</th>
+              <th>{t('pf1e.hp.bonus')}</th>
             </tr>
           </thead>
           <tbody>
@@ -211,7 +206,7 @@ export function HpBreakdownDialog({
                     type="number"
                     min={0}
                     value={line.hp}
-                    aria-label={`${line.className} favored HP`}
+                    aria-label={t('pf1e.hp.favoredAria', { name: line.className })}
                     onChange={(e) =>
                       writeFavored(
                         line.classRowId,
@@ -228,15 +223,15 @@ export function HpBreakdownDialog({
       <table className="sheet-table">
         <tbody>
           <tr>
-            <th>From hit dice</th>
+            <th>{t('pf1e.hp.fromHitDice')}</th>
             <td>{breakdown.fromDice}</td>
           </tr>
           <tr>
-            <th>From favored class</th>
+            <th>{t('pf1e.hp.fromFavored')}</th>
             <td>{breakdown.fromFavored}</td>
           </tr>
           <tr>
-            <th>Max HP</th>
+            <th>{t('pf1e.hp.maxHp')}</th>
             <td>
               <strong>{breakdown.maxHp}</strong>
             </td>

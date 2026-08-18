@@ -22,6 +22,7 @@ export function applyOverrides<T extends OverrideHost>(
   overrides: Record<string, OverrideValue>,
   applyOne: (view: T, path: string, value: unknown) => boolean,
 ): T {
+  if (Object.keys(overrides).length === 0) return view
   const next: T = structuredClone(view)
   for (const [path, override] of Object.entries(overrides)) {
     if (applyOne(next, path, override.value)) {

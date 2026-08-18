@@ -1,6 +1,6 @@
 # Continuation design — options to proceed from Phase 1
 
-**Status:** Executed (S1 vertical slice + S4 validation prelude landed 2026-08-14). Historical PF2e sequencing.  
+**Status:** Archival. Executed (S1 vertical slice + S4 validation prelude landed 2026-08-14). Historical PF2e sequencing. Do not use this file to schedule new work.  
 **Current sequencing:** [`next-increment-multi-system.md`](next-increment-multi-system.md) (ADR 0003).  
 **Date:** 2026-08-14  
 **Audience:** Product / engineering  

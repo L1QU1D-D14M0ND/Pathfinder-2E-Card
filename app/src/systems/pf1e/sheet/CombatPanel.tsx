@@ -5,7 +5,7 @@ import {
 import type { AbilityKey } from '../character/types'
 import { formatIteratives, signed, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
-import { t } from '../../../shared/i18n'
+import { useT } from '../../../shared/i18n'
 import type { SheetUpdate } from './update'
 
 const ABILITY_OPTIONS: AbilityKey[] = [
@@ -47,6 +47,7 @@ export function CombatPanel({
   derived: DerivedView
   update: SheetUpdate
 }) {
+  const t = useT()
   const ac = character.armorClass
   const combat = character.combat
 
@@ -168,6 +169,7 @@ export function CombatPanel({
               <td>
                 <input
                   type="number"
+                  aria-label={t(labelKey)}
                   value={ac[key]}
                   onChange={(e) =>
                     setAc(
@@ -186,6 +188,7 @@ export function CombatPanel({
             <td>
               <input
                 type="number"
+                aria-label={t('pf1e.combat.maxDex')}
                 value={ac.maxDex ?? ''}
                 onChange={(e) =>
                   setAc(
@@ -214,6 +217,7 @@ export function CombatPanel({
               <td>
                 <input
                   type="number"
+                  aria-label={t(labelKey)}
                   value={combat[key]}
                   onChange={(e) =>
                     setCombat(key, Number(e.target.value) || 0)
@@ -271,6 +275,7 @@ export function CombatPanel({
                 <tr key={row.id}>
                   <td>
                     <input
+                      aria-label={t('pf1e.combat.name')}
                       value={row.name}
                       onChange={(e) =>
                         update((c) => {
@@ -286,6 +291,7 @@ export function CombatPanel({
                   </td>
                   <td>
                     <select
+                      aria-label={t('pf1e.combat.type')}
                       value={row.attackType}
                       onChange={(e) =>
                         update((c) => {
@@ -304,6 +310,7 @@ export function CombatPanel({
                   </td>
                   <td>
                     <input
+                      aria-label={t('pf1e.combat.dice')}
                       value={row.damageDice}
                       onChange={(e) =>
                         update((c) => {
@@ -319,6 +326,7 @@ export function CombatPanel({
                   </td>
                   <td>
                     <input
+                      aria-label={t('pf1e.combat.damageType')}
                       value={row.damageType}
                       onChange={(e) =>
                         update((c) => {
@@ -334,6 +342,7 @@ export function CombatPanel({
                   </td>
                   <td>
                     <select
+                      aria-label={t('pf1e.combat.atkAbility')}
                       value={row.attackAbility ?? (row.attackType === 'ranged' ? 'dex' : 'str')}
                       onChange={(e) =>
                         update((c) => {
@@ -355,6 +364,7 @@ export function CombatPanel({
                   </td>
                   <td>
                     <select
+                      aria-label={t('pf1e.combat.dmgAbility')}
                       value={row.damageAbility === null ? '' : (row.damageAbility ?? row.attackAbility ?? 'str')}
                       onChange={(e) =>
                         update((c) => {
@@ -381,6 +391,7 @@ export function CombatPanel({
                   <td>
                     <input
                       type="number"
+                      aria-label={t('pf1e.combat.miscAtk')}
                       value={row.miscAttack ?? 0}
                       onChange={(e) =>
                         update((c) => {
@@ -397,6 +408,7 @@ export function CombatPanel({
                   <td>
                     <input
                       type="number"
+                      aria-label={t('pf1e.combat.miscDmg')}
                       value={row.miscDamage ?? 0}
                       onChange={(e) =>
                         update((c) => {
@@ -452,6 +464,7 @@ export function CombatPanel({
                   <td>
                     <input
                       type="number"
+                      aria-label={t('pf1e.combat.range')}
                       value={row.rangeFeet ?? ''}
                       onChange={(e) =>
                         update((c) => {

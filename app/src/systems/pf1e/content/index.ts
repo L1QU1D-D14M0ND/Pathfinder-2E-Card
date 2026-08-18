@@ -1,4 +1,5 @@
 export {
+  applyClassProgression,
   applyCrbClassProgression,
   applyCrbFeat,
   applyCrbItem,
@@ -33,3 +34,4 @@ export type {
   CrbSpell,
 } from './crbPack'
 export type { ApgArchetype, ApgClassProgression } from './apgPack'
+export type { ClassProgression } from './packRegistry'

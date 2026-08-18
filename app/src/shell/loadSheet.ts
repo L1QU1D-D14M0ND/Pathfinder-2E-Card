@@ -1,13 +1,8 @@
 import { parseJsonObject } from '../shared/saveLoad'
 import { isRecord, resolveSystemId, type SystemId } from '../shared/envelope'
-import {
-  parseCharacterJson as parsePf1e,
-  type CharacterDocument as Pf1eDocument,
-} from '../systems/pf1e/character'
-import {
-  parseCharacterJson as parsePf2e,
-  type CharacterDocument as Pf2eDocument,
-} from '../systems/pf2e/character'
+import type { CharacterDocument as Pf1eDocument } from '../systems/pf1e/character'
+import type { CharacterDocument as Pf2eDocument } from '../systems/pf2e/character'
+import { parseSheetFor } from './registry'
 
 export type LoadedSheet =
   | { system: 'pf1e'; character: Pf1eDocument }
@@ -19,9 +14,5 @@ export function peekSystemId(text: string): SystemId {
 }
 
 export function parseLoadedSheet(text: string): LoadedSheet {
-  const system = peekSystemId(text)
-  if (system === 'pf1e') {
-    return { system: 'pf1e', character: parsePf1e(text) }
-  }
-  return { system: 'pf2e', character: parsePf2e(text) }
+  return parseSheetFor(peekSystemId(text), text)
 }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { t } from '../shared/i18n'
+import { useT } from '../shared/i18n'
 
 export function RestoreDraftDialog({
   open,
@@ -10,6 +10,7 @@ export function RestoreDraftDialog({
   onRestore: () => void
   onDiscard: () => void
 }) {
+  const t = useT()
   useEffect(() => {
     if (!open) return
     function onKey(event: KeyboardEvent) {

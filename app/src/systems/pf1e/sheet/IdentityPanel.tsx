@@ -3,9 +3,10 @@ import {
   type CharacterDocument,
 } from '../character'
 import type { Alignment, Size } from '../character/types'
-import { applyCrbClassProgression, applyCrbRace, applyApgArchetype, APG_ARCHETYPES, APG_CLASSES, CRB_CLASSES, CRB_RACES, stampClassSkills } from '../content'
+import { applyClassProgression, applyCrbRace, applyApgArchetype, APG_ARCHETYPES, APG_CLASSES, CRB_CLASSES, CRB_RACES, stampClassSkills } from '../content'
 import { characterLevel } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
+import { useT } from '../../../shared/i18n'
 import type { DerivedView } from '../engine'
 import type { SheetUpdate } from './update'
 
@@ -42,6 +43,24 @@ const BAB: Array<CharacterDocument['classes'][number]['babProgression']> = [
 
 const SAVE: Array<'good' | 'poor'> = ['good', 'poor']
 
+const ALIGNMENT_KEYS: Record<Alignment, string> = {
+  'lawful good': 'pf1e.identity.alignments.lawfulGood',
+  'neutral good': 'pf1e.identity.alignments.neutralGood',
+  'chaotic good': 'pf1e.identity.alignments.chaoticGood',
+  'lawful neutral': 'pf1e.identity.alignments.lawfulNeutral',
+  'neutral': 'pf1e.identity.alignments.neutral',
+  'chaotic neutral': 'pf1e.identity.alignments.chaoticNeutral',
+  'lawful evil': 'pf1e.identity.alignments.lawfulEvil',
+  'neutral evil': 'pf1e.identity.alignments.neutralEvil',
+  'chaotic evil': 'pf1e.identity.alignments.chaoticEvil',
+}
+
+const BAB_KEYS = {
+  full: 'pf1e.identity.babFull',
+  threeQuarter: 'pf1e.identity.babThreeQuarter',
+  half: 'pf1e.identity.babHalf',
+} as const
+
 export function IdentityPanel({
   character,
   derived,
@@ -51,14 +70,16 @@ export function IdentityPanel({
   derived: DerivedView
   update: SheetUpdate
 }) {
+  const t = useT()
   return (
     <div className="panel-stack">
       <table className="sheet-table">
         <tbody>
           <tr>
-            <th>Player</th>
+            <th>{t('pf1e.identity.player')}</th>
             <td>
               <input
+                aria-label={t('pf1e.identity.player')}
                 value={character.identity.playerName ?? ''}
                 onChange={(e) =>
                   update((c) => ({
@@ -70,10 +91,10 @@ export function IdentityPanel({
             </td>
           </tr>
           <tr>
-            <th>Race</th>
+            <th>{t('pf1e.identity.race')}</th>
             <td className="race-cell">
               <select
-                aria-label="CRB race"
+                aria-label={t('pf1e.identity.raceCatalog')}
                 value={character.identity.race.id ?? ''}
                 onChange={(e) => {
                   const id = e.target.value || null
@@ -83,7 +104,7 @@ export function IdentityPanel({
                   }))
                 }}
               >
-                <option value="">Custom</option>
+                <option value="">{t('pf1e.common.custom')}</option>
                 {CRB_RACES.map((entry) => (
                   <option key={entry.id} value={entry.id}>
                     {entry.name}
@@ -91,7 +112,7 @@ export function IdentityPanel({
                 ))}
               </select>
               <input
-                aria-label="Race name"
+                aria-label={t('pf1e.identity.raceName')}
                 value={character.identity.race.name}
                 onChange={(e) =>
                   update((c) => ({
@@ -104,15 +125,15 @@ export function IdentityPanel({
                 }
               />
               <p className="muted">
-                Human +2 any ability is typed into the score, not stamped from
-                the catalog.
+                {t('pf1e.identity.humanHelp')}
               </p>
             </td>
           </tr>
           <tr>
-            <th>Size</th>
+            <th>{t('pf1e.identity.size')}</th>
             <td>
               <select
+                aria-label={t('pf1e.identity.size')}
                 value={character.identity.size}
                 onChange={(e) =>
                   update((c) => ({
@@ -123,16 +144,17 @@ export function IdentityPanel({
               >
                 {SIZES.map((size) => (
                   <option key={size} value={size}>
-                    {size}
+                    {t(`pf1e.identity.sizes.${size}`)}
                   </option>
                 ))}
               </select>
             </td>
           </tr>
           <tr>
-            <th>Alignment</th>
+            <th>{t('pf1e.identity.alignment')}</th>
             <td>
               <select
+                aria-label={t('pf1e.identity.alignment')}
                 value={character.identity.alignment ?? ''}
                 onChange={(e) =>
                   update((c) => ({
@@ -146,16 +168,19 @@ export function IdentityPanel({
               >
                 {ALIGNMENTS.map((value) => (
                   <option key={value || 'none'} value={value}>
-                    {value || '(none)'}
+                    {value
+                      ? t(ALIGNMENT_KEYS[value])
+                      : t('pf1e.common.none')}
                   </option>
                 ))}
               </select>
             </td>
           </tr>
           <tr>
-            <th>Deity</th>
+            <th>{t('pf1e.identity.deity')}</th>
             <td>
               <input
+                aria-label={t('pf1e.identity.deity')}
                 value={character.identity.deity ?? ''}
                 onChange={(e) =>
                   update((c) => ({
@@ -167,11 +192,12 @@ export function IdentityPanel({
             </td>
           </tr>
           <tr>
-            <th>XP</th>
+            <th>{t('pf1e.identity.xp')}</th>
             <td>
               <input
                 type="number"
                 min={0}
+                aria-label={t('pf1e.identity.xp')}
                 value={character.identity.xp ?? 0}
                 onChange={(e) =>
                   update((c) => ({
@@ -186,7 +212,7 @@ export function IdentityPanel({
             </td>
           </tr>
           <tr>
-            <th>Level (derived)</th>
+            <th>{t('pf1e.identity.levelDerived')}</th>
             <td>
               <DerivedCell
                 value={derived.level}
@@ -194,7 +220,9 @@ export function IdentityPanel({
               />
               <span className="muted">
                 {' '}
-                sum of class levels ({characterLevel(character.classes)})
+                {t('pf1e.identity.levelSum', {
+                  level: characterLevel(character.classes),
+                })}
               </span>
             </td>
           </tr>
@@ -202,7 +230,7 @@ export function IdentityPanel({
       </table>
 
       <div className="table-toolbar">
-        <strong>Classes</strong>
+        <strong>{t('pf1e.identity.classes')}</strong>
         <button
           type="button"
           onClick={() =>
@@ -212,21 +240,21 @@ export function IdentityPanel({
             }))
           }
         >
-          Add class
+          {t('pf1e.identity.addClass')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Class</th>
-            <th>Levels</th>
-            <th>HD</th>
-            <th>BAB</th>
-            <th>Fort</th>
-            <th>Ref</th>
-            <th>Will</th>
-            <th>Favored HP</th>
-            <th>Favored ranks</th>
+            <th>{t('pf1e.identity.className')}</th>
+            <th>{t('pf1e.identity.levels')}</th>
+            <th>{t('pf1e.identity.hitDie')}</th>
+            <th>{t('pf1e.identity.bab')}</th>
+            <th>{t('pf1e.identity.fort')}</th>
+            <th>{t('pf1e.identity.ref')}</th>
+            <th>{t('pf1e.identity.will')}</th>
+            <th>{t('pf1e.identity.favoredHp')}</th>
+            <th>{t('pf1e.identity.favoredRanks')}</th>
             <th></th>
           </tr>
         </thead>
@@ -234,8 +262,7 @@ export function IdentityPanel({
           {character.classes.length === 0 ? (
             <tr>
               <td colSpan={10} className="muted">
-                No class rows. Add one, then pick a catalog class (fills HD /
-                BAB / saves / class skills). APG Summoner is in this list.
+                {t('pf1e.identity.noClasses')}
               </td>
             </tr>
           ) : (
@@ -243,13 +270,13 @@ export function IdentityPanel({
               <tr key={row.id}>
                 <td className="class-cell">
                   <select
-                    aria-label="Class catalog"
+                    aria-label={t('pf1e.identity.classCatalog')}
                     value={row.class.id ?? ''}
                     onChange={(e) => {
                       const id = e.target.value || null
                       update((c) => {
                         const classes = [...c.classes]
-                        classes[index] = applyCrbClassProgression(
+                        classes[index] = applyClassProgression(
                           classes[index],
                           id,
                         )
@@ -261,15 +288,15 @@ export function IdentityPanel({
                       })
                     }}
                   >
-                    <option value="">Custom</option>
-                    <optgroup label="Core Rulebook">
+                    <option value="">{t('pf1e.common.custom')}</option>
+                    <optgroup label={t('pf1e.identity.optgroupCrb')}>
                       {CRB_CLASSES.map((entry) => (
                         <option key={entry.id} value={entry.id}>
                           {entry.name}
                         </option>
                       ))}
                     </optgroup>
-                    <optgroup label="Advanced Player's Guide">
+                    <optgroup label={t('pf1e.identity.optgroupApg')}>
                       {APG_CLASSES.map((entry) => (
                         <option key={entry.id} value={entry.id}>
                           {entry.name}
@@ -278,7 +305,7 @@ export function IdentityPanel({
                     </optgroup>
                   </select>
                   <input
-                    aria-label="Class name"
+                    aria-label={t('pf1e.identity.className')}
                     value={row.class.name}
                     onChange={(e) =>
                       update((c) => {
@@ -297,7 +324,7 @@ export function IdentityPanel({
                   {row.class.id === 'class.summoner' ? (
                     <>
                       <select
-                        aria-label="APG archetype"
+                        aria-label={t('pf1e.identity.archetype')}
                         value={row.archetype?.id ?? ''}
                         onChange={(e) => {
                           const id = e.target.value || null
@@ -311,7 +338,7 @@ export function IdentityPanel({
                           })
                         }}
                       >
-                        <option value="">No archetype</option>
+                        <option value="">{t('pf1e.identity.noArchetype')}</option>
                         {APG_ARCHETYPES.map((entry) => (
                           <option key={entry.id} value={entry.id}>
                             {entry.name}
@@ -319,7 +346,7 @@ export function IdentityPanel({
                         ))}
                       </select>
                       <input
-                        aria-label="Archetype name"
+                        aria-label={t('pf1e.identity.archetypeName')}
                         value={row.archetype?.name ?? ''}
                         onChange={(e) =>
                           update((c) => {
@@ -343,6 +370,7 @@ export function IdentityPanel({
                   <input
                     type="number"
                     min={1}
+                    aria-label={t('pf1e.identity.levels')}
                     value={row.levels}
                     onChange={(e) =>
                       update((c) => {
@@ -360,6 +388,7 @@ export function IdentityPanel({
                   <input
                     type="number"
                     min={1}
+                    aria-label={t('pf1e.identity.hitDie')}
                     value={row.hitDie}
                     onChange={(e) =>
                       update((c) => {
@@ -375,6 +404,7 @@ export function IdentityPanel({
                 </td>
                 <td>
                   <select
+                    aria-label={t('pf1e.identity.bab')}
                     value={row.babProgression}
                     onChange={(e) =>
                       update((c) => {
@@ -390,7 +420,7 @@ export function IdentityPanel({
                   >
                     {BAB.map((value) => (
                       <option key={value} value={value}>
-                        {value}
+                        {t(BAB_KEYS[value])}
                       </option>
                     ))}
                   </select>
@@ -398,6 +428,7 @@ export function IdentityPanel({
                 {(['fort', 'ref', 'will'] as const).map((save) => (
                   <td key={save}>
                     <select
+                      aria-label={t(`pf1e.identity.${save}`)}
                       value={row.saves[save]}
                       onChange={(e) =>
                         update((c) => {
@@ -415,7 +446,7 @@ export function IdentityPanel({
                     >
                       {SAVE.map((value) => (
                         <option key={value} value={value}>
-                          {value}
+                          {t(value === 'good' ? 'pf1e.identity.saveGood' : 'pf1e.identity.savePoor')}
                         </option>
                       ))}
                     </select>
@@ -425,6 +456,7 @@ export function IdentityPanel({
                   <input
                     type="number"
                     min={0}
+                    aria-label={t('pf1e.identity.favoredHp')}
                     value={row.favored?.hp ?? 0}
                     onChange={(e) =>
                       update((c) => {
@@ -445,6 +477,7 @@ export function IdentityPanel({
                   <input
                     type="number"
                     min={0}
+                    aria-label={t('pf1e.identity.favoredRanks')}
                     value={row.favored?.skillRanks ?? 0}
                     onChange={(e) =>
                       update((c) => {
@@ -480,7 +513,7 @@ export function IdentityPanel({
                       })
                     }
                   >
-                    Remove
+                    {t('pf1e.common.remove')}
                   </button>
                 </td>
               </tr>
@@ -490,8 +523,7 @@ export function IdentityPanel({
       </table>
       {character.classes.some((row) => row.class.id === 'class.summoner') ? (
         <p className="muted">
-          Synthesist stamps the archetype name only. Fused STR/DEX/CON, costume
-          HP, and evolutions stay typed.
+          {t('pf1e.identity.synthesistHelp')}
         </p>
       ) : null}
     </div>

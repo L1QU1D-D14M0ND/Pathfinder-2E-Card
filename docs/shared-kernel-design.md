@@ -84,25 +84,28 @@ JSON Schema files stay per system (`schemas/character.schema.json` for PF2e; `sc
 
 ## 4. `SystemModule` contract
 
-The shell does not switch on `if (system === 'pf2e')` for math or panel trees. It registers modules:
+The shell does not switch on `if (system === 'pf2e')` for math or panel trees. It registers modules. App retains **one** typed switch to pick `pf1eModule` vs `pf2eModule` when mounting `SheetSession` (TypeScript cannot erase the `LoadedSheet` union).
 
 ```ts
 type SystemId = 'pf1e' | 'pf2e' // further ids reserved
 
 interface SystemModule<Doc, Derived> {
   id: SystemId
-  displayName: string
-  schema: object
+  displayNameKey: string
   validate(data: unknown): Doc
   createEmpty(): Doc
   compute(doc: Doc): Derived
-  stripDerived(doc: Doc): Doc
+  parse(text: string): Doc
+  serialize(doc: Doc): string
+  download(doc: Doc): void
+  readFile(file: File): Promise<Doc>
   suggestedFilename(doc: Doc): string
-  tabs: Array<{ id: string; labelKey: string }>
-  // Panels rendered by tab id; each panel is system-owned
-  sidebarTools?: SidebarTool<Doc, Derived>[]  // optional; host is shell (ADR 0005)
+  Workspace: ComponentType<SheetWorkspaceProps<Doc, Derived>>
+  sidebarTools: SidebarTool<Doc, Derived>[]
 }
 ```
+
+Tab ids and strip chrome stay **inside each Workspace**. They are not a field on the module.
 
 Load:
 
@@ -110,9 +113,9 @@ Load:
 2. Read `system` (missing → `pf2e`).
 3. Dispatch to that module’s `validate` + `compute`.
 
-Save: module `stripDerived` + `validate`, write `system`.
+Save: module `serialize` (strips `derived`) + `validate`, write `system`.
 
-New: picker → `createEmpty()`.
+New: picker iterates the registry → `createEmpty()`.
 
 No conversion of a PF2e document into PF1e (or the reverse).
 
@@ -265,11 +268,11 @@ Use this table when naming fields so we do not “standardize” the wrong thing
 ### Adding a system
 
 1. `systems/<id>/` with schema, types, `createEmpty`, `compute`, goldens.
-2. Implement `SystemModule`.
-3. Register in the shell. No edits inside another system’s engine.
+2. Implement `SystemModule` (`Workspace`, `displayNameKey`, `sidebarTools`).
+3. Add the id to `SystemId`, register in `shell/registry.ts`, add a `LoadedSheet` variant. No edits inside another system’s engine.
 4. Fixtures named with the system (`pf1e-fighter-5.json` or a `pf1e/` folder).
 5. i18n keys under `<id>.*`.
-6. Optional `sidebarTools` on the module; do not skip the host `update` path.
+6. `sidebarTools` on the module (empty array is valid); do not skip the host `update` path.
 
 ### Adding a sidebar tool (later)
 
@@ -357,3 +360,4 @@ Duplicating a 20-line skill total function is cheaper than a shared skill API wi
 | 2026-08-17 | Sidebar host on the shell; `sidebarTools` on SystemModule (ADR 0005) |
 | 2026-08-17 | Record what Phase M actually extracted vs still-duplicated types |
 | 2026-08-17 | Extract ContentRef, Effect, applyOverrides, Notes, Currency, AbilityKey; `en.json` + `t()` |
+| 2026-08-19 | Align `SystemModule` with `shell/types.ts`: `Workspace`, `displayNameKey`, no `schema`/`tabs` on the module |

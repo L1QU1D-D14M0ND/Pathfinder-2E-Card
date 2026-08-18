@@ -11,18 +11,38 @@ export { isOverridden }
 
 const ATTRIBUTE_KEYS: AttributeKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
-const SCALAR_KEYS = new Set([
-  'ac',
-  'maxHp',
-  'perception',
-  'fortitude',
-  'reflex',
-  'will',
-  'classDC',
-  'bulkUsed',
-  'bulkCapacity',
-  'investedCount',
-])
+const SCALARS: Record<string, (view: DerivedView, value: number) => void> = {
+  ac: (view, value) => {
+    view.ac = value
+  },
+  maxHp: (view, value) => {
+    view.maxHp = value
+  },
+  perception: (view, value) => {
+    view.perception = value
+  },
+  fortitude: (view, value) => {
+    view.fortitude = value
+  },
+  reflex: (view, value) => {
+    view.reflex = value
+  },
+  will: (view, value) => {
+    view.will = value
+  },
+  classDC: (view, value) => {
+    view.classDC = value
+  },
+  bulkUsed: (view, value) => {
+    view.bulkUsed = value
+  },
+  bulkCapacity: (view, value) => {
+    view.bulkCapacity = value
+  },
+  investedCount: (view, value) => {
+    view.investedCount = value
+  },
+}
 
 /**
  * Apply overrides last. Unknown paths are ignored (stored on ignoredOverridePaths).
@@ -44,43 +64,11 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
   const parts = path.split('.')
   if (parts[0] !== 'derived' || parts.length < 2) return false
 
-  if (parts.length === 2 && SCALAR_KEYS.has(parts[1])) {
+  const setScalar = parts.length === 2 ? SCALARS[parts[1]] : undefined
+  if (setScalar) {
     if (!isFiniteNumber(value)) return false
-    const key = parts[1]
-    switch (key) {
-      case 'ac':
-        view.ac = value
-        return true
-      case 'maxHp':
-        view.maxHp = value
-        return true
-      case 'perception':
-        view.perception = value
-        return true
-      case 'fortitude':
-        view.fortitude = value
-        return true
-      case 'reflex':
-        view.reflex = value
-        return true
-      case 'will':
-        view.will = value
-        return true
-      case 'classDC':
-        view.classDC = value
-        return true
-      case 'bulkUsed':
-        view.bulkUsed = value
-        return true
-      case 'bulkCapacity':
-        view.bulkCapacity = value
-        return true
-      case 'investedCount':
-        view.investedCount = value
-        return true
-      default:
-        return false
-    }
+    setScalar(view, value)
+    return true
   }
 
   if (

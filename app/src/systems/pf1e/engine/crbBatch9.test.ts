@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
 import { createEmptyClass } from '../character/createRows'
 import { parseCharacterJson } from '../character/saveLoad'
-import { applyCrbClassProgression } from '../content'
+import { applyClassProgression } from '../content'
 import { compute } from './compute'
 import {
   skillRanksBudget,
@@ -73,7 +73,7 @@ describe('CRB batch 9: skill points per level', () => {
     const character = createEmptyCharacter()
     character.identity.race = { id: 'race.human', name: 'Human' }
     character.abilities.int.score = 10
-    const fighter = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
+    const fighter = applyClassProgression(createEmptyClass(), 'class.fighter')
     fighter.levels = 5
     character.classes = [fighter]
     const view = compute(character)

@@ -1,20 +1,23 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { APP_DISPLAY_NAME } from '../shared/constants'
-import { t } from '../shared/i18n'
+import { LOCALES, useI18n } from '../shared/i18n'
 import { CharacterSaveError, readTextFile } from '../shared/saveLoad'
 import type { SystemId } from '../shared/envelope'
 import { pf1eModule } from '../systems/pf1e/module'
 import { pf2eModule } from '../systems/pf2e/module'
-import { Pf1eWorkspace } from '../systems/pf1e/sheet/Workspace'
-import { Pf2eWorkspace } from '../systems/pf2e/sheet/Workspace'
-import type { CharacterDocument as Pf1eDocument } from '../systems/pf1e/character'
-import type { CharacterDocument as Pf2eDocument } from '../systems/pf2e/character'
 import { parseLoadedSheet, type LoadedSheet } from './loadSheet'
-import { parseDraft, serializeSheet } from './draft'
+import { parseDraft } from './draft'
 import { clearDraft, readDraft, writeDraft } from './draftStore'
+import {
+  createSheet,
+  downloadSheet,
+  serializeSheet,
+} from './registry'
 import { NewSheetDialog } from './NewSheetDialog'
 import { RestoreDraftDialog } from './RestoreDraftDialog'
 import { SidebarHost } from './sidebar/SidebarHost'
+import type { SystemModule } from './types'
+import { usePrefersNarrow } from './usePrefersNarrow'
 import './App.css'
 
 function touchMeta<T extends { meta: { updatedAt: string } }>(character: T): T {
@@ -24,27 +27,30 @@ function touchMeta<T extends { meta: { updatedAt: string } }>(character: T): T {
   }
 }
 
-function Pf1eSession({
+function SheetSession<Doc extends { meta: { updatedAt: string } }, Derived>({
+  module,
   character,
   setCharacter,
   setStatus,
   sidebarCollapsed,
   setSidebarCollapsed,
 }: {
-  character: Pf1eDocument
-  setCharacter: (mutator: (c: Pf1eDocument) => Pf1eDocument) => void
+  module: SystemModule<Doc, Derived>
+  character: Doc
+  setCharacter: (mutator: (c: Doc) => Doc) => void
   setStatus: (message: string) => void
   sidebarCollapsed: boolean
   setSidebarCollapsed: (value: boolean | ((prev: boolean) => boolean)) => void
 }) {
-  const derived = useMemo(() => pf1eModule.compute(character), [character])
-  const update = (mutator: (c: Pf1eDocument) => Pf1eDocument) => {
+  const derived = useMemo(() => module.compute(character), [character, module])
+  const update = (mutator: (c: Doc) => Doc) => {
     setCharacter((c) => touchMeta(mutator(c)))
   }
+  const Workspace = module.Workspace
   return (
     <>
       <div className="workspace-main">
-        <Pf1eWorkspace
+        <Workspace
           character={character}
           derived={derived}
           update={update}
@@ -52,51 +58,9 @@ function Pf1eSession({
         />
       </div>
       <SidebarHost
-        tools={pf1eModule.sidebarTools}
+        tools={module.sidebarTools}
         context={{
-          system: 'pf1e',
-          character,
-          derived,
-          update,
-        }}
-        collapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed((value) => !value)}
-      />
-    </>
-  )
-}
-
-function Pf2eSession({
-  character,
-  setCharacter,
-  setStatus,
-  sidebarCollapsed,
-  setSidebarCollapsed,
-}: {
-  character: Pf2eDocument
-  setCharacter: (mutator: (c: Pf2eDocument) => Pf2eDocument) => void
-  setStatus: (message: string) => void
-  sidebarCollapsed: boolean
-  setSidebarCollapsed: (value: boolean | ((prev: boolean) => boolean)) => void
-}) {
-  const derived = useMemo(() => pf2eModule.compute(character), [character])
-  const update = (mutator: (c: Pf2eDocument) => Pf2eDocument) => {
-    setCharacter((c) => touchMeta(mutator(c)))
-  }
-  return (
-    <>
-      <div className="workspace-main">
-        <Pf2eWorkspace
-          character={character}
-          derived={derived}
-          update={update}
-          setStatus={setStatus}
-        />
-      </div>
-      <SidebarHost
-        tools={pf2eModule.sidebarTools}
-        context={{
-          system: 'pf2e',
+          system: module.id,
           character,
           derived,
           update,
@@ -109,12 +73,10 @@ function Pf2eSession({
 }
 
 export default function App() {
-  const [sheet, setSheet] = useState<LoadedSheet>(() => ({
-    system: 'pf2e',
-    character: pf2eModule.createEmpty(),
-  }))
-  const [status, setStatus] = useState(t('shell.newReady'))
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
+  const { t, locale, setLocale } = useI18n()
+  const [sheet, setSheet] = useState<LoadedSheet>(() => createSheet('pf2e'))
+  const [status, setStatus] = useState<string | undefined>(undefined)
+  const [sidebarOverride, setSidebarOverride] = useState<boolean | null>(null)
   const [newOpen, setNewOpen] = useState(false)
   const [draftGate, setDraftGate] = useState<'boot' | 'prompt' | 'ready'>(
     'boot',
@@ -122,7 +84,17 @@ export default function App() {
   const [restoreSheet, setRestoreSheet] = useState<LoadedSheet | null>(null)
   const [autosave, setAutosave] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
-  const module = sheet.system === 'pf1e' ? pf1eModule : pf2eModule
+  const isNarrow = usePrefersNarrow()
+  const displayNameKey =
+    sheet.system === 'pf1e'
+      ? pf1eModule.displayNameKey
+      : pf2eModule.displayNameKey
+  const toolsEmpty =
+    (sheet.system === 'pf1e'
+      ? pf1eModule.sidebarTools
+      : pf2eModule.sidebarTools
+    ).length === 0
+  const sidebarCollapsed = sidebarOverride ?? (toolsEmpty || isNarrow)
 
   function commitSheet(next: LoadedSheet, message: string) {
     setSheet(next)
@@ -162,17 +134,11 @@ export default function App() {
 
   function onChooseNew(system: SystemId) {
     setNewOpen(false)
-    if (system === 'pf1e') {
-      commitSheet(
-        { system: 'pf1e', character: pf1eModule.createEmpty() },
-        t('shell.newCreated', { system: t('pf1e.displayName') }),
-      )
-    } else {
-      commitSheet(
-        { system: 'pf2e', character: pf2eModule.createEmpty() },
-        t('shell.newCreated', { system: t('pf2e.displayName') }),
-      )
-    }
+    const next = createSheet(system)
+    commitSheet(
+      next,
+      t('shell.newCreated', { system: t(activeNameKey(system)) }),
+    )
   }
 
   async function onLoadFile(event: ChangeEvent<HTMLInputElement>) {
@@ -192,8 +158,7 @@ export default function App() {
 
   function onSave() {
     try {
-      if (sheet.system === 'pf1e') pf1eModule.download(sheet.character)
-      else pf2eModule.download(sheet.character)
+      downloadSheet(sheet)
       setStatus(t('shell.saved'))
     } catch (err) {
       setStatus(
@@ -213,7 +178,7 @@ export default function App() {
           <h1>{APP_DISPLAY_NAME}</h1>
           <p className="tagline">
             {t('shell.tagline', {
-              system: module.displayName,
+              system: t(displayNameKey),
               version: sheet.character.schemaVersion,
             })}
           </p>
@@ -230,10 +195,27 @@ export default function App() {
           </button>
           <button
             type="button"
-            onClick={() => setSidebarCollapsed((value) => !value)}
+            onClick={() => setSidebarOverride(!sidebarCollapsed)}
           >
             {sidebarCollapsed ? t('shell.showTools') : t('shell.hideTools')}
           </button>
+          <label className="locale-picker">
+            {t('shell.language')}
+            <select
+              aria-label={t('shell.language')}
+              value={locale}
+              onChange={(event) => {
+                const next = event.target.value
+                if (next === 'en' || next === 'es') setLocale(next)
+              }}
+            >
+              {LOCALES.map((id) => (
+                <option key={id} value={id}>
+                  {t(id === 'en' ? 'shell.localeEn' : 'shell.localeEs')}
+                </option>
+              ))}
+            </select>
+          </label>
           <input
             ref={fileRef}
             type="file"
@@ -246,7 +228,8 @@ export default function App() {
 
       <div className="workspace-layout">
         {sheet.system === 'pf1e' ? (
-          <Pf1eSession
+          <SheetSession
+            module={pf1eModule}
             character={sheet.character}
             setCharacter={(mutator) => {
               setAutosave(true)
@@ -258,10 +241,15 @@ export default function App() {
             }}
             setStatus={setStatus}
             sidebarCollapsed={sidebarCollapsed}
-            setSidebarCollapsed={setSidebarCollapsed}
+            setSidebarCollapsed={(value) => {
+              const next =
+                typeof value === 'function' ? value(sidebarCollapsed) : value
+              setSidebarOverride(next)
+            }}
           />
         ) : (
-          <Pf2eSession
+          <SheetSession
+            module={pf2eModule}
             character={sheet.character}
             setCharacter={(mutator) => {
               setAutosave(true)
@@ -273,12 +261,16 @@ export default function App() {
             }}
             setStatus={setStatus}
             sidebarCollapsed={sidebarCollapsed}
-            setSidebarCollapsed={setSidebarCollapsed}
+            setSidebarCollapsed={(value) => {
+              const next =
+                typeof value === 'function' ? value(sidebarCollapsed) : value
+              setSidebarOverride(next)
+            }}
           />
         )}
       </div>
 
-      <footer className="status">{status}</footer>
+      <footer className="status" role="status" aria-live="polite">{status ?? t('shell.newReady')}</footer>
       <NewSheetDialog
         open={newOpen}
         onCancel={() => setNewOpen(false)}
@@ -300,4 +292,8 @@ export default function App() {
       />
     </div>
   )
+}
+
+function activeNameKey(system: SystemId): string {
+  return system === 'pf1e' ? pf1eModule.displayNameKey : pf2eModule.displayNameKey
 }

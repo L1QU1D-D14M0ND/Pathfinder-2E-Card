@@ -1,6 +1,6 @@
 # Next increment — multi-system refactor, then PF1e
 
-**Status:** Active sequencing document (2026-08-18)  
+**Status:** Active sequencing document (2026-08-19)  
 **Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [ADR 0007](adr/0007-content-licensing.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **1.0 remaining work**: documentary evolution names plus a fused STR/DEX/CON overlay. APG slice 1 landed (Summoner catalog + Synthesist name, [ADR 0007](adr/0007-content-licensing.md) mechanics-only). Spanish (`es`) is a separate 1.0 track. Batches 1–13 and the IndexedDB draft / PWA proof are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **1.0 remaining work**: documentary evolution names plus a fused STR/DEX/CON overlay. APG slice 1 landed (Summoner catalog + Synthesist name, [ADR 0007](adr/0007-content-licensing.md) mechanics-only). Pre-1.0 architecture correction landed (locale runtime, polymorphic shell, pack JSON Schema + registry). Spanish copy is unblocked (`es.json` is a fallback stub) but stays a separate 1.0 track. Batches 1–13 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -24,7 +24,7 @@ The next **code** increment is **1.0 remaining work**: documentary evolution nam
 | PF1e development priority; PF2e slice must not regress | ADR 0003 |
 | Existing Load files without `system` are PF2e | ADR 0003 |
 | One sheet; Save/Load `.json`; no library, dice, VTT, house-rule flags | ADR 0003 |
-| English 0.9 / Spanish 1.0; chrome catalog landed | ADR 0003 (T4′) |
+| English 0.9 / Spanish 1.0; locale runtime + PF1e catalogs landed; `es.json` is a stub | ADR 0003 (T4′) |
 | PF2e documents still validate against `schemas/character.schema.json` until a dedicated move is part of Phase M | ADR 0002 |
 | Core calcs only; unknown `effects[]` ignored | ADR 0003 |
 | Sidebar host when a sheet is loaded; tools TBD; empty host OK for 0.9 | ADR 0005 |
@@ -232,8 +232,8 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Wizard 5 golden
 - [x] Multiclass golden
 - [x] Editors for those domains (no familiar nested sheet)
-- [x] `en` catalog for shell chrome + PF1e Combat/Abilities/Skills/tabs (PF2e panel literals remain)
-- [x] PWA install + offline proven once
+- [x] `en` catalog for shell chrome + PF1e panels; locale runtime; `es.json` stub (PF2e panel literals remain)
+- [x] PWA dist artifacts (`verify:pwa`); runtime offline is a manual `app/README.md` step
 - [x] PF2e Fighter 5 / Wizard 5 still pass
 - [x] Sidebar host may be empty; named tools not required
 
@@ -269,7 +269,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | Synthesist golden | After overlay |
 | Spanish (`es`) catalog | **1.0** (separate track) |
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
-| `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
+| App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Extract when those panels next change |
 
 ---
@@ -306,3 +306,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | OGL / PI review landed (ADR 0007); next code is 1.0 |
 | 2026-08-18 | APG slice 1: Summoner catalog + Synthesist name; next is evolutions + fused overlay |
 | 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; publishing local main to origin |
+| 2026-08-19 | Architecture correction: locale runtime, system registry, pack schemas, PF1e i18n + a11y, jsdom tests. Next code is evolutions + fused overlay |

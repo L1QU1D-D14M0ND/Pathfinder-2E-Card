@@ -22,4 +22,10 @@ describe('shared applyOverrides', () => {
     expect(isOverridden(next, 'derived.n')).toBe(true)
     expect(next.ignoredOverridePaths).toEqual(['derived.nope'])
   })
+
+  it('returns the same view when there are no overrides', () => {
+    const view = { n: 1, overriddenPaths: [] as string[], ignoredOverridePaths: [] as string[] }
+    const next = applyOverrides(view, {}, () => true)
+    expect(next).toBe(view)
+  })
 })

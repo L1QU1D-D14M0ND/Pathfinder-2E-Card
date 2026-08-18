@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ttrpg-sheet.local/schemas/content/pf1e/classes.schema.json",
+  "title": "PF1e class catalog",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "name",
+      "hitDie",
+      "babProgression",
+      "saves",
+      "skillPointsPerLevel",
+      "classSkills"
+    ],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "hitDie": { "type": "integer", "minimum": 4, "maximum": 12 },
+      "babProgression": { "enum": ["full", "threeQuarter", "half"] },
+      "saves": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fort", "ref", "will"],
+        "properties": {
+          "fort": { "enum": ["good", "poor"] },
+          "ref": { "enum": ["good", "poor"] },
+          "will": { "enum": ["good", "poor"] }
+        }
+      },
+      "skillPointsPerLevel": { "type": "integer", "minimum": 0 },
+      "classSkills": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 }
+      },
+      "source": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "book": { "type": "string" },
+          "page": { "type": ["integer", "null"] },
+          "rarity": { "enum": ["common", "uncommon", "rare", "unique"] }
+        }
+      }
+    }
+  }
+}

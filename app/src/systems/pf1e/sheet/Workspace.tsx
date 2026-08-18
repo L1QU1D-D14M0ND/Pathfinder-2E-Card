@@ -5,7 +5,7 @@ import {
 } from '../character'
 import type { AbilityKey } from '../character/types'
 import { signed } from '../../../shared/format'
-import { t } from '../../../shared/i18n'
+import { useT, type TranslateFn } from '../../../shared/i18n'
 import { NotesPanel } from '../../../shared/ui/NotesPanel'
 import { formatIteratives, ranksExceedLevel, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
@@ -43,10 +43,13 @@ const TAB_IDS: TabId[] = [
 
 const ATTRS: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
-function classSummary(character: CharacterDocument): string {
+function classSummary(
+  character: CharacterDocument,
+  t: TranslateFn,
+): string {
   if (character.classes.length === 0) return t('pf1e.strip.noClass')
   return character.classes
-    .map((row) => `${row.class.name || 'Class'} ${row.levels}`)
+    .map((row) => `${row.class.name || t('pf1e.common.classFallback')} ${row.levels}`)
     .join(' / ')
 }
 
@@ -61,16 +64,17 @@ export function Pf1eWorkspace({
   update: SheetUpdate
   setStatus: (message: string) => void
 }) {
+  const t = useT()
   const [tab, setTab] = useState<TabId>('identity')
   const [hpOpen, setHpOpen] = useState(false)
 
   function addWildcardSkill(kind: 'craft' | 'perform' | 'profession') {
-    const raw = window.prompt(`${kind} specialty (e.g. weapons)`)
+    const raw = window.prompt(t('pf1e.skills.specialtyPrompt', { kind }))
     if (!raw?.trim()) return
     const topic = raw.trim()
     const key = skillKeyFromName(topic, kind)
     if (character.skills.some((skill) => skill.key === key)) {
-      setStatus(`Skill already exists: ${key}`)
+      setStatus(t('pf1e.skills.alreadyExists', { key }))
       return
     }
     const ability: AbilityKey =
@@ -118,7 +122,7 @@ export function Pf1eWorkspace({
         </label>
         <label>
           {t('pf1e.strip.class')}
-          <span className="derived">{classSummary(character)}</span>
+          <span className="derived">{classSummary(character, t)}</span>
         </label>
         <label>
           {t('pf1e.strip.hp')}
@@ -170,7 +174,7 @@ export function Pf1eWorkspace({
         </label>
       </section>
 
-      <nav className="tabs" aria-label="Sheet tabs">
+      <nav className="tabs" aria-label={t('pf1e.tabs.nav')}>
         {TAB_IDS.map((id) => (
           <button
             key={id}
@@ -214,6 +218,7 @@ export function Pf1eWorkspace({
                     <td>
                       <input
                         type="number"
+                        aria-label={`${key.toUpperCase()} ${t('pf1e.abilities.score')}`}
                         value={block.score}
                         onChange={(e) =>
                           update((c) => ({
@@ -232,6 +237,7 @@ export function Pf1eWorkspace({
                     <td>
                       <input
                         type="number"
+                        aria-label={`${key.toUpperCase()} ${t('pf1e.abilities.tempScore')}`}
                         value={block.tempScore ?? 0}
                         onChange={(e) =>
                           update((c) => ({
@@ -250,6 +256,7 @@ export function Pf1eWorkspace({
                     <td>
                       <input
                         type="number"
+                        aria-label={`${key.toUpperCase()} ${t('pf1e.abilities.tempMod')}`}
                         value={block.tempModifier ?? 0}
                         onChange={(e) =>
                           update((c) => ({
@@ -335,6 +342,7 @@ export function Pf1eWorkspace({
                       <input
                         type="number"
                         min={0}
+                        aria-label={`${skill.name} ${t('pf1e.skills.ranks')}`}
                         value={skill.ranks}
                         aria-invalid={overCap || undefined}
                         onChange={(e) =>
@@ -357,6 +365,7 @@ export function Pf1eWorkspace({
                     <td>
                       <input
                         type="checkbox"
+                        aria-label={`${skill.name} ${t('pf1e.skills.class')}`}
                         checked={skill.classSkill}
                         onChange={(e) =>
                           update((c) => {
@@ -373,6 +382,7 @@ export function Pf1eWorkspace({
                     <td>
                       <input
                         type="number"
+                        aria-label={`${skill.name} ${t('pf1e.skills.misc')}`}
                         value={skill.misc ?? 0}
                         onChange={(e) =>
                           update((c) => {

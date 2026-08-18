@@ -9,7 +9,7 @@ import {
 import { STANDARD_SKILLS } from '../character/standardSkills'
 import { parseCharacterJson } from '../character/saveLoad'
 import {
-  applyCrbClassProgression,
+  applyClassProgression,
   applyCrbFeat,
   applyCrbItem,
   applyCrbRace,
@@ -79,7 +79,7 @@ describe('CRB pack batch 1: class progression catalog', () => {
     const row = createEmptyClass()
     row.levels = 5
     row.favored = { hp: 5, skillRanks: 1 }
-    const fighter = applyCrbClassProgression(row, 'class.fighter')
+    const fighter = applyClassProgression(row, 'class.fighter')
     expect(fighter.levels).toBe(5)
     expect(fighter.favored).toEqual({ hp: 5, skillRanks: 1 })
     expect(fighter.hitDie).toBe(10)
@@ -94,7 +94,7 @@ describe('CRB pack batch 1: class progression catalog', () => {
     const row = createEmptyClass()
     row.hitDie = 12
     row.babProgression = 'full'
-    const custom = applyCrbClassProgression(row, 'class.alchemist')
+    const custom = applyClassProgression(row, 'class.alchemist')
     expect(custom.class.id).toBeNull()
     expect(custom.hitDie).toBe(12)
     expect(custom.babProgression).toBe('full')
@@ -121,7 +121,7 @@ describe('CRB pack batch 1: class progression catalog', () => {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batch-7')
+    expect(pack.status).toBe('batches-1-13-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
     ])
@@ -206,7 +206,7 @@ describe('CRB pack batch 9: class skills', () => {
 
   it('stamps Fighter class-skill checkboxes and leaves ranks alone', () => {
     const character = createEmptyCharacter()
-    const row = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
+    const row = applyClassProgression(createEmptyClass(), 'class.fighter')
     const skills = stampClassSkills(character.skills, [row])
     const flagged = skills.filter((skill) => skill.classSkill).map((skill) => skill.key)
     expect(flagged).toEqual([
@@ -223,8 +223,8 @@ describe('CRB pack batch 9: class skills', () => {
   })
 
   it('unions Fighter and Wizard class skills', () => {
-    const fighter = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
-    const wizard = applyCrbClassProgression(createEmptyClass(), 'class.wizard')
+    const fighter = applyClassProgression(createEmptyClass(), 'class.fighter')
+    const wizard = applyClassProgression(createEmptyClass(), 'class.wizard')
     const keys = classSkillKeySet([fighter, wizard])
     expect(keys.has('climb')).toBe(true)
     expect(keys.has('spellcraft')).toBe(true)
@@ -242,7 +242,7 @@ describe('CRB pack batch 9: class skills', () => {
       armorPenaltyApplies: false,
       misc: 0,
     })
-    const row = applyCrbClassProgression(createEmptyClass(), 'class.wizard')
+    const row = applyClassProgression(createEmptyClass(), 'class.wizard')
     const skills = stampClassSkills(character.skills, [row])
     const craft = skills.find((skill) => skill.key === 'craft-weapons')
     expect(craft?.classSkill).toBe(true)
@@ -454,7 +454,7 @@ describe('CRB pack batch 11: remaining CRB classes', () => {
 
   it('stamps Rogue class skills through the existing apply/stamp path', () => {
     const character = createEmptyCharacter()
-    const row = applyCrbClassProgression(createEmptyClass(), 'class.rogue')
+    const row = applyClassProgression(createEmptyClass(), 'class.rogue')
     const skills = stampClassSkills(character.skills, [row])
     const flagged = skills
       .filter((skill) => skill.classSkill)
@@ -468,8 +468,8 @@ describe('CRB pack batch 11: remaining CRB classes', () => {
   })
 
   it('unions a new CRB class with Fighter using the same checkbox stamp', () => {
-    const fighter = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
-    const rogue = applyCrbClassProgression(createEmptyClass(), 'class.rogue')
+    const fighter = applyClassProgression(createEmptyClass(), 'class.fighter')
+    const rogue = applyClassProgression(createEmptyClass(), 'class.rogue')
     const keys = classSkillKeySet([fighter, rogue])
     expect(keys.has('climb')).toBe(true)
     expect(keys.has('disable-device')).toBe(true)

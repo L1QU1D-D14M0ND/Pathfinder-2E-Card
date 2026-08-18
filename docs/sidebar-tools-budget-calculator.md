@@ -185,7 +185,7 @@ First implementation: **no writes**. Copy totals to notes is optional later, not
 | --- | --- |
 | Tool id | `shell.budget-calculator` |
 | Slot | Named tool in the loaded-sheet sidebar |
-| Access | `SidebarToolAccess` — `character`, `derived`, `update` (update unused until apply-purchase) |
+| Access | `SidebarToolContext` — `character`, `derived`, `update` (update unused until apply-purchase) |
 | Systems | PF1e first (priced adventuring + magic items). PF2e when that sheet’s inventory/wealth is stable. |
 
 Empty sidebar until this id is registered in code. Spec-only until the 90% sheet gate.

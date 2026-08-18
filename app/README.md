@@ -31,11 +31,11 @@ npm run build
 - Save export strips `derived`
 - Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the sheet is ~90% done)
 - PWA: `npm run build` emits a Workbox service worker + standalone manifest (CI `verify:pwa`). Install/offline checklist below
-- UI chrome uses `en.json` + `t()`; PF2e panel literals remain
+- Locale runtime (`I18nProvider` / `useT()`). Chrome + PF1e panels use `en.json`; `es.json` is a stub that falls back to English. PF2e panel literals remain
 
 ## PWA proof (0.9)
 
-CI runs `npm run build` then `npm run verify:pwa` (standalone manifest, 192/512 PNG icons, Workbox SW that precaches `index.html`).
+CI runs `npm run build` then `npm run verify:pwa` (**dist artifact** check: standalone manifest, 192/512 PNG icons, Workbox SW that precaches `index.html`). Runtime install/offline is the manual checklist below.
 
 Manual once on a preview URL:
 

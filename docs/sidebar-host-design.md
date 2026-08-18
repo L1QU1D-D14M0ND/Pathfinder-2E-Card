@@ -2,7 +2,7 @@
 
 **Status:** Product + shell lock (ADR 0005) — 2026-08-17  
 **Parent:** [ADR 0005](adr/0005-sidebar-host.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md)  
-**Code:** thin host in `app/src/shell/sidebar` (collapsed empty rail). Named tools not implemented.
+**Code:** `app/src/shell/sidebar/SidebarHost.tsx`. Types (`SidebarTool`, `SidebarToolContext`) live in `app/src/shell/types.ts`. Named tools not implemented.
 
 This document locks the **host**. Named later tools are listed in §5; they are **not** implemented until a tools increment.
 
@@ -25,7 +25,7 @@ The spreadsheet remains the complete Build + Play editor. The sidebar is compani
 | Invalid Load rejected | Previous sheet stays; sidebar stays bound to that sheet |
 | User collapses the rail | Host remains; tools unmounted or hidden; sheet uses full width |
 
-Narrow / mobile: rail **collapsed by default**. Desktop: expanded when at least one tool is registered, otherwise collapsed (empty host must not steal a wide column).
+Narrow / mobile (`matchMedia('(max-width: 800px)')`): rail **collapsed by default**. Desktop: also collapsed when `tools.length === 0` (empty host must not steal a wide column). The player can override with the toolbar Show/Hide control.
 
 ---
 
@@ -64,7 +64,7 @@ Locked look-and-feel, still lightweight (no animations beyond show/hide):
 - A **rail** on the trailing edge of the main column (LTR: right). Spreadsheet tabs stay on the left/center.
 - A **collapse** control in the identity/top bar or the rail header.
 - Inside the rail: a **tool list** (names) + the **active tool** body. Extra information may be a built-in summary region *or* just another tool; do not invent a third column.
-- Empty state: “No tools yet” (i18n `shell.sidebar.empty`) when the registry is empty — acceptable for 0.9.
+- Empty state: “No tools yet” (i18n `shell.toolsEmpty`) when the registry is empty — acceptable for 0.9.
 - No cards, no decorative motion, no floating windows.
 
 CSS lives with the shell. Do not put PF2e-only class names on the rail.
@@ -82,7 +82,7 @@ interface SidebarTool<Doc, Derived> {
 }
 ```
 
-`SystemModule` may expose `sidebarTools`. The shell concatenates shared tools + the active system’s tools, filters by `systems`, and renders the host.
+`SystemModule` exposes `sidebarTools`. The shell uses the active module’s tools (there is no separate `registry.ts` for tools), filters by `systems`, and renders the host.
 
 Adding a tool later = implement `SidebarTool` + register. It must not require changing Save/Load or the envelope.
 
@@ -119,7 +119,7 @@ The old “reference sidebar” (Spells / Afflictions / Actions) remains a possi
 | **Sb** | Done (thin host: collapse, registry, empty state, context wired) |
 | **Tools** (later) | After the character sheet is **~90% done** (dynamic and functional). **Attack Helper**, **Actions List**, and **Budget Calculator** are specified; encyclopedia is a candidate |
 | 0.9 | PF1e bar does **not** wait on tools. Empty/collapsed host is fine |
-| 1.0 | Same; Spanish includes `shell.sidebar.*` if the host shipped |
+| 1.0 | Same; Spanish includes `shell.tools*` if the host shipped |
 
 Phase Sb can follow 1e if engineering prefers PF1e math first; the **contract** must exist before the first tool PR so tools do not invent a second write path.
 
@@ -130,13 +130,13 @@ Phase Sb can follow 1e if engineering prefers PF1e math first; the **contract** 
 Add to the shell (not `systems/pf2e` math):
 
 ```text
-app/src/shell/sidebar/
-  SidebarHost.tsx      # rail + collapse + tool list
-  types.ts             # SidebarTool, SidebarToolContext
-  registry.ts          # merge shared + system tools
+app/src/shell/
+  types.ts             # SidebarTool, SidebarToolContext, SystemModule
+  sidebar/
+    SidebarHost.tsx    # rail + collapse + tool list
 ```
 
-`SystemModule` grows an optional `sidebarTools` array. Shared kernel already owns `update` / derived-cell patterns; the sidebar reuses them.
+`SystemModule` has a `sidebarTools` array. Shared kernel already owns `update` / derived-cell patterns; the sidebar reuses them.
 
 Import rule unchanged: PF1e tools must not import PF2e modules.
 
@@ -151,3 +151,4 @@ Import rule unchanged: PF1e tools must not import PF2e modules.
 | 2026-08-17 | Tools sequenced after the sheet is ~90% done; not during schema/engine work |
 | 2026-08-17 | Reserve **Actions List** (grey-out + short reason) |
 | 2026-08-17 | Reserve **Budget Calculator** (buy vs craft cost, time, DC, requirements) |
+| 2026-08-19 | Types live in `shell/types.ts`; `labelKey`; collapse when no tools or `max-width: 800px` |

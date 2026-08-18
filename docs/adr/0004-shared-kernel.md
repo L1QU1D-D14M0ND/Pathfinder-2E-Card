@@ -15,7 +15,7 @@ Split the codebase into three layers:
 2. **Shared kernel** — envelope, persistence wiring, IDs, `ContentRef` core, `Effect` stub, override *application*, row-table UI primitives, i18n helper, golden-test helper. No edition math.
 3. **System modules** — PF2e and PF1e each own schema, document types, `compute()`, class/skill tables, Combat / Spells / Play / Identity panels, and **optional sidebar tools**.
 
-The shell talks to a system through a **`SystemModule` interface** (id, validate, createEmpty, compute, tabs/panels, save filename, optional `sidebarTools`). The active sheet is a discriminated union. **Do not** share one TypeScript `CharacterDocument` or one JSON Schema `oneOf` body.
+The shell talks to a system through a **`SystemModule` interface** (id, `displayNameKey`, validate, createEmpty, compute, `Workspace`, save filename, `sidebarTools`). Tabs stay inside each Workspace (tab ids and strip chrome differ per edition). The active sheet is a discriminated union. App retains **one** typed switch to mount `pf1eModule` vs `pf2eModule` (TypeScript cannot erase the union). **Do not** share one TypeScript `CharacterDocument` or one JSON Schema `oneOf` body.
 
 The loaded-sheet **sidebar host** is shell chrome ([ADR 0005](0005-sidebar-host.md)): tools read/write the same document via `update`. Host extraction may start in Phase M as an empty rail; named tools are later.
 

@@ -5,6 +5,7 @@ import {
 } from '../character'
 import type { DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
+import { useT } from '../../../shared/i18n'
 import type { SheetUpdate } from './update'
 
 const RESETS = ['daily', 'encounter', 'other'] as const
@@ -20,15 +21,17 @@ export function PlayPanel({
   update: SheetUpdate
   onOpenHpBreakdown: () => void
 }) {
+  const t = useT()
   return (
     <div className="panel-stack">
       <table className="sheet-table">
         <tbody>
           <tr>
-            <th>Current HP</th>
+            <th>{t('pf1e.play.currentHp')}</th>
             <td>
               <input
                 type="number"
+                aria-label={t('pf1e.play.currentHp')}
                 value={character.vitals.currentHp}
                 onChange={(e) =>
                   update((c) => ({
@@ -40,11 +43,11 @@ export function PlayPanel({
                   }))
                 }
               />
-              <span className="muted"> may be negative</span>
+              <span className="muted"> {t('pf1e.play.mayBeNegative')}</span>
             </td>
           </tr>
           <tr>
-            <th>Max HP</th>
+            <th>{t('pf1e.play.maxHp')}</th>
             <td>
               <button
                 type="button"
@@ -53,21 +56,22 @@ export function PlayPanel({
                     ? 'derived overridden hp-max-button'
                     : 'derived hp-max-button'
                 }
-                title="Open HP breakdown"
-                aria-label={`Max HP ${derived.maxHp}, open breakdown`}
+                title={t('pf1e.play.openBreakdown')}
+                aria-label={t('pf1e.play.maxHpBreakdown', { max: derived.maxHp })}
                 onClick={onOpenHpBreakdown}
               >
                 {derived.maxHp}
               </button>
-              <span className="muted"> click for HD breakdown</span>
+              <span className="muted"> {t('pf1e.play.clickBreakdown')}</span>
             </td>
           </tr>
           <tr>
-            <th>Temp HP</th>
+            <th>{t('pf1e.play.tempHp')}</th>
             <td>
               <input
                 type="number"
                 min={0}
+                aria-label={t('pf1e.play.tempHp')}
                 value={character.vitals.tempHp}
                 onChange={(e) =>
                   update((c) => ({
@@ -82,11 +86,12 @@ export function PlayPanel({
             </td>
           </tr>
           <tr>
-            <th>Nonlethal</th>
+            <th>{t('pf1e.play.nonlethal')}</th>
             <td>
               <input
                 type="number"
                 min={0}
+                aria-label={t('pf1e.play.nonlethal')}
                 value={character.vitals.nonlethal ?? 0}
                 onChange={(e) =>
                   update((c) => ({
@@ -101,23 +106,23 @@ export function PlayPanel({
             </td>
           </tr>
           <tr>
-            <th>Dead at</th>
+            <th>{t('pf1e.play.deadAt')}</th>
             <td>
               <DerivedCell
                 value={derived.deadAt}
                 overridden={derived.overriddenPaths.includes('derived.deadAt')}
               />
-              <span className="muted"> −Constitution score</span>
+              <span className="muted"> {t('pf1e.play.deadAtHelp')}</span>
             </td>
           </tr>
           <tr>
-            <th>HD rolls</th>
+            <th>{t('pf1e.play.hdRolls')}</th>
             <td>
               <button type="button" onClick={onOpenHpBreakdown}>
-                Enter HD rolls…
+                {t('pf1e.play.enterHd')}
               </button>
               <div className="muted">
-                Physical dice only. Type each HD result in the breakdown.
+                {t('pf1e.play.hdHelp')}
               </div>
             </td>
           </tr>
@@ -125,7 +130,7 @@ export function PlayPanel({
       </table>
 
       <div className="table-toolbar">
-        <strong>Conditions</strong>
+        <strong>{t('pf1e.play.conditions')}</strong>
         <button
           type="button"
           onClick={() =>
@@ -135,15 +140,15 @@ export function PlayPanel({
             }))
           }
         >
-          Add condition
+          {t('pf1e.play.addCondition')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Value</th>
-            <th>Duration</th>
+            <th>{t('pf1e.play.name')}</th>
+            <th>{t('pf1e.play.value')}</th>
+            <th>{t('pf1e.play.duration')}</th>
             <th></th>
           </tr>
         </thead>
@@ -151,7 +156,7 @@ export function PlayPanel({
           {character.conditions.length === 0 ? (
             <tr>
               <td colSpan={4} className="muted">
-                No conditions.
+                {t('pf1e.play.noConditions')}
               </td>
             </tr>
           ) : (
@@ -159,6 +164,7 @@ export function PlayPanel({
               <tr key={row.id}>
                 <td>
                   <input
+                    aria-label={t('pf1e.play.name')}
                     value={row.condition.name}
                     onChange={(e) =>
                       update((c) => {
@@ -178,6 +184,7 @@ export function PlayPanel({
                 <td>
                   <input
                     type="number"
+                    aria-label={t('pf1e.play.value')}
                     value={row.value ?? ''}
                     onChange={(e) =>
                       update((c) => {
@@ -196,6 +203,7 @@ export function PlayPanel({
                 </td>
                 <td>
                   <input
+                    aria-label={t('pf1e.play.duration')}
                     value={row.duration ?? ''}
                     onChange={(e) =>
                       update((c) => {
@@ -221,7 +229,7 @@ export function PlayPanel({
                       }))
                     }
                   >
-                    Remove
+                    {t('pf1e.common.remove')}
                   </button>
                 </td>
               </tr>
@@ -231,7 +239,7 @@ export function PlayPanel({
       </table>
 
       <div className="table-toolbar">
-        <strong>Daily resources</strong>
+        <strong>{t('pf1e.play.dailyResources')}</strong>
         <button
           type="button"
           onClick={() =>
@@ -247,16 +255,16 @@ export function PlayPanel({
             }))
           }
         >
-          Add resource
+          {t('pf1e.play.addResource')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Max</th>
-            <th>Left</th>
-            <th>Resets</th>
+            <th>{t('pf1e.play.name')}</th>
+            <th>{t('pf1e.play.max')}</th>
+            <th>{t('pf1e.play.left')}</th>
+            <th>{t('pf1e.play.resets')}</th>
             <th></th>
           </tr>
         </thead>
@@ -264,7 +272,7 @@ export function PlayPanel({
           {character.play.dailyResources.length === 0 ? (
             <tr>
               <td colSpan={5} className="muted">
-                Rage, channel, and similar trackers.
+                {t('pf1e.play.noResources')}
               </td>
             </tr>
           ) : (
@@ -272,6 +280,7 @@ export function PlayPanel({
               <tr key={row.id}>
                 <td>
                   <input
+                    aria-label={t('pf1e.play.name')}
                     value={row.name}
                     onChange={(e) =>
                       update((c) => {
@@ -292,6 +301,7 @@ export function PlayPanel({
                   <input
                     type="number"
                     min={0}
+                    aria-label={t('pf1e.play.max')}
                     value={row.max}
                     onChange={(e) =>
                       update((c) => {
@@ -312,6 +322,7 @@ export function PlayPanel({
                   <input
                     type="number"
                     min={0}
+                    aria-label={t('pf1e.play.left')}
                     value={row.remaining}
                     onChange={(e) =>
                       update((c) => {
@@ -330,6 +341,7 @@ export function PlayPanel({
                 </td>
                 <td>
                   <select
+                    aria-label={t('pf1e.play.resets')}
                     value={row.resetsOn ?? 'daily'}
                     onChange={(e) =>
                       update((c) => {
@@ -347,7 +359,13 @@ export function PlayPanel({
                   >
                     {RESETS.map((value) => (
                       <option key={value} value={value}>
-                        {value}
+                        {t(
+                          value === 'daily'
+                            ? 'pf1e.play.resetDaily'
+                            : value === 'encounter'
+                              ? 'pf1e.play.resetEncounter'
+                              : 'pf1e.play.resetOther',
+                        )}
                       </option>
                     ))}
                   </select>
@@ -367,7 +385,7 @@ export function PlayPanel({
                       }))
                     }
                   >
-                    Remove
+                    {t('pf1e.common.remove')}
                   </button>
                 </td>
               </tr>

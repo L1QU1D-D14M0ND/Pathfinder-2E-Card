@@ -770,3 +770,4 @@ The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the ne
 | 2026-08-18 | App draft + PWA proof landed; this pack’s next gate is OGL before rules text |
 | 2026-08-18 | OGL / PI review: mechanics-only pack; no Section 15 until rules text; next is 1.0 |
 | 2026-08-18 | APG slice 1 landed in a separate pack; this folder stays CRB-only |
+| 2026-08-19 | Pack `status` records batches 1–13 complete. Next product work is still APG overlay, not more CRB encyclopedia rows |

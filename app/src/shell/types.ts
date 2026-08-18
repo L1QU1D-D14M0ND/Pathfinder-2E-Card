@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import type { SystemId } from '../shared/envelope'
 
 export interface SidebarToolContext<Doc, Derived> {
@@ -11,14 +11,21 @@ export interface SidebarToolContext<Doc, Derived> {
 
 export interface SidebarTool<Doc, Derived> {
   id: string
-  label: string
+  labelKey: string
   systems?: SystemId[]
   render: (ctx: SidebarToolContext<Doc, Derived>) => ReactNode
 }
 
+export interface SheetWorkspaceProps<Doc, Derived> {
+  character: Doc
+  derived: Derived
+  update: (mutator: (c: Doc) => Doc) => void
+  setStatus: (message: string) => void
+}
+
 export interface SystemModule<Doc, Derived> {
   id: SystemId
-  displayName: string
+  displayNameKey: string
   validate(data: unknown): Doc
   createEmpty(): Doc
   compute(doc: Doc): Derived
@@ -27,5 +34,6 @@ export interface SystemModule<Doc, Derived> {
   download(doc: Doc): void
   readFile(file: File): Promise<Doc>
   suggestedFilename(doc: Doc): string
+  Workspace: ComponentType<SheetWorkspaceProps<Doc, Derived>>
   sidebarTools: SidebarTool<Doc, Derived>[]
 }

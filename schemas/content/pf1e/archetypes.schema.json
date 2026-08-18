@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ttrpg-sheet.local/schemas/content/pf1e/archetypes.schema.json",
+  "title": "PF1e archetype catalog",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "name", "classId"],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "classId": { "type": "string", "minLength": 1 },
+      "source": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "book": { "type": "string" },
+          "page": { "type": ["integer", "null"] },
+          "rarity": { "enum": ["common", "uncommon", "rare", "unique"] }
+        }
+      }
+    }
+  }
+}

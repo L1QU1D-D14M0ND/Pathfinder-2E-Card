@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ttrpg-sheet.local/schemas/content/pf1e/pack.schema.json",
+  "title": "PF1e content pack manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "id",
+    "system",
+    "schemaVersion",
+    "contentKind",
+    "oglNoticeRequired"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "system": { "const": "pf1e" },
+    "title": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "status": { "type": "string" },
+    "license": { "type": "string" },
+    "contentKind": { "const": "mechanics-only" },
+    "oglNoticeRequired": { "type": "boolean" }
+  }
+}

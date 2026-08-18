@@ -7,6 +7,7 @@ import type { AbilityKey, SpellListEntry, SpellcastingEntry } from '../character
 import { applyCrbSpell, CRB_SPELLS } from '../content'
 import type { DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
+import { useT } from '../../../shared/i18n'
 import type { SheetUpdate } from './update'
 
 const ATTRS: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
@@ -21,6 +22,7 @@ export function SpellsPanel({
   derived: DerivedView
   update: SheetUpdate
 }) {
+  const t = useT()
   function patchEntry(
     index: number,
     patch: Partial<SpellcastingEntry> | ((entry: SpellcastingEntry) => SpellcastingEntry),
@@ -36,14 +38,9 @@ export function SpellsPanel({
 
   return (
     <div className="panel-stack">
-      <p className="muted">
-        Slots are user-entered. DC is 10 + spell level + ability. Bonus slots
-        from ability are derived (add them into max yourself in 0.9). Spell
-        Focus does not change DC. Catalog spells stamp name and level only —
-        they do not fill slots or a spellbook.
-      </p>
+      <p className="muted">{t('pf1e.spells.help')}</p>
       <div className="table-toolbar">
-        <strong>Spellcasting entries</strong>
+        <strong>{t('pf1e.spells.entries')}</strong>
         <button
           type="button"
           onClick={() =>
@@ -53,11 +50,11 @@ export function SpellsPanel({
             }))
           }
         >
-          Add spellcasting
+          {t('pf1e.spells.addEntry')}
         </button>
       </div>
       {character.spellcasting.length === 0 ? (
-        <p className="placeholder">No spellcasting entries yet.</p>
+        <p className="placeholder">{t('pf1e.spells.empty')}</p>
       ) : (
         character.spellcasting.map((entry, index) => (
           <SpellcastingBlock
@@ -97,6 +94,7 @@ function SpellcastingBlock({
   ) => void
   onRemove: () => void
 }) {
+  const t = useT()
   function patchList(listKey: 'cantrips' | 'spells', list: SpellListEntry[]) {
     onPatch({ [listKey]: list })
   }
@@ -107,18 +105,19 @@ function SpellcastingBlock({
         <input
           value={entry.name}
           onChange={(e) => onPatch({ name: e.target.value })}
-          aria-label="Spellcasting name"
+          aria-label={t('pf1e.spells.entryName')}
         />
         <button type="button" onClick={onRemove}>
-          Remove entry
+          {t('pf1e.spells.removeEntry')}
         </button>
       </div>
       <table className="sheet-table">
         <tbody>
           <tr>
-            <th>Ability</th>
+            <th>{t('pf1e.spells.ability')}</th>
             <td>
               <select
+                aria-label={t('pf1e.spells.ability')}
                 value={entry.ability}
                 onChange={(e) =>
                   onPatch({ ability: e.target.value as AbilityKey })
@@ -133,15 +132,16 @@ function SpellcastingBlock({
             </td>
           </tr>
           <tr>
-            <th>Class row</th>
+            <th>{t('pf1e.spells.classRow')}</th>
             <td>
               <select
+                aria-label={t('pf1e.spells.classRow')}
                 value={entry.classRowId ?? ''}
                 onChange={(e) =>
                   onPatch({ classRowId: e.target.value || null })
                 }
               >
-                <option value="">(none — set CL override)</option>
+                <option value="">{t('pf1e.spells.noClassRow')}</option>
                 {classes.map((row) => (
                   <option key={row.id} value={row.id}>
                     {row.class.name || row.id} {row.levels}
@@ -151,11 +151,12 @@ function SpellcastingBlock({
             </td>
           </tr>
           <tr>
-            <th>Caster level override</th>
+            <th>{t('pf1e.spells.casterLevelOverride')}</th>
             <td>
               <input
                 type="number"
                 min={0}
+                aria-label={t('pf1e.spells.casterLevelOverride')}
                 value={entry.casterLevelOverride ?? ''}
                 onChange={(e) =>
                   onPatch({
@@ -169,7 +170,7 @@ function SpellcastingBlock({
             </td>
           </tr>
           <tr>
-            <th>Caster level</th>
+            <th>{t('pf1e.spells.casterLevel')}</th>
             <td>
               <DerivedCell
                 value={derived?.casterLevel ?? 0}
@@ -185,11 +186,11 @@ function SpellcastingBlock({
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Level</th>
-            <th>DC</th>
-            <th>Bonus slots</th>
-            <th>Max</th>
-            <th>Left</th>
+            <th>{t('pf1e.spells.level')}</th>
+            <th>{t('pf1e.spells.dc')}</th>
+            <th>{t('pf1e.spells.bonusSlots')}</th>
+            <th>{t('pf1e.spells.max')}</th>
+            <th>{t('pf1e.spells.left')}</th>
           </tr>
         </thead>
         <tbody>
@@ -202,7 +203,11 @@ function SpellcastingBlock({
               }
             return (
               <tr key={spellLevel}>
-                <th>{spellLevel === 0 ? '0 (cantrips)' : spellLevel}</th>
+                <th>
+                  {spellLevel === 0
+                    ? t('pf1e.spells.cantripLevel')
+                    : spellLevel}
+                </th>
                 <td>
                   <DerivedCell
                     value={derived?.dcByLevel[spellLevel] ?? 10}
@@ -223,6 +228,7 @@ function SpellcastingBlock({
                   <input
                     type="number"
                     min={0}
+                    aria-label={`${t('pf1e.spells.max')} ${spellLevel}`}
                     value={slot.max}
                     onChange={(e) =>
                       onPatch((current) => ({
@@ -238,6 +244,7 @@ function SpellcastingBlock({
                   <input
                     type="number"
                     min={0}
+                    aria-label={`${t('pf1e.spells.left')} ${spellLevel}`}
                     value={slot.remaining}
                     onChange={(e) =>
                       onPatch((current) => ({
@@ -256,13 +263,13 @@ function SpellcastingBlock({
       </table>
 
       <SpellListTable
-        title="Cantrips / orisons"
+        title={t('pf1e.spells.cantrips')}
         rows={entry.cantrips}
         onChange={(list) => patchList('cantrips', list)}
         defaultLevel={0}
       />
       <SpellListTable
-        title="Spells"
+        title={t('pf1e.spells.spells')}
         rows={entry.spells}
         onChange={(list) => patchList('spells', list)}
         defaultLevel={1}
@@ -301,6 +308,7 @@ function SpellListTable({
   onChange: (rows: SpellListEntry[]) => void
   defaultLevel: number
 }) {
+  const t = useT()
   return (
     <>
       <div className="table-toolbar">
@@ -311,15 +319,15 @@ function SpellListTable({
             onChange([...rows, createEmptySpellListEntry(defaultLevel)])
           }
         >
-          Add spell
+          {t('pf1e.spells.addSpell')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Level</th>
-            <th>Prepared</th>
+            <th>{t('pf1e.spells.name')}</th>
+            <th>{t('pf1e.spells.level')}</th>
+            <th>{t('pf1e.spells.prepared')}</th>
             <th></th>
           </tr>
         </thead>
@@ -327,8 +335,7 @@ function SpellListTable({
           {rows.length === 0 ? (
             <tr>
               <td colSpan={4} className="muted">
-                No spells in this list. Catalog stamps name and level; prepared
-                stays typed.
+                {t('pf1e.spells.emptyList')}
               </td>
             </tr>
           ) : (
@@ -336,7 +343,7 @@ function SpellListTable({
               <tr key={row.id}>
                 <td className="spell-cell">
                   <select
-                    aria-label="CRB spell"
+                    aria-label={t('pf1e.spells.catalog')}
                     value={row.spell.id ?? ''}
                     onChange={(e) => {
                       const id = e.target.value || null
@@ -345,7 +352,7 @@ function SpellListTable({
                       onChange(next)
                     }}
                   >
-                    <option value="">Custom</option>
+                    <option value="">{t('pf1e.common.custom')}</option>
                     {CRB_SPELLS.map((entry) => (
                       <option key={entry.id} value={entry.id}>
                         {entry.name}
@@ -353,7 +360,7 @@ function SpellListTable({
                     ))}
                   </select>
                   <input
-                    aria-label="Spell name"
+                    aria-label={t('pf1e.spells.spellName')}
                     value={row.spell.name}
                     onChange={(e) => {
                       const next = [...rows]
@@ -370,6 +377,7 @@ function SpellListTable({
                     type="number"
                     min={0}
                     max={9}
+                    aria-label={t('pf1e.spells.level')}
                     value={row.spellLevel}
                     onChange={(e) => {
                       const next = [...rows]
@@ -387,6 +395,7 @@ function SpellListTable({
                 <td>
                   <input
                     type="checkbox"
+                    aria-label={t('pf1e.spells.prepared')}
                     checked={row.prepared ?? false}
                     onChange={(e) => {
                       const next = [...rows]
@@ -405,7 +414,7 @@ function SpellListTable({
                       onChange(rows.filter((item) => item.id !== row.id))
                     }
                   >
-                    Remove
+                    {t('pf1e.common.remove')}
                   </button>
                 </td>
               </tr>

@@ -5,6 +5,7 @@ import {
 } from '../character'
 import type { FeatEntry } from '../character/types'
 import { applyCrbFeat, CRB_FEATS } from '../content'
+import { useT } from '../../../shared/i18n'
 import type { SheetUpdate } from './update'
 
 const FEAT_CATEGORIES: FeatEntry['category'][] = [
@@ -22,26 +23,27 @@ export function FeatsPanel({
   character: CharacterDocument
   update: SheetUpdate
 }) {
+  const t = useT()
   return (
     <div className="panel-stack">
       <div className="table-toolbar">
-        <strong>Feats</strong>
+        <strong>{t('pf1e.feats.feats')}</strong>
         <button
           type="button"
           onClick={() =>
             update((c) => ({ ...c, feats: [...c.feats, createEmptyFeat()] }))
           }
         >
-          Add feat
+          {t('pf1e.feats.addFeat')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Level</th>
-            <th>Summary</th>
+            <th>{t('pf1e.feats.name')}</th>
+            <th>{t('pf1e.feats.category')}</th>
+            <th>{t('pf1e.feats.level')}</th>
+            <th>{t('pf1e.feats.summary')}</th>
             <th></th>
           </tr>
         </thead>
@@ -49,8 +51,7 @@ export function FeatsPanel({
           {character.feats.length === 0 ? (
             <tr>
               <td colSpan={5} className="muted">
-                No feats yet. Catalog stamps name and category only — Combat
-                numbers and summaries stay typed. Effects are not applied.
+                {t('pf1e.feats.emptyFeats')}
               </td>
             </tr>
           ) : (
@@ -58,7 +59,7 @@ export function FeatsPanel({
               <tr key={feat.id}>
                 <td className="feat-cell">
                   <select
-                    aria-label="CRB feat"
+                    aria-label={t('pf1e.feats.catalog')}
                     value={feat.feat.id ?? ''}
                     onChange={(e) => {
                       const id = e.target.value || null
@@ -69,7 +70,7 @@ export function FeatsPanel({
                       })
                     }}
                   >
-                    <option value="">Custom</option>
+                    <option value="">{t('pf1e.common.custom')}</option>
                     {CRB_FEATS.map((entry) => (
                       <option key={entry.id} value={entry.id}>
                         {entry.name}
@@ -77,7 +78,7 @@ export function FeatsPanel({
                     ))}
                   </select>
                   <input
-                    aria-label="Feat name"
+                    aria-label={t('pf1e.feats.featName')}
                     value={feat.feat.name}
                     onChange={(e) =>
                       update((c) => {
@@ -93,6 +94,7 @@ export function FeatsPanel({
                 </td>
                 <td>
                   <select
+                    aria-label={t('pf1e.feats.category')}
                     value={feat.category}
                     onChange={(e) =>
                       update((c) => {
@@ -107,7 +109,7 @@ export function FeatsPanel({
                   >
                     {FEAT_CATEGORIES.map((category) => (
                       <option key={category} value={category}>
-                        {category}
+                        {t(`pf1e.feats.categories.${category}`)}
                       </option>
                     ))}
                   </select>
@@ -116,6 +118,7 @@ export function FeatsPanel({
                   <input
                     type="number"
                     min={1}
+                    aria-label={t('pf1e.feats.level')}
                     value={feat.levelGained}
                     onChange={(e) =>
                       update((c) => {
@@ -131,6 +134,7 @@ export function FeatsPanel({
                 </td>
                 <td>
                   <input
+                    aria-label={t('pf1e.feats.summary')}
                     value={feat.summary ?? ''}
                     onChange={(e) =>
                       update((c) => {
@@ -154,7 +158,7 @@ export function FeatsPanel({
                       }))
                     }
                   >
-                    Remove
+                    {t('pf1e.common.remove')}
                   </button>
                 </td>
               </tr>
@@ -164,7 +168,7 @@ export function FeatsPanel({
       </table>
 
       <div className="table-toolbar">
-        <strong>Features</strong>
+        <strong>{t('pf1e.feats.features')}</strong>
         <button
           type="button"
           onClick={() =>
@@ -174,15 +178,15 @@ export function FeatsPanel({
             }))
           }
         >
-          Add feature
+          {t('pf1e.feats.addFeature')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Level</th>
-            <th>Summary</th>
+            <th>{t('pf1e.feats.name')}</th>
+            <th>{t('pf1e.feats.level')}</th>
+            <th>{t('pf1e.feats.summary')}</th>
             <th></th>
           </tr>
         </thead>
@@ -190,7 +194,7 @@ export function FeatsPanel({
           {character.features.length === 0 ? (
             <tr>
               <td colSpan={4} className="muted">
-                Class features as user-entered rows.
+                {t('pf1e.feats.emptyFeatures')}
               </td>
             </tr>
           ) : (
@@ -198,6 +202,7 @@ export function FeatsPanel({
               <tr key={feature.id}>
                 <td>
                   <input
+                    aria-label={t('pf1e.feats.featureName')}
                     value={feature.feature.name}
                     onChange={(e) =>
                       update((c) => {
@@ -218,6 +223,7 @@ export function FeatsPanel({
                   <input
                     type="number"
                     min={1}
+                    aria-label={t('pf1e.feats.level')}
                     value={feature.levelGained}
                     onChange={(e) =>
                       update((c) => {
@@ -233,6 +239,7 @@ export function FeatsPanel({
                 </td>
                 <td>
                   <input
+                    aria-label={t('pf1e.feats.summary')}
                     value={feature.summary ?? ''}
                     onChange={(e) =>
                       update((c) => {
@@ -258,7 +265,7 @@ export function FeatsPanel({
                       }))
                     }
                   >
-                    Remove
+                    {t('pf1e.common.remove')}
                   </button>
                 </td>
               </tr>

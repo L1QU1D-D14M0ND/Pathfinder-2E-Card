@@ -27,7 +27,9 @@
     "src",
     "../schemas/character.schema.json",
     "../schemas/pf1e/character.schema.json",
-    "../content/pf1e/crb/**/*.json"
+    "../schemas/content/pf1e/**/*.json",
+    "../content/pf1e/crb/**/*.json",
+    "../content/pf1e/apg/**/*.json"
   ],
-  "exclude": ["src/**/*.test.ts", "src/test"]
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test"]
 }

@@ -6,7 +6,7 @@ import { parseCharacterJson } from '../character/saveLoad'
 import { readRepoFile } from '../../../test/readRepoFile'
 import {
   applyApgArchetype,
-  applyCrbClassProgression,
+  applyClassProgression,
   classSkillKeySet,
   lookupApgArchetype,
   lookupApgClass,
@@ -36,7 +36,7 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
     const row = createEmptyClass()
     row.levels = 5
     row.favored = { hp: 2, skillRanks: 1 }
-    const summoner = applyCrbClassProgression(row, 'class.summoner')
+    const summoner = applyClassProgression(row, 'class.summoner')
     expect(summoner.levels).toBe(5)
     expect(summoner.favored).toEqual({ hp: 2, skillRanks: 1 })
     expect(summoner.hitDie).toBe(8)
@@ -57,7 +57,7 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
     expect(lookupApgArchetype('archetype.synthesist')?.classId).toBe(
       'class.summoner',
     )
-    const summoner = applyCrbClassProgression(
+    const summoner = applyClassProgression(
       createEmptyClass(),
       'class.summoner',
     )
@@ -76,17 +76,17 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
 
   it('clears Synthesist when the class leaves Summoner', () => {
     const summoner = applyApgArchetype(
-      applyCrbClassProgression(createEmptyClass(), 'class.summoner'),
+      applyClassProgression(createEmptyClass(), 'class.summoner'),
       'archetype.synthesist',
     )
-    const fighter = applyCrbClassProgression(summoner, 'class.fighter')
+    const fighter = applyClassProgression(summoner, 'class.fighter')
     expect(fighter.class.id).toBe('class.fighter')
     expect(fighter.archetype).toBeUndefined()
   })
 
   it('stamps Summoner class skills without spending ranks or adding spellcasting', () => {
     const character = createEmptyCharacter()
-    const row = applyCrbClassProgression(createEmptyClass(), 'class.summoner')
+    const row = applyClassProgression(createEmptyClass(), 'class.summoner')
     const skills = stampClassSkills(character.skills, [row])
     const flagged = skills
       .filter((skill) => skill.classSkill)
@@ -108,8 +108,8 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
   })
 
   it('unions Summoner with Fighter on the existing checkbox stamp', () => {
-    const fighter = applyCrbClassProgression(createEmptyClass(), 'class.fighter')
-    const summoner = applyCrbClassProgression(
+    const fighter = applyClassProgression(createEmptyClass(), 'class.fighter')
+    const summoner = applyClassProgression(
       createEmptyClass(),
       'class.summoner',
     )
@@ -123,7 +123,7 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
     const character = createEmptyCharacter()
     character.identity.race = { id: 'race.human', name: 'Human' }
     character.abilities.int.score = 10
-    const summoner = applyCrbClassProgression(
+    const summoner = applyClassProgression(
       createEmptyClass(),
       'class.summoner',
     )

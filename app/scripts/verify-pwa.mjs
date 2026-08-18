@@ -1,3 +1,9 @@
+/**
+ * Dist artifact check after `vite build`: standalone manifest, 192/512 PNG
+ * icons, and a Workbox service worker that mentions `index.html`.
+ * This is not a runtime offline test. Manual install + offline reload is in
+ * app/README.md.
+ */
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'

@@ -1,5 +1,5 @@
 import { NOTE_KEYS, type Notes } from '../notes'
-import { t } from '../i18n'
+import { useT } from '../i18n'
 
 export function NotesPanel({
   notes,
@@ -8,6 +8,7 @@ export function NotesPanel({
   notes: Notes
   onChange: (key: (typeof NOTE_KEYS)[number], value: string) => void
 }) {
+  const t = useT()
   return (
     <table className="sheet-table">
       <tbody>

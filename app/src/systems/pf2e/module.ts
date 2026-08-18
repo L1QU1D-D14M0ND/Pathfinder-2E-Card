@@ -9,11 +9,12 @@ import {
   type CharacterDocument,
 } from './character'
 import { compute, type DerivedView } from './engine'
+import { Pf2eWorkspace } from './sheet/Workspace'
 import type { SystemModule } from '../../shell/types'
 
 export const pf2eModule: SystemModule<CharacterDocument, DerivedView> = {
   id: 'pf2e',
-  displayName: 'Pathfinder Second Edition',
+  displayNameKey: 'pf2e.displayName',
   validate: validateCharacterDocument,
   createEmpty: createEmptyCharacter,
   compute,
@@ -22,6 +23,7 @@ export const pf2eModule: SystemModule<CharacterDocument, DerivedView> = {
   download: downloadCharacterJson,
   readFile: readCharacterFile,
   suggestedFilename: suggestedSaveFilename,
+  Workspace: Pf2eWorkspace,
   sidebarTools: [],
 }
 

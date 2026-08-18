@@ -1,4 +1,4 @@
-import { t } from '../../shared/i18n'
+import { useT } from '../../shared/i18n'
 import type { SidebarTool, SidebarToolContext } from '../types'
 
 export function SidebarHost<Doc, Derived>({
@@ -12,6 +12,7 @@ export function SidebarHost<Doc, Derived>({
   collapsed: boolean
   onToggle: () => void
 }) {
+  const t = useT()
   const available = tools.filter(
     (tool) => !tool.systems || tool.systems.includes(context.system),
   )

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { t } from '../shared/i18n'
+import { useT } from '../shared/i18n'
 import type { SystemId } from '../shared/envelope'
+import { SYSTEM_IDS, SYSTEM_MODULES } from './registry'
 
 export function NewSheetDialog({
   open,
@@ -11,6 +12,7 @@ export function NewSheetDialog({
   onCancel: () => void
   onChoose: (system: SystemId) => void
 }) {
+  const t = useT()
   useEffect(() => {
     if (!open) return
     function onKey(event: KeyboardEvent) {
@@ -37,16 +39,16 @@ export function NewSheetDialog({
         <h2 id="new-sheet-title">{t('shell.newDialogTitle')}</h2>
         <p>{t('shell.newDialogBody')}</p>
         <div className="dialog-actions">
-          <button
-            type="button"
-            className="primary"
-            onClick={() => onChoose('pf1e')}
-          >
-            {t('shell.newPf1e')}
-          </button>
-          <button type="button" onClick={() => onChoose('pf2e')}>
-            {t('shell.newPf2e')}
-          </button>
+          {SYSTEM_IDS.map((id, index) => (
+            <button
+              key={id}
+              type="button"
+              className={index === 0 ? 'primary' : undefined}
+              onClick={() => onChoose(id)}
+            >
+              {t(SYSTEM_MODULES[id].displayNameKey)}
+            </button>
+          ))}
           <button type="button" onClick={onCancel}>
             {t('shell.cancel')}
           </button>

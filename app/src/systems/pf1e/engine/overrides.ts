@@ -11,111 +11,81 @@ export { isOverridden }
 
 const ABILITY_KEYS: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
-const SCALAR_KEYS = new Set([
-  'level',
-  'bab',
-  'maxHp',
-  'deadAt',
-  'ac',
-  'touchAc',
-  'flatFootedAc',
-  'cmb',
-  'cmd',
-  'initiative',
-  'fortitude',
-  'reflex',
-  'will',
-  'meleeAttack',
-  'rangedAttack',
-  'weightUsed',
-  'lightLoad',
-  'mediumLoad',
-  'heavyLoad',
-  'skillRanksSpent',
-  'skillRanksBudget',
-])
-
-function setScalar(
-  view: DerivedView,
-  key: string,
-  value: number,
-): boolean {
-  switch (key) {
-    case 'level':
-      view.level = value
-      return true
-    case 'bab':
-      view.bab = value
-      return true
-    case 'maxHp':
-      view.maxHp = value
-      return true
-    case 'deadAt':
-      view.deadAt = value
-      return true
-    case 'ac':
-      view.ac = value
-      return true
-    case 'touchAc':
-      view.touchAc = value
-      return true
-    case 'flatFootedAc':
-      view.flatFootedAc = value
-      return true
-    case 'cmb':
-      view.cmb = value
-      return true
-    case 'cmd':
-      view.cmd = value
-      return true
-    case 'initiative':
-      view.initiative = value
-      return true
-    case 'fortitude':
-      view.fortitude = value
-      return true
-    case 'reflex':
-      view.reflex = value
-      return true
-    case 'will':
-      view.will = value
-      return true
-    case 'meleeAttack':
-      view.meleeAttack = value
-      return true
-    case 'rangedAttack':
-      view.rangedAttack = value
-      return true
-    case 'weightUsed':
-      view.weightUsed = value
-      return true
-    case 'lightLoad':
-      view.lightLoad = value
-      return true
-    case 'mediumLoad':
-      view.mediumLoad = value
-      return true
-    case 'heavyLoad':
-      view.heavyLoad = value
-      return true
-    case 'skillRanksSpent':
-      view.skillRanksSpent = value
-      return true
-    case 'skillRanksBudget':
-      view.skillRanksBudget = value
-      return true
-    default:
-      return false
-  }
+const SCALARS: Record<string, (view: DerivedView, value: number) => void> = {
+  level: (view, value) => {
+    view.level = value
+  },
+  bab: (view, value) => {
+    view.bab = value
+  },
+  maxHp: (view, value) => {
+    view.maxHp = value
+  },
+  deadAt: (view, value) => {
+    view.deadAt = value
+  },
+  ac: (view, value) => {
+    view.ac = value
+  },
+  touchAc: (view, value) => {
+    view.touchAc = value
+  },
+  flatFootedAc: (view, value) => {
+    view.flatFootedAc = value
+  },
+  cmb: (view, value) => {
+    view.cmb = value
+  },
+  cmd: (view, value) => {
+    view.cmd = value
+  },
+  initiative: (view, value) => {
+    view.initiative = value
+  },
+  fortitude: (view, value) => {
+    view.fortitude = value
+  },
+  reflex: (view, value) => {
+    view.reflex = value
+  },
+  will: (view, value) => {
+    view.will = value
+  },
+  meleeAttack: (view, value) => {
+    view.meleeAttack = value
+  },
+  rangedAttack: (view, value) => {
+    view.rangedAttack = value
+  },
+  weightUsed: (view, value) => {
+    view.weightUsed = value
+  },
+  lightLoad: (view, value) => {
+    view.lightLoad = value
+  },
+  mediumLoad: (view, value) => {
+    view.mediumLoad = value
+  },
+  heavyLoad: (view, value) => {
+    view.heavyLoad = value
+  },
+  skillRanksSpent: (view, value) => {
+    view.skillRanksSpent = value
+  },
+  skillRanksBudget: (view, value) => {
+    view.skillRanksBudget = value
+  },
 }
 
 function applyOne(view: DerivedView, path: string, value: unknown): boolean {
   const parts = path.split('.')
   if (parts[0] !== 'derived' || parts.length < 2) return false
 
-  if (parts.length === 2 && SCALAR_KEYS.has(parts[1])) {
+  const setScalar = parts.length === 2 ? SCALARS[parts[1]] : undefined
+  if (setScalar) {
     if (!isFiniteNumber(value)) return false
-    return setScalar(view, parts[1], value)
+    setScalar(view, value)
+    return true
   }
 
   if (parts.length === 2 && parts[1] === 'babIteratives') {

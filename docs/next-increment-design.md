@@ -1,6 +1,6 @@
 # Next increment design — options after S1 / S4
 
-**Status:** Historical (T1 + T3 executed 2026-08-14). **Not** the current coding sequence.  
+**Status:** Archival. Historical (T1 + T3 executed 2026-08-14). **Not** the current coding sequence. Do not use this file to schedule new work.  
 **Current sequencing:** [`next-increment-multi-system.md`](next-increment-multi-system.md) (ADR 0003: PF1e-first multi-system). Leftover PF2e goldens, companion editor, and content packs in §8 are **deprioritized** until the PF1e 0.9 bar.  
 **Date:** 2026-08-14  
 **Audience:** Product / engineering  

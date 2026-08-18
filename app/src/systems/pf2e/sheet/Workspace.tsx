@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { CharacterDocument } from '../character'
 import type { AttributeKey, ProficiencyRank } from '../character/types'
 import { signed } from '../../../shared/format'
-import { t } from '../../../shared/i18n'
+import { useT } from '../../../shared/i18n'
 import { NotesPanel } from '../../../shared/ui/NotesPanel'
 import type { DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
@@ -57,6 +57,7 @@ export function Pf2eWorkspace({
   update: SheetUpdate
   setStatus: (message: string) => void
 }) {
+  const t = useT()
   const [tab, setTab] = useState<TabId>('identity')
 
   function addLore() {

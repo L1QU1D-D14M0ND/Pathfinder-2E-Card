@@ -2,8 +2,8 @@
 
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
-**Status date:** 2026-08-18  
-**Current phase:** **1.0 in progress** — APG slice 1 landed (Summoner catalog + Synthesist name). **Next:** documentary evolution names + fused overlay. Spanish is a separate 1.0 track. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Status date:** 2026-08-19  
+**Current phase:** **1.0 in progress** — APG slice 1 landed (Summoner catalog + Synthesist name). Pre-1.0 architecture correction landed (locale runtime, system registry, pack schemas, PF1e i18n + a11y). **Next code:** documentary evolution names + fused overlay. Spanish copy is unblocked (`es.json` stub + `useT()`) but stays a separate 1.0 track. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
@@ -52,7 +52,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 - [x] New sheet still produces a valid PF2e document until PF1e factory exists
 - [x] Existing PF2e goldens and unit tests stay green
 - [x] Leave shell layout room for a sidebar rail (empty/collapsed aside OK)
-- [x] Optional: extract English chrome (`en.json`) so PF1e UI does not add literals (T4′)
+- [x] Locale runtime (`I18nProvider` / `useT()`, `es.json` stub falling back to English). Chrome + PF1e panels extracted; PF2e panel literals remain (T4′)
 
 Working display name in chrome is **TTRPG Character Sheet**.
 
@@ -149,9 +149,9 @@ Not started (after PF1e 0.9):
 - [ ] PF2e goldens: Bard or Sorcerer 5; Cleric 5; companion user; one Player Core 2 class
 - [ ] Companion nested-sheet editor
 - [ ] Override UI (engine works; no cell editor)
-- [ ] English message catalogs (may land earlier as T4′ during M/1e)
+- [x] English catalogs for chrome + PF1e panels; locale runtime exists; `es.json` is a stub. PF2e panel literals remain
 - [x] IndexedDB draft buffer
-- [x] PWA install + offline verification (needed once before calling **app** 0.9 done; not PF2e-specific)
+- [x] PWA dist artifacts (`verify:pwa` after build). Runtime install/offline stays a manual [`app/README.md`](../app/README.md) step
 - [ ] Remaster + legacy content packs
 
 ---
@@ -296,3 +296,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-18 | OGL / PI review landed (ADR 0007); pack stays mechanics-only; next is 1.0 |
 | 2026-08-18 | 1.0 APG slice 1: Summoner catalog + Synthesist name; next is evolutions + fused overlay |
 | 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; local `main` published to origin |
+| 2026-08-19 | Pre-1.0 architecture: locale runtime, system registry, pack schemas, override maps, PF1e extract + a11y, jsdom tests. Next code is again evolutions + fused overlay |
