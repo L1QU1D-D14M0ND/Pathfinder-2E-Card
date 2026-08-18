@@ -1,0 +1,75 @@
+[
+  {
+    "id": "weapon.dagger",
+    "name": "Dagger",
+    "kind": "weapon",
+    "pounds": 1,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "piercing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "rangeFeet": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.longsword",
+    "name": "Longsword",
+    "kind": "weapon",
+    "pounds": 4,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 19,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.quarterstaff",
+    "name": "Quarterstaff",
+    "kind": "weapon",
+    "pounds": 4,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.chain-shirt",
+    "name": "Chain shirt",
+    "kind": "armor",
+    "pounds": 25,
+    "armor": {
+      "acBonus": 4,
+      "maxDex": 4,
+      "armorCheckPenalty": -2,
+      "spellFailurePercent": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.chainmail",
+    "name": "Chainmail",
+    "kind": "armor",
+    "pounds": 40,
+    "armor": {
+      "acBonus": 6,
+      "maxDex": 2,
+      "armorCheckPenalty": -5,
+      "spellFailurePercent": 30
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.spellbook",
+    "name": "Spellbook",
+    "kind": "item",
+    "pounds": 3,
+    "source": { "book": "CRB" }
+  }
+]

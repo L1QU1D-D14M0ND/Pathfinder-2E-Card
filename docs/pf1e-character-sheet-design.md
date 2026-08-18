@@ -169,11 +169,11 @@ Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–6, 8, and 9 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool. Load penalties are not auto-written.
+Batch 1–6 and 8–10 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids (Combat numbers stay typed). Load penalties and equipped-item AC are not auto-written.
 
-**Next (batch 10):** Documentary weapons/armor ids on the three goldens. Batch 7 (spell DC / bonus slots) is already in the engine. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+**Next:** Remaining 9 CRB classes. Batch 7 (spell DC / bonus slots) is already in the engine. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
 
-Remaining CRB classes, feats, and spell metadata wait until the three goldens can be rebuilt from ids.
+Remaining feats and spell metadata wait until after those class tags.
 
 Enough catalog to rebuild the three goldens is the 0.9 content bar. Full CRB spell list can trail.
 
@@ -207,3 +207,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Batch 6 encumbrance review landed (Ignore weight opt-out). Next pack work is Human catalog (batch 8). |
 | 2026-08-18 | Batch 8 Human catalog landed. Next pack work is class skills (batch 9). |
 | 2026-08-18 | Batch 9 class skills + skill-point pool landed. Next pack work is weapons/armor ids (batch 10). |
+| 2026-08-18 | Batch 10 documentary weapons/armor ids landed. Next pack work is remaining 9 CRB classes. |

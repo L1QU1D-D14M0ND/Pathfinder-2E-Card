@@ -4,11 +4,13 @@ import type {
   ClassSaves,
   ContentRef,
   Identity,
+  ItemEntry,
   SkillEntry,
 } from '../character/types'
 import { STANDARD_SKILLS } from '../character/standardSkills'
 import classesJson from '../../../../../content/pf1e/crb/classes.json'
 import racesJson from '../../../../../content/pf1e/crb/races.json'
+import itemsJson from '../../../../../content/pf1e/crb/items.json'
 
 export interface CrbClassProgression {
   id: string
@@ -142,4 +144,62 @@ export function applyCrbRace(identity: Identity, id: string | null): Identity {
 export function skillPointsPerLevelFor(row: ClassEntry): number {
   if (row.skillPointsPerLevel != null) return row.skillPointsPerLevel
   return lookupCrbClass(row.class.id)?.skillPointsPerLevel ?? 0
+}
+
+export type CrbItemKind = 'weapon' | 'armor' | 'item'
+
+export interface CrbItem {
+  id: string
+  name: string
+  kind: CrbItemKind
+  pounds: number
+  weapon?: ItemEntry['weapon']
+  armor?: ItemEntry['armor']
+  source?: ContentRef['source']
+}
+
+export const CRB_ITEMS: CrbItem[] = itemsJson.map((row) => ({
+  id: row.id,
+  name: row.name,
+  kind: row.kind as CrbItemKind,
+  pounds: row.pounds,
+  weapon: 'weapon' in row ? row.weapon : undefined,
+  armor: 'armor' in row ? row.armor : undefined,
+  source: row.source,
+}))
+
+/** Unknown or empty id → null. Never throws. */
+export function lookupCrbItem(id: string | null | undefined): CrbItem | null {
+  if (!id) return null
+  return CRB_ITEMS.find((entry) => entry.id === id) ?? null
+}
+
+/**
+ * Stamp catalog id, name, pounds, and documentary weapon/armor fields.
+ * Does not rewrite quantity, location, armorClass, or attacks.
+ * Unknown id clears `item.id` and leaves the rest of the row.
+ */
+export function applyCrbItem(row: ItemEntry, id: string | null): ItemEntry {
+  const found = lookupCrbItem(id)
+  if (!found) {
+    return {
+      ...row,
+      item: { ...row.item, id: null },
+    }
+  }
+  return {
+    ...row,
+    item: {
+      id: found.id,
+      name: found.name,
+      source: found.source,
+    },
+    pounds: found.pounds,
+    weapon:
+      found.kind === 'weapon' && found.weapon
+        ? { ...found.weapon }
+        : undefined,
+    armor:
+      found.kind === 'armor' && found.armor ? { ...found.armor } : undefined,
+  }
 }

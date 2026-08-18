@@ -275,7 +275,8 @@ button.hp-max-button.overridden {
 }
 
 .class-cell,
-.race-cell {
+.race-cell,
+.item-cell {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;

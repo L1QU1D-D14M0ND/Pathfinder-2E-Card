@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–6, 8, and 9 landed. **Next code: batch 10** — weapons/armor ids on the three goldens.  
+**Status:** In progress (2026-08-18). Batches 1–6 and 8–10 landed. **Next code: remaining 9 CRB classes.** Batch 7 (spell DC) stays later.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -44,8 +44,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
 | **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | Done |
 | **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | Done |
-| **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | **Next** |
-| … | Feats, spells metadata, remaining 9 CRB classes | After the three goldens can be rebuilt from ids | Catalog | After 8–10 |
+| **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | Done |
+| … | Remaining 9 CRB classes; then feats and spell metadata | After the three goldens can be rebuilt from ids | Catalog | **Next** (classes first) |
 
 Annotations for remaining batches (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
 
@@ -59,6 +59,7 @@ content/pf1e/crb/
   pack.json          # manifest + which batches have landed
   classes.json       # HD/BAB/saves (batch 1); class skills + skill points (batch 9)
   races.json         # race id + name (batch 8: human)
+  items.json         # weapon/armor/gear ids (batch 10: golden rows only)
 ```
 
 A class catalog row in this phase is **not** a class description. It is:
@@ -370,7 +371,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **App today / this batch:** `sizeCarryMultiplier` feeds `loadThresholds`. Small heavy is `floor(Medium heavy × 3/4)`; Large is Medium ×2.
 
-**Gaps:** Strength 1–29 column and overloaded category review wait for batch 6. Inventory auto-sum from armor catalog waits for batch 10.
+**Gaps:** Strength 1–29 column and overloaded category review wait for batch 6. Inventory auto-sum from equipped armor stays out of 0.9 (player types Combat).
 
 **Pack slice:** none.
 
@@ -416,7 +417,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** Category math matches the inclusive CRB bands. The Ignore weight control is a sheet opt-out of the *category*, not of inventory pounds.
 
-**Gaps:** Auto-applying medium/heavy penalties onto ACP, max Dex, and speed stays out of 0.9 (player types). Inventory auto-sum from an armor catalog waits for batch 10.
+**Gaps:** Auto-applying medium/heavy penalties onto ACP, max Dex, and speed stays out of 0.9 (player types). Inventory auto-sum from equipped armor stays out of 0.9.
 
 **Pack slice:** none.
 
@@ -511,6 +512,53 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 10 — two mechanics
+
+### 4.17 Weapons on the three goldens
+
+**CRB (player-facing):** Equipment tables list a weapon’s **weight, damage dice, type, crit, and range**. The player records those on the sheet. Attack bonuses are a Combat calculation (BAB + ability + misc), not a property that auto-fills from the item.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `content/pf1e/crb/items.json` | Golden ids: `weapon.dagger`, `weapon.longsword`, `weapon.quarterstaff` (plus armor and spellbook in 4.18) |
+| Lookup | `lookupCrbItem` | Unknown or empty id → `null` (custom). Never throws |
+| Apply | `applyCrbItem` | Stamps item id, name, pounds, and `weapon` subobject. Clears `armor`. Does **not** rewrite quantity, location, `armorClass`, or `attacks` |
+| UI | Inventory item select | Catalog or Custom, plus a typed name. Muted note: AC and attacks stay on Combat |
+| Goldens | Fighter 5 longsword/dagger; Wizard 5 quarterstaff | Already stored those ids; Load does not re-apply the catalog |
+
+**Verdict:** The golden weapon ids resolve. Quarterstaff is stored as a **single 1d6** to match the golden attack row, not the CRB double-weapon listing. The Fighter 5 dagger row has no `weapon` subobject; the catalog still lists 1d4 / 10 ft for a fresh apply.
+
+**Gaps:** Remaining CRB weapons; magic weapons; priced treasure; two-weapon / double-weapon attack rows.
+
+**Pack slice:** weapon rows needed by the goldens.
+
+**Tests:** Catalog lists golden ids; unknown id is null; goldens resolve.
+
+### 4.18 Armor (and spellbook) on the three goldens
+
+**CRB (player-facing):** Armor tables list **AC bonus, max Dex, ACP, spell failure, and weight**. Those numbers are copied onto Combat (`armorClass`) by the player. Equipping an item does not by itself change AC.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `items.json` | `armor.chainmail`, `armor.chain-shirt`, `item.spellbook` (3 lb, no combat subobject) |
+| Apply | `applyCrbItem` | Armor stamps the documentary `armor` subobject and clears `weapon`. Spellbook stamps pounds only |
+| Combat | `armorClass` / `attacks` | **Unchanged** when a catalog item is applied or equipped |
+| Goldens | Fighter 5 chainmail; F2/W3 chain shirt; Wizard 5 unarmored + spellbook | Already stored those ids |
+
+**Verdict:** Equipping catalog chainmail on an empty sheet leaves **AC 10**. Fighter 5 still computes AC 18 from the typed `armorBonus` 6.
+
+**Gaps:** Remaining CRB armor/shields; auto-sum of equipped AC / ACP / max Dex stays **out of 0.9**.
+
+**Pack slice:** armor and gear rows needed by the goldens.
+
+**Tests:** Apply chainmail does not rewrite `armorClass`; empty sheet AC stays 10; Fighter 5 AC 18 still comes from typed Combat.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
@@ -519,19 +567,19 @@ These are **annotations**, not landed reviews. Each future PR still follows §1 
 
 Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review when spell metadata lands.
 
-### Batch 10 — Weapons / armor on the three goldens (**next**)
+### Remaining 9 CRB classes (**next**)
 
-**Pairing:** Documentary catalog ids for the weapons and armor already named on the three goldens (longsword, chainmail, chain shirt, …). Combat numbers stay on `armorClass` / `attacks`.
+**Pairing:** Progression tags (and later class skills / skill points) for the CRB classes the goldens do not use.
 
-**Already in the app:** Inventory item names and pounds; AC and attack bonuses typed on Combat.
+**Already in the app:** Fighter and Wizard catalog rows; stacked multiclass math.
 
-**In this batch:** Ids such as `weapon.longsword` and `armor.chainmail` on those rows (and a small items catalog if needed). Do not auto-fill AC from equipped items.
+**In this batch:** Smallest catalog slice for those nine classes (HD / BAB / saves first, matching batch 1). Do not start feats or spell text.
 
-**Out:** Priced treasure; magic weapons; auto-sum of item AC/ACP/max Dex.
+**Out:** Class flavor; prestige classes; APG classes.
 
-**Pack slice:** item ids for the goldens only.
+**Pack slice:** ids for the remaining CRB base classes.
 
-**After 8–10:** remaining 9 CRB classes, feats, spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
+**After that:** feats, spell metadata. OGL / Product Identity review before any **rules text**. Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -551,3 +599,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 6: Strength heavy-load + load category; Ignore weight opt-out; next is Human catalog |
 | 2026-08-18 | Batch 8: Human race catalog id; +2 stays typed; next is class skills |
 | 2026-08-18 | Batch 9: Fighter/Wizard class skills + skill-point pool; next is weapons/armor ids |
+| 2026-08-18 | Batch 10: documentary weapons/armor ids; AC/attacks stay typed; next is remaining 9 CRB classes |

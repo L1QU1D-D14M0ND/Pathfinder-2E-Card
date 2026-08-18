@@ -1,5 +1,6 @@
 import { createEmptyItem, type CharacterDocument } from '../character'
 import type { ItemLocation } from '../character/types'
+import { applyCrbItem, CRB_ITEMS } from '../content'
 import type { DerivedView } from '../engine'
 import { formatLoadSummary } from '../engine/encumbrance'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
@@ -80,7 +81,9 @@ export function InventoryPanel({
               </div>
               <p className="muted">
                 Load does not change ACP, max Dex, or speed. Ignore weight
-                turns off the load category; carried pounds still sum.
+                turns off the load category; carried pounds still sum. Catalog
+                items stamp name, pounds, and documentary weapon/armor fields
+                only — AC and attacks stay on Combat.
               </p>
             </td>
           </tr>
@@ -124,8 +127,31 @@ export function InventoryPanel({
           ) : (
             character.inventory.items.map((item, index) => (
               <tr key={item.id}>
-                <td>
+                <td className="item-cell">
+                  <select
+                    aria-label="CRB item"
+                    value={item.item.id ?? ''}
+                    onChange={(e) => {
+                      const id = e.target.value || null
+                      update((c) => {
+                        const items = [...c.inventory.items]
+                        items[index] = applyCrbItem(items[index], id)
+                        return {
+                          ...c,
+                          inventory: { ...c.inventory, items },
+                        }
+                      })
+                    }}
+                  >
+                    <option value="">Custom</option>
+                    {CRB_ITEMS.map((entry) => (
+                      <option key={entry.id} value={entry.id}>
+                        {entry.name}
+                      </option>
+                    ))}
+                  </select>
                   <input
+                    aria-label="Item name"
                     value={item.item.name}
                     onChange={(e) =>
                       update((c) => {

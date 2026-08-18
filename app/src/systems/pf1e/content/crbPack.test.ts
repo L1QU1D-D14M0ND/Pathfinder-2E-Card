@@ -1,15 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
-import { createEmptyClass } from '../character/createRows'
+import { createEmptyClass, createEmptyItem } from '../character/createRows'
 import { parseCharacterJson } from '../character/saveLoad'
 import {
   applyCrbClassProgression,
+  applyCrbItem,
   applyCrbRace,
   classSkillKeySet,
   lookupCrbClass,
+  lookupCrbItem,
   lookupCrbRace,
   stampClassSkills,
   CRB_CLASSES,
+  CRB_ITEMS,
   CRB_RACES,
 } from './crbPack'
 import { readRepoFile, readRepoJson } from '../../../test/readRepoFile'
@@ -92,14 +95,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–6, 8, and 9', () => {
+  it('pack manifest records batches 1–6 and 8–10', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batch-9')
+    expect(pack.status).toBe('batch-10')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 8, 9,
+      1, 2, 3, 4, 5, 6, 8, 9, 10,
     ])
   })
 })
@@ -235,5 +238,99 @@ describe('CRB pack batch 9: class skills', () => {
       const next = stamped.find((row) => row.key === skill.key)
       expect(next?.classSkill).toBe(skill.classSkill)
     }
+  })
+})
+
+describe('CRB pack batch 10: weapons and armor catalog', () => {
+  it('lists the golden item ids', () => {
+    expect(CRB_ITEMS.map((row) => row.id)).toEqual([
+      'weapon.dagger',
+      'weapon.longsword',
+      'weapon.quarterstaff',
+      'armor.chain-shirt',
+      'armor.chainmail',
+      'item.spellbook',
+    ])
+    expect(lookupCrbItem('armor.chainmail')).toMatchObject({
+      name: 'Chainmail',
+      pounds: 40,
+      armor: { acBonus: 6, maxDex: 2, armorCheckPenalty: -5 },
+    })
+    expect(lookupCrbItem('weapon.longsword')).toMatchObject({
+      name: 'Longsword',
+      pounds: 4,
+      weapon: { damageDice: '1d8', critRange: 19, critMultiplier: 2 },
+    })
+  })
+
+  it('returns null for an unknown item id', () => {
+    expect(lookupCrbItem('weapon.greatsword')).toBeNull()
+    expect(lookupCrbItem(null)).toBeNull()
+    expect(lookupCrbItem('')).toBeNull()
+  })
+
+  it('stamps documentary fields without changing quantity or location', () => {
+    const row = createEmptyItem()
+    row.quantity = 2
+    row.location = 'equipped'
+    const chainmail = applyCrbItem(row, 'armor.chainmail')
+    expect(chainmail.quantity).toBe(2)
+    expect(chainmail.location).toBe('equipped')
+    expect(chainmail.item.id).toBe('armor.chainmail')
+    expect(chainmail.item.name).toBe('Chainmail')
+    expect(chainmail.pounds).toBe(40)
+    expect(chainmail.armor).toEqual({
+      acBonus: 6,
+      maxDex: 2,
+      armorCheckPenalty: -5,
+      spellFailurePercent: 30,
+    })
+    expect(chainmail.weapon).toBeUndefined()
+  })
+
+  it('clears the other subobject when switching kind', () => {
+    const chainmail = applyCrbItem(createEmptyItem(), 'armor.chainmail')
+    const longsword = applyCrbItem(chainmail, 'weapon.longsword')
+    expect(longsword.weapon?.damageDice).toBe('1d8')
+    expect(longsword.armor).toBeUndefined()
+    const gear = applyCrbItem(longsword, 'item.spellbook')
+    expect(gear.weapon).toBeUndefined()
+    expect(gear.armor).toBeUndefined()
+    expect(gear.pounds).toBe(3)
+  })
+
+  it('unknown apply clears id and leaves the rest of the row', () => {
+    const row = applyCrbItem(createEmptyItem(), 'weapon.longsword')
+    const custom = applyCrbItem(row, 'weapon.greatsword')
+    expect(custom.item.id).toBeNull()
+    expect(custom.item.name).toBe('Longsword')
+    expect(custom.pounds).toBe(4)
+    expect(custom.weapon?.damageDice).toBe('1d8')
+  })
+
+  it('goldens use catalog ids that resolve', () => {
+    const fighter = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),
+    )
+    const wizard = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/wizard-5.json'),
+    )
+    const mixed = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-2-wizard-3.json'),
+    )
+    for (const character of [fighter, wizard, mixed]) {
+      for (const row of character.inventory.items) {
+        expect(lookupCrbItem(row.item.id)).not.toBeNull()
+      }
+    }
+    expect(lookupCrbItem(fighter.inventory.items[0]?.item.id)?.id).toBe(
+      'armor.chainmail',
+    )
+    expect(lookupCrbItem(wizard.inventory.items[0]?.item.id)?.id).toBe(
+      'weapon.quarterstaff',
+    )
+    expect(lookupCrbItem(mixed.inventory.items[0]?.item.id)?.id).toBe(
+      'armor.chain-shirt',
+    )
   })
 })

@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-9",
+  "status": "batch-10",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -45,6 +45,11 @@
       "id": 9,
       "mechanics": ["class-skills", "skill-points-per-level"],
       "notes": "Fighter/Wizard class-skill lists and 2 skill points per level. Checkboxes stamp on class pick. Ranks are not auto-spent. Human +1/level is in the pool when race.human."
+    },
+    {
+      "id": 10,
+      "mechanics": ["weapons-goldens", "armor-goldens"],
+      "notes": "Documentary catalog ids for the golden weapons and armor. Stamps name, pounds, and weapon/armor fields. Does not write armorClass or attacks."
     }
   ]
 }
