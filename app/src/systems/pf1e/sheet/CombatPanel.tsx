@@ -2,9 +2,41 @@ import {
   createEmptyAttack,
   type CharacterDocument,
 } from '../character'
+import type { AbilityKey } from '../character/types'
 import { formatIteratives, signed, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
+import { t } from '../../../shared/i18n'
 import type { SheetUpdate } from './update'
+
+const ABILITY_OPTIONS: AbilityKey[] = [
+  'str',
+  'dex',
+  'con',
+  'int',
+  'wis',
+  'cha',
+]
+
+const AC_FIELDS = [
+  ['armorBonus', 'pf1e.combat.armorBonus'],
+  ['shieldBonus', 'pf1e.combat.shieldBonus'],
+  ['natural', 'pf1e.combat.natural'],
+  ['deflection', 'pf1e.combat.deflection'],
+  ['dodge', 'pf1e.combat.dodge'],
+  ['other', 'pf1e.combat.other'],
+  ['armorCheckPenalty', 'pf1e.combat.acp'],
+] as const
+
+const COMBAT_MISC = [
+  ['initiativeMisc', 'pf1e.combat.initiativeMisc'],
+  ['meleeAttackMisc', 'pf1e.combat.meleeMisc'],
+  ['rangedAttackMisc', 'pf1e.combat.rangedMisc'],
+  ['cmbMisc', 'pf1e.combat.cmbMisc'],
+  ['cmdMisc', 'pf1e.combat.cmdMisc'],
+  ['fortMisc', 'pf1e.combat.fortMisc'],
+  ['refMisc', 'pf1e.combat.refMisc'],
+  ['willMisc', 'pf1e.combat.willMisc'],
+] as const
 
 export function CombatPanel({
   character,
@@ -40,21 +72,28 @@ export function CombatPanel({
       <table className="sheet-table">
         <tbody>
           <tr>
-            <th>Iterative attacks</th>
+            <th>{t('pf1e.combat.bab')}</th>
             <td>
               <DerivedCell
-                value={formatIteratives(derived.babIteratives)}
+                value={signed(derived.bab)}
                 overridden={derived.overriddenPaths.includes('derived.bab')}
               />
-              <div className="muted">
-                Extra attacks at BAB +6, +11, and +16 (−5 steps). Full-round
-                attack. No dice roller. Haste / two-weapon fighting are not
-                included.
-              </div>
             </td>
           </tr>
           <tr>
-            <th>Melee / ranged</th>
+            <th>{t('pf1e.combat.iteratives')}</th>
+            <td>
+              <DerivedCell
+                value={formatIteratives(derived.babIteratives)}
+                overridden={derived.overriddenPaths.includes(
+                  'derived.babIteratives',
+                )}
+              />
+              <div className="muted">{t('pf1e.combat.iterativesHelp')}</div>
+            </td>
+          </tr>
+          <tr>
+            <th>{t('pf1e.combat.meleeRanged')}</th>
             <td>
               <DerivedCell
                 value={`${signed(derived.meleeAttack)} / ${signed(derived.rangedAttack)}`}
@@ -66,16 +105,20 @@ export function CombatPanel({
             </td>
           </tr>
           <tr>
-            <th>AC / touch / FF</th>
+            <th>{t('pf1e.combat.acTrio')}</th>
             <td>
               <DerivedCell
                 value={`${derived.ac} / ${derived.touchAc} / ${derived.flatFootedAc}`}
-                overridden={derived.overriddenPaths.includes('derived.ac')}
+                overridden={
+                  derived.overriddenPaths.includes('derived.ac') ||
+                  derived.overriddenPaths.includes('derived.touchAc') ||
+                  derived.overriddenPaths.includes('derived.flatFootedAc')
+                }
               />
             </td>
           </tr>
           <tr>
-            <th>CMB / CMD</th>
+            <th>{t('pf1e.combat.cmbCmd')}</th>
             <td>
               <DerivedCell
                 value={`${signed(derived.cmb)} / ${derived.cmd}`}
@@ -87,16 +130,18 @@ export function CombatPanel({
             </td>
           </tr>
           <tr>
-            <th>Fort / Ref / Will</th>
+            <th>{t('pf1e.combat.saves')}</th>
             <td>
               <DerivedCell
                 value={`${signed(derived.fortitude)} / ${signed(derived.reflex)} / ${signed(derived.will)}`}
-                overridden={derived.overriddenPaths.includes('derived.fortitude')}
+                overridden={derived.overriddenPaths.includes(
+                  'derived.fortitude',
+                )}
               />
             </td>
           </tr>
           <tr>
-            <th>Initiative</th>
+            <th>{t('pf1e.combat.initiative')}</th>
             <td>
               <DerivedCell
                 value={signed(derived.initiative)}
@@ -112,24 +157,14 @@ export function CombatPanel({
       <table className="sheet-table">
         <thead>
           <tr>
-            <th>AC inputs</th>
-            <th>Value</th>
+            <th>{t('pf1e.combat.acInputs')}</th>
+            <th>{t('pf1e.combat.value')}</th>
           </tr>
         </thead>
         <tbody>
-          {(
-            [
-              ['Armor bonus', 'armorBonus'],
-              ['Shield bonus', 'shieldBonus'],
-              ['Natural', 'natural'],
-              ['Deflection', 'deflection'],
-              ['Dodge', 'dodge'],
-              ['Other', 'other'],
-              ['ACP (≤ 0)', 'armorCheckPenalty'],
-            ] as const
-          ).map(([label, key]) => (
+          {AC_FIELDS.map(([key, labelKey]) => (
             <tr key={key}>
-              <th>{label}</th>
+              <th>{t(labelKey)}</th>
               <td>
                 <input
                   type="number"
@@ -147,7 +182,7 @@ export function CombatPanel({
             </tr>
           ))}
           <tr>
-            <th>Max Dex (blank = none)</th>
+            <th>{t('pf1e.combat.maxDex')}</th>
             <td>
               <input
                 type="number"
@@ -163,29 +198,19 @@ export function CombatPanel({
           </tr>
         </tbody>
       </table>
+      <p className="muted">{t('pf1e.combat.otherApplies')}</p>
 
       <table className="sheet-table">
         <thead>
           <tr>
-            <th>Misc combat</th>
-            <th>Value</th>
+            <th>{t('pf1e.combat.miscCombat')}</th>
+            <th>{t('pf1e.combat.value')}</th>
           </tr>
         </thead>
         <tbody>
-          {(
-            [
-              ['Initiative misc', 'initiativeMisc'],
-              ['Melee misc', 'meleeAttackMisc'],
-              ['Ranged misc', 'rangedAttackMisc'],
-              ['CMB misc', 'cmbMisc'],
-              ['CMD misc', 'cmdMisc'],
-              ['Fort misc', 'fortMisc'],
-              ['Ref misc', 'refMisc'],
-              ['Will misc', 'willMisc'],
-            ] as const
-          ).map(([label, key]) => (
+          {COMBAT_MISC.map(([key, labelKey]) => (
             <tr key={key}>
-              <th>{label}</th>
+              <th>{t(labelKey)}</th>
               <td>
                 <input
                   type="number"
@@ -201,7 +226,7 @@ export function CombatPanel({
       </table>
 
       <div className="table-toolbar">
-        <strong>Attacks</strong>
+        <strong>{t('pf1e.combat.attacks')}</strong>
         <button
           type="button"
           onClick={() =>
@@ -211,27 +236,32 @@ export function CombatPanel({
             }))
           }
         >
-          Add attack
+          {t('pf1e.combat.addAttack')}
         </button>
       </div>
       <table className="sheet-table wide">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Dice</th>
-            <th>Type</th>
-            <th>Misc atk</th>
-            <th>Attack</th>
-            <th>Damage</th>
+            <th>{t('pf1e.combat.name')}</th>
+            <th>{t('pf1e.combat.type')}</th>
+            <th>{t('pf1e.combat.dice')}</th>
+            <th>{t('pf1e.combat.damageType')}</th>
+            <th>{t('pf1e.combat.atkAbility')}</th>
+            <th>{t('pf1e.combat.dmgAbility')}</th>
+            <th>{t('pf1e.combat.miscAtk')}</th>
+            <th>{t('pf1e.combat.miscDmg')}</th>
+            <th>{t('pf1e.combat.crit')}</th>
+            <th>{t('pf1e.combat.range')}</th>
+            <th>{t('pf1e.combat.attack')}</th>
+            <th>{t('pf1e.combat.damage')}</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {character.attacks.length === 0 ? (
             <tr>
-              <td colSpan={8} className="muted">
-                No attacks. Add a longsword snapshot to match the Fighter golden.
+              <td colSpan={13} className="muted">
+                {t('pf1e.combat.noAttacks')}
               </td>
             </tr>
           ) : (
@@ -268,8 +298,8 @@ export function CombatPanel({
                         })
                       }
                     >
-                      <option value="melee">melee</option>
-                      <option value="ranged">ranged</option>
+                      <option value="melee">{t('pf1e.combat.melee')}</option>
+                      <option value="ranged">{t('pf1e.combat.ranged')}</option>
                     </select>
                   </td>
                   <td>
@@ -303,6 +333,52 @@ export function CombatPanel({
                     />
                   </td>
                   <td>
+                    <select
+                      value={row.attackAbility ?? (row.attackType === 'ranged' ? 'dex' : 'str')}
+                      onChange={(e) =>
+                        update((c) => {
+                          const attacks = [...c.attacks]
+                          attacks[index] = {
+                            ...attacks[index],
+                            attackAbility: e.target.value as AbilityKey,
+                          }
+                          return { ...c, attacks }
+                        })
+                      }
+                    >
+                      {ABILITY_OPTIONS.map((key) => (
+                        <option key={key} value={key}>
+                          {key.toUpperCase()}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
+                    <select
+                      value={row.damageAbility === null ? '' : (row.damageAbility ?? row.attackAbility ?? 'str')}
+                      onChange={(e) =>
+                        update((c) => {
+                          const attacks = [...c.attacks]
+                          attacks[index] = {
+                            ...attacks[index],
+                            damageAbility:
+                              e.target.value === ''
+                                ? null
+                                : (e.target.value as AbilityKey),
+                          }
+                          return { ...c, attacks }
+                        })
+                      }
+                    >
+                      <option value="">{t('pf1e.combat.none')}</option>
+                      {ABILITY_OPTIONS.map((key) => (
+                        <option key={key} value={key}>
+                          {key.toUpperCase()}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
                     <input
                       type="number"
                       value={row.miscAttack ?? 0}
@@ -312,6 +388,80 @@ export function CombatPanel({
                           attacks[index] = {
                             ...attacks[index],
                             miscAttack: Number(e.target.value) || 0,
+                          }
+                          return { ...c, attacks }
+                        })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.miscDamage ?? 0}
+                      onChange={(e) =>
+                        update((c) => {
+                          const attacks = [...c.attacks]
+                          attacks[index] = {
+                            ...attacks[index],
+                            miscDamage: Number(e.target.value) || 0,
+                          }
+                          return { ...c, attacks }
+                        })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      aria-label={t('pf1e.combat.crit')}
+                      value={row.critRange ?? 20}
+                      onChange={(e) =>
+                        update((c) => {
+                          const attacks = [...c.attacks]
+                          attacks[index] = {
+                            ...attacks[index],
+                            critRange: Math.min(
+                              20,
+                              Math.max(1, Number(e.target.value) || 20),
+                            ),
+                          }
+                          return { ...c, attacks }
+                        })
+                      }
+                    />
+                    ×
+                    <input
+                      type="number"
+                      aria-label={t('pf1e.combat.crit')}
+                      value={row.critMultiplier ?? 2}
+                      onChange={(e) =>
+                        update((c) => {
+                          const attacks = [...c.attacks]
+                          attacks[index] = {
+                            ...attacks[index],
+                            critMultiplier: Math.max(
+                              2,
+                              Number(e.target.value) || 2,
+                            ),
+                          }
+                          return { ...c, attacks }
+                        })
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      value={row.rangeFeet ?? ''}
+                      onChange={(e) =>
+                        update((c) => {
+                          const attacks = [...c.attacks]
+                          attacks[index] = {
+                            ...attacks[index],
+                            rangeFeet:
+                              e.target.value === ''
+                                ? null
+                                : Math.max(0, Number(e.target.value) || 0),
                           }
                           return { ...c, attacks }
                         })
@@ -343,7 +493,7 @@ export function CombatPanel({
                         }))
                       }
                     >
-                      Remove
+                      {t('pf1e.combat.remove')}
                     </button>
                   </td>
                 </tr>

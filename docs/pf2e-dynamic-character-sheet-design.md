@@ -294,7 +294,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 
 **Later tools:** reference tabs (Spells / Afflictions / Actions) plug into the host without abandoning the sheet grid.
 
-**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; add `es` for 1.0. **Not started** — scaffold UI strings are hardcoded English in `app/src/App.tsx`.
+**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; add `es` for 1.0. Chrome catalog exists; remaining PF2e panel literals in `app/src/systems/pf2e/sheet/` extract when those panels change.
 
 ---
 

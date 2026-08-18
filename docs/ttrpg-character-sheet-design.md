@@ -114,22 +114,20 @@ Shared spreadsheet chrome  +  sidebar host (read/write via update)
   + registered sidebar tools (shared and/or per system; list TBD)
 ```
 
-### 4.1 Code layout (target, not current)
+### 4.1 Code layout
 
-Current code lives at `app/src/character`, `app/src/engine`, `app/src/sheet` and is PF2e-only. The refactor increment moves that to a system module without changing PF2e behavior.
-
-Target sketch (locked in [ADR 0004](adr/0004-shared-kernel.md) / [`shared-kernel-design.md`](shared-kernel-design.md)):
+Phase M extracted the kernel. Current layout:
 
 ```text
 app/src/
   shell/          # PWA chrome, tabs, Save/Load, New-system picker, registry, sidebar host
-  shared/         # envelope, ids, Ajv helper, overrides apply, DerivedCell, …
+  shared/         # envelope, ids, Ajv helper, strip-derived, file IO, DerivedCell
   systems/
-    pf2e/         # today’s character/ + engine/ (+ PF2e-specific panels + optional tools)
-    pf1e/         # schema types, engine, PF1e-specific panels + optional tools
+    pf2e/         # schema types, engine, PF2e-specific panels
+    pf1e/         # schema types, engine, PF1e-specific panels, CRB pack lookup
 ```
 
-Exact folder names are an implementation detail of the refactor; the constraint is **one engine per system**, **no cross-imports between systems**, and **PF2e tests stay green**.
+The constraint is **one engine per system**, **no cross-imports between systems**, and **PF2e tests stay green**. `SystemModule` is registered per edition; the shell still branches on `system` to mount `Pf1eWorkspace` vs `Pf2eWorkspace` (the ADR 0004 `tabs` field is not on the module yet).
 
 ### 4.2 Envelope
 
@@ -140,7 +138,7 @@ Exact folder names are an implementation detail of the refactor; the constraint 
 - Save still strips `derived`.
 - `overrides` and `extensions` remain the escape hatches in each system document.
 
-PF2e schema file stays [`schemas/character.schema.json`](../schemas/character.schema.json) until the refactor; PF1e schema will be a sibling (e.g. `schemas/pf1e/character.schema.json`) under a later schema ADR.
+PF2e schema file stays [`schemas/character.schema.json`](../schemas/character.schema.json); PF1e schema is [`schemas/pf1e/character.schema.json`](../schemas/pf1e/character.schema.json) ([ADR 0006](adr/0006-pf1e-character-schema.md)).
 
 ### 4.3 What is shared vs forked
 
@@ -191,7 +189,7 @@ One active character. Switching system on an existing document is **not** suppor
 
 **New sheet:** system choice before the empty factory runs.
 
-**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; `es` in 1.0. Still hardcoded English in the current scaffold — extract during or immediately before the first PF1e editors so a second wave of literals is not added.
+**i18n:** All user-visible strings via message catalogs. Ship `en` in 0.9; `es` in 1.0. Chrome (`en.json` + `t()`) covers shell, tabs, PF1e Combat/Abilities/Skills, and Notes. Remaining PF2e panel literals extract when those panels change.
 
 ---
 
@@ -202,7 +200,7 @@ One active character. Switching system on an existing document is **not** suppor
 - **PF2e pack:** still Remaster Player Core + Player Core 2, hybrid curated-first, optional attributed ORC import later. **Sequenced after** the PF1e 0.9 bar.
 - Isolate content-resolve failures to the row; never fail whole-sheet load for one bad id.
 
-Until a pack exists, goldens use `rulesetSource: "custom"` and filled numeric inputs (current PF2e practice).
+Until a pack exists, **PF2e** goldens use `rulesetSource: "custom"` and filled numeric inputs. **PF1e** goldens use ContentRef `id`/`name` only (no `rulesetSource` on that document) plus filled numeric inputs; catalog stamps HD/BAB/saves when the player picks Fighter or Wizard.
 
 ---
 
@@ -267,3 +265,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves |
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative attacks |
 | 2026-08-17 | Annotate CRB batches 3–10; next is AC/CMB |
+| 2026-08-17 | Layout §4.1 matches extracted kernel; PF1e goldens are not `rulesetSource` |

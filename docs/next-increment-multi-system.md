@@ -24,7 +24,7 @@ The next **code** increment is **Phase 3c batch 3** (AC / touch / FF + CMB / CMD
 | PF1e development priority; PF2e slice must not regress | ADR 0003 |
 | Existing Load files without `system` are PF2e | ADR 0003 |
 | One sheet; Save/Load `.json`; no library, dice, VTT, house-rule flags | ADR 0003 |
-| English 0.9 / Spanish 1.0; externalize strings | ADR 0003 (still not done) |
+| English 0.9 / Spanish 1.0; chrome catalog landed | ADR 0003 (T4′) |
 | PF2e documents still validate against `schemas/character.schema.json` until a dedicated move is part of Phase M | ADR 0002 |
 | Core calcs only; unknown `effects[]` ignored | ADR 0003 |
 | Sidebar host when a sheet is loaded; tools TBD; empty host OK for 0.9 | ADR 0005 |
@@ -220,7 +220,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Wizard 5 golden
 - [x] Multiclass golden
 - [ ] Editors for those domains (no familiar nested sheet)
-- [ ] `en` catalog (no new hardcoded chrome)
+- [x] `en` catalog for shell chrome + PF1e Combat/Abilities/Skills/tabs (PF2e panel literals remain)
 - [ ] PWA install + offline proven once
 - [ ] PF2e Fighter 5 / Wizard 5 still pass
 - [ ] Sidebar host may be empty; named tools not required
@@ -241,6 +241,25 @@ Steps 2–4 are the **next development increments** after this documentation cha
 
 ---
 
+## 9. Audit notes (2026-08-17)
+
+Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 5 slots **4/4/3/2**; `miscDamage` with null damage ability; attack-override slash line.
+
+**Decisions (implemented):** 1A New-sheet picker with Cancel abort (boot stays PF2e). 2B `tempScore` + keep `tempModifier`. 3A last-wins BAB; Combat flags BAB vs iteratives separately. 4A one `other` field; Combat states it applies to all three ACs. 5A warn when ranks > level (no clamp). 6B blank Disable Device / UMD / Handle Animal at 0 ranks; blank Fly without a fly speed. 7B full attack-row fields. 8C no extra CMD/max-Dex copy. 9B `en.json` + `t()` for chrome (shell, tabs, PF1e Combat/Abilities/Skills, Notes). 10B shared `ContentRef`/`Effect`/`applyOverrides`/`Notes`/`Currency`.
+
+**Still sequenced (not this change):**
+
+| Item | Disposition |
+| --- | --- |
+| Full CRB review of AC/touch/FF + CMB/CMD table tests | Batch 3 |
+| Class-skill lists / skill points catalog | Batch 4 remainder / batch 9 |
+| Size tables beyond Medium | Batch 5 |
+| Load penalties onto ACP / max Dex | Batch 6 (document only) |
+| `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
+| Remaining PF2e panel literals | Extract when those panels next change |
+
+---
+
 ## Appendix — Document history
 
 | Date | Change |
@@ -255,3 +274,5 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | 2026-08-17 | Phase 3c batch 1: ability modifiers + BAB/saves; CRB pack scaffold |
 | 2026-08-17 | Phase 3c batch 2: HP breakdown dialog + iterative attacks |
 | 2026-08-17 | Annotate CRB batches 3–10; next increment is batch 3 only |
+| 2026-08-17 | Audit: Wizard 5 slots 4/4/3/2; remaining design notes in §9 |
+| 2026-08-17 | Implement audit decisions 1A–10B (picker, tempScore, chrome i18n, kernel types) |

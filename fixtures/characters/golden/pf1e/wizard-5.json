@@ -158,9 +158,9 @@
       "casterLevelOverride": null,
       "slots": [
         { "spellLevel": 0, "max": 4, "remaining": 4 },
-        { "spellLevel": 1, "max": 5, "remaining": 4 },
-        { "spellLevel": 2, "max": 4, "remaining": 4 },
-        { "spellLevel": 3, "max": 3, "remaining": 2 }
+        { "spellLevel": 1, "max": 4, "remaining": 3 },
+        { "spellLevel": 2, "max": 3, "remaining": 3 },
+        { "spellLevel": 3, "max": 2, "remaining": 1 }
       ],
       "cantrips": [
         {
@@ -225,7 +225,7 @@
     "appearance": "Golden-test prepared caster.",
     "personality": "",
     "campaign": "",
-    "other": "20-point buy + human +2 Int. Unarmored. INT 18 bonus slots 1/1/1 at levels 1–3."
+    "other": "20-point buy + human +2 Int. Unarmored. Wizard 5 table 4/3/2/1 + INT 18 bonus 1/1/1 (not a specialist) = 4/4/3/2."
   },
   "overrides": {},
   "extensions": {}

@@ -1,6 +1,13 @@
 import type { OverrideValue } from '../character/types'
 import type { AbilityKey } from '../character/types'
+import {
+  applyOverrides as applyOverridesShared,
+  isFiniteNumber,
+  isOverridden,
+} from '../../../shared/overrides'
 import type { DerivedView } from './types'
+
+export { isOverridden }
 
 const ABILITY_KEYS: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
@@ -25,10 +32,6 @@ const SCALAR_KEYS = new Set([
   'mediumLoad',
   'heavyLoad',
 ])
-
-function isFiniteNumber(value: unknown): value is number {
-  return typeof value === 'number' && Number.isFinite(value)
-}
 
 function setScalar(
   view: DerivedView,
@@ -98,28 +101,6 @@ function setScalar(
   }
 }
 
-/**
- * Apply overrides last. Unknown paths are ignored (stored on ignoredOverridePaths).
- */
-export function applyOverrides(
-  view: DerivedView,
-  overrides: Record<string, OverrideValue>,
-): DerivedView {
-  const next: DerivedView = structuredClone(view)
-  for (const [path, override] of Object.entries(overrides)) {
-    if (applyOne(next, path, override.value)) {
-      next.overriddenPaths.push(path)
-    } else {
-      next.ignoredOverridePaths.push(path)
-    }
-  }
-  return next
-}
-
-export function isOverridden(view: DerivedView, path: string): boolean {
-  return view.overriddenPaths.includes(path)
-}
-
 function applyOne(view: DerivedView, path: string, value: unknown): boolean {
   const parts = path.split('.')
   if (parts[0] !== 'derived' || parts.length < 2) return false
@@ -127,6 +108,12 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
   if (parts.length === 2 && SCALAR_KEYS.has(parts[1])) {
     if (!isFiniteNumber(value)) return false
     return setScalar(view, parts[1], value)
+  }
+
+  if (parts.length === 2 && parts[1] === 'babIteratives') {
+    if (!Array.isArray(value) || !value.every(isFiniteNumber)) return false
+    view.babIteratives = [...value]
+    return true
   }
 
   if (
@@ -154,7 +141,9 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
     if (!isFiniteNumber(value)) return false
     const existing = view.attacks[parts[2]]
     if (!existing) return false
+    const delta = value - existing.attack
     existing.attack = value
+    existing.iteratives = existing.iteratives.map((step) => step + delta)
     return true
   }
 
@@ -188,4 +177,15 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
   }
 
   return false
+}
+
+/**
+ * Apply overrides last. Unknown paths are ignored (stored on ignoredOverridePaths).
+ * Overriding BAB does not rewrite babIteratives or attack slash lines.
+ */
+export function applyOverrides(
+  view: DerivedView,
+  overrides: Record<string, OverrideValue>,
+): DerivedView {
+  return applyOverridesShared(view, overrides, applyOne)
 }

@@ -32,7 +32,7 @@ Other systems (Starfinder, D&D 5e, etc.) are **architecture-only** for 0.9/1.0: 
 | Modes | Build and Play |
 | Dice | No dice roller (a future sidebar tool does not reopen this unless a later ADR says so) |
 | Campaign options | Omit house-rule flags for 0.9/1.0 (PF2e Free Archetype; PF1e traits/variant rules). Extra feats/traits entered as custom rows |
-| i18n | English in 0.9; Spanish in 1.0 (strings externalized from the start — still not done in the scaffold) |
+| i18n | English in 0.9; Spanish in 1.0. Chrome uses `en.json` + `t()`; remaining PF2e panel literals extract when those panels change |
 | Language | TypeScript |
 | UI framework | React |
 | Save files | `.json` |
@@ -57,6 +57,8 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 - Shared vs forked code is locked in [ADR 0004](0004-shared-kernel.md). Phase M extracts the kernel with PF2e as the first consumer.
 - Sidebar **host** (read/write rail when a sheet is loaded; tools unspecified) is locked in [ADR 0005](0005-sidebar-host.md). Empty/collapsed host is enough for 0.9; tool list comes later.
 - A future ADR will lock the PF1e JSON schema (analog of ADR 0002). Envelope rules in this ADR and [PF1e schema notes](../pf1e-schema-design-notes.md) are the standing defaults until then.
+
+**Postscript (2026-08-17):** Phase M, ADR 0006, and Phases 1e–3e / 3c batches 1–2 have landed. The next *code* increment is Phase 3c batch 3 (AC / CMB), not the refactor this ADR originally scheduled. See [`ROADMAP.md`](../ROADMAP.md).
 
 ## Defaults for open questions
 

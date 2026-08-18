@@ -1,4 +1,5 @@
 import { newId } from '../../../shared/ids'
+import { emptyCurrency } from '../../../shared/currency'
 import { createStandardSkillEntries } from './standardSkills'
 import {
   APP_VERSION,
@@ -116,7 +117,7 @@ export function createEmptyCharacter(): CharacterDocument {
     strikes: [],
     spellcasting: [],
     inventory: {
-      currency: { cp: 0, sp: 0, gp: 0, pp: 0 },
+      currency: emptyCurrency(),
       items: [],
       bulkBonus: 0,
       notes: '',

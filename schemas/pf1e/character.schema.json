@@ -69,7 +69,7 @@
     "spellcasting": {
       "type": "array",
       "items": { "$ref": "#/$defs/SpellcastingEntry" },
-      "description": "One entry per casting class. Slots are user-entered in 0.9; DC math is a later phase."
+      "description": "One entry per casting class. Slots are user-entered in 0.9. Spell DC (10 + spell level + ability) and bonus spells from ability score are derived."
     },
     "inventory": { "$ref": "#/$defs/Inventory" },
     "companions": {
@@ -292,11 +292,15 @@
       "properties": {
         "score": {
           "type": "integer",
-          "description": "Final ability score used for the modifier (includes racial). No schema maximum."
+          "description": "Final ability score used for the modifier (includes racial). No schema maximum. Temp score is added on top."
+        },
+        "tempScore": {
+          "type": "integer",
+          "description": "Added to score before floor((score-10)/2) and the bonus-spell table (belts, bull's strength). Does not replace tempModifier."
         },
         "tempModifier": {
           "type": "integer",
-          "description": "Added to the derived modifier after floor((score-10)/2)."
+          "description": "Added to the derived modifier after floor((effectiveScore-10)/2). Does not change bonus slots or carrying capacity."
         }
       }
     },

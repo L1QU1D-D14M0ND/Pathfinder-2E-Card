@@ -108,7 +108,7 @@ Temporary bonuses that **increase the score** (belt of giant strength, *bull’s
 | UI | Abilities tab: Score, Temp mod, derived Modifier | |
 | Goldens | Fighter 5, Wizard 5, Fighter 2 / Wizard 3 | Assert the six modifiers |
 
-**Verdict:** The **formula is correct** and matches the CRB table. Encumberance correctly uses the **score**, not the modifier.
+**Verdict:** The **formula is correct** and matches the CRB table. Encumbrance correctly uses the **score**, not the modifier.
 
 **Gaps (do not fix in this batch unless they block goldens):**
 
@@ -257,6 +257,13 @@ Armor **max Dex** caps Dex on AC and touch, **not** on CMD (CMD uses the full De
 
 **In this batch:** CRB procedure in our own words; table tests beyond the three goldens (Dex cap, negative Dex on FF, touch omits armor); Combat UI labels if a total is easy to misread; document that armor/shield/natural/deflection fields are **user-responsible** (no typed-bonus stacker — risk P2).
 
+UI honesty already noticed (partially landed; remaining work is formula table tests):
+
+- AC / touch / FF derived cell flags any of the three override paths.
+- Combat shows BAB (flags `derived.bab`) and iteratives (flags `derived.babIteratives`) separately. Overriding BAB does not rewrite the slash line.
+- `armorClass.other` applies to touch and flat-footed (dodge does not apply to FF). Combat tab states this. User-responsible.
+- CMD uses **uncapped** Dex; AC/touch use `maxDex`. No extra copy (decision 8C).
+
 **Out:** Item-granted AC from inventory; max Dex from an armor catalog (batch 10); size table expansion (batch 5 — already applied, Medium-only in goldens); Combat Expertise / fighting defensively; shield bash; CMD vs specific maneuvers.
 
 **Pack slice:** none (engine-owned).
@@ -269,7 +276,7 @@ Armor **max Dex** caps Dex on AC and touch, **not** on CMD (CMD uses the full De
 
 **Already in the app:** `skillTotal` = ranks + ability + (trained and class skill → +3) + ACP (if the skill flags it) + misc. Factory seeds the CRB skill list. Favored-class **skill ranks** are stored on the class row but not auto-applied to a skill.
 
-**In this batch:** Confirm +3 only when ranks ≥ 1; ACP only on flagged skills (Climb, not Diplomacy); max ranks = **character level** (CRB; no 3.5 cross-class half ranks). UI or engine honesty if ranks can exceed level today.
+**In this batch:** Confirm +3 only when ranks ≥ 1; ACP only on flagged skills (Climb, not Diplomacy); max ranks = **character level** (CRB; no 3.5 cross-class half ranks). UI warns when ranks exceed level (no clamp). Disable Device, Use Magic Device, and Handle Animal show **—** at 0 ranks; Fly shows **—** without a fly speed.
 
 **Out:** Stamping Fighter/Wizard class-skill checkboxes from the pack (batch 9); armor-load penalties stacking on top of typed ACP (batch 6); Craft/Perform/Profession catalogs.
 
@@ -328,3 +335,5 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-17 | Phase 3c opened. Batch 1: ability modifiers + BAB/save progressions; Fighter/Wizard catalog tags |
 | 2026-08-17 | Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks |
 | 2026-08-17 | Annotated upcoming batches 3–10 (next PR is AC/touch/FF + CMB/CMD) |
+| 2026-08-17 | Batch 3 UI-honesty notes; typo Encumberance → Encumbrance |
+| 2026-08-17 | Skill warn/blank and Combat honesty landed early; batch 3 formula table tests still next |

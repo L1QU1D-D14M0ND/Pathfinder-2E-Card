@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState, type ChangeEvent } from 'react'
 import { APP_DISPLAY_NAME } from '../shared/constants'
+import { t } from '../shared/i18n'
 import { CharacterSaveError, readTextFile } from '../shared/saveLoad'
+import type { SystemId } from '../shared/envelope'
 import { pf1eModule } from '../systems/pf1e/module'
 import { pf2eModule } from '../systems/pf2e/module'
 import { Pf1eWorkspace } from '../systems/pf1e/sheet/Workspace'
@@ -8,6 +10,7 @@ import { Pf2eWorkspace } from '../systems/pf2e/sheet/Workspace'
 import type { CharacterDocument as Pf1eDocument } from '../systems/pf1e/character'
 import type { CharacterDocument as Pf2eDocument } from '../systems/pf2e/character'
 import { parseLoadedSheet, type LoadedSheet } from './loadSheet'
+import { NewSheetDialog } from './NewSheetDialog'
 import { SidebarHost } from './sidebar/SidebarHost'
 import './App.css'
 
@@ -107,28 +110,20 @@ export default function App() {
     system: 'pf2e',
     character: pf2eModule.createEmpty(),
   }))
-  const [status, setStatus] = useState('New sheet ready.')
+  const [status, setStatus] = useState(t('shell.newReady'))
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
+  const [newOpen, setNewOpen] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   const module = sheet.system === 'pf1e' ? pf1eModule : pf2eModule
 
-  function onNew() {
-    if (
-      !window.confirm(
-        'Start a new blank sheet? Unsaved changes in memory will be lost.',
-      )
-    ) {
-      return
-    }
-    const pf1e = window.confirm(
-      'Create a Pathfinder First Edition sheet?\nCancel creates Pathfinder Second Edition.',
-    )
-    if (pf1e) {
+  function onChooseNew(system: SystemId) {
+    setNewOpen(false)
+    if (system === 'pf1e') {
       setSheet({ system: 'pf1e', character: pf1eModule.createEmpty() })
-      setStatus('New Pathfinder 1E sheet created.')
+      setStatus(t('shell.newCreated', { system: t('pf1e.displayName') }))
     } else {
       setSheet({ system: 'pf2e', character: pf2eModule.createEmpty() })
-      setStatus('New Pathfinder 2E sheet created.')
+      setStatus(t('shell.newCreated', { system: t('pf2e.displayName') }))
     }
   }
 
@@ -139,9 +134,9 @@ export default function App() {
     try {
       const loaded = parseLoadedSheet(await readTextFile(file))
       setSheet(loaded)
-      setStatus(`Loaded ${file.name} (${loaded.system})`)
+      setStatus(t('shell.loaded', { name: file.name, system: loaded.system }))
     } catch (err) {
-      setStatus(err instanceof Error ? err.message : 'Load failed.')
+      setStatus(err instanceof Error ? err.message : t('shell.loadFailed'))
     }
   }
 
@@ -149,14 +144,14 @@ export default function App() {
     try {
       if (sheet.system === 'pf1e') pf1eModule.download(sheet.character)
       else pf2eModule.download(sheet.character)
-      setStatus('Save sheet downloaded (.json).')
+      setStatus(t('shell.saved'))
     } catch (err) {
       setStatus(
         err instanceof CharacterSaveError
           ? err.message
           : err instanceof Error
             ? err.message
-            : 'Save failed.',
+            : t('shell.saveFailed'),
       )
     }
   }
@@ -167,25 +162,27 @@ export default function App() {
         <div className="brand">
           <h1>{APP_DISPLAY_NAME}</h1>
           <p className="tagline">
-            {module.displayName} · local Build + Play · schema v
-            {sheet.character.schemaVersion}
+            {t('shell.tagline', {
+              system: module.displayName,
+              version: sheet.character.schemaVersion,
+            })}
           </p>
         </div>
         <div className="toolbar">
-          <button type="button" onClick={onNew}>
-            New sheet
+          <button type="button" onClick={() => setNewOpen(true)}>
+            {t('shell.newSheet')}
           </button>
           <button type="button" onClick={() => fileRef.current?.click()}>
-            Load sheet
+            {t('shell.loadSheet')}
           </button>
           <button type="button" className="primary" onClick={onSave}>
-            Save sheet
+            {t('shell.saveSheet')}
           </button>
           <button
             type="button"
             onClick={() => setSidebarCollapsed((value) => !value)}
           >
-            {sidebarCollapsed ? 'Show tools' : 'Hide tools'}
+            {sidebarCollapsed ? t('shell.showTools') : t('shell.hideTools')}
           </button>
           <input
             ref={fileRef}
@@ -230,6 +227,11 @@ export default function App() {
       </div>
 
       <footer className="status">{status}</footer>
+      <NewSheetDialog
+        open={newOpen}
+        onCancel={() => setNewOpen(false)}
+        onChoose={onChooseNew}
+      />
     </div>
   )
 }

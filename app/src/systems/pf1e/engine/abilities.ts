@@ -1,8 +1,13 @@
 import type { Abilities, AbilityKey, Size } from '../character/types'
+import { abilityModifierFromScore } from '../../../shared/abilities'
 
-/** CRB Ability Modifiers table: floor((score − 10) / 2). */
-export function abilityModifierFromScore(score: number): number {
-  return Math.floor((score - 10) / 2)
+export { abilityModifierFromScore }
+
+export function effectiveAbilityScore(block: {
+  score: number
+  tempScore?: number
+}): number {
+  return block.score + (block.tempScore ?? 0)
 }
 
 export function abilityModifiers(
@@ -13,7 +18,8 @@ export function abilityModifiers(
   for (const key of keys) {
     const block = abilities[key]
     result[key] =
-      abilityModifierFromScore(block.score) + (block.tempModifier ?? 0)
+      abilityModifierFromScore(effectiveAbilityScore(block)) +
+      (block.tempModifier ?? 0)
   }
   return result
 }

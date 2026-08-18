@@ -80,6 +80,18 @@ describe('CRB batch 1: ability modifiers', () => {
     expect(mods.str).toBe(8)
     expect(abilityModifierFromScore(22)).toBe(6)
   })
+
+  it('adds tempScore to the score before the modifier', () => {
+    const mods = abilityModifiers({
+      str: { score: 18, tempScore: 4 },
+      dex: { score: 10 },
+      con: { score: 10 },
+      int: { score: 10 },
+      wis: { score: 10 },
+      cha: { score: 10 },
+    })
+    expect(mods.str).toBe(6)
+  })
 })
 
 describe('CRB batch 1: BAB and save progressions', () => {

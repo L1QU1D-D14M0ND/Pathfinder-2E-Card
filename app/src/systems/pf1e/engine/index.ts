@@ -1,5 +1,5 @@
 export { compute, computeCharacter } from './compute'
-export { abilityModifierFromScore, abilityModifiers } from './abilities'
+export { abilityModifierFromScore, abilityModifiers, effectiveAbilityScore } from './abilities'
 export { isOverridden } from './overrides'
 export { signed } from './types'
 export type { DerivedView, AttackDerived, SpellcastingDerived } from './types'
@@ -20,5 +20,7 @@ export {
   hpBreakdown,
   hpFromHitDie,
   maxHp,
+  ranksExceedLevel,
   setHitDieRoll,
+  skillUsableUntrained,
 } from './vitals'

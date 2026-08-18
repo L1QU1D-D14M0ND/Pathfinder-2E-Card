@@ -72,9 +72,13 @@ app/src/
     golden.ts            # load fixture → validate → compute → assert
 ```
 
-Folder names can shift in Phase M; the **boundaries** are the lock.
+Folder names can shift; the **boundaries** are the lock.
 
-JSON Schema files stay per system (`schemas/character.schema.json` for PF2e until moved; `schemas/pf1e/character.schema.json` when 1e exists). A tiny **envelope** fragment (or documented required fields) is shared conceptually: `schemaVersion`, `system`.
+**Extracted today:** `envelope.ts`, `ids.ts`, `format.ts` (`signed`), `validate.ts`, `saveLoad.ts` (strip-derived + file IO), `constants.ts`, `contentRef.ts`, `effects.ts`, `overrides.ts` (generic apply + per-system `applyOne`), `notes.ts`, `currency.ts`, `abilities.ts` (`AbilityKey`, `abilityModifierFromScore`), `i18n.ts` + `locales/en.json`, `ui/DerivedCell.tsx`, `ui/NotesPanel.tsx`.
+
+**Still per-system:** allow-lists inside each `engine/overrides.ts`, PF2e `ContentRef` extensions (`rulesetSource`, `legacyId`), edition math. Duplicating those is cheaper than a shared type with optional edition fields.
+
+JSON Schema files stay per system (`schemas/character.schema.json` for PF2e; `schemas/pf1e/character.schema.json` for PF1e). A tiny **envelope** fragment (or documented required fields) is shared conceptually: `schemaVersion`, `system`.
 
 ---
 
@@ -351,3 +355,5 @@ Duplicating a 20-line skill total function is cheaper than a shared skill API wi
 | --- | --- |
 | 2026-08-17 | Initial shared-kernel inventory and SystemModule contract (ADR 0004) |
 | 2026-08-17 | Sidebar host on the shell; `sidebarTools` on SystemModule (ADR 0005) |
+| 2026-08-17 | Record what Phase M actually extracted vs still-duplicated types |
+| 2026-08-17 | Extract ContentRef, Effect, applyOverrides, Notes, Currency, AbilityKey; `en.json` + `t()` |

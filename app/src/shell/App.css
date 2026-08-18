@@ -328,6 +328,45 @@ button.hp-max-button.overridden {
   padding-left: 1.1rem;
 }
 
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 1rem;
+}
+
+.dialog-card {
+  background: #fff;
+  border: 2px solid #222;
+  max-width: 28rem;
+  width: 100%;
+  padding: 1rem 1.1rem;
+}
+
+.dialog-card h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.dialog-card p {
+  margin: 0 0 0.9rem;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.rank-warning {
+  color: #8a4b00;
+  font-size: 0.75rem;
+}
+
 @media (max-width: 800px) {
   .identity-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));

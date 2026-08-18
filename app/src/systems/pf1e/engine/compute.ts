@@ -1,5 +1,5 @@
 import type { CharacterDocument } from '../character/types'
-import { abilityModifiers, sizeAcAttackModifier, sizeCmbModifier } from './abilities'
+import { abilityModifiers, effectiveAbilityScore, sizeAcAttackModifier, sizeCmbModifier } from './abilities'
 import { armorClassValues } from './ac'
 import { loadCategory, loadThresholds, weightUsed } from './encumbrance'
 import { applyOverrides } from './overrides'
@@ -16,6 +16,7 @@ import {
   defaultAttackAbility,
   maxHp,
   skillTotal,
+  skillUsableUntrained,
 } from './vitals'
 
 export function compute(character: ComputeInput): DerivedView {
@@ -26,11 +27,24 @@ export function compute(character: ComputeInput): DerivedView {
   const sizeAttack = sizeAcAttackModifier(size)
   const sizeCmb = sizeCmbModifier(size)
   const ac = armorClassValues(character.armorClass, mods.dex, size)
-  const thresholds = loadThresholds(character.abilities.str.score, size)
+  const thresholds = loadThresholds(
+    effectiveAbilityScore(character.abilities.str),
+    size,
+  )
   const carried = weightUsed(character.inventory.items)
 
-  const skillTotals: Record<string, number> = {}
+  const skillTotals: Record<string, number | null> = {}
   for (const skill of character.skills) {
+    if (
+      !skillUsableUntrained(
+        skill.key,
+        skill.ranks,
+        character.vitals.speeds,
+      )
+    ) {
+      skillTotals[skill.key] = null
+      continue
+    }
     skillTotals[skill.key] = skillTotal({
       ranks: skill.ranks,
       abilityMod: mods[skill.ability],
@@ -59,7 +73,8 @@ export function compute(character: ComputeInput): DerivedView {
       (attack.attackType === 'melee'
         ? character.combat.meleeAttackMisc
         : character.combat.rangedAttackMisc)
-    const dmgMod = dmgKey === null ? 0 : mods[dmgKey] + (attack.miscDamage ?? 0)
+    const abilityDamage = dmgKey === null ? 0 : mods[dmgKey]
+    const dmgMod = abilityDamage + (attack.miscDamage ?? 0)
     const dmgSign = dmgMod === 0 ? '' : dmgMod > 0 ? `+${dmgMod}` : `${dmgMod}`
     attacks[attack.id] = {
       attack: attackBonus,
@@ -74,7 +89,7 @@ export function compute(character: ComputeInput): DerivedView {
     bab,
     babIteratives,
     maxHp: maxHp(character.vitals, character.classes, mods.con),
-    deadAt: deadAtThreshold(character.abilities.con.score),
+    deadAt: deadAtThreshold(effectiveAbilityScore(character.abilities.con)),
     ac: ac.ac,
     touchAc: ac.touchAc,
     flatFootedAc: ac.flatFootedAc,
@@ -105,12 +120,12 @@ export function compute(character: ComputeInput): DerivedView {
       character.spellcasting,
       character.classes,
       {
-        str: character.abilities.str.score,
-        dex: character.abilities.dex.score,
-        con: character.abilities.con.score,
-        int: character.abilities.int.score,
-        wis: character.abilities.wis.score,
-        cha: character.abilities.cha.score,
+        str: effectiveAbilityScore(character.abilities.str),
+        dex: effectiveAbilityScore(character.abilities.dex),
+        con: effectiveAbilityScore(character.abilities.con),
+        int: effectiveAbilityScore(character.abilities.int),
+        wis: effectiveAbilityScore(character.abilities.wis),
+        cha: effectiveAbilityScore(character.abilities.cha),
       },
       mods,
     ),

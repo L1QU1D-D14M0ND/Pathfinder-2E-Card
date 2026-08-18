@@ -2,6 +2,8 @@ import { useState } from 'react'
 import type { CharacterDocument } from '../character'
 import type { AttributeKey, ProficiencyRank } from '../character/types'
 import { signed } from '../../../shared/format'
+import { t } from '../../../shared/i18n'
+import { NotesPanel } from '../../../shared/ui/NotesPanel'
 import type { DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import { CombatPanel } from './CombatPanel'
@@ -23,16 +25,16 @@ type TabId =
   | 'play'
   | 'notes'
 
-const TABS: Array<{ id: TabId; label: string }> = [
-  { id: 'identity', label: 'Identity' },
-  { id: 'attributes', label: 'Attributes' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'combat', label: 'Combat' },
-  { id: 'feats', label: 'Feats' },
-  { id: 'spells', label: 'Spells' },
-  { id: 'inventory', label: 'Inventory' },
-  { id: 'play', label: 'Play' },
-  { id: 'notes', label: 'Notes' },
+const TAB_IDS: TabId[] = [
+  'identity',
+  'attributes',
+  'skills',
+  'combat',
+  'feats',
+  'spells',
+  'inventory',
+  'play',
+  'notes',
 ]
 
 const ATTRS: AttributeKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
@@ -185,14 +187,14 @@ export function Pf2eWorkspace({
       </section>
 
       <nav className="tabs" aria-label="Sheet tabs">
-        {TABS.map((t) => (
+        {TAB_IDS.map((id) => (
           <button
-            key={t.id}
+            key={id}
             type="button"
-            className={tab === t.id ? 'active' : ''}
-            onClick={() => setTab(t.id)}
+            className={tab === id ? 'active' : ''}
+            onClick={() => setTab(id)}
           >
-            {t.label}
+            {t(`pf2e.tabs.${id}`)}
           </button>
         ))}
       </nav>
@@ -361,34 +363,15 @@ export function Pf2eWorkspace({
         )}
 
         {tab === 'notes' && (
-          <table className="sheet-table">
-            <tbody>
-              {(
-                [
-                  ['Appearance', 'appearance'],
-                  ['Personality', 'personality'],
-                  ['Campaign', 'campaign'],
-                  ['Other', 'other'],
-                ] as const
-              ).map(([label, key]) => (
-                <tr key={key}>
-                  <th>{label}</th>
-                  <td>
-                    <textarea
-                      rows={3}
-                      value={character.notes[key] ?? ''}
-                      onChange={(e) =>
-                        update((c) => ({
-                          ...c,
-                          notes: { ...c.notes, [key]: e.target.value },
-                        }))
-                      }
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <NotesPanel
+            notes={character.notes}
+            onChange={(key, value) =>
+              update((c) => ({
+                ...c,
+                notes: { ...c.notes, [key]: value },
+              }))
+            }
+          />
         )}
       </main>
     </div>

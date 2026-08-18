@@ -1,6 +1,13 @@
 import type { OverrideValue } from '../character/types'
 import type { AttributeKey } from '../character/types'
+import {
+  applyOverrides as applyOverridesShared,
+  isFiniteNumber,
+  isOverridden,
+} from '../../../shared/overrides'
 import type { DerivedView } from './types'
+
+export { isOverridden }
 
 const ATTRIBUTE_KEYS: AttributeKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
@@ -17,10 +24,6 @@ const SCALAR_KEYS = new Set([
   'investedCount',
 ])
 
-function isFiniteNumber(value: unknown): value is number {
-  return typeof value === 'number' && Number.isFinite(value)
-}
-
 /**
  * Apply overrides last. Unknown paths are ignored (stored on ignoredOverridePaths).
  * Allowed: derived.ac, derived.maxHp, derived.perception, derived.fortitude,
@@ -34,19 +37,7 @@ export function applyOverrides(
   view: DerivedView,
   overrides: Record<string, OverrideValue>,
 ): DerivedView {
-  const next: DerivedView = structuredClone(view)
-  for (const [path, override] of Object.entries(overrides)) {
-    if (applyOne(next, path, override.value)) {
-      next.overriddenPaths.push(path)
-    } else {
-      next.ignoredOverridePaths.push(path)
-    }
-  }
-  return next
-}
-
-export function isOverridden(view: DerivedView, path: string): boolean {
-  return view.overriddenPaths.includes(path)
+  return applyOverridesShared(view, overrides, applyOne)
 }
 
 function applyOne(view: DerivedView, path: string, value: unknown): boolean {
