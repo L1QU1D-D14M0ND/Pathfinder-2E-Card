@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-17). Batches 1–2 landed. **Next PR: batch 3** (AC / touch / FF + CMB / CMD).  
+**Status:** In progress (2026-08-18). Batches 1–2 landed. Combat/Skills UI honesty from the audit is on local `main`. **Next code: batch 3** — AC / touch / FF + CMB / CMD **formula table tests** (not a rewrite).  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -255,7 +255,7 @@ Special size for CMB/CMD is the negation of the AC/attack size modifier (`engine
 
 Armor **max Dex** caps Dex on AC and touch, **not** on CMD (CMD uses the full Dex modifier). Do not “fix” CMD to use `cappedDexBonus`.
 
-**In this batch:** CRB procedure in our own words; table tests beyond the three goldens (Dex cap, negative Dex on FF, touch omits armor); Combat UI labels if a total is easy to misread; document that armor/shield/natural/deflection fields are **user-responsible** (no typed-bonus stacker — risk P2).
+**In this batch:** CRB procedure in our own words (§4 style, written when landing); table tests beyond the three goldens (Dex cap on AC/touch, CMD still uncapped, negative Dex on FF, touch omits armor/shield/natural). Combat UI honesty for these totals already landed (1A–10B) — do not redo unless a test finds a mislabel. Document that armor/shield/natural/deflection fields are **user-responsible** (no typed-bonus stacker — risk P2).
 
 UI honesty already noticed (partially landed; remaining work is formula table tests):
 
@@ -337,3 +337,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-17 | Annotated upcoming batches 3–10 (next PR is AC/touch/FF + CMB/CMD) |
 | 2026-08-17 | Batch 3 UI-honesty notes; typo Encumberance → Encumbrance |
 | 2026-08-17 | Skill warn/blank and Combat honesty landed early; batch 3 formula table tests still next |
+| 2026-08-18 | Audit merged on local `main`; batch 3 remains the next code change |

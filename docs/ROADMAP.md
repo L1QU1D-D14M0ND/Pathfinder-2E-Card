@@ -2,9 +2,9 @@
 
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
-**Status date:** 2026-08-17  
-**Current phase:** **3c in progress** (CRB pack, batches 1–2 landed). **Next: batch 3** — AC / touch / FF + CMB / CMD. Then skills, size, encumbrance (still two mechanics per PR). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
-**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~50% of the new 0.9 definition.
+**Status date:** 2026-08-18  
+**Current phase:** **3c in progress** (batches 1–2 landed; audit 1A–10B on local `main`). **Next code: batch 3** — AC / touch / FF + CMB / CMD formula table tests. UI honesty for those totals already landed; do not start batch 4 in the same change. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
 
@@ -94,13 +94,13 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** In progress (batch 2 landed; next is batch 3)
+**Status:** In progress (batches 1–2 + audit UI honesty on local `main`; next is batch 3 table tests)
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
 - [x] Lookup: catalog id → custom; unknown id does not throw
 - [x] Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks (CRB slash line)
-- [ ] **Batch 3 (next):** AC / touch / FF + CMB / CMD — engine review; no new catalog; no typed-bonus stacker
+- [ ] **Batch 3 (next):** AC / touch / FF + CMB / CMD — CRB procedure + table tests; UI honesty already landed; no new catalog; no typed-bonus stacker
 - [ ] Batch 4: skills (ranks, class +3, ACP) + max ranks = level
 - [ ] Batch 5: size tables (AC/attack vs CMB/CMD vs carry)
 - [ ] Batch 6: encumbrance (Strength heavy-load table; light / medium / heavy)
@@ -222,14 +222,14 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | Conditions, hero points, daily resources | Yes | Yes | n/a |
 | Notes | Yes | Yes | n/a |
 | Overrides + Save/Load | Yes | Save/Load yes; override UI no | Overrides applied |
-| i18n catalogs (`en` → `es`) | n/a | Hardcoded English | n/a |
+| i18n catalogs (`en` → `es`) | n/a | Chrome `en.json`; PF2e panel literals remain | n/a |
 
 ---
 
 ## Recommended next work (in order)
 
-1. **Phase 3c batch 3** — AC / touch / FF + CMB / CMD. Engine review of formulas already in `compute()`; Combat UI honesty; Dex-cap and flat-footed Dex-penalty tests. **Stop after those two mechanics.** Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
-2. **Batch 4** — Skills: ranks + class-skill +3 + ACP; max ranks = character level. Class-skill *lists* wait for batch 9.
+1. **Phase 3c batch 3 (next code)** — AC / touch / FF + CMB / CMD. Formulas already in `engine/ac.ts` / `compute()`. Combat UI honesty (override flags, Other note, no CMD vs max-Dex copy) already landed in 1A–10B. This change is the CRB write-up plus table tests: Dex cap on AC/touch not CMD; negative Dex still on flat-footed; touch omits armor/shield/natural; goldens stay 18 / 12 / 16 and CMB +9 / CMD 21. **Stop after those two mechanics.** Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+2. **Batch 4** — Skills: confirm +3 only when ranks ≥ 1; ACP only on flagged skills. Rank-cap **warning** and untrained blanks already landed; class-skill *lists* wait for batch 9.
 3. **Batch 5** — Size tables (AC/attack, opposite CMB/CMD, carry multiplier). Goldens stay Medium; add table tests.
 4. **Batch 6** — Encumbrance: Strength heavy-load table; light / medium / heavy / overloaded. Load penalties are not auto-written onto ACP / max Dex in 0.9.
 5. **Catalog 8 → 9 → 10** — Human id; Fighter/Wizard class skills + skill points; weapon/armor ids on the three goldens. Batch 7 (spell DC / bonus slots) is already in the engine; pack-review later.
@@ -237,6 +237,8 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 7. **Spanish** — 1.0.
 8. **Only then** leftover PF2e goldens / companion / Remaster packs.
 9. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
+
+Housekeeping (not a product increment): local `main` is ahead of `origin/main` with the audit merge. Push when ready. Do not merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
 
 ---
 
@@ -248,7 +250,10 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | `cursor/continuation-design-options-5edf` | Phase 1 sequencing options | Merged; marked executed |
 | `cursor/merge-next-steps-5edf` | Next-increment options after S1/S4 | Merged |
 | `cursor/t1-t3-wizard-editors-5edf` | Wizard 5 + form editors (T1/T3) | Merged into `main` |
-| `cursor/setup-cloud-agent-env-2c8f` | Cloud Agent `environment.json` | Already on `main` via #2 (same content) |
+| `cursor/setup-cloud-agent-env-2c8f` | Cloud Agent `environment.json` | Already on `main` via #2 (same content). Do not merge the old tip. |
+| `cursor/multi-system-docs-990b` | Parallel Phase M–3e rewrite | Superseded by #7/#8. Do not merge (conflicts; missing CRB 1–2). |
+| `cursor/pf1e-multiclass-budget-990b` | CRB batches 1–2 + batch 3–10 annotations | Same tree as #8; histories joined on local `main` |
+| `cursor/audit-docs-code-cad8` | Wizard 5 slots, engine honesty, 1A–10B | Merged on local `main` (2026-08-18) |
 
 ---
 
@@ -271,3 +276,4 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | 2026-08-17 | Annotate CRB batches 3–10; next recommended PR is AC/touch/FF + CMB/CMD |
 | 2026-08-17 | Audit: Wizard 5 slots corrected to CRB 4/4/3/2; remaining issues in next-increment §9 |
 | 2026-08-17 | Design decisions 1A–10B: new-sheet picker, tempScore, en.json chrome, shared kernel types |
+| 2026-08-18 | Local `main` absorbed the audit branch; next code is still CRB batch 3 table tests |

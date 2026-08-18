@@ -1,6 +1,6 @@
 # Next increment — multi-system refactor, then PF1e
 
-**Status:** Active sequencing document (2026-08-17)  
+**Status:** Active sequencing document (2026-08-18)  
 **Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **Phase 3c batch 3** (AC / touch / FF + CMB / CMD only). Batches 1–2 are in the repo. After 3, stay on two-mechanic PRs: skills (4), size (5), encumbrance (6), then catalog Human / class skills / weapons (8–10). Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **Phase 3c batch 3** (AC / touch / FF + CMB / CMD **table tests** only). Batches 1–2 are in the repo. Audit decisions 1A–10B (picker, `tempScore`, chrome i18n, kernel types, Combat/Skills honesty) are on local `main`. After 3, stay on two-mechanic PRs: skills (4), size (5), encumbrance (6), then catalog Human / class skills / weapons (8–10). Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batches 1–2 landed; upcoming batches annotated in the pack design (§6). Next code: batch 3 AC/CMB |
+| Content | `content/pf1e/crb/` batches 1–2 landed; upcoming batches annotated in the pack design (§6). Next code: batch 3 AC/CMB table tests |
 
 ---
 
@@ -205,8 +205,8 @@ Steps 2–4 are the **next development increments** after this documentation cha
 
 - [x] Batch 1: ability modifiers + BAB/save progressions (review + Fighter/Wizard tags)
 - [x] Batch 2: HP breakdown dialog (manual HD rolls) + iterative attacks
-- [ ] **Batch 3 (next):** AC / touch / FF + CMB / CMD (engine review; no typed-bonus stacker)
-- [ ] Batch 4: skills (ranks, class +3, ACP) + max ranks = level
+- [ ] **Batch 3 (next):** AC / touch / FF + CMB / CMD (CRB write-up + table tests; UI honesty already landed)
+- [ ] Batch 4: skills (ranks, class +3, ACP); warn/blank already landed; class-skill lists wait for 9
 - [ ] Batch 5: size tables (AC/attack vs CMB/CMD vs carry)
 - [ ] Batch 6: encumbrance (Strength table; light / medium / heavy)
 - [ ] Batches 8–10: Human; Fighter/Wizard class skills + skill points; weapons/armor ids
@@ -241,13 +241,15 @@ Steps 2–4 are the **next development increments** after this documentation cha
 
 ---
 
-## 9. Audit notes (2026-08-17)
+## 9. Audit notes (2026-08-17; merged local `main` 2026-08-18)
 
 Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 5 slots **4/4/3/2**; `miscDamage` with null damage ability; attack-override slash line.
 
-**Decisions (implemented):** 1A New-sheet picker with Cancel abort (boot stays PF2e). 2B `tempScore` + keep `tempModifier`. 3A last-wins BAB; Combat flags BAB vs iteratives separately. 4A one `other` field; Combat states it applies to all three ACs. 5A warn when ranks > level (no clamp). 6B blank Disable Device / UMD / Handle Animal at 0 ranks; blank Fly without a fly speed. 7B full attack-row fields. 8C no extra CMD/max-Dex copy. 9B `en.json` + `t()` for chrome (shell, tabs, PF1e Combat/Abilities/Skills, Notes). 10B shared `ContentRef`/`Effect`/`applyOverrides`/`Notes`/`Currency`.
+**Decisions (implemented on local `main`):** 1A New-sheet picker with Cancel abort (boot stays PF2e). 2B `tempScore` + keep `tempModifier`. 3A last-wins BAB; Combat flags BAB vs iteratives separately. 4A one `other` field; Combat states it applies to all three ACs. 5A warn when ranks > level (no clamp). 6B blank Disable Device / UMD / Handle Animal at 0 ranks; blank Fly without a fly speed. 7B full attack-row fields. 8C no extra CMD/max-Dex copy. 9B `en.json` + `t()` for chrome (shell, tabs, PF1e Combat/Abilities/Skills, Notes). 10B shared `ContentRef`/`Effect`/`applyOverrides`/`Notes`/`Currency`.
 
-**Still sequenced (not this change):**
+**Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
+
+**Still sequenced (next code is batch 3 only):**
 
 | Item | Disposition |
 | --- | --- |
@@ -276,3 +278,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-17 | Annotate CRB batches 3–10; next increment is batch 3 only |
 | 2026-08-17 | Audit: Wizard 5 slots 4/4/3/2; remaining design notes in §9 |
 | 2026-08-17 | Implement audit decisions 1A–10B (picker, tempScore, chrome i18n, kernel types) |
+| 2026-08-18 | Local `main` merge of audit + branch audit; next code remains batch 3 table tests |

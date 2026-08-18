@@ -202,3 +202,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-17 | Annotate upcoming CRB batches 3–10; next is AC/touch/FF + CMB/CMD. |
 | 2026-08-17 | Size lock is AC/attack/CMB/CMD/carry, not skill size mods. PF1e goldens have no `rulesetSource`. |
 | 2026-08-17 | Ability modifier uses `tempScore` (score bump) plus `tempModifier` (check/DC addend). |
+| 2026-08-18 | Audit 1A–10B on local `main`. Next pack work is still batch 3 table tests. |
