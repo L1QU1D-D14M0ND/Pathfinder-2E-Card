@@ -8,6 +8,7 @@ import itemsSchema from '../../../../../schemas/content/pf1e/items.schema.json'
 import featsSchema from '../../../../../schemas/content/pf1e/feats.schema.json'
 import spellsSchema from '../../../../../schemas/content/pf1e/spells.schema.json'
 import archetypesSchema from '../../../../../schemas/content/pf1e/archetypes.schema.json'
+import evolutionsSchema from '../../../../../schemas/content/pf1e/evolutions.schema.json'
 
 const FILES: Array<{ file: string; schema: object }> = [
   { file: 'content/pf1e/crb/pack.json', schema: packSchema },
@@ -19,6 +20,7 @@ const FILES: Array<{ file: string; schema: object }> = [
   { file: 'content/pf1e/crb/feats.json', schema: featsSchema },
   { file: 'content/pf1e/crb/spells.json', schema: spellsSchema },
   { file: 'content/pf1e/apg/archetypes.json', schema: archetypesSchema },
+  { file: 'content/pf1e/apg/evolutions.json', schema: evolutionsSchema },
 ]
 
 describe('PF1e content pack JSON Schema', () => {

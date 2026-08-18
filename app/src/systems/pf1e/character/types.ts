@@ -252,10 +252,29 @@ export interface Inventory {
   notes?: string
 }
 
+export interface FusedOverlay {
+  /** When true, physical ability mods, Fort, carry, and max HP use this overlay. */
+  active: boolean
+  str: number
+  dex: number
+  con: number
+  /** Typed costume HP pool while fused. Not derived from HD or evolutions. */
+  costumeHp: number
+}
+
+export interface EvolutionEntry {
+  id: string
+  evolution: ContentRef
+  notes?: string
+  effects?: Effect[]
+}
+
 export interface CompanionStub {
   id: string
-  kind: 'animalCompanion' | 'familiar' | 'other'
+  kind: 'animalCompanion' | 'familiar' | 'eidolon' | 'other'
   name: string
+  fused?: FusedOverlay
+  evolutions?: EvolutionEntry[]
   notes?: string
 }
 

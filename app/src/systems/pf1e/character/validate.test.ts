@@ -5,6 +5,7 @@ import {
   createEmptyClass,
   createEmptyCondition,
   createEmptyDailyResource,
+  createEmptyEidolon,
   createEmptyFeat,
   createEmptyFeature,
   createEmptySpellListEntry,
@@ -80,6 +81,7 @@ describe('PF1e character JSON Schema validation', () => {
     doc.spellcasting.push(entry)
     doc.feats.push(createEmptyFeat())
     doc.features.push(createEmptyFeature())
+    doc.companions.push(createEmptyEidolon())
     doc.conditions.push(createEmptyCondition())
     doc.play.dailyResources.push(createEmptyDailyResource())
     expect(() => serializeCharacter(doc)).not.toThrow()

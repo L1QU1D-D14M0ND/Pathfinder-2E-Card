@@ -63,6 +63,11 @@ export function PlayPanel({
                 {derived.maxHp}
               </button>
               <span className="muted"> {t('pf1e.play.clickBreakdown')}</span>
+              {derived.fusedActive ? (
+                <div className="muted">
+                  {t('pf1e.play.costumeHpNote', { pilot: derived.pilotMaxHp })}
+                </div>
+              ) : null}
             </td>
           </tr>
           <tr>

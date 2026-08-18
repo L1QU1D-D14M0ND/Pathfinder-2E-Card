@@ -199,6 +199,9 @@ export function Pf1eWorkspace({
         {tab === 'abilities' && (
           <>
             <p className="muted">{t('pf1e.abilities.help')}</p>
+            {derived.fusedActive ? (
+              <p className="muted">{t('pf1e.abilities.fusedNote')}</p>
+            ) : null}
             <table className="sheet-table">
             <thead>
               <tr>

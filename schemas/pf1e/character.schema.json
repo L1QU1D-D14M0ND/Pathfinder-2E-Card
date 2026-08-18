@@ -75,7 +75,7 @@
     "companions": {
       "type": "array",
       "items": { "$ref": "#/$defs/CompanionStub" },
-      "description": "Hook only. No nested companion sheet in PF1e 0.9."
+      "description": "Hook for companions. 1.0 Synthesist uses kind eidolon with optional fused overlay and documentary evolutions. Not a nested second PC sheet."
     },
     "conditions": {
       "type": "array",
@@ -708,6 +708,34 @@
         "notes": { "type": "string" }
       }
     },
+    "FusedOverlay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["active", "str", "dex", "con", "costumeHp"],
+      "description": "Synthesist fused physical scores and costume HP. Typed; evolutions do not write these.",
+      "properties": {
+        "active": { "type": "boolean" },
+        "str": { "type": "integer" },
+        "dex": { "type": "integer" },
+        "con": { "type": "integer" },
+        "costumeHp": { "type": "integer" }
+      }
+    },
+    "EvolutionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "evolution"],
+      "description": "Documentary evolution row. Catalog stamps id and name only.",
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "evolution": { "$ref": "#/$defs/ContentRef" },
+        "notes": { "type": "string" },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Effect" }
+        }
+      }
+    },
     "CompanionStub": {
       "type": "object",
       "additionalProperties": false,
@@ -716,9 +744,14 @@
         "id": { "type": "string", "minLength": 1 },
         "kind": {
           "type": "string",
-          "enum": ["animalCompanion", "familiar", "other"]
+          "enum": ["animalCompanion", "familiar", "eidolon", "other"]
         },
         "name": { "type": "string" },
+        "fused": { "$ref": "#/$defs/FusedOverlay" },
+        "evolutions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/EvolutionEntry" }
+        },
         "notes": { "type": "string" }
       }
     },

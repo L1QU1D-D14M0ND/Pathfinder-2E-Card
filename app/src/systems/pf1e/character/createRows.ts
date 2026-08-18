@@ -2,8 +2,10 @@ import { newId } from '../../../shared/ids'
 import type {
   AttackEntry,
   ClassEntry,
+  CompanionStub,
   ConditionEntry,
   ContentRef,
+  EvolutionEntry,
   FeatEntry,
   FeatureEntry,
   ItemEntry,
@@ -84,6 +86,36 @@ export function createEmptyCondition(): ConditionEntry {
     duration: null,
     notes: '',
   }
+}
+
+export function createEmptyEvolution(): EvolutionEntry {
+  return {
+    id: newId(),
+    evolution: blankRef(),
+  }
+}
+
+export function createEmptyEidolon(): CompanionStub {
+  return {
+    id: newId(),
+    kind: 'eidolon',
+    name: '',
+    fused: {
+      active: false,
+      str: 10,
+      dex: 10,
+      con: 10,
+      costumeHp: 0,
+    },
+    evolutions: [],
+  }
+}
+
+export function ensureEidolonCompanion(
+  companions: CompanionStub[],
+): CompanionStub[] {
+  if (companions.some((row) => row.kind === 'eidolon')) return companions
+  return [...companions, createEmptyEidolon()]
 }
 
 export function createEmptyDailyResource() {

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "evolution.bite",
+    "name": "Bite",
+    "source": { "book": "APG" }
+  },
+  {
+    "id": "evolution.claws",
+    "name": "Claws",
+    "source": { "book": "APG" }
+  },
+  {
+    "id": "evolution.improved-damage",
+    "name": "Improved Damage",
+    "source": { "book": "APG" }
+  },
+  {
+    "id": "evolution.improved-natural-armor",
+    "name": "Improved Natural Armor",
+    "source": { "book": "APG" }
+  },
+  {
+    "id": "evolution.ability-increase",
+    "name": "Ability Increase",
+    "source": { "book": "APG" }
+  },
+  {
+    "id": "evolution.limbs-arms",
+    "name": "Limbs (Arms)",
+    "source": { "book": "APG" }
+  },
+  {
+    "id": "evolution.flight",
+    "name": "Flight",
+    "source": { "book": "APG" }
+  },
+  {
+    "id": "evolution.weapon-training",
+    "name": "Weapon Training",
+    "source": { "book": "APG" }
+  }
+]

@@ -1,6 +1,6 @@
 # PF1e Advanced Player’s Guide pack (1.0 Synthesist)
 
-**Status:** Slice 1 landed (Summoner catalog + Synthesist name). **Next:** documentary evolution names + fused overlay (not auto-applied). Spanish is a separate 1.0 track.  
+**Status:** Slice 2 landed (documentary evolution names + fused overlay). **Next:** Synthesist golden. Spanish is a separate 1.0 track.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) decisions 16 and 20, [ADR 0007](adr/0007-content-licensing.md)  
 **On disk:** [`../content/pf1e/apg/`](../content/pf1e/apg/)  
 **Code:** `app/src/systems/pf1e/content/apgPack.ts` (apply reuses the CRB class path)
@@ -40,12 +40,28 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 
 ---
 
+## Slice 2 — documentary evolutions + fused overlay
+
+**Pairing:** Evolution catalog ids (name stamp only) plus a fused STR/DEX/CON overlay and costume HP on the same sheet.
+
+**In this slice:**
+
+| Piece | What landed |
+| --- | --- |
+| Pack | `evolutions.json` — ids and names only (Bite, Claws, …). No point costs, no evolution text |
+| Schema | `companions[]` may use `kind: eidolon` with optional `fused` and `evolutions[]`. No `schemaVersion` bump |
+| Apply | Picking an evolution stamps id/name. Does **not** write fused scores, costume HP, natural armor, or attacks |
+| Compute | While `fused.active`, physical ability mods, Fort, carry, dead-at, and `maxHp` use the overlay. Pilot scores stay on `abilities`. HD max stays on `derived.pilotMaxHp` |
+| UI | Identity shows the overlay when Synthesist is selected. Abilities inputs remain the pilot |
+
+**Out:** Auto-applied evolutions, Summoner spell list, Magical Child, a Synthesist golden, Spanish.
+
+---
+
 ## Later slices (not this change)
 
-1. Documentary evolution **names** (same honesty as CRB feats).
-2. Fused overlay on the same sheet (pilot vs fused physical scores; costume HP). Evolutions stay typed — not auto-applied.
-3. Synthesist golden (Half-Elf Radiant Striker is the intended first table character when that increment starts).
-4. Spanish (`es`) catalog — 1.0, independent of remaining Synthesist math.
+1. Synthesist golden (Half-Elf Radiant Striker is the intended first table character when that increment starts).
+2. Spanish (`es`) catalog — 1.0, independent of remaining Synthesist math.
 
 ---
 
@@ -54,3 +70,4 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 | Date | Change |
 | --- | --- |
 | 2026-08-18 | Slice 1: Summoner catalog + Synthesist name stamp; fused overlay waits |
+| 2026-08-19 | Slice 2: documentary evolution names + fused STR/DEX/CON overlay and costume HP |

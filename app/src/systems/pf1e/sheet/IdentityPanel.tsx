@@ -1,13 +1,14 @@
 import {
   createEmptyClass,
+  ensureEidolonCompanion,
   type CharacterDocument,
 } from '../character'
 import type { Alignment, Size } from '../character/types'
 import { applyClassProgression, applyCrbRace, applyApgArchetype, APG_ARCHETYPES, APG_CLASSES, CRB_CLASSES, CRB_RACES, stampClassSkills } from '../content'
-import { characterLevel } from '../engine'
+import { characterLevel, type DerivedView } from '../engine'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import { useT } from '../../../shared/i18n'
-import type { DerivedView } from '../engine'
+import { SynthesistPanel } from './SynthesistPanel'
 import type { SheetUpdate } from './update'
 
 const SIZES: Size[] = [
@@ -334,7 +335,14 @@ export function IdentityPanel({
                               classes[index],
                               id,
                             )
-                            return { ...c, classes }
+                            return {
+                              ...c,
+                              classes,
+                              companions:
+                                id === 'archetype.synthesist'
+                                  ? ensureEidolonCompanion(c.companions)
+                                  : c.companions,
+                            }
                           })
                         }}
                       >
@@ -526,6 +534,11 @@ export function IdentityPanel({
           {t('pf1e.identity.synthesistHelp')}
         </p>
       ) : null}
+      <SynthesistPanel
+        character={character}
+        derived={derived}
+        update={update}
+      />
     </div>
   )
 }

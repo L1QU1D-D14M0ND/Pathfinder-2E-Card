@@ -7,7 +7,7 @@ JSON Schema definitions for TTRPG Character Sheet save formats (repo: Pathfinder
 | [`character.schema.json`](character.schema.json) | One **PF2e** PC character sheet document (`schemaVersion` 1). [ADR 0002](../docs/adr/0002-character-schema.md). Optional `system` is `"pf2e"`; files without it still load as PF2e. Save always writes `system`. |
 | [`pf1e/character.schema.json`](pf1e/character.schema.json) | One **PF1e** PC character sheet document (`schemaVersion` 1, independent of PF2e). [ADR 0006](../docs/adr/0006-pf1e-character-schema.md). `system` is required `"pf1e"`. |
 | [`content/pf1e/pack.schema.json`](content/pf1e/pack.schema.json) | PF1e content-pack manifest (`contentKind`, `oglNoticeRequired`). |
-| [`content/pf1e/*.schema.json`](content/pf1e/) | PF1e pack rows: class, race, item, feat, spell, archetype. |
+| [`content/pf1e/*.schema.json`](content/pf1e/) | PF1e pack rows: class, race, item, feat, spell, archetype, evolution. |
 
 Do not add First Edition fields to `character.schema.json`. Do not add Second Edition fields to `pf1e/character.schema.json`. Pack JSON is validated at module load and in `packSchema.test.ts`.
 

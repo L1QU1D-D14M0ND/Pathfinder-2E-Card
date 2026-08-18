@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-18  
-**Implementation:** PF1e **0.9 bar landed**. **1.0 in progress** — APG slice 1 (Summoner catalog + Synthesist name). **Next:** documentary evolution names + fused overlay ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish is a separate 1.0 track. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
+**Implementation:** PF1e **0.9 bar landed**. **1.0 in progress** — APG slice 2 (evolution names + fused overlay). **Next:** Synthesist golden ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish is a separate 1.0 track. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  

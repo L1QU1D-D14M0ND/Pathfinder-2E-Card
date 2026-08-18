@@ -65,6 +65,7 @@
     },
     "abilities": {
       "help": "Modifier is floor((effective score − 10) / 2) + temp mod. Temp score adds to the score (belts, bull's strength) and affects bonus spells and carrying capacity. Temp mod is a check/DC addend only.",
+      "fusedNote": "Fused is on. Physical modifiers come from the overlay on Identity. These inputs remain the pilot scores.",
       "ability": "Ability",
       "score": "Score",
       "tempScore": "Temp score",
@@ -174,7 +175,7 @@
       "will": "Will",
       "favoredHp": "Favored HP",
       "favoredRanks": "Favored ranks",
-      "synthesistHelp": "Synthesist stamps the archetype name only. Fused STR/DEX/CON, costume HP, and evolutions stay typed.",
+      "synthesistHelp": "Pick Synthesist to open the fused overlay. Evolutions stamp a name only.",
       "sizes": {
         "fine": "Fine",
         "diminutive": "Diminutive",
@@ -237,6 +238,7 @@
       "openBreakdown": "Open HP breakdown",
       "maxHpBreakdown": "Max HP {max}, open breakdown",
       "clickBreakdown": "click for HD breakdown",
+      "costumeHpNote": "Fused: this max is costume HP. Pilot HD max is {pilot}.",
       "tempHp": "Temp HP",
       "nonlethal": "Nonlethal",
       "deadAt": "Dead at",
@@ -326,6 +328,22 @@
       "fromHitDice": "From hit dice",
       "fromFavored": "From favored class",
       "maxHp": "Max HP"
+    },
+    "synthesist": {
+      "title": "Fused eidolon",
+      "help": "Pilot STR/DEX/CON stay on Abilities. While fused, physical modifiers, Fort, carry, and max HP use this overlay. Evolutions stamp a name only — they do not write scores or costume HP.",
+      "name": "Eidolon name",
+      "fused": "Fused",
+      "str": "Fused STR",
+      "dex": "Fused DEX",
+      "con": "Fused CON",
+      "costumeHp": "Costume HP",
+      "pilotMaxHp": "Pilot max HP (HD)",
+      "evolutions": "Evolutions",
+      "addEvolution": "Add evolution",
+      "empty": "No evolutions. Catalog stamps name only.",
+      "catalog": "APG evolution",
+      "evolutionName": "Evolution name"
     }
   },
   "pf2e": {

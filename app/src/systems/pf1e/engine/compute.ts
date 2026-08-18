@@ -12,6 +12,7 @@ import {
 } from './progressions'
 import { spellcastingDerived } from './spellcasting'
 import type { ComputeInput, DerivedView } from './types'
+import { activeFusedOverlay, abilitiesForCompute } from './fused'
 import {
   deadAtThreshold,
   defaultAttackAbility,
@@ -23,7 +24,10 @@ import {
 } from './vitals'
 
 export function compute(character: ComputeInput): DerivedView {
-  const mods = abilityModifiers(character.abilities)
+  const fused = activeFusedOverlay(character.companions)
+  const body = abilitiesForCompute(character.abilities, character.companions)
+  const mods = abilityModifiers(body)
+  const pilotMods = abilityModifiers(character.abilities)
   const level = characterLevel(character.classes)
   const bab = stackedBab(character.classes)
   const size = character.identity.size
@@ -31,10 +35,15 @@ export function compute(character: ComputeInput): DerivedView {
   const sizeCmb = sizeCmbModifier(size)
   const ac = armorClassValues(character.armorClass, mods.dex, size)
   const thresholds = loadThresholds(
-    effectiveAbilityScore(character.abilities.str),
+    effectiveAbilityScore(body.str),
     size,
   )
   const carried = weightUsed(character.inventory.items)
+  const pilotMaxHp = maxHp(
+    character.vitals,
+    character.classes,
+    pilotMods.con,
+  )
 
   const skillTotals: Record<string, number | null> = {}
   for (const skill of character.skills) {
@@ -91,8 +100,8 @@ export function compute(character: ComputeInput): DerivedView {
     abilityModifiers: mods,
     bab,
     babIteratives,
-    maxHp: maxHp(character.vitals, character.classes, mods.con),
-    deadAt: deadAtThreshold(effectiveAbilityScore(character.abilities.con)),
+    maxHp: fused ? fused.costumeHp : pilotMaxHp,
+    deadAt: deadAtThreshold(effectiveAbilityScore(body.con)),
     ac: ac.ac,
     touchAc: ac.touchAc,
     flatFootedAc: ac.flatFootedAc,
@@ -138,9 +147,9 @@ export function compute(character: ComputeInput): DerivedView {
       character.spellcasting,
       character.classes,
       {
-        str: effectiveAbilityScore(character.abilities.str),
-        dex: effectiveAbilityScore(character.abilities.dex),
-        con: effectiveAbilityScore(character.abilities.con),
+        str: effectiveAbilityScore(body.str),
+        dex: effectiveAbilityScore(body.dex),
+        con: effectiveAbilityScore(body.con),
         int: effectiveAbilityScore(character.abilities.int),
         wis: effectiveAbilityScore(character.abilities.wis),
         cha: effectiveAbilityScore(character.abilities.cha),
@@ -149,6 +158,8 @@ export function compute(character: ComputeInput): DerivedView {
     ),
     overriddenPaths: [],
     ignoredOverridePaths: [],
+    fusedActive: fused != null,
+    pilotMaxHp,
   }
 
   return applyOverrides(base, character.overrides)

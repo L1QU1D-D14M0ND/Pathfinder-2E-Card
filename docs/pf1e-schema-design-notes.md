@@ -129,7 +129,7 @@ Catalog ids may contain `.` as a namespace separator (`class.fighter`). **Skill 
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
 6. ~~Multiclass golden (Phase 3e).~~
-7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–13 landed (including Batch 7). Draft + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 1 landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). **Next: documentary evolutions + fused overlay.** Spanish is a separate 1.0 track. **1.0:** playable APG Synthesist Summoner (not the CRB pack).
+7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–13 landed (including Batch 7). Draft + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 2 landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). **Next: Synthesist golden.** Spanish is a separate 1.0 track. **1.0:** playable APG Synthesist Summoner (not the CRB pack).
 
 Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 
@@ -154,3 +154,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-18 | App IndexedDB draft + PWA build verify |
 | 2026-08-18 | OGL / PI review: mechanics-only CRB pack; no Section 15 until rules text |
 | 2026-08-18 | Optional `classes[].archetype`; APG slice 1 Summoner catalog |
+| 2026-08-19 | Optional eidolon companion fused overlay + documentary evolutions |

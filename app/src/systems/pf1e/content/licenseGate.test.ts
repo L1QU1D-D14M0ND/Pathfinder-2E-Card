@@ -9,6 +9,7 @@ const ENTITY_FILES = [
   'content/pf1e/crb/spells.json',
   'content/pf1e/apg/classes.json',
   'content/pf1e/apg/archetypes.json',
+  'content/pf1e/apg/evolutions.json',
 ] as const
 
 const PACK_FILES = [

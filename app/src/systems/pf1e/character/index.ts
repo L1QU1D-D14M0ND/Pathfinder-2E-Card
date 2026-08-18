@@ -21,7 +21,10 @@ export {
   createEmptyFeat,
   createEmptyFeature,
   createEmptyItem,
+  createEmptyEidolon,
+  createEmptyEvolution,
   createEmptySpellListEntry,
   createEmptySpellcasting,
+  ensureEidolonCompanion,
   skillKeyFromName,
 } from './createRows'

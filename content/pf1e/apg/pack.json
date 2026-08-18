@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder APG player catalog (Synthesist slice)",
   "schemaVersion": 1,
-  "status": "slice-1",
+  "status": "slice-2",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor, eidolon prose, or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -12,6 +12,11 @@
       "id": 1,
       "mechanics": ["class-summoner", "archetype-synthesist-name"],
       "notes": "Summoner uses the same class catalog row as CRB classes. Synthesist stamps id and name only. Fused STR/DEX/CON, costume HP, and evolutions stay typed."
+    },
+    {
+      "id": 2,
+      "mechanics": ["evolution-names", "fused-overlay"],
+      "notes": "Evolution catalog stamps id and name only. Fused STR/DEX/CON and costume HP are typed overlay fields. Evolutions do not write scores or HP."
     }
   ]
 }

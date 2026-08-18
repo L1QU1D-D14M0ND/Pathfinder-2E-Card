@@ -57,12 +57,19 @@ export interface ArchetypeCatalogRow {
   source?: ContentRef['source']
 }
 
+export interface EvolutionCatalogRow {
+  id: string
+  name: string
+  source?: ContentRef['source']
+}
+
 const classPacks: ClassProgression[][] = []
 const racePacks: RaceCatalogRow[][] = []
 const itemPacks: ItemCatalogRow[][] = []
 const featPacks: FeatCatalogRow[][] = []
 const spellPacks: SpellCatalogRow[][] = []
 const archetypePacks: ArchetypeCatalogRow[][] = []
+const evolutionPacks: EvolutionCatalogRow[][] = []
 
 function lookupRegistered<T extends { id: string }>(
   packs: readonly T[][],
@@ -102,6 +109,12 @@ export function registerArchetypePack(
   archetypePacks.push([...rows])
 }
 
+export function registerEvolutionPack(
+  rows: readonly EvolutionCatalogRow[],
+): void {
+  evolutionPacks.push([...rows])
+}
+
 export function lookupClassProgression(
   id: string | null | undefined,
 ): ClassProgression | null {
@@ -136,4 +149,10 @@ export function lookupArchetype(
   id: string | null | undefined,
 ): ArchetypeCatalogRow | null {
   return lookupRegistered(archetypePacks, id)
+}
+
+export function lookupEvolution(
+  id: string | null | undefined,
+): EvolutionCatalogRow | null {
+  return lookupRegistered(evolutionPacks, id)
 }

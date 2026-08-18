@@ -75,6 +75,9 @@ const SCALARS: Record<string, (view: DerivedView, value: number) => void> = {
   skillRanksBudget: (view, value) => {
     view.skillRanksBudget = value
   },
+  pilotMaxHp: (view, value) => {
+    view.pilotMaxHp = value
+  },
 }
 
 function applyOne(view: DerivedView, path: string, value: unknown): boolean {

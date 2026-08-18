@@ -42,6 +42,8 @@ export interface DerivedView {
   spellcasting: Record<string, SpellcastingDerived>
   overriddenPaths: string[]
   ignoredOverridePaths: string[]
+  fusedActive: boolean
+  pilotMaxHp: number
 }
 
 export function toDerivedCache(view: DerivedView): DerivedCache {
@@ -85,5 +87,6 @@ export type ComputeInput = Pick<
   | 'attacks'
   | 'spellcasting'
   | 'inventory'
+  | 'companions'
   | 'overrides'
 >

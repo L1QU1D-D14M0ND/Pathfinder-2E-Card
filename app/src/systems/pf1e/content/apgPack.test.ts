@@ -1,19 +1,27 @@
 import { describe, expect, it } from 'vitest'
 import { createEmptyCharacter } from '../character/createEmptyCharacter'
-import { createEmptyClass } from '../character/createRows'
+import {
+  createEmptyClass,
+  createEmptyEidolon,
+  createEmptyEvolution,
+} from '../character/createRows'
 import { STANDARD_SKILLS } from '../character/standardSkills'
 import { parseCharacterJson } from '../character/saveLoad'
 import { readRepoFile } from '../../../test/readRepoFile'
 import {
   applyApgArchetype,
+  applyApgEvolution,
   applyClassProgression,
   classSkillKeySet,
   lookupApgArchetype,
   lookupApgClass,
+  lookupApgEvolution,
   lookupCrbClass,
+  lookupCrbFeat,
   stampClassSkills,
   APG_ARCHETYPES,
   APG_CLASSES,
+  APG_EVOLUTIONS,
 } from './index'
 import { compute } from '../engine/compute'
 import {
@@ -140,6 +148,7 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
     expect(character.abilities.str.score).toBe(10)
     expect(character.abilities.dex.score).toBe(10)
     expect(character.abilities.con.score).toBe(10)
+    expect(view.fusedActive).toBe(false)
     expect(character.feats).toEqual([])
     expect(character.features).toEqual([])
     expect(character.spellcasting).toEqual([])
@@ -151,5 +160,79 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
     )
     expect(lookupCrbClass(fighter.classes[0]?.class.id)).not.toBeNull()
     expect(fighter.classes[0]?.class.id).not.toBe('class.summoner')
+  })
+})
+
+describe('APG slice 2: documentary evolutions + fused overlay', () => {
+  it('stamps evolution names without writing fused scores', () => {
+    expect(lookupCrbFeat('evolution.claws')).toBeNull()
+    expect(lookupApgEvolution('evolution.claws')?.name).toBe('Claws')
+    expect(APG_EVOLUTIONS.map((row) => row.id)).toContain('evolution.claws')
+    const stamped = applyApgEvolution(createEmptyEvolution(), 'evolution.claws')
+    expect(stamped.evolution).toEqual({
+      id: 'evolution.claws',
+      name: 'Claws',
+      source: { book: 'APG' },
+    })
+    const unknown = applyApgEvolution(stamped, 'evolution.not-real')
+    expect(unknown.evolution.id).toBeNull()
+    expect(unknown.evolution.name).toBe('Claws')
+  })
+
+  it('uses fused STR/DEX/CON and costume HP without applying evolutions', () => {
+    const character = createEmptyCharacter()
+    character.abilities.str.score = 10
+    character.abilities.dex.score = 10
+    character.abilities.con.score = 10
+    character.abilities.int.score = 14
+    const summoner = applyClassProgression(createEmptyClass(), 'class.summoner')
+    character.classes = [applyApgArchetype(summoner, 'archetype.synthesist')]
+    const eidolon = createEmptyEidolon()
+    eidolon.fused = {
+      active: true,
+      str: 18,
+      dex: 14,
+      con: 16,
+      costumeHp: 42,
+    }
+    eidolon.evolutions = [
+      applyApgEvolution(createEmptyEvolution(), 'evolution.ability-increase'),
+    ]
+    character.companions = [eidolon]
+
+    const view = compute(character)
+    expect(view.fusedActive).toBe(true)
+    expect(view.abilityModifiers.str).toBe(4)
+    expect(view.abilityModifiers.dex).toBe(2)
+    expect(view.abilityModifiers.con).toBe(3)
+    expect(view.abilityModifiers.int).toBe(2)
+    expect(view.maxHp).toBe(42)
+    expect(view.pilotMaxHp).toBe(0)
+    expect(view.deadAt).toBe(-16)
+    expect(view.fortitude).toBe(stackedSave(character.classes, 'fort') + 3)
+    expect(character.abilities.str.score).toBe(10)
+    expect(character.abilities.con.score).toBe(10)
+    expect(eidolon.evolutions[0]?.evolution.id).toBe(
+      'evolution.ability-increase',
+    )
+  })
+
+  it('keeps pilot physical scores when fused is off', () => {
+    const character = createEmptyCharacter()
+    character.abilities.str.score = 8
+    const eidolon = createEmptyEidolon()
+    eidolon.fused = {
+      active: false,
+      str: 18,
+      dex: 14,
+      con: 16,
+      costumeHp: 42,
+    }
+    character.companions = [eidolon]
+    const view = compute(character)
+    expect(view.fusedActive).toBe(false)
+    expect(view.abilityModifiers.str).toBe(-1)
+    expect(view.maxHp).toBe(0)
+    expect(view.maxHp).toBe(view.pilotMaxHp)
   })
 })
