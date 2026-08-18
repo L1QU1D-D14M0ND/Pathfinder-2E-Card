@@ -51,7 +51,7 @@ See the JSON Schema for types. Summary:
 | Combat misc | initiative / melee / ranged / CMB / CMD / save misc |
 | Skills | `key` kebab **without dots**, `ranks`, `classSkill`, `armorPenaltyApplies`, `misc` |
 | Attacks | snapshot rows; engine adds BAB + ability + size |
-| Inventory | `pounds`, location `equipped\|carried\|stowed\|dropped` (dropped excluded from weight) |
+| Inventory | `pounds`, location `equipped\|carried\|stowed\|dropped` (dropped excluded from weight), optional `ignoreWeight` |
 | Play | `dailyResources` only — no hero points, no dying track |
 
 ContentRef is `{ id, name }` plus optional `source`. No Remaster/legacy fields.
@@ -79,7 +79,7 @@ User adds `craft-*`, `perform-*`, `profession-*` like PF2e lore.
 - HP: each `hpRolled` entry contributes `max(1, roll + Con mod)`, plus favored-class HP totals. The player types each HD result in the Max HP breakdown dialog (physical dice).
 - AC: Dex bonus capped by `maxDex`; Dex **penalties** still apply when flat-footed; dodge is lost when flat-footed. Touch omits armor/shield/natural. CMD uses dodge + deflection, not armor. Full review is batch 3.
 - CMB: `BAB + STR + special size + misc`. CMD: `10 + BAB + STR + DEX + special size + dodge + deflection + misc`.
-- Load: CRB Strength heavy-load table × size multiplier; light/medium = floor(heavy/3) and floor(2×heavy/3). Load penalties are not auto-applied to ACP / max Dex (batch 6).
+- Load: CRB Strength heavy-load table × size multiplier; light/medium = floor(heavy/3) and floor(2×heavy/3). Load penalties are not auto-applied to ACP / max Dex. `inventory.ignoreWeight` sets load category to `ignored` (pounds still sum).
 - Item armor/weapon subfields are documentary in 0.9; combat numbers come from `armorClass` / `attacks`.
 - Unknown `effects[]` are ignored (not read).
 
@@ -127,7 +127,7 @@ Catalog ids may contain `.` as a namespace separator (`class.fighter`). **Skill 
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
 6. ~~Multiclass golden (Phase 3e).~~
-7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–2 landed. **Next: batch 3** AC / CMB. Then skills, size, encumbrance; catalog 8–10.
+7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–6 landed. **Next: batch 8** Human catalog. Then class skills and weapons/armor ids.
 
 Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
 
@@ -146,3 +146,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-17 | Point next schema/pack work at annotated CRB batches 3–10 |
 | 2026-08-17 | Catalog ids vs skill keys: `skill.knowledge-arcana`, not `knowledge.arcana` |
 | 2026-08-17 | Optional `tempScore` (score addend); `tempModifier` remains a check/DC addend |
+| 2026-08-18 | Optional `ignoreWeight`; load category may be `ignored` |

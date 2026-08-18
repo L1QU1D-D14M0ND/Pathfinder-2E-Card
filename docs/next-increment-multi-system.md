@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **Phase 3c batch 6** (encumbrance: Strength heavy-load table; light / medium / heavy). Batches 1–5 are in the repo. After 6: catalog Human / class skills / weapons (8–10). Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **Phase 3c batch 8** (Human race catalog id). Batches 1–6 are in the repo (math reviews done). After 8: class skills (9) and weapons/armor ids (10). Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json` |
-| Content | `content/pf1e/crb/` batches 1–5 landed; upcoming batches annotated in the pack design (§6). Next code: batch 6 encumbrance |
+| Content | `content/pf1e/crb/` batches 1–6 landed; upcoming catalog batches annotated in the pack design (§6). Next code: batch 8 Human |
 
 ---
 
@@ -128,7 +128,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batch 1: ability modifiers (engine) + BAB/save tags (Fighter, Wizard catalog). Batch 2: HP breakdown (manual HD rolls) + iterative slash notation. **Next: batch 3** AC/touch/FF + CMB/CMD (engine review, no catalog). Then 4 skills, 5 size, 6 encumbrance; catalog 8–10 after that. Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–6 (math reviews) landed. **Next: batch 8** Human catalog. Then class skills (9) and weapons/armor ids (10). Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -208,8 +208,9 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Batch 3: AC / touch / FF + CMB / CMD (CRB write-up + table tests)
 - [x] Batch 4: skills (ranks, class +3, ACP) + max ranks
 - [x] Batch 5: size tables (AC/attack vs CMB/CMD vs carry)
-- [ ] **Batch 6 (next):** encumbrance (Strength table; light / medium / heavy)
-- [ ] Batches 8–10: Human; Fighter/Wizard class skills + skill points; weapons/armor ids
+- [x] Batch 6: encumbrance (Strength table; light / medium / heavy) + Ignore weight
+- [ ] **Batch 8 (next):** Human race catalog id
+- [ ] Batches 9–10: Fighter/Wizard class skills + skill points; weapons/armor ids
 - [ ] Batch 7 (spell DC / bonus slots): already in engine; pack review later
 - [ ] Catalog enough to rebuild the three goldens
 - [ ] OGL review before rules **text**
@@ -249,11 +250,11 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). `origin/main` is still #8 until local `main` is pushed.
 
-**Still sequenced (next code is batch 6 only):**
+**Still sequenced (next code is batch 8 only):**
 
 | Item | Disposition |
 | --- | --- |
-| Strength heavy-load table + load category; penalties not auto-written | Batch 6 |
+| Human race catalog id | Batch 8 |
 | Class-skill lists / skill points catalog | Batch 9 |
 | `SystemModule.tabs`; App still branches to mount workspaces | Fine until a third system |
 | Remaining PF2e panel literals | Extract when those panels next change |
@@ -280,3 +281,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-18 | Batch 3 AC/CMB table tests landed; next code is batch 4 skills |
 | 2026-08-18 | Batch 4 skill totals + max ranks landed; next code is batch 5 size |
 | 2026-08-18 | Batch 5 size tables landed; next code is batch 6 encumbrance |
+| 2026-08-18 | Batch 6 encumbrance + Ignore weight landed; next code is batch 8 Human |

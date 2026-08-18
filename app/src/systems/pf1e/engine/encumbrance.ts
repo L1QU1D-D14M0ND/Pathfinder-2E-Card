@@ -36,6 +36,25 @@ export function loadCategory(
   return 'overloaded'
 }
 
+/** Sheet opt-out of load category. Carried pounds still sum. */
+export function effectiveLoadCategory(
+  carried: number,
+  thresholds: { light: number; medium: number; heavy: number },
+  ignoreWeight: boolean,
+): LoadCategory {
+  if (ignoreWeight) return 'ignored'
+  return loadCategory(carried, thresholds)
+}
+
+export function formatLoadSummary(
+  carried: number,
+  category: LoadCategory,
+  thresholds: { light: number; medium: number; heavy: number },
+): string {
+  if (category === 'ignored') return `${carried} lb · ignored`
+  return `${carried} lb · ${category} (L ${thresholds.light} / M ${thresholds.medium} / H ${thresholds.heavy})`
+}
+
 export function weightUsed(
   items: Array<{ quantity: number; pounds: number; location: string }>,
 ): number {

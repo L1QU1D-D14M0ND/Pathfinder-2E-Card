@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batch-5",
+  "status": "batch-6",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "batches": [
     {
@@ -30,6 +30,11 @@
       "id": 5,
       "mechanics": ["size-ac-attack-cmb", "size-carry-multiplier"],
       "notes": "Size tables are engine-owned. Goldens stay Medium. Quadruped carry waits."
+    },
+    {
+      "id": 6,
+      "mechanics": ["strength-heavy-load", "load-category"],
+      "notes": "Encumbrance is engine-owned. Medium/heavy penalties are not auto-written. ignoreWeight opts out of load category."
     }
   ]
 }

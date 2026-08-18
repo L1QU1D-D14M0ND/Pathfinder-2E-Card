@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** In progress (2026-08-18). Batches 1–5 landed. **Next code: batch 6** — encumbrance (Strength heavy-load table; light / medium / heavy).  
+**Status:** In progress (2026-08-18). Batches 1–6 landed. **Next code: batch 8** — Human race catalog id.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -40,14 +40,14 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **3** | AC / touch / flat-footed; CMB / CMD | Same Combat block; Dex, size, dodge, and deflection are shared | Engine review (no new catalog) | Done |
 | **4** | Skills (ranks, class +3, ACP); max ranks = character level | Skill total vs rank cap; ACP already lives on AC inputs | Engine review (class-skill list waits for 9) | Done |
 | **5** | Size (AC/attack vs CMB/CMD vs carry) | One CRB size table, three consumers (AC/attack, CMB/CMD, carry) | Engine review (table tests; goldens stay Medium) | Done |
-| **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | **Next** |
+| **6** | Encumbrance (Strength heavy-load table; light / medium / heavy) | Carry multiplier comes from size (batch 5) | Engine review | Done |
 | **7** | Spell DC; bonus spells from ability | Already computed in Phase 2e | Engine already; pack review later | Later |
-| **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | After math 3–6 |
+| **8** | Race (Human first — golden) | Golden `race.human`; ability adjustments stay typed into scores | Catalog | **Next** |
 | **9** | Class skills + skill points per level (Fighter, Wizard) | Needs skill math from batch 4 | Catalog | After 4 |
 | **10** | Weapons / armor on the three goldens | Documentary item ids; combat numbers stay on `armorClass` / `attacks` | Catalog | After 3; recommended after 3–6 |
 | … | Feats, spells metadata, remaining 9 CRB classes | After the three goldens can be rebuilt from ids | Catalog | After 8–10 |
 
-Annotations for batches 3–10 (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
+Annotations for remaining batches (intent, already in the app, in/out, tests) are in [§6](#6-recommended-upcoming-batches). Full CRB write-ups like §4.1–4.4 are written **when that batch lands**, not ahead of time.
 
 ---
 
@@ -372,33 +372,76 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 6 — two mechanics
+
+### 4.11 Strength heavy-load table
+
+**CRB (player-facing):** A Medium biped’s **heavy load** comes from the Strength table (STR 1 = 10 lb, 10 = 100, 14 = 175, 18 = 300, 29 = 1400). **Light** load is one-third of that heavy value; **medium** load is two-thirds. Size from batch 5 multiplies the Medium heavy number first, then those fractions apply.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Engine | `mediumBipedHeavyLoad`, `loadThresholds` | Heavy from the STR column; light = `floor(heavy/3)`; medium = `floor(2×heavy/3)`; × size multiplier |
+| Strength used | `effectiveAbilityScore` of STR | `tempScore` raises carry; `tempModifier` does not |
+| Goldens | Fighter 5 STR 18 → heavy **300**, light **100** | Unchanged |
+
+**Verdict:** Strength 1–29 matches the published Medium biped column. STR 14 is 58 / 116 / 175; STR 18 is 100 / 200 / 300.
+
+**Gaps:** Quadruped (×1.5) and powerful build wait. Coins are not auto-converted to pounds. STR ≤ 0 is an engine bound (0 lb), not a CRB row.
+
+**Pack slice:** none.
+
+**Tests:** Full STR 1–29 heavy column; STR 14 and 18 light/medium/heavy fractions.
+
+### 4.12 Load category and Ignore weight
+
+**CRB (player-facing):** Compare carried pounds to those three thresholds. At or below light is a light load; then medium; then heavy. More than a heavy load is beyond what the character can carry as a load (the sheet labels this **overloaded**). Medium and heavy loads impose max Dex, ACP, and speed penalties in the CRB.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Carried | `weightUsed` | Quantity × pounds; **dropped** excluded |
+| Category | `loadCategory` / `effectiveLoadCategory` | Thresholds are inclusive; above heavy → `overloaded` |
+| Ignore | `inventory.ignoreWeight` (optional boolean, omitted = false) | Load category becomes **`ignored`**. Pounds and L/M/H thresholds still compute. No schemaVersion bump |
+| UI | Inventory **Ignore weight** toggle | Pressed state; summary shows `N lb · ignored` without L/M/H |
+| Penalties | ACP / max Dex / speed | **Not** auto-written from load. The player types them. Muted note on Inventory |
+
+**Verdict:** Category math matches the inclusive CRB bands. The Ignore weight control is a sheet opt-out of the *category*, not of inventory pounds.
+
+**Gaps:** Auto-applying medium/heavy penalties onto ACP, max Dex, and speed stays out of 0.9 (player types). Inventory auto-sum from an armor catalog waits for batch 10.
+
+**Pack slice:** none.
+
+**Tests:** Inclusive bands at STR 18; dropped items excluded; Fighter 5 45 lb light; ignoreWeight → ignored with pounds unchanged; omitted flag still counts weight.
+
+---
+
 ## 6. Recommended upcoming batches
 
 These are **annotations**, not landed reviews. Each future PR still follows §1 (CRB procedure → app today → gaps → pack slice → tests) and stops after **two** mechanics.
 
-### Batch 6 — Encumbrance (Strength table; light / medium / heavy) (**next**)
-
-**Pairing:** Heavy load from the Strength table, then light = floor(heavy/3) and medium = floor(2×heavy/3), is one CRB procedure. Load *category* is the second mechanic (thresholds vs carried pounds).
-
-**Already in the app:** `mediumBipedHeavyLoad`, `loadThresholds` (× size multiplier), `weightUsed` (dropped items excluded), `loadCategory` including overloaded.
-
-**In this batch:** Strength 1–29 (or the published Medium biped column) as tests; Medium STR 14 / 18 spot checks; document that medium/heavy **penalties** (max Dex, ACP, speed) are **not** auto-written onto `armorClass` in 0.9 — the player types ACP / max Dex.
-
-**Out:** Quadruped / powerful build; inventory auto-sum from armor catalog (batch 10).
-
-**Pack slice:** none.
-
-**Depends on:** batch 5 (size multiplier).
-
 ### Batch 7 — Spell DC + bonus spells (review later)
 
-Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. **Do not insert this before batches 3–6.** Pack review when spell metadata lands.
+Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from the ability table; slots user-entered). Wizard 5 golden covers it. Pack review when spell metadata lands.
 
-### Batches 8–10 — catalog (after the math reviews)
+### Batch 8 — Race (Human) (**next**)
+
+**Pairing:** Catalog id for the golden race. Human +2 any ability stays typed into the score (not auto-applied from the pack).
+
+**Already in the app:** Goldens store `race.human` as a ContentRef name; Identity has a race field. No `content/pf1e/crb/races.json` yet.
+
+**In this batch:** Add a Human catalog row (id + name). Lookup unknown race id → custom, same resolver as classes.
+
+**Out:** Full racial trait text; other races; automatic ability-score stamps.
+
+**Pack slice:** `races.json` (or equivalent) with Human only.
+
+### Batches 9–10 — catalog (after Human)
 
 | Batch | Add | Do not add |
 | --- | --- | --- |
-| **8** Race | `race.human` id + name; Human +2 any stays typed into the score | Full racial trait text; other races |
 | **9** Class skills + skill points | Fighter/Wizard class-skill flags and skill points per level; Identity or Skills can stamp checkboxes | All 11 CRB classes; auto-spend favored skill ranks |
 | **10** Weapons / armor | Ids for the three goldens (longsword, chainmail, …); still documentary — AC and attack numbers stay on sheet fields | Auto-fill AC from equipped items; priced treasure; magic weapons |
 
@@ -419,3 +462,4 @@ Already in Phase 2e (`spellDc` = 10 + spell level + ability; bonus slots from th
 | 2026-08-18 | Batch 3: AC/touch/FF + CMB/CMD table tests; next is skills |
 | 2026-08-18 | Batch 4: skill totals + max ranks; next is size tables |
 | 2026-08-18 | Batch 5: size AC/attack/CMB/CMD + carry multiplier; next is encumbrance |
+| 2026-08-18 | Batch 6: Strength heavy-load + load category; Ignore weight opt-out; next is Human catalog |

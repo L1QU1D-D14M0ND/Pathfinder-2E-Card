@@ -1,7 +1,7 @@
 import type { CharacterDocument } from '../character/types'
 import { abilityModifiers, effectiveAbilityScore, sizeAcAttackModifier, sizeCmbModifier } from './abilities'
 import { armorClassValues } from './ac'
-import { loadCategory, loadThresholds, weightUsed } from './encumbrance'
+import { effectiveLoadCategory, loadThresholds, weightUsed } from './encumbrance'
 import { applyOverrides } from './overrides'
 import {
   characterLevel,
@@ -114,7 +114,11 @@ export function compute(character: ComputeInput): DerivedView {
     lightLoad: thresholds.light,
     mediumLoad: thresholds.medium,
     heavyLoad: thresholds.heavy,
-    loadCategory: loadCategory(carried, thresholds),
+    loadCategory: effectiveLoadCategory(
+      carried,
+      thresholds,
+      character.inventory.ignoreWeight === true,
+    ),
     attacks,
     spellcasting: spellcastingDerived(
       character.spellcasting,

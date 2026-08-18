@@ -692,6 +692,10 @@
           "type": "array",
           "items": { "$ref": "#/$defs/ItemEntry" }
         },
+        "ignoreWeight": {
+          "type": "boolean",
+          "description": "When true, load category is ignored (derived as ignored). Carried pounds still sum. Omitted means false. No schemaVersion bump."
+        },
         "notes": { "type": "string" }
       }
     },

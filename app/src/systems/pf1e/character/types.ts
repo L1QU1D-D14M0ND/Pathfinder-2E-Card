@@ -39,7 +39,7 @@ export type Alignment =
   | 'neutral evil'
   | 'chaotic evil'
 export type ItemLocation = 'equipped' | 'carried' | 'stowed' | 'dropped'
-export type LoadCategory = 'light' | 'medium' | 'heavy' | 'overloaded'
+export type LoadCategory = 'light' | 'medium' | 'heavy' | 'overloaded' | 'ignored'
 
 export interface Meta {
   createdAt: string
@@ -243,6 +243,8 @@ export interface ItemEntry {
 export interface Inventory {
   currency: Currency
   items: ItemEntry[]
+  /** When true, load category is ignored. Carried pounds still sum. */
+  ignoreWeight?: boolean
   notes?: string
 }
 

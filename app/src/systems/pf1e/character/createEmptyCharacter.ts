@@ -93,6 +93,7 @@ export function createEmptyCharacter(): CharacterDocument {
     inventory: {
       currency: emptyCurrency(),
       items: [],
+      ignoreWeight: false,
       notes: '',
     },
     companions: [],

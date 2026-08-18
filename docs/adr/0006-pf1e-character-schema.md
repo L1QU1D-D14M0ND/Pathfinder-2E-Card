@@ -16,7 +16,7 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 - BAB and saves are **not** user totals. They come from per-class progressions (`full` / `threeQuarter` / `half` BAB; `good` / `poor` saves), then stack. Manual totals go through **`overrides`**.
 - AC uses **explicit buckets** (armor, shield, Dex via `maxDex`, size, natural, deflection, dodge, other) rather than a 12-type bonus graph. Armor check penalty is a user field on `armorClass` for 0.9.
 - Skills are **rank-based**. Class-skill +3 when trained (`ranks >= 1`). No `ProficiencyRank`. Skill **keys must not contain `.`** so override paths `derived.skillTotals.<key>` stay unambiguous (use `knowledge-arcana`, not `knowledge.arcana`).
-- Inventory weight is **pounds** (numbers; `0.5` allowed). No bulk. Load category is derived from Strength (and size) tables.
+- Inventory weight is **pounds** (numbers; `0.5` allowed). No bulk. Load category is derived from Strength (and size) tables. Optional `inventory.ignoreWeight` sets the derived category to `ignored` without dropping carried pounds.
 - **`currentHp` may be negative.** No dying/wounded/doomed track. No hero points / focus pool in this document.
 - Spell slots are **user-entered** (max/remaining). Spell DC (`10 + spell level + ability`) and bonus-spells-from-ability are derived in `compute()`; slots themselves are not auto-filled from the class table.
 - Open **`effects[]`** hooks: unknown `type` is ignored. **`extensions`** bag for experiments. No campaign-options block.

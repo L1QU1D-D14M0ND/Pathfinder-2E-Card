@@ -1,6 +1,7 @@
 import { createEmptyItem, type CharacterDocument } from '../character'
 import type { ItemLocation } from '../character/types'
 import type { DerivedView } from '../engine'
+import { formatLoadSummary } from '../engine/encumbrance'
 import { DerivedCell } from '../../../shared/ui/DerivedCell'
 import type { SheetUpdate } from './update'
 
@@ -46,12 +47,41 @@ export function InventoryPanel({
           <tr>
             <th>Weight / load</th>
             <td>
-              <DerivedCell
-                value={`${derived.weightUsed} lb · ${derived.loadCategory} (L ${derived.lightLoad} / M ${derived.mediumLoad} / H ${derived.heavyLoad})`}
-                overridden={derived.overriddenPaths.includes(
-                  'derived.weightUsed',
-                )}
-              />
+              <div className="weight-row">
+                <DerivedCell
+                  value={formatLoadSummary(
+                    derived.weightUsed,
+                    derived.loadCategory,
+                    {
+                      light: derived.lightLoad,
+                      medium: derived.mediumLoad,
+                      heavy: derived.heavyLoad,
+                    },
+                  )}
+                  overridden={derived.overriddenPaths.includes(
+                    'derived.weightUsed',
+                  )}
+                />
+                <button
+                  type="button"
+                  aria-pressed={character.inventory.ignoreWeight === true}
+                  onClick={() =>
+                    update((c) => ({
+                      ...c,
+                      inventory: {
+                        ...c.inventory,
+                        ignoreWeight: !c.inventory.ignoreWeight,
+                      },
+                    }))
+                  }
+                >
+                  Ignore weight
+                </button>
+              </div>
+              <p className="muted">
+                Load does not change ACP, max Dex, or speed. Ignore weight
+                turns off the load category; carried pounds still sum.
+              </p>
             </td>
           </tr>
         </tbody>

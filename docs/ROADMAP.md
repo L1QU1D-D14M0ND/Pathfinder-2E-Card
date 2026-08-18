@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-18  
-**Current phase:** **3c in progress** (batches 1–5 landed). **Next code: batch 6** — encumbrance (Strength heavy-load table; light / medium / heavy). Load penalties are not auto-written onto ACP / max Dex. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **3c in progress** (batches 1–6 landed). **Next code: batch 8** — Human race catalog id. Load penalties are not auto-written onto ACP / max Dex. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 estimate:** shared shell ~80% of a PF2e-shaped PWA; **PF1e 0.9 bar ~martial + prepared caster + multiclass**. Overall ~55% of the new 0.9 definition.
 
 ---
@@ -94,7 +94,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** In progress (batches 1–5 landed; next is batch 6)
+**Status:** In progress (batches 1–6 landed; next is batch 8)
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
@@ -103,8 +103,9 @@ Working display name in chrome is **TTRPG Character Sheet**.
 - [x] **Batch 3:** AC / touch / FF + CMB / CMD — CRB procedure + table tests; UI honesty already landed; no new catalog; no typed-bonus stacker
 - [x] **Batch 4:** skills (ranks, class +3, ACP) + max ranks = level; warn/blank already landed; class-skill lists wait for 9
 - [x] **Batch 5:** size tables (AC/attack vs CMB/CMD vs carry) — goldens stay Medium
-- [ ] **Batch 6 (next):** encumbrance (Strength heavy-load table; light / medium / heavy)
-- [ ] Batches 8–10 (catalog, after the math reviews): Human; Fighter/Wizard class skills + skill points; weapons/armor ids on the three goldens
+- [x] **Batch 6:** encumbrance (Strength heavy-load table; light / medium / heavy) — Ignore weight opt-out; penalties not auto-written
+- [ ] **Batch 8 (next):** Human race catalog id
+- [ ] Batches 9–10: Fighter/Wizard class skills + skill points; weapons/armor ids on the three goldens
 - [ ] Remaining CRB character mechanics after that (see pack design queue)
 - [ ] Catalog enough ids to rebuild the three goldens (race, skills, weapons/armor, remaining classes)
 - [ ] OGL / Product Identity review before shipping copyrighted **text**
@@ -198,7 +199,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | HP (HD + Con) | Yes | Yes | Yes |
 | Skills (ranks) | Yes | Yes | Yes |
 | Feats / features | Yes | Yes | n/a (effects ignored) |
-| Inventory (pounds) | Yes | Yes | Weight + load |
+| Inventory (pounds) | Yes | Yes | Weight + load; Ignore weight |
 | Spellcasting | Yes | Yes | DC + bonus slots |
 | Play (negative HP, conditions) | Yes | Yes | Dead-at threshold |
 | Overrides + Save/Load | Yes | Save/Load yes | Overrides applied |
@@ -228,8 +229,8 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Phase 3c batch 6 (next code)** — Encumbrance: Strength heavy-load table; light / medium / heavy / overloaded. Load penalties are not auto-written onto ACP / max Dex in 0.9. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
-2. **Catalog 8 → 9 → 10** — Human id; Fighter/Wizard class skills + skill points; weapon/armor ids on the three goldens. Batch 7 (spell DC / bonus slots) is already in the engine; pack-review later.
+1. **Phase 3c batch 8 (next code)** — Human race catalog id (`race.human`). Ability adjustments stay typed into scores. Annotated in [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+2. **Catalog 9 → 10** — Fighter/Wizard class skills + skill points; weapon/armor ids on the three goldens. Batch 7 (spell DC / bonus slots) is already in the engine; pack-review later.
 3. **Draft buffer + PWA proof** — app 0.9 platform.
 4. **Spanish** — 1.0.
 5. **Only then** leftover PF2e goldens / companion / Remaster packs.
@@ -277,3 +278,4 @@ Housekeeping (not a product increment): local `main` is ahead of `origin/main`. 
 | 2026-08-18 | Phase 3c batch 3: AC/touch/FF + CMB/CMD table tests; next is skills |
 | 2026-08-18 | Phase 3c batch 4: skill totals + max ranks; next is size tables |
 | 2026-08-18 | Phase 3c batch 5: size AC/attack/CMB/CMD + carry multiplier; next is encumbrance |
+| 2026-08-18 | Phase 3c batch 6: Strength heavy-load + load category; Ignore weight; next is Human catalog |

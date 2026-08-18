@@ -83,7 +83,7 @@ One `spellcasting[]` entry per casting class (wizard, cleric, …). Ability key,
 
 ### 3.7 Inventory & wealth
 
-Items with pounds, equipped/carried, weapon/armor/shield subfields (enhancement bonus, armor bonus, max Dex, ACP, spell failure). Currency (pp/gp/sp/cp). Derived weight and load category.
+Items with pounds, equipped/carried, weapon/armor/shield subfields (enhancement bonus, armor bonus, max Dex, ACP, spell failure). Currency (pp/gp/sp/cp). Derived weight and load category. **Ignore weight** opts out of load category (pounds still sum). Medium/heavy load penalties are not auto-written onto ACP / max Dex / speed.
 
 ### 3.8 Play
 
@@ -169,11 +169,9 @@ Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1 (landed): ability-modifier formula (engine-owned) + BAB/save progression tags for Fighter and Wizard. Identity can apply those tags from a class picker.
+Batch 1–6 (landed): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out). Load penalties are not auto-written.
 
-Batch 2 (landed): click **max HP** to open a per-HD breakdown; the player types physical HD rolls (the app does not roll). BAB and each attack show CRB iterative slash notation (`+6/+1`). Fighter 5 stays a single +5.
-
-**Next (batch 3):** AC / touch / FF + CMB / CMD — engine review of formulas already in `compute()`, no new catalog, no typed-bonus stacker. Then batch 4 skills, 5 size, 6 encumbrance. Catalog (Human, Fighter/Wizard class skills + skill points, weapons/armor ids) is batches 8–10 after those math reviews. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
+**Next (batch 8):** Human race catalog id. Then class skills (9) and weapons/armor ids (10). Batch 7 (spell DC / bonus slots) is already in the engine. Annotated queue: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §6.
 
 Remaining CRB classes, feats, and spell metadata wait until the three goldens can be rebuilt from ids.
 
@@ -206,3 +204,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | Batch 3 AC/CMB review landed. Next pack work is skills (batch 4). |
 | 2026-08-18 | Batch 4 skill review landed. Next pack work is size tables (batch 5). |
 | 2026-08-18 | Batch 5 size review landed. Next pack work is encumbrance (batch 6). |
+| 2026-08-18 | Batch 6 encumbrance review landed (Ignore weight opt-out). Next pack work is Human catalog (batch 8). |

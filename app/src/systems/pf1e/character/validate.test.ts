@@ -107,6 +107,20 @@ describe('PF1e character JSON Schema validation', () => {
     )
   })
 
+  it('accepts ignoreWeight and treats an omitted flag as count-weight', () => {
+    const withFlag = createEmptyCharacter()
+    withFlag.inventory.ignoreWeight = true
+    expect(() => validateCharacterDocument(withFlag)).not.toThrow()
+    const reloaded = parseCharacterJson(serializeCharacter(withFlag))
+    expect(reloaded.inventory.ignoreWeight).toBe(true)
+
+    const omitted = JSON.parse(serializeCharacter(createEmptyCharacter())) as {
+      inventory: { ignoreWeight?: boolean }
+    }
+    delete omitted.inventory.ignoreWeight
+    expect(() => parseCharacterJson(JSON.stringify(omitted))).not.toThrow()
+  })
+
   it('strips derived on save and still validates', () => {
     const doc = createEmptyCharacter()
     doc.derived = { maxHp: 99, ac: 99 }

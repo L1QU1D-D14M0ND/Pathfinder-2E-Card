@@ -76,6 +76,19 @@ button:disabled {
   cursor: not-allowed;
 }
 
+button[aria-pressed='true'] {
+  background: #1f4b2c;
+  border-color: #1f4b2c;
+  color: #fff;
+}
+
+.weight-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .identity-strip {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
