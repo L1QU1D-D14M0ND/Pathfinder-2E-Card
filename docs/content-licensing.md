@@ -34,7 +34,7 @@ Engine formulas (ability modifier, BAB tables, spell DC, bonus spells, heavy loa
 | Location | Finding |
 | --- | --- |
 | `content/pf1e/crb/classes.json` | 11 CRB class ids; HD / BAB / saves / skill points / class-skill keys; `source.book: CRB`. No Summoner. No flavor |
-| `races.json` | `race.human` name only |
+| `races.json` | Seven CRB player race names + size; no Golarion PI |
 | `items.json` | Golden weapons/armor/spellbook: pounds and documentary combat fields |
 | `feats.json` | Five golden feat ids; name + category |
 | `spells.json` | Four golden spell ids; name + spell level. No descriptions |
@@ -99,3 +99,4 @@ No Remaster encyclopedia in this review. ORC import remains later (ADR 0003). PF
 | 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker) |
 | 2026-08-19 | Spanish UI catalog (`es.json`); pack still mechanics-only English names |
 | 2026-08-19 | 1.0 stability; pack still mechanics-only |
+| 2026-08-19 | CRB batch 14: remaining player race names + size; still no PI |

@@ -1,9 +1,9 @@
 # Pathfinder First Edition — Character sheet (system spec)
 
-**Status:** System specification locked (ADR 0003). PF1e **0.9 bar landed**. **1.0 landed** (Synthesist golden + Spanish UI catalog + stability).  
+**Status:** System specification locked (ADR 0003). PF1e **0.9 bar landed**. **1.0 landed** (Synthesist golden + Spanish UI catalog + stability). **Next:** finish First Edition this release. Remaining PF2e work waits for a later release.  
 **Parent:** [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md)  
 **Schema:** [ADR 0006](adr/0006-pf1e-character-schema.md), [`pf1e-schema-design-notes.md`](pf1e-schema-design-notes.md), [`../schemas/pf1e/character.schema.json`](../schemas/pf1e/character.schema.json)  
-**Priority:** **First** system to take to a playable 0.9 bar (ahead of remaining PF2e work)
+**Priority:** **Finish** this system in the current release (ahead of remaining PF2e work, which waits for a later release)
 
 This is the PF1e analog of the PF2e design doc. It does not replace the umbrella product lock.
 
@@ -162,7 +162,7 @@ Engineering fixtures. Assert core outputs. Until catalog batches 8–10 land, go
 
 Exact ability scores, feats, and spell picks are chosen when writing the fixture. Roles above stay covered.
 
-Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 5 + companion, prestige smoke test. **1.0 Synthesist golden:** landed (`synthesist-5.json`).
+Optional later (this First Edition finish): Cleric 5 (domains/channel as daily resources), prestige smoke test, familiar/companion table fixture. **1.0 Synthesist golden:** landed (`synthesist-5.json`).
 
 ---
 
@@ -170,7 +170,7 @@ Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–13 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed). Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
+Batch 1–14 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed); remaining CRB player races + size stamp (ability adjustments stay typed). Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
 
 License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **1.0 landed.** Spanish UI catalog: [`../app/src/locales/es.json`](../app/src/locales/es.json). Synthesist golden landed.
 
@@ -219,3 +219,5 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker). Next is Spanish. |
 | 2026-08-19 | Spanish UI catalog. Next is 1.0 stability. |
 | 2026-08-19 | 1.0 stability. Next is leftover PF2e work. |
+| 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release. |
+| 2026-08-19 | CRB batch 14: remaining player races + size stamp. Next is spells-per-day tables. |

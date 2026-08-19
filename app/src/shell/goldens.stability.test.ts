@@ -9,6 +9,7 @@ const GOLDENS = [
   ['fixtures/characters/golden/wizard-5.json', 'pf2e'],
   ['fixtures/characters/golden/bard-5.json', 'pf2e'],
   ['fixtures/characters/golden/cleric-5.json', 'pf2e'],
+  ['fixtures/characters/golden/ranger-5.json', 'pf2e'],
   ['fixtures/characters/golden/pf1e/fighter-5.json', 'pf1e'],
   ['fixtures/characters/golden/pf1e/wizard-5.json', 'pf1e'],
   ['fixtures/characters/golden/pf1e/fighter-2-wizard-3.json', 'pf1e'],

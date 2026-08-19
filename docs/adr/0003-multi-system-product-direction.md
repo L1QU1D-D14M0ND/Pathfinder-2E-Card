@@ -62,6 +62,8 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 
 **Postscript (2026-08-18, licensing):** Content licensing review is [ADR 0007](0007-content-licensing.md). The CRB pack stays mechanics-only (no OGL notice until rules text). 1.0 APG pack follows the same bar.
 
+**Postscript (2026-08-19):** Stakeholder override: **finish First Edition** in this release. Remaining PF2e work (PC2 golden, companion editor, Remaster packs, PF2e panel i18n) waits for a **later release**. The PF2e slice stays in the app and must not regress. See [`ROADMAP.md`](../ROADMAP.md) Phase 1x.
+
 ## Defaults for open questions
 
 These are **locked for sequencing** unless the stakeholder overrides them. See also [the umbrella design](../ttrpg-character-sheet-design.md) § open picks.
@@ -74,7 +76,7 @@ These are **locked for sequencing** unless the stakeholder overrides them. See a
 | PF1e books for 0.9 | Core Rulebook, player-facing | APG (traits, extra classes) is pulled in |
 | PF1e books for 1.0 | 0.9 CRB bar **plus** APG Summoner / Synthesist far enough to play | Broader APG (all base classes, Magical Child, etc.) |
 | PF1e goldens | Fighter 5; Wizard 5; Fighter 2 / Wizard 3 (or equivalent BAB mix) | Cleric/familiar is needed sooner |
-| Resume remaining PF2e goldens | After PF1e 0.9 | Stakeholder wants PF2e finished first after all |
+| Resume remaining PF2e goldens | Later *release* (after finishing PF1e) | Stakeholder wants PF2e finished in this release |
 | Missing `system` on Load | Treat as `pf2e` | Never; would break current fixtures |
 | PF1e BAB/saves/HD | Engine tables for the 11 CRB classes + user-picked progression on custom/prestige rows | Fully user-entered BAB (weaker golden) |
 | PF1e spells per day | User-entered max slots in 0.9 (content pack may seed later) | Same as PF2e slot policy |

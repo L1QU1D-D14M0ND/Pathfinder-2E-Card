@@ -150,7 +150,7 @@
       "race": "Raza",
       "raceCatalog": "Raza del Manual Básico",
       "raceName": "Nombre de raza",
-      "humanHelp": "El +2 a una característica de humano se escribe en la puntuación; el catálogo no lo aplica.",
+      "raceHelp": "El catálogo sella nombre y tamaño. Los ajustes de características se escriben en la puntuación (el +2 de humano no se aplica solo).",
       "size": "Tamaño",
       "alignment": "Alineamiento",
       "deity": "Deidad",

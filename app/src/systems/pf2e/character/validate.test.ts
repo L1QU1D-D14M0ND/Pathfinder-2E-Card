@@ -55,6 +55,7 @@ describe('character JSON Schema validation', () => {
     'fixtures/characters/golden/wizard-5.json',
     'fixtures/characters/golden/bard-5.json',
     'fixtures/characters/golden/cleric-5.json',
+    'fixtures/characters/golden/ranger-5.json',
   ])('accepts golden fixture %s', (path) => {
     expect(() => parseCharacterJson(readRepoFile(path))).not.toThrow()
   })

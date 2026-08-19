@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-13-complete",
+  "status": "batches-1-14-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -72,6 +72,11 @@
       "id": 13,
       "mechanics": ["spells-goldens", "spell-slots-stay-typed"],
       "notes": "Documentary catalog ids for the golden spells. Stamps name and spell level. Does not write slots, DCs, or prepared flags."
+    },
+    {
+      "id": 14,
+      "mechanics": ["remaining-crb-races", "race-size-stamp"],
+      "notes": "Dwarf, Elf, Gnome, Half-Elf, Half-Orc, Halfling plus Human size. Apply stamps identity.size. Ability adjustments stay typed. Languages and speeds are not stamped."
     }
   ]
 }

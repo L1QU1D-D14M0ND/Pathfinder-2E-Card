@@ -4,6 +4,7 @@ import type {
   ContentRef,
   FeatEntry,
   ItemEntry,
+  Size,
 } from '../character/types'
 import { lookupById } from './catalogLookup'
 
@@ -21,6 +22,7 @@ export interface ClassProgression {
 export interface RaceCatalogRow {
   id: string
   name: string
+  size?: Size
   source?: ContentRef['source']
 }
 

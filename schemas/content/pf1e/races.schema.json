@@ -10,6 +10,21 @@
     "properties": {
       "id": { "type": "string", "minLength": 1 },
       "name": { "type": "string", "minLength": 1 },
+      "size": {
+        "type": "string",
+        "enum": [
+          "fine",
+          "diminutive",
+          "tiny",
+          "small",
+          "medium",
+          "large",
+          "huge",
+          "gargantuan",
+          "colossal"
+        ],
+        "description": "Typical adult size. Apply stamps identity.size. Ability adjustments stay typed."
+      },
       "source": {
         "type": "object",
         "additionalProperties": false,

@@ -150,7 +150,7 @@
       "race": "Race",
       "raceCatalog": "CRB race",
       "raceName": "Race name",
-      "humanHelp": "Human +2 any ability is typed into the score, not stamped from the catalog.",
+      "raceHelp": "Catalog stamps name and size. Ability adjustments stay typed into scores (Human +2 any ability is not auto-applied).",
       "size": "Size",
       "alignment": "Alignment",
       "deity": "Deity",

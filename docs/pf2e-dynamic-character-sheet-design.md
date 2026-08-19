@@ -1,7 +1,7 @@
 # Pathfinder Second Edition — Dynamic Character Sheet Design
 
-**Status:** **System specification** for Pathfinder Second Edition (still valid). App-level product direction is [ADR 0003](adr/0003-multi-system-product-direction.md) / [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md): multi-system PWA, **PF1e first**, this PF2e slice **preserved** and remaining PF2e 0.9 goldens/content **deprioritized**.  
-**Implementation:** PF2e Phase 1–2 scaffold exists (S1 Fighter 5, T1 Wizard 5, leftover Bard 5 and Cleric 5 goldens, T3 form editors, S4 validation). Companion editor, remaining goldens, content packs, and PF2e panel i18n catalogs are not started.  
+**Status:** **System specification** for Pathfinder Second Edition (still valid). App-level product direction is [ADR 0003](adr/0003-multi-system-product-direction.md) / [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md): multi-system PWA, **finish PF1e this release**, this PF2e slice **preserved**. Remaining PF2e goldens/content wait for a **later release**.  
+**Implementation:** PF2e Phase 1–2 scaffold exists (S1 Fighter 5, T1 Wizard 5, leftover Bard 5 / Cleric 5 / Ranger 5 goldens, T3 form editors, S4 validation). Companion editor, remaining PC2 golden, content packs, and PF2e panel i18n catalogs wait for a later PF2e *release*.  
 **Sequencing:** [`next-increment-multi-system.md`](next-increment-multi-system.md) (current). Historical: [`next-increment-design.md`](next-increment-design.md), [`continuation-design.md`](continuation-design.md).  
 **Repo context:** `Pathfinder-2E-Card`  
 **Audience:** Product / engineering  
@@ -40,7 +40,7 @@ This document is the **PF2e system spec**. The app is a multi-system sheet ([umb
 | 13 | Stack | **TypeScript + React** |
 | 14 | License | **MIT** |
 | 15 | Campaign / house rules | **Omit** optional flags (e.g. Free Archetype) in 0.9/1.0 — extra feats entered as custom rows if needed |
-| 16 | Golden tests | **Fighter 5 and Wizard 5 required regressions.** Bard 5 and Cleric 5 landed. Remaining proposed set in §12 is **post-PF1e-0.9** |
+| 16 | Golden tests | **Fighter 5 and Wizard 5 required regressions.** Bard 5, Cleric 5, and Ranger 5 landed. Remaining proposed set in §12 waits for a **later PF2e release** |
 | 17 | Save extension | **`.json`** |
 | 18 | App display name | Chrome still **Pathfinder 2E Character sheet** until Phase M; working product title **TTRPG Character Sheet** |
 
@@ -57,10 +57,10 @@ The **app** 0.9/1.0 bars are defined in the [umbrella design](ttrpg-character-sh
 **PF2e slice that must keep working (app 0.9)**
 
 - Spreadsheet Build + Play for the current editors.
-- Core calcs + Fighter 5, Wizard 5, Bard 5, and Cleric 5 goldens.
+- Core calcs + Fighter 5, Wizard 5, Bard 5, Cleric 5, and Ranger 5 goldens.
 - Save / Load of PF2e documents (with `system: "pf2e"` after Phase M).
 
-**Full PF2e 0.9 catalog (after PF1e 0.9)**
+**Full PF2e catalog (later PF2e *release*)**
 
 - Remaster-first / legacy fallback.
 - Remaining goldens in §12; companion nested editor.
@@ -325,15 +325,15 @@ Live status checkboxes: [`ROADMAP.md`](ROADMAP.md). App-level phases (M, 1e, 2e,
 
 ### Phase 1 — Schema + core calc engine (TypeScript) — martial/caster slice done; leftover goldens deferred
 
-- Done: character JSON schema v1; TypeScript types; empty-sheet factory; Save strips `derived`; Ajv validation on Load/Save; `compute()` for attributes, proficiency, HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides; Fighter 5, Wizard 5, Bard 5, and Cleric 5 goldens; React PWA scaffold with derived cells plus identity, feats, spells, inventory, strike, and play editors.
-- Remaining (after PF1e 0.9): goldens for companion user, one PC2 class; companion nested-sheet editor.
+- Done: character JSON schema v1; TypeScript types; empty-sheet factory; Save strips `derived`; Ajv validation on Load/Save; `compute()` for attributes, proficiency, HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides; Fighter 5, Wizard 5, Bard 5, Cleric 5, and Ranger 5 goldens; React PWA scaffold with derived cells plus identity, feats, spells, inventory, strike, and play editors. `computeCompanion()` reuses core calcs on nested `CompanionSheet`.
+- Remaining (later PF2e *release*): golden for one PC2 class; companion nested-sheet editor.
 - Content pack stubs (`/content/remaster`, `/content/legacy`) stay Phase 3; they are not in the repo yet.
 
 ### Phase 2 — PWA spreadsheet shell
 
 - Tab chrome, Save/Load, derived cells, identity/feats/spells/inventory/strike/play editors exist. Remaining: companion nested sheet; optional IndexedDB draft buffer; English UI strings externalized (currently hardcoded; may land during Phase M as T4′).
 
-### Phase 3 — Content fill-out (after PF1e 0.9)
+### Phase 3 — Content fill-out (later PF2e *release*)
 
 - PC1 + PC2 player catalog; legacy fallback rows for renames/replacements.
 
@@ -362,7 +362,7 @@ Engineering fixtures (not necessarily shipped as player samples). Assert core ou
 
 3. Spontaneous caster — **Bard 5** — exists
 4. Divine prepared — **Cleric 5** — exists
-5. Companion user — **Ranger 5** with animal companion **or** Druid with companion
+5. Companion user — **Ranger 5** with animal companion **or** Druid with companion — Ranger 5 exists (nested sheet; no companion editor yet)
 6. PC2 smoke test — one **Player Core 2** class at level 3 or 5
 
 Exact subclass/spell picks can be chosen during implementation as long as the roles above stay covered.
@@ -374,10 +374,10 @@ Exact subclass/spell picks can be chosen during implementation as long as the ro
 This section is the **PF2e system target**, not the app 0.9 bar (see [umbrella §10](ttrpg-character-sheet-design.md)).
 
 - PF2e documents: **Remaster-first / legacy fallback**; **core calcs** with expansion hooks.
-- **Player Core + Player Core 2** (hybrid content acquisition); no GM exclusives — pack fill-out after PF1e 0.9.
+- **Player Core + Player Core 2** (hybrid content acquisition); no GM exclusives — pack fill-out in a later PF2e *release*.
 - **No** PF2e campaign house-rule flags in 0.9/1.0.
 - Shared app: installable PWA, spreadsheet, one character, Save/Load, English then Spanish, no dice/cloud/VTT.
-- Golden tests: Fighter 5, Wizard 5, Bard 5, and Cleric 5 must keep passing; §12 remainder is later.
+- Golden tests: Fighter 5, Wizard 5, Bard 5, Cleric 5, and Ranger 5 must keep passing; §12 remainder is later.
 
 ---
 
@@ -416,3 +416,5 @@ This section is the **PF2e system target**, not the app 0.9 bar (see [umbrella �
 | 2026-08-17 | Sidebar is an app host (ADR 0005); encyclopedia is a future tool |
 | 2026-08-19 | Bard 5 golden (spontaneous occult); remaining §12 goldens after PF1e 1.0 |
 | 2026-08-19 | Cleric 5 golden (prepared divine); remaining §12 is companion user + PC2 class |
+| 2026-08-19 | Ranger 5 golden (nested wolf companion + `computeCompanion`); remaining §12 is PC2 class |
+| 2026-08-19 | Remaining PF2e leftover waits for a later *release*; finish First Edition first |

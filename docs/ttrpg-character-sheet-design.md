@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-18  
-**Implementation:** PF1e **0.9 bar landed**. **1.0 landed** — Synthesist golden + Spanish UI catalog + stability. PF2e panel literals remain. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
+**Implementation:** PF1e **0.9 bar landed**. **1.0 landed** — Synthesist golden + Spanish UI catalog + stability. **Next:** finish First Edition this release. Remaining PF2e work waits for a **later release**. Sidebar tools wait until the PF1e sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -35,7 +35,7 @@ System-specific locks live in the PF1e / PF2e design docs. This table is the **a
 | 1 | Platform | **Installable PWA** — local/offline after install; mobile-compatible |
 | 2 | UI | **Spreadsheet / Excel-like** plus a **loaded-sheet sidebar host** (tools TBD) — dense grids, tabs, plain inputs |
 | 3 | Systems | Discriminated engines. 0.9/1.0 ship **PF1e** (priority) + **PF2e** (preserve). Further systems are reserved ids only |
-| 4 | Priority | **PF1e first** to a playable 0.9 bar. Do not delete PF2e. Remaining PF2e goldens/content **after** that bar |
+| 4 | Priority | **Finish PF1e** in this release. Do not delete PF2e. Remaining PF2e goldens/content wait for a **later release** |
 | 5 | Calc depth (1.0) | **Core calculations only** per system; expansion hooks (`effects[]`, overrides) |
 | 6 | Persistence | **One sheet at a time** + **Save sheet** / **Load sheet**. No multi-character library, no cloud |
 | 7 | Modes | **Build and Play** |
@@ -77,10 +77,15 @@ See [ADR 0003](adr/0003-multi-system-product-direction.md).
 - **PF1e:** player can build and play an **APG Synthesist Summoner** (fused eidolon on the same sheet).
 - Still core calcs only.
 
+**After 1.0 (current release)**
+
+- Finish First Edition past the 1.0 goldens (CRB pack fill-out, APG follow-through, optional extra PF1e goldens, OGL when rules text ships).
+- **Sidebar tools** after the PF1e sheet is ~90% done.
+
 **Later (design must not block)**
 
-- Remaining PF2e goldens, companion editor, Remaster + legacy content packs (the old PF2e 0.9 leftovers).
-- **Sidebar tools** (Attack Helper + Actions List + Budget Calculator specified). Sequenced **after the character sheet is ~90% done**. Encyclopedia (Spells / Afflictions / Actions **rules text**) is a candidate, distinct from Actions List. [ADR 0005](adr/0005-sidebar-host.md). **Attack Helper:** [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md). **Actions List:** [`sidebar-tools-actions-list.md`](sidebar-tools-actions-list.md). **Budget Calculator:** [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md).
+- Remaining PF2e goldens, companion editor, Remaster + legacy content packs, PF2e panel i18n — **later release**.
+- Encyclopedia (Spells / Afflictions / Actions **rules text**) is a candidate, distinct from Actions List. [ADR 0005](adr/0005-sidebar-host.md). **Attack Helper:** [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md). **Actions List:** [`sidebar-tools-actions-list.md`](sidebar-tools-actions-list.md). **Budget Calculator:** [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md).
 - Typed `effects[]` automation.
 - Optional card-oriented play surfaces.
 - Additional systems behind the same `system` discriminator.
@@ -237,7 +242,8 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | Sb | Sidebar host (registry, collapse, empty state); **not** blocking 1e |
 | 0.9 | English PWA; PF1e playable bar; PF2e slice non-regressed; sidebar host may be empty |
 | 4 | Spanish + playable APG Synthesist Summoner; stability (**1.0**) |
-| 5 | Leftover PF2e 0.9 work; **sidebar tools** (when specified); `effects[]`; more systems |
+| 1x | Finish First Edition (CRB fill-out, APG follow-through); PF2e leftover waits |
+| 5 | Later PF2e *release*; **sidebar tools** after the PF1e sheet is ~90% done; `effects[]`; more systems |
 
 ---
 
@@ -249,7 +255,7 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 - **Core calcs** for 0.9/1.0 with expansion hooks.
 - **No** campaign house-rule flags, dice, cloud, or VTT.
 - **English in 0.9**, **Spanish in 1.0**.
-- Later: leftover PF2e catalog/goldens (Bard 5 and Cleric 5 exist), sidebar tools, more systems.
+- Later: finish First Edition (current); leftover PF2e catalog/goldens wait for a later release; sidebar tools; more systems.
 
 ---
 
@@ -277,3 +283,5 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-19 | 1.0 stability pass; next is leftover PF2e work |
 | 2026-08-19 | PF2e Bard 5 golden; next leftover is Cleric 5 |
 | 2026-08-19 | PF2e Cleric 5 golden; next leftover is a companion user |
+| 2026-08-19 | PF2e Ranger 5 golden (nested companion); next leftover is a PC2 class |
+| 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release |

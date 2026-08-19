@@ -32,6 +32,7 @@ import {
   babFromProgression,
   saveFromProgression,
 } from '../engine/progressions'
+import { compute } from '../engine/compute'
 
 describe('CRB pack batch 1: class progression catalog', () => {
   it('lists the 11 CRB base classes in chapter order', () => {
@@ -116,34 +117,34 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–13', () => {
+  it('pack manifest records batches 1–14', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batches-1-13-complete')
+    expect(pack.status).toBe('batches-1-14-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
     ])
   })
 })
 
 describe('CRB pack batch 8: Human race catalog', () => {
-  it('lists Human only', () => {
-    expect(CRB_RACES.map((row) => row.id)).toEqual(['race.human'])
+  it('includes Human with catalog size medium', () => {
     expect(lookupCrbRace('race.human')).toMatchObject({
       id: 'race.human',
       name: 'Human',
+      size: 'medium',
     })
   })
 
   it('returns null for an unknown race id', () => {
-    expect(lookupCrbRace('race.elf')).toBeNull()
+    expect(lookupCrbRace('race.tiefling')).toBeNull()
     expect(lookupCrbRace(null)).toBeNull()
     expect(lookupCrbRace('')).toBeNull()
   })
 
-  it('stamps id and name without rewriting size or ability scores', () => {
+  it('stamps Human id and name without rewriting ability scores', () => {
     const character = createEmptyCharacter()
     character.identity.size = 'small'
     character.abilities.str.score = 16
@@ -151,17 +152,19 @@ describe('CRB pack batch 8: Human race catalog', () => {
     const identity = applyCrbRace(character.identity, 'race.human')
     expect(identity.race.id).toBe('race.human')
     expect(identity.race.name).toBe('Human')
-    expect(identity.size).toBe('small')
+    expect(identity.size).toBe('medium')
     expect(character.abilities).toEqual(before)
     expect(character.abilities.str.score).toBe(16)
   })
 
-  it('unknown apply clears id and leaves the typed name', () => {
+  it('unknown apply clears id and leaves the typed name and size', () => {
     const character = createEmptyCharacter()
+    character.identity.size = 'small'
     character.identity.race = { id: 'race.human', name: 'Half-Elf' }
-    const identity = applyCrbRace(character.identity, 'race.elf')
+    const identity = applyCrbRace(character.identity, 'race.tiefling')
     expect(identity.race.id).toBeNull()
     expect(identity.race.name).toBe('Half-Elf')
+    expect(identity.size).toBe('small')
   })
 
   it('goldens resolve race.human and keep scores as typed', () => {
@@ -612,5 +615,68 @@ describe('CRB pack batch 13: spell catalog', () => {
     expect(lookupCrbSpell(mixed.spellcasting[0]?.spells[0]?.spell.id)?.id).toBe(
       'spell.magic-missile',
     )
+  })
+})
+
+describe('CRB pack batch 14: remaining player races and size stamp', () => {
+  it('lists the 7 CRB player races in chapter order', () => {
+    expect(CRB_RACES.map((row) => row.id)).toEqual([
+      'race.dwarf',
+      'race.elf',
+      'race.gnome',
+      'race.half-elf',
+      'race.half-orc',
+      'race.halfling',
+      'race.human',
+    ])
+    expect(lookupCrbRace('race.gnome')).toMatchObject({
+      id: 'race.gnome',
+      name: 'Gnome',
+      size: 'small',
+    })
+    expect(lookupCrbRace('race.halfling')?.size).toBe('small')
+    expect(lookupCrbRace('race.elf')?.size).toBe('medium')
+    expect(lookupCrbRace('race.half-elf')?.size).toBe('medium')
+  })
+
+  it('stamps Gnome and Halfling as small without rewriting ability scores', () => {
+    const character = createEmptyCharacter()
+    character.identity.size = 'medium'
+    character.abilities.dex.score = 16
+    const before = structuredClone(character.abilities)
+    const gnome = applyCrbRace(character.identity, 'race.gnome')
+    expect(gnome.race.id).toBe('race.gnome')
+    expect(gnome.race.name).toBe('Gnome')
+    expect(gnome.size).toBe('small')
+    const halfling = applyCrbRace(character.identity, 'race.halfling')
+    expect(halfling.size).toBe('small')
+    expect(character.abilities).toEqual(before)
+  })
+
+  it('does not grant Human extra skill ranks to Half-Elf', () => {
+    const character = createEmptyCharacter()
+    const fighter = applyClassProgression(createEmptyClass(), 'class.fighter')
+    fighter.levels = 5
+    character.classes = [fighter]
+    character.identity = applyCrbRace(character.identity, 'race.half-elf')
+    expect(character.identity.race.id).toBe('race.half-elf')
+    expect(compute(character).skillRanksBudget).toBe(10)
+    character.identity = applyCrbRace(character.identity, 'race.human')
+    expect(compute(character).skillRanksBudget).toBe(15)
+  })
+
+  it('goldens stay Medium; Synthesist Half-Elf stays custom', () => {
+    const fighter = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),
+    )
+    const synthesist = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/synthesist-5.json'),
+    )
+    expect(fighter.identity.size).toBe('medium')
+    expect(lookupCrbRace(fighter.identity.race.id)?.id).toBe('race.human')
+    expect(synthesist.identity.race.id).toBeNull()
+    expect(synthesist.identity.race.name).toBe('Half-Elf')
+    expect(lookupCrbRace(synthesist.identity.race.id)).toBeNull()
+    expect(lookupCrbRace('race.half-elf')).not.toBeNull()
   })
 })

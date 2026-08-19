@@ -117,14 +117,14 @@ Legacy rune names map in content fallback, not alternate schema enums.
 
 ## Next implementation steps
 
-PF2e leftover editors/goldens/content are **deprioritized** behind PF1e ([roadmap](ROADMAP.md)). Remaining PF2e notes:
+PF2e leftover editors/goldens/content wait for a **later PF2e release** ([roadmap](ROADMAP.md) Phase 1x). Remaining PF2e notes:
 
 1. ~~TypeScript types mirrored from the schema.~~  
 2. ~~Empty-sheet factory: auto-seed 16 skills; `schemaVersion: 1`.~~  
 3. ~~Save sheet serializer that strips `derived`.~~  
 4. ~~Validate Load and Save against `schemas/character.schema.json`.~~  
-5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5, Bard 5, and Cleric 5 goldens exist; remaining PF2e goldens deferred.  
-6. Companion nested-sheet editor still missing (after PF1e 0.9).  
+5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5, Bard 5, Cleric 5, and Ranger 5 goldens exist; remaining PF2e golden is the PC2 smoke test (later release).  
+6. Companion nested-sheet editor still missing (Ranger 5 golden stores the nested sheet; editor waits for the later PF2e release).  
 7. Externalize English UI strings (may land as T4′ during Phase M).  
 8. Optional IndexedDB draft buffer for refresh safety.
 
@@ -142,3 +142,5 @@ Current sequencing: [`next-increment-multi-system.md`](next-increment-multi-syst
 | 2026-08-17 | Relabeled PF2e-only; point leftover work at ADR 0003 sequencing |
 | 2026-08-19 | Bard 5 golden exists; remaining leftover PF2e goldens deferred |
 | 2026-08-19 | Cleric 5 golden exists; remaining leftover is companion user + PC2 class |
+| 2026-08-19 | Ranger 5 golden + `computeCompanion`; remaining leftover is PC2 class; companion editor still missing |
+| 2026-08-19 | Remaining PF2e leftover waits for a later release; finish First Edition first |

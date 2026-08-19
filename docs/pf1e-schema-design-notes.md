@@ -89,6 +89,7 @@ User adds `craft-*`, `perform-*`, `profession-*` like PF2e lore.
 
 ```text
 race.human
+race.elf
 class.fighter
 class.wizard
 class.summoner
@@ -158,3 +159,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker) |
 | 2026-08-19 | Spanish UI catalog (`es.json`); pack names stay English |
 | 2026-08-19 | 1.0 stability; Save stamps `meta.locale` |
+| 2026-08-19 | CRB batch 14: remaining player races + optional catalog `size`; ability adjustments stay typed |

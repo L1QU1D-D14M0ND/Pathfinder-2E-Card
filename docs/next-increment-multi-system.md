@@ -4,7 +4,7 @@
 **Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [ADR 0007](adr/0007-content-licensing.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
-This document **does** change product sequencing: PF1e is first; remaining PF2e 0.9 work waits. It does **not** reopen PF2e schema math (ADR 0002) or authorize deleting the PF2e slice.
+This document **does** change product sequencing: **finish First Edition** in this release; remaining PF2e work waits for a later *release*. It does **not** reopen PF2e schema math (ADR 0002) or authorize deleting the PF2e slice.
 
 ---
 
@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is leftover **PF2e** work (companion-user golden, companion editor, Remaster packs). **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5 and Cleric 5 goldens landed. APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–13 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **finish First Edition** (class spells-per-day tables, remaining CRB catalog, APG follow-through). Remaining **PF2e** work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). The PF2e slice stays in the app and must not regress. **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5, Cleric 5, and Ranger 5 goldens landed. APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–14 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the **PF1e** sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -42,8 +42,8 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Schema | PF2e `character.schema.json`; PF1e `schemas/pf1e/character.schema.json` |
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
-| Goldens | PF2e `fighter-5.json`, `wizard-5.json`, `bard-5.json`, `cleric-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
-| Content | `content/pf1e/crb/` batches 1–13. `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
+| Goldens | PF2e `fighter-5.json`, `wizard-5.json`, `bard-5.json`, `cleric-5.json`, `ranger-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
+| Content | `content/pf1e/crb/` batches 1–14. `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
 
 ---
 
@@ -128,7 +128,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 2 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish UI catalog landed. 1.0 stability landed (goldens still compute; Save stamps `meta.locale`). Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–14 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 2 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish UI catalog landed. 1.0 stability landed (goldens still compute; Save stamps `meta.locale`). Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -147,7 +147,8 @@ After goldens can be typed by hand. Review CRB character mechanics **two at a ti
 | 8 | Platform | IndexedDB draft; PWA install/offline proof |
 | 9 | 0.9 | English; PF1e bar; PF2e slice still works; sidebar host may be empty |
 | 10 | Phase 4 | `es` + playable APG Synthesist = 1.0 |
-| 11 | Later | Leftover PF2e goldens/content; **sidebar tools** when specified; more systems |
+| 11 | 1x | Finish First Edition (CRB fill-out, APG follow-through) |
+| 12 | Later release | Leftover PF2e goldens/content; **sidebar tools** after the PF1e sheet is ~90% done; more systems |
 
 Steps 2–4 are the **next development increments** after this documentation change.
 
@@ -216,6 +217,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] **Batch 12:** feat catalog ids
 - [x] **Batch 13:** spell catalog ids
 - [x] **Batch 7:** spell DC / bonus slots (table tests; slots stay typed)
+- [x] **Batch 14:** remaining CRB player races + size stamp
 - [x] IndexedDB one-key draft + PWA build verify
 - [x] OGL / Product Identity review (mechanics-only pack; [ADR 0007](adr/0007-content-licensing.md))
 
@@ -262,7 +264,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). Local `main` (0.9 bar + APG slice 1) is the publish tip.
 
-**Still sequenced (1.0 landed; leftover PF2e next):**
+**Still sequenced (finish First Edition; leftover PF2e later release):**
 
 | Item | Disposition |
 | --- | --- |
@@ -272,9 +274,12 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 1.0 stability | Landed (goldens compute; Save stamps `meta.locale`) |
 | PF2e Bard 5 golden | Landed (spontaneous occult; signature spells typed) |
 | PF2e Cleric 5 golden | Landed (prepared divine; Divine Font typed) |
+| PF2e Ranger 5 golden | Landed (nested wolf companion; `computeCompanion`; no companion editor) |
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
-| Remaining PF2e panel literals | Extract when those panels next change |
+| Remaining PF2e panel literals | Later PF2e *release* (when those panels next change) |
+| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batch 14 races landed; next is spells-per-day tables) |
+| Leftover PF2e (PC2 golden, companion editor, Remaster packs) | Later *release* |
 
 ---
 
@@ -317,3 +322,6 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-19 | 1.0 stability: locale stamped on Save; all six goldens still compute |
 | 2026-08-19 | PF2e Bard 5 golden (spontaneous occult); next is Cleric 5 |
 | 2026-08-19 | PF2e Cleric 5 golden (prepared divine); next is a companion user |
+| 2026-08-19 | PF2e Ranger 5 golden (nested wolf companion); next is a PC2 class |
+| 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release |
+| 2026-08-19 | CRB batch 14: remaining player races + size stamp; next is spells-per-day tables |

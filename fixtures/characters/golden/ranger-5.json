@@ -1,0 +1,817 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "createdAt": "2026-08-19T16:00:00.000Z",
+    "updatedAt": "2026-08-19T16:00:00.000Z",
+    "preferredRuleset": "remaster",
+    "appVersion": "0.0.0",
+    "locale": "en"
+  },
+  "identity": {
+    "characterName": "Ryn Trackwell",
+    "playerName": "Golden Test",
+    "level": 5,
+    "xp": 40,
+    "ancestry": {
+      "id": "ancestry.human",
+      "name": "Human",
+      "rulesetSource": "custom"
+    },
+    "heritage": {
+      "id": "heritage.versatile-human",
+      "name": "Versatile Human",
+      "rulesetSource": "custom"
+    },
+    "background": {
+      "id": "background.scout",
+      "name": "Scout",
+      "rulesetSource": "custom"
+    },
+    "class": {
+      "id": "class.ranger",
+      "name": "Ranger",
+      "rulesetSource": "custom"
+    },
+    "subclass": {
+      "id": "class.ranger.precision",
+      "name": "Precision",
+      "rulesetSource": "custom"
+    },
+    "archetypes": [],
+    "size": "medium",
+    "traits": [
+      "human",
+      "humanoid"
+    ],
+    "languages": [
+      {
+        "id": "language.common",
+        "name": "Common",
+        "rulesetSource": "custom"
+      }
+    ],
+    "deity": null,
+    "homeRegion": "",
+    "alignment": null,
+    "edicts": "",
+    "anathema": ""
+  },
+  "attributes": {
+    "str": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "str",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "dex": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "dex",
+          "amount": 4,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "con": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "con",
+          "amount": 2,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "int": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "wis": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "wis",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "cha": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    }
+  },
+  "proficiencies": {
+    "perception": {
+      "rank": "expert",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "fortitude": {
+      "rank": "expert",
+      "attribute": "con",
+      "modifiers": {}
+    },
+    "reflex": {
+      "rank": "expert",
+      "attribute": "dex",
+      "modifiers": {}
+    },
+    "will": {
+      "rank": "trained",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "classDC": {
+      "rank": "trained",
+      "attribute": "dex",
+      "modifiers": {}
+    },
+    "armor": {
+      "unarmored": "trained",
+      "light": "trained",
+      "medium": "trained",
+      "heavy": "untrained"
+    },
+    "weapons": {
+      "unarmed": "trained",
+      "simple": "trained",
+      "martial": "trained",
+      "advanced": "untrained",
+      "specific": []
+    }
+  },
+  "vitals": {
+    "ancestryHp": 8,
+    "classHpPerLevel": 10,
+    "bonuses": [],
+    "currentHp": 68,
+    "temporaryHp": 0,
+    "dying": 0,
+    "wounded": 0,
+    "doomed": 0,
+    "resistances": [],
+    "immunities": [],
+    "weaknesses": [],
+    "speeds": [
+      {
+        "kind": "land",
+        "feet": 25
+      }
+    ],
+    "senses": []
+  },
+  "armorClass": {
+    "equippedArmorItemId": "item-leather",
+    "equippedShieldItemId": null,
+    "shieldRaised": false,
+    "dexCapOverride": null,
+    "modifiers": {},
+    "notes": ""
+  },
+  "skills": [
+    {
+      "key": "acrobatics",
+      "name": "Acrobatics",
+      "attribute": "dex",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "arcana",
+      "name": "Arcana",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "athletics",
+      "name": "Athletics",
+      "attribute": "str",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "crafting",
+      "name": "Crafting",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "deception",
+      "name": "Deception",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "diplomacy",
+      "name": "Diplomacy",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "intimidation",
+      "name": "Intimidation",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "medicine",
+      "name": "Medicine",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "nature",
+      "name": "Nature",
+      "attribute": "wis",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "occultism",
+      "name": "Occultism",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "performance",
+      "name": "Performance",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "religion",
+      "name": "Religion",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "society",
+      "name": "Society",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "stealth",
+      "name": "Stealth",
+      "attribute": "dex",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "survival",
+      "name": "Survival",
+      "attribute": "wis",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "thievery",
+      "name": "Thievery",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    }
+  ],
+  "feats": [
+    {
+      "id": "feat-animal-companion",
+      "category": "class",
+      "feat": {
+        "id": "feat.animal-companion",
+        "name": "Animal Companion",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "traits": [],
+      "summary": "Young companion; not auto-applied.",
+      "effects": []
+    },
+    {
+      "id": "feat-mature-companion",
+      "category": "class",
+      "feat": {
+        "id": "feat.mature-animal-companion",
+        "name": "Mature Animal Companion",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 4,
+      "traits": [],
+      "summary": "Companion is mature; numbers stay typed on the nested sheet.",
+      "effects": []
+    },
+    {
+      "id": "feat-hunters-aim",
+      "category": "class",
+      "feat": {
+        "id": "feat.hunters-aim",
+        "name": "Hunter's Aim",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 2,
+      "traits": [],
+      "summary": "Not auto-applied.",
+      "effects": []
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-hunt-prey",
+      "feature": {
+        "id": "feature.hunt-prey",
+        "name": "Hunt Prey",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "summary": "Designate prey. Not auto-applied.",
+      "effects": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "action-hunt-prey",
+      "name": "Hunt Prey",
+      "actionType": "action",
+      "actionCost": 1,
+      "traits": [
+        "concentrate"
+      ],
+      "frequency": "",
+      "summary": "Designate a hunted prey.",
+      "sourceFeatId": null,
+      "effects": []
+    }
+  ],
+  "strikes": [
+    {
+      "id": "strike-longbow",
+      "name": "Longbow",
+      "strikeType": "ranged",
+      "weaponCategory": "martial",
+      "itemId": "item-longbow",
+      "attackAttribute": "dex",
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "traits": [
+        "deadly-d10",
+        "volley-30"
+      ],
+      "rangeFeet": 100,
+      "reload": "0",
+      "ammoItemId": "item-arrows",
+      "modifiers": {},
+      "notes": ""
+    }
+  ],
+  "spellcasting": [],
+  "inventory": {
+    "currency": {
+      "cp": 0,
+      "sp": 6,
+      "gp": 10,
+      "pp": 0
+    },
+    "items": [
+      {
+        "id": "item-leather",
+        "item": {
+          "id": "armor.leather",
+          "name": "Leather Armor",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "worn",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "armor": {
+          "category": "light",
+          "acBonus": 1,
+          "dexCap": 4,
+          "checkPenalty": -1,
+          "speedPenalty": 0,
+          "strength": 0,
+          "potencyRune": 0,
+          "resilientRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [],
+        "notes": ""
+      },
+      {
+        "id": "item-longbow",
+        "item": {
+          "id": "weapon.longbow",
+          "name": "Longbow",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 2,
+        "location": "readied",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "weapon": {
+          "category": "martial",
+          "group": "bow",
+          "damageDice": "1d8",
+          "damageType": "piercing",
+          "hands": "1+",
+          "rangeFeet": 100,
+          "reload": "0",
+          "potencyRune": 0,
+          "strikingRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [
+          "deadly-d10",
+          "volley-30"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "item-arrows",
+        "item": {
+          "id": null,
+          "name": "Arrows",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 0.1,
+        "location": "stowed",
+        "invested": false,
+        "equipped": false,
+        "containerId": null,
+        "traits": [],
+        "notes": ""
+      }
+    ],
+    "bulkBonus": 0,
+    "notes": ""
+  },
+  "companions": [
+    {
+      "id": "companion-ash",
+      "kind": "animalCompanion",
+      "name": "Ash",
+      "linkedFeatureId": "feat-animal-companion",
+      "sheet": {
+        "identity": {
+          "level": 5,
+          "size": "medium",
+          "traits": [
+            "animal",
+            "companion",
+            "wolf"
+          ],
+          "ancestryOrType": {
+            "id": null,
+            "name": "Wolf",
+            "rulesetSource": "custom"
+          }
+        },
+        "attributes": {
+          "str": {
+            "boosts": [
+              {
+                "kind": "free",
+                "attribute": "str",
+                "amount": 3,
+                "label": "User-entered total"
+              }
+            ],
+            "legacyScore": null,
+            "modifierOverride": null
+          },
+          "dex": {
+            "boosts": [
+              {
+                "kind": "free",
+                "attribute": "dex",
+                "amount": 2,
+                "label": "User-entered total"
+              }
+            ],
+            "legacyScore": null,
+            "modifierOverride": null
+          },
+          "con": {
+            "boosts": [
+              {
+                "kind": "free",
+                "attribute": "con",
+                "amount": 2,
+                "label": "User-entered total"
+              }
+            ],
+            "legacyScore": null,
+            "modifierOverride": null
+          },
+          "int": {
+            "boosts": [
+              {
+                "kind": "flaw",
+                "attribute": "int",
+                "amount": -4,
+                "label": "User-entered total"
+              }
+            ],
+            "legacyScore": null,
+            "modifierOverride": null
+          },
+          "wis": {
+            "boosts": [
+              {
+                "kind": "free",
+                "attribute": "wis",
+                "amount": 1,
+                "label": "User-entered total"
+              }
+            ],
+            "legacyScore": null,
+            "modifierOverride": null
+          },
+          "cha": {
+            "boosts": [],
+            "legacyScore": null,
+            "modifierOverride": null
+          }
+        },
+        "proficiencies": {
+          "perception": {
+            "rank": "trained",
+            "attribute": "wis",
+            "modifiers": {}
+          },
+          "fortitude": {
+            "rank": "expert",
+            "attribute": "con",
+            "modifiers": {}
+          },
+          "reflex": {
+            "rank": "trained",
+            "attribute": "dex",
+            "modifiers": {}
+          },
+          "will": {
+            "rank": "trained",
+            "attribute": "wis",
+            "modifiers": {}
+          },
+          "classDC": {
+            "rank": "untrained",
+            "attribute": "str",
+            "modifiers": {}
+          },
+          "armor": {
+            "unarmored": "trained",
+            "light": "untrained",
+            "medium": "untrained",
+            "heavy": "untrained"
+          },
+          "weapons": {
+            "unarmed": "trained",
+            "simple": "untrained",
+            "martial": "untrained",
+            "advanced": "untrained",
+            "specific": []
+          }
+        },
+        "vitals": {
+          "ancestryHp": 10,
+          "classHpPerLevel": 6,
+          "bonuses": [],
+          "currentHp": 50,
+          "temporaryHp": 0,
+          "dying": 0,
+          "wounded": 0,
+          "doomed": 0,
+          "resistances": [],
+          "immunities": [],
+          "weaknesses": [],
+          "speeds": [
+            {
+              "kind": "land",
+              "feet": 40
+            }
+          ],
+          "senses": [
+            {
+              "name": "scent",
+              "rangeFeet": 30,
+              "notes": ""
+            }
+          ]
+        },
+        "armorClass": {
+          "equippedArmorItemId": null,
+          "equippedShieldItemId": null,
+          "shieldRaised": false,
+          "dexCapOverride": null,
+          "modifiers": {},
+          "notes": ""
+        },
+        "skills": [
+          {
+            "key": "athletics",
+            "name": "Athletics",
+            "attribute": "str",
+            "rank": "trained",
+            "isLore": false,
+            "armorPenaltyApplies": true,
+            "modifiers": {},
+            "notes": "",
+            "effects": []
+          },
+          {
+            "key": "survival",
+            "name": "Survival",
+            "attribute": "wis",
+            "rank": "trained",
+            "isLore": false,
+            "armorPenaltyApplies": false,
+            "modifiers": {},
+            "notes": "",
+            "effects": []
+          },
+          {
+            "key": "intimidation",
+            "name": "Intimidation",
+            "attribute": "cha",
+            "rank": "untrained",
+            "isLore": false,
+            "armorPenaltyApplies": false,
+            "modifiers": {},
+            "notes": "",
+            "effects": []
+          },
+          {
+            "key": "stealth",
+            "name": "Stealth",
+            "attribute": "dex",
+            "rank": "trained",
+            "isLore": false,
+            "armorPenaltyApplies": true,
+            "modifiers": {},
+            "notes": "",
+            "effects": []
+          }
+        ],
+        "strikes": [
+          {
+            "id": "strike-jaws",
+            "name": "Jaws",
+            "strikeType": "unarmed",
+            "weaponCategory": "unarmed",
+            "itemId": null,
+            "attackAttribute": "str",
+            "damageAttribute": "str",
+            "damageDice": "1d8",
+            "damageType": "piercing",
+            "traits": [
+              "unarmed"
+            ],
+            "rangeFeet": null,
+            "reload": null,
+            "ammoItemId": null,
+            "modifiers": {},
+            "notes": ""
+          }
+        ],
+        "actions": [
+          {
+            "id": "action-support",
+            "name": "Support",
+            "actionType": "action",
+            "actionCost": 1,
+            "traits": [],
+            "frequency": "",
+            "summary": "Support benefit is not auto-applied.",
+            "sourceFeatId": null,
+            "effects": []
+          }
+        ],
+        "spellcasting": [],
+        "inventory": {
+          "currency": {
+            "cp": 0,
+            "sp": 0,
+            "gp": 0,
+            "pp": 0
+          },
+          "items": [],
+          "bulkBonus": 0,
+          "notes": ""
+        },
+        "conditions": [],
+        "notes": "Mature wolf companion. Nested sheet only; no companion editor yet."
+      }
+    }
+  ],
+  "conditions": [],
+  "play": {
+    "heroPoints": 1,
+    "focusPool": 0,
+    "focusRemaining": 0,
+    "initiativeModifier": null,
+    "dailyResources": []
+  },
+  "notes": {
+    "appearance": "",
+    "personality": "",
+    "campaign": "Engineering golden: Ranger 5 + animal companion",
+    "other": ""
+  },
+  "overrides": {},
+  "extensions": {}
+}

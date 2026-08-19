@@ -40,6 +40,17 @@ describe('parseLoadedSheet', () => {
     }
   })
 
+  it('loads the PF2e Ranger 5 golden as pf2e', () => {
+    const loaded = parseLoadedSheet(
+      readRepoFile('fixtures/characters/golden/ranger-5.json'),
+    )
+    expect(loaded.system).toBe('pf2e')
+    if (loaded.system === 'pf2e') {
+      expect(loaded.character.identity.class.id).toBe('class.ranger')
+      expect(loaded.character.companions[0]?.kind).toBe('animalCompanion')
+    }
+  })
+
   it('loads a PF1e golden as pf1e', () => {
     const loaded = parseLoadedSheet(
       readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),

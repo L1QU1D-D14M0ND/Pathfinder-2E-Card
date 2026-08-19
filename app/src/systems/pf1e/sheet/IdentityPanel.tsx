@@ -126,7 +126,7 @@ export function IdentityPanel({
                 }
               />
               <p className="muted">
-                {t('pf1e.identity.humanHelp')}
+                {t('pf1e.identity.raceHelp')}
               </p>
             </td>
           </tr>

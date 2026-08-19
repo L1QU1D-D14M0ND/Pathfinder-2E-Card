@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-19  
-**Current phase:** **1.0 landed** — Spanish catalog + playable Synthesist. PF2e panel literals remain in English. **Next code:** leftover PF2e goldens (companion user, one PC2 class) / companion editor / Remaster packs. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
@@ -14,7 +14,11 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 
 **1.0** — Spanish locale; same 0.9 bar, called stable; **PF1e player can build and play an APG Synthesist Summoner** (fused eidolon). Still core calcs; no in-app dice.
 
-**Later** — remaining PF2e goldens, companion editor, Remaster/legacy packs; PF1e CRB pack fill-out beyond goldens; **sidebar tools after the sheet is ~90% done** (Attack Helper, Actions List, and Budget Calculator specified; encyclopedia is a candidate); typed `effects[]`; optional card play surfaces; additional systems.
+**Finish First Edition (current release)** — take PF1e past the 1.0 goldens: CRB pack fill-out, APG follow-through, optional extra PF1e goldens, OGL when rules text ships. Then sidebar tools when that sheet is ~90% done.
+
+**Later release — Second Edition** — leftover PF2e goldens (PC2 class), companion nested editor, Remaster/legacy packs, PF2e panel i18n. Do not start that work in this release.
+
+**Later still** — typed `effects[]`; optional card play surfaces; additional systems.
 
 ---
 
@@ -94,7 +98,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** Mechanic batches done (1–13, including Batch 7). OGL / PI review landed.
+**Status:** Mechanic batches done (1–14, including Batch 7). OGL / PI review landed.
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
@@ -111,9 +115,10 @@ Working display name in chrome is **TTRPG Character Sheet**.
 - [x] **Batch 12:** feat catalog ids on the three goldens — documentary stamp only; Combat math stays typed
 - [x] **Batch 13:** spell catalog ids on the Wizard / multiclass goldens — documentary stamp only; slots/DCs stay typed
 - [x] **Batch 7:** spell DC / bonus slots — CRB table tests; slots stay user-entered; Spell Focus does not change DC
+- [x] **Batch 14:** remaining CRB player races + size stamp — ability adjustments stay typed; Human extra skill rank stays `race.human` only
 - [x] OGL / Product Identity review — pack stays mechanics-only; no OGL notice until rules text ([ADR 0007](adr/0007-content-licensing.md))
 
-Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name when they pick Human, documentary item fields when they pick a catalog weapon or armor, feat name/category when they pick a catalog feat, and spell name/level when they pick a catalog spell).
+Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name/size when they pick a CRB race, documentary item fields when they pick a catalog weapon or armor, feat name/category when they pick a catalog feat, and spell name/level when they pick a catalog spell).
 
 ---
 
@@ -133,32 +138,33 @@ See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-hos
 
 ---
 
-## Phase 1–2 leftover (PF2e) — deprioritized
+## Phase 1–2 leftover (PF2e) — later release
 
-**Status:** In progress after PF1e 1.0. Bard 5 and Cleric 5 goldens landed; remaining §12 goldens wait.
+**Status:** Frozen for this release. Bard 5, Cleric 5, and Ranger 5 goldens already in the tree; remaining §12 golden is the PC2 smoke test. Do not continue that set until a later PF2e *release*.
 
-Already in the repo (kept):
+Already in the repo (kept; must not regress):
 
 - [x] PF2e schema v1, types, factory, Ajv, `compute()` (HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides)
-- [x] Goldens: PF2e Fighter 5; Wizard 5; Bard 5; Cleric 5
+- [x] Goldens: PF2e Fighter 5; Wizard 5; Bard 5; Cleric 5; Ranger 5
 - [x] Spreadsheet editors except companions
 - [x] Vitest + CI
-
-Not started (after PF1e 0.9):
-
-- [ ] PF2e goldens: companion user; one Player Core 2 class
-- [ ] Companion nested-sheet editor
-- [ ] Override UI (engine works; no cell editor)
 - [x] English catalogs for chrome + PF1e panels; locale runtime exists; `es.json` covers those keys. PF2e panel literals remain
 - [x] IndexedDB draft buffer
 - [x] PWA dist artifacts (`verify:pwa` after build). Runtime install/offline stays a manual [`app/README.md`](../app/README.md) step
+
+Not started (later PF2e release):
+
+- [ ] PF2e goldens: one Player Core 2 class
+- [ ] Companion nested-sheet editor
+- [ ] Override UI (engine works; no cell editor)
 - [ ] Remaster + legacy content packs
+- [ ] PF2e panel i18n catalogs
 
 ---
 
-## Phase 3 (PF2e content) — deprioritized
+## Phase 3 (PF2e content) — later release
 
-**Status:** Not started (0%). Sequenced **after** PF1e 1.0.
+**Status:** Not started (0%). Sequenced with the later PF2e *release*, not this First Edition finish.
 
 - [ ] Curated Remaster Player Core player catalog
 - [ ] Player Core 2 player catalog
@@ -181,12 +187,30 @@ Not started (after PF1e 0.9):
 
 ---
 
-## Phase 5 — Post-1.0
+## Phase 1x — Finish First Edition (current release)
 
-**Status:** Deferred by design (0%)
+**Status:** In progress. PF2e leftover waits for a later *release*.
 
-- [ ] Remaining PF2e 0.9 leftovers if not already done
-- [ ] Sidebar **tools** (Attack Helper + Actions List + Budget Calculator specified). Sequence: after the character sheet is ~90% done, dynamic and functional. Candidate also: Spells / Afflictions / Actions **encyclopedia** (rules text, not the PC action menu)
+Bar: a player can build and play PF1e from catalog beyond the four goldens, still core calcs, still mechanics-only until rules text. Keep Summoner out of the CRB pack. Existing PF1e and PF2e goldens must stay green.
+
+Recommended order:
+
+- [x] **CRB Batch 14** — remaining player races + size stamp (ability adjustments stay typed)
+- [ ] **CRB pack fill-out** remainder — class spells-per-day tables; remaining player catalog rows. Combat/spell math stays typed unless a batch says otherwise. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
+- [ ] **APG follow-through** — Summoner spell catalog (mechanics-only); other APG classes as separate slices (Magical Child, etc.). Auto-applied evolutions only if a later slice says so. [`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)
+- [ ] **Optional PF1e goldens** (system spec §6) — Cleric 5 (domains/channel as daily resources); prestige smoke test; PF1e familiar/companion table fixture if the stub needs one
+- [ ] **OGL notice + Section 15** — same change as the first pack **rules text** ([ADR 0007](adr/0007-content-licensing.md))
+- [ ] **Sidebar tools** when the PF1e sheet is ~90% done — Attack Helper, Actions List, Budget Calculator
+
+Do **not** start PF2e companion editor, PC2 golden, Remaster packs, or PF2e panel i18n in this phase.
+
+---
+
+## Phase 5 — After the PF1e sheet (and later PF2e release)
+
+**Status:** Deferred. Tools wait until the PF1e sheet is ~90% done (Phase 1x). Remaining PF2e leftovers wait for the later PF2e *release*.
+
+- [ ] Sidebar **tools** (Attack Helper + Actions List + Budget Calculator specified). Candidate also: Spells / Afflictions / Actions **encyclopedia** (rules text, not the PC action menu)
 - [ ] Typed `effects[]` automation
 - [ ] Optional card-oriented play surfaces
 - [ ] Additional systems behind `system`
@@ -238,8 +262,9 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **After 1.0** — leftover PF2e goldens (companion user next) / companion editor / Remaster packs. Keep Summoner out of the CRB pack.
-2. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
+1. **Finish First Edition** (Phase 1x) — class spells-per-day tables, then remaining CRB catalog, then APG follow-through. Keep Summoner out of the CRB pack.
+2. **Sidebar tools** when the PF1e sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during pack/schema work.
+3. **Later release** — leftover PF2e (PC2 golden, companion editor, Remaster packs, PF2e panel i18n).
 
 Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
 
@@ -302,3 +327,6 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-19 | 1.0 stability: locale stamped on Save; all goldens still compute |
 | 2026-08-19 | PF2e Bard 5 golden (spontaneous occult); next is Cleric 5 |
 | 2026-08-19 | PF2e Cleric 5 golden (prepared divine); next is a companion user |
+| 2026-08-19 | PF2e Ranger 5 golden (nested wolf companion); next is a PC2 class |
+| 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release |
+| 2026-08-19 | Phase 1x batch 14: remaining CRB player races + size stamp; next is spells-per-day tables |

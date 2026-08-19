@@ -126,9 +126,9 @@ export {
 } from './classLookup'
 
 /**
- * Stamp race id + name from the CRB catalog.
- * Does not rewrite size, languages, or ability scores.
- * Unknown id clears `race.id` and leaves the typed name.
+ * Stamp race id, name, and catalog size from the CRB catalog.
+ * Does not rewrite languages or ability scores.
+ * Unknown id clears `race.id` and leaves the typed name and size.
  */
 export function applyCrbRace(identity: Identity, id: string | null): Identity {
   const found = lookupCrbRace(id)
@@ -140,6 +140,7 @@ export function applyCrbRace(identity: Identity, id: string | null): Identity {
   }
   return {
     ...identity,
+    size: found.size ?? identity.size,
     race: {
       id: found.id,
       name: found.name,

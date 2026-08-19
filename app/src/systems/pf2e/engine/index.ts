@@ -1,4 +1,5 @@
 export { compute, computeCharacter } from './compute'
+export { computeCompanion, companionAsComputeInput } from './companion'
 export { proficiencyBonus } from './proficiency'
 export { attributeModifiers } from './attributes'
 export { isOverridden } from './overrides'

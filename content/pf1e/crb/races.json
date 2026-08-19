@@ -1,7 +1,44 @@
 [
   {
+    "id": "race.dwarf",
+    "name": "Dwarf",
+    "size": "medium",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "race.elf",
+    "name": "Elf",
+    "size": "medium",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "race.gnome",
+    "name": "Gnome",
+    "size": "small",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "race.half-elf",
+    "name": "Half-Elf",
+    "size": "medium",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "race.half-orc",
+    "name": "Half-Orc",
+    "size": "medium",
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "race.halfling",
+    "name": "Halfling",
+    "size": "small",
+    "source": { "book": "CRB" }
+  },
+  {
     "id": "race.human",
     "name": "Human",
+    "size": "medium",
     "source": { "book": "CRB" }
   }
 ]

@@ -77,7 +77,7 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 
 ## Later slices (not this change)
 
-None for 1.0 APG mechanics. Spanish UI lives in `app/src/locales/es.json`, not this pack. Auto-applied evolutions and a Summoner spell list wait.
+Auto-applied evolutions and a Summoner spell list wait for the First Edition finish (roadmap Phase 1x), not a PF2e increment. Spanish UI lives in `app/src/locales/es.json`, not this pack.
 
 ---
 
@@ -90,3 +90,4 @@ None for 1.0 APG mechanics. Spanish UI lives in `app/src/locales/es.json`, not t
 | 2026-08-19 | Slice 3: Synthesist golden (Half-Elf Radiant Striker) |
 | 2026-08-19 | Spanish UI catalog landed outside this pack (`es.json`) |
 | 2026-08-19 | 1.0 stability; this pack unchanged |
+| 2026-08-19 | Summoner spell catalog / other APG classes sequenced in the First Edition finish, not leftover PF2e |

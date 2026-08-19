@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–13 landed (Batch 7 last). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–14 landed (Batch 14 is 1x fill-out). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -31,7 +31,7 @@ Resolver rule (locked): missing catalog id → treat as **custom**; isolate to t
 
 Order is CRB character-build order, not encyclopedia order. Sidebar tools stay out. **Two mechanics per PR** — do not start the following pair in the same change.
 
-**How to pick the next PR:** take the first row whose status is **Next**. Engine-owned rows review formulas and UI honesty; catalog rows add ids. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here. The 0.9 character-basics queue below is complete; remaining work is outside this table.
+**How to pick the next PR:** take the first row whose status is **Next**. Engine-owned rows review formulas and UI honesty; catalog rows add ids. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here. The 0.9 character-basics queue is complete; 1x fill-out continues after that table.
 
 | Batch | Mechanics | Why this pair | Kind | Status |
 | --- | --- | --- | --- | --- |
@@ -48,8 +48,9 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **11** | Remaining 9 CRB classes (progressions + class skills) | Same catalog row as Fighter/Wizard; Identity select already lists `CRB_CLASSES` | Catalog | Done |
 | **12** | Feats on the three goldens | Documentary feat ids; Combat math stays typed | Catalog | Done |
 | **13** | Spell metadata on the goldens | Documentary spell ids; slots/DCs/prepared stay typed | Catalog | Done |
+| **14** | Remaining CRB player races; stamp catalog size | Identity already lists `CRB_RACES`; Gnome/Halfling are Small; ability adjustments stay typed | Catalog | Done |
 
-The 0.9 character-basics write-ups are in §4. Remaining work after this table is in [§6](#6-recommended-upcoming-work).
+The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Remaining work after this table is in [§6](#6-recommended-upcoming-work).
 
 ---
 
@@ -60,7 +61,7 @@ content/pf1e/crb/
   README.md          # license / what is in this folder
   pack.json          # manifest + which batches have landed
   classes.json       # HD/BAB/saves + class skills + skill points (11 CRB base classes)
-  races.json         # race id + name (batch 8: human)
+  races.json         # race id + name + size (batch 8 Human; batch 14 remaining CRB player races)
   items.json         # weapon/armor/gear ids (batch 10: golden rows only)
   feats.json         # feat id + name + category (batch 12: golden rows only)
   spells.json        # spell id + name + spellLevel (batch 13: golden rows only)
@@ -195,7 +196,7 @@ applyCrbRace(identity, id) → Identity
 ```
 
 - Known class id → fill `class` ref, `hitDie`, `babProgression`, `saves`, `skillPointsPerLevel`. Leave `levels` and favored-class totals alone. Identity also **stamps** class-skill checkboxes from the union of catalog lists (`stampClassSkills`). Ranks are not spent.
-- Known race id → fill `race` id, name, and source. Do **not** rewrite size or ability scores.
+- Known race id → fill `race` id, name, and source. Stamp `identity.size` when the catalog row has `size` (batch 14). Do **not** rewrite ability scores or languages.
 - Unknown or empty id → `null` / custom (`class.id` or `race.id` cleared). Do not throw.
 - Load of an existing sheet **does not** re-apply the catalog (the saved row is authoritative). Apply is a UI action when the player picks a class or race.
 
@@ -364,7 +365,7 @@ CMB and CMD use a **special size modifier** with the **opposite sign** of that A
 
 **Verdict:** The published Fine–Colossal row matches the engine. Empty-sheet Small is AC 11 / attack +1 / CMB −1 / CMD 9; Large is the inverse on those combat numbers.
 
-**Gaps:** Size stays on `identity.size` (Human goldens are Medium; batch 8 does not stamp size). Stealth/Fly size skill modifiers stay player-typed (PF1e design §14). Quadruped / powerful-build carry is batch 6 out-of-scope.
+**Gaps:** Size stays on `identity.size` (Human goldens are Medium; batch 14 stamps catalog size on pick). Stealth/Fly size skill modifiers stay player-typed (PF1e design §14). Quadruped / powerful-build carry is batch 6 out-of-scope.
 
 **Pack slice:** none (engine-owned).
 
@@ -444,13 +445,13 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 | --- | --- | --- |
 | Pack | `content/pf1e/crb/races.json` | One row: `race.human` / Human / source CRB |
 | Lookup | `lookupCrbRace` | Unknown or empty id → `null` (custom). Never throws |
-| Apply | `applyCrbRace` | Stamps `identity.race` id, name, and source. Does **not** rewrite size or languages |
+| Apply | `applyCrbRace` | Stamps `identity.race` id, name, and source. Batch 8 did **not** rewrite size; batch 14 later stamps catalog size |
 | UI | Identity Race select | Human or Custom, plus a typed name |
 | Goldens | All three PF1e goldens | Already stored `race.human`; Load does not re-apply the catalog |
 
 **Verdict:** The golden id resolves. Custom races stay a free name with `id` cleared.
 
-**Gaps:** Other CRB races; extra feat / extra skill rank / bonus language as catalog traits.
+**Gaps:** Other CRB races and size stamp wait for batch 14; extra feat / extra skill rank / bonus language as catalog traits.
 
 **Pack slice:** Human only.
 
@@ -466,7 +467,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** none beyond the Human row.
 
-**Tests:** Applying `race.human` leaves size and ability scores unchanged; unknown apply clears id and keeps the typed name.
+**Tests:** Applying `race.human` leaves ability scores unchanged; unknown apply clears id and keeps the typed name. Size stamp is batch 14.
 
 ---
 
@@ -688,6 +689,44 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 14 — two mechanics
+
+### 4.27 Remaining CRB player races
+
+**CRB (player-facing):** The Core Rulebook player races are Dwarf, Elf, Gnome, Half-Elf, Half-Orc, Halfling, and Human. Ability adjustments and languages are chosen at creation; this batch does not write those scores.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `content/pf1e/crb/races.json` | Seven rows: id, name, size, source CRB |
+| Lookup | `lookupCrbRace` | Unknown or empty id → `null` (custom). Never throws |
+| Apply | `applyCrbRace` | Stamps race id, name, source, and catalog size. Does **not** rewrite languages, speeds, or ability scores |
+| UI | Identity Race select | Lists `CRB_RACES` or Custom, plus a typed name |
+| Goldens | PF1e Fighter/Wizard/multiclass | Stay `race.human`. Synthesist stays custom Half-Elf (`id` null) |
+
+**Verdict:** Catalog names are generic race labels. Custom races stay a free name with `id` cleared. Half-Elf catalog id does **not** grant Human extra skill ranks.
+
+**Gaps:** Racial ability adjustments, languages, speeds, weapon familiarity, extra feat. Do not auto-apply racial +2.
+
+**Pack slice:** six remaining CRB player races (Human already existed).
+
+**Tests:** Catalog lists seven ids; unknown id (`race.tiefling`) is null; Synthesist golden stays custom.
+
+### 4.28 Race size stamp
+
+**CRB (player-facing):** Gnome and Halfling are **Small**. The other CRB player races are **Medium**. Size already feeds AC/attack, CMB/CMD, and carry (batch 5).
+
+**App today / this batch:** `applyCrbRace` writes `identity.size` from the catalog row. The player can still change size afterward. Ability scores stay typed. Goldens stay Medium.
+
+**Gaps:** Size skill modifiers (Stealth/Fly) stay player-typed.
+
+**Pack slice:** optional `size` on each race row (Human included).
+
+**Tests:** Gnome/Halfling apply stamps `small`; Human apply stamps `medium` without changing scores; goldens remain Medium.
+
+---
+
 ## Batch 7 — two mechanics
 
 ### 4.25 Spell DC
@@ -740,9 +779,9 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** leftover PF2e goldens (companion user next; Bard 5 and Cleric 5 landed) / companion. 1.0 landed. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
+**Next product work:** class spells-per-day tables, then remaining catalog rows, then APG follow-through. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -775,3 +814,4 @@ The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the ne
 | 2026-08-19 | Synthesist golden landed in fixtures; this folder stays CRB-only |
 | 2026-08-19 | Spanish UI catalog landed; this folder stays English mechanics-only names |
 | 2026-08-19 | 1.0 stability; this folder stays CRB-only |
+| 2026-08-19 | Batch 14: remaining CRB player races + size stamp; ability adjustments stay typed; next is spells-per-day tables |
