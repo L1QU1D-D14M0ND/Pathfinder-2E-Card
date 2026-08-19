@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "system": "pf1e",
+  "meta": {
+    "createdAt": "2026-08-19T00:00:00.000Z",
+    "updatedAt": "2026-08-19T00:00:00.000Z",
+    "appVersion": "0.0.0",
+    "locale": "en",
+    "characterId": "golden-pf1e-synthesist-5"
+  },
+  "identity": {
+    "characterName": "Radiant Striker",
+    "playerName": "Fixture",
+    "race": { "id": null, "name": "Half-Elf" },
+    "size": "medium",
+    "alignment": "chaotic good",
+    "deity": "",
+    "xp": 10000,
+    "languages": [
+      { "id": null, "name": "Common" },
+      { "id": null, "name": "Elven" }
+    ]
+  },
+  "classes": [
+    {
+      "id": "class-row-summoner",
+      "class": { "id": "class.summoner", "name": "Summoner", "source": { "book": "APG" } },
+      "levels": 5,
+      "hitDie": 8,
+      "babProgression": "threeQuarter",
+      "saves": { "fort": "poor", "ref": "poor", "will": "good" },
+      "skillPointsPerLevel": 2,
+      "archetype": { "id": "archetype.synthesist", "name": "Synthesist", "source": { "book": "APG" } },
+      "favored": { "hp": 5, "skillRanks": 0 },
+      "notes": "Half-Elf favored-class summon-time bonus is notes only; it is not auto-applied."
+    }
+  ],
+  "abilities": {
+    "str": { "score": 7 },
+    "dex": { "score": 10 },
+    "con": { "score": 13 },
+    "int": { "score": 14 },
+    "wis": { "score": 14 },
+    "cha": { "score": 20 }
+  },
+  "vitals": {
+    "hpRolled": [8, 5, 5, 5, 5],
+    "currentHp": 39,
+    "tempHp": 0,
+    "nonlethal": 0,
+    "speeds": [
+      { "kind": "land", "feet": 30 },
+      { "kind": "fly", "feet": 30, "notes": "Typed; Flight evolution does not write this." }
+    ]
+  },
+  "armorClass": {
+    "armorBonus": 4,
+    "shieldBonus": 0,
+    "natural": 4,
+    "deflection": 0,
+    "dodge": 0,
+    "other": 0,
+    "maxDex": null,
+    "armorCheckPenalty": 0,
+    "notes": "Fused: Mage Armor +4 and natural +4 typed. Evolutions do not write AC."
+  },
+  "combat": {
+    "initiativeMisc": 0,
+    "meleeAttackMisc": 0,
+    "rangedAttackMisc": 0,
+    "cmbMisc": 0,
+    "cmdMisc": 0,
+    "fortMisc": 0,
+    "refMisc": 0,
+    "willMisc": 0
+  },
+  "skills": [
+    { "key": "acrobatics", "name": "Acrobatics", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "appraise", "name": "Appraise", "ability": "int", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "bluff", "name": "Bluff", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "climb", "name": "Climb", "ability": "str", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "diplomacy", "name": "Diplomacy", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "disable-device", "name": "Disable Device", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "disguise", "name": "Disguise", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "escape-artist", "name": "Escape Artist", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "fly", "name": "Fly", "ability": "dex", "ranks": 5, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "handle-animal", "name": "Handle Animal", "ability": "cha", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "heal", "name": "Heal", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "intimidate", "name": "Intimidate", "ability": "cha", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "linguistics", "name": "Linguistics", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "perception", "name": "Perception", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "ride", "name": "Ride", "ability": "dex", "ranks": 0, "classSkill": true, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "sense-motive", "name": "Sense Motive", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "sleight-of-hand", "name": "Sleight of Hand", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "spellcraft", "name": "Spellcraft", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "stealth", "name": "Stealth", "ability": "dex", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "survival", "name": "Survival", "ability": "wis", "ranks": 0, "classSkill": false, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "swim", "name": "Swim", "ability": "str", "ranks": 0, "classSkill": false, "armorPenaltyApplies": true, "misc": 0 },
+    { "key": "use-magic-device", "name": "Use Magic Device", "ability": "cha", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-arcana", "name": "Knowledge (arcana)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-dungeoneering", "name": "Knowledge (dungeoneering)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-engineering", "name": "Knowledge (engineering)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-geography", "name": "Knowledge (geography)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-history", "name": "Knowledge (history)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-local", "name": "Knowledge (local)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nature", "name": "Knowledge (nature)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-nobility", "name": "Knowledge (nobility)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-planes", "name": "Knowledge (planes)", "ability": "int", "ranks": 5, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 },
+    { "key": "knowledge-religion", "name": "Knowledge (religion)", "ability": "int", "ranks": 0, "classSkill": true, "armorPenaltyApplies": false, "misc": 0 }
+  ],
+  "feats": [
+    {
+      "id": "feat-improved-initiative",
+      "category": "combat",
+      "feat": { "id": "feat.improved-initiative", "name": "Improved Initiative" },
+      "levelGained": 1,
+      "summary": "Not auto-applied; initiativeMisc stays 0."
+    },
+    {
+      "id": "feat-extra-evolution",
+      "category": "general",
+      "feat": { "id": null, "name": "Extra Evolution" },
+      "levelGained": 3,
+      "summary": "Documentary. Evolution point budget is not tracked."
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-fused-eidolon",
+      "feature": { "id": null, "name": "Fused Eidolon" },
+      "levelGained": 1,
+      "summary": "Synthesist overlay is the fused companion row. Not a nested second sheet."
+    }
+  ],
+  "attacks": [
+    {
+      "id": "atk-claws",
+      "name": "Claws",
+      "attackType": "melee",
+      "itemId": null,
+      "attackAbility": "str",
+      "damageAbility": "str",
+      "damageDice": "1d4",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "miscAttack": 0,
+      "miscDamage": 0
+    },
+    {
+      "id": "atk-bite",
+      "name": "Bite",
+      "attackType": "melee",
+      "itemId": null,
+      "attackAbility": "str",
+      "damageAbility": "str",
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "miscAttack": 0,
+      "miscDamage": 0
+    }
+  ],
+  "spellcasting": [
+    {
+      "id": "cast-summoner",
+      "name": "Summoner",
+      "ability": "cha",
+      "classRowId": "class-row-summoner",
+      "casterLevelOverride": null,
+      "slots": [
+        { "spellLevel": 1, "max": 6, "remaining": 5 },
+        { "spellLevel": 2, "max": 3, "remaining": 3 }
+      ],
+      "cantrips": [
+        {
+          "id": "spell-detect-magic",
+          "spell": { "id": "spell.detect-magic", "name": "Detect Magic" },
+          "spellLevel": 0,
+          "prepared": true
+        },
+        {
+          "id": "spell-light",
+          "spell": { "id": "spell.light", "name": "Light" },
+          "spellLevel": 0,
+          "prepared": true
+        }
+      ],
+      "spells": [
+        {
+          "id": "spell-mage-armor",
+          "spell": { "id": null, "name": "Mage Armor" },
+          "spellLevel": 1,
+          "prepared": true
+        },
+        {
+          "id": "spell-shield",
+          "spell": { "id": null, "name": "Shield" },
+          "spellLevel": 1,
+          "prepared": true
+        },
+        {
+          "id": "spell-rejuvenate-eidolon-lesser",
+          "spell": { "id": null, "name": "Rejuvenate Eidolon, Lesser" },
+          "spellLevel": 1,
+          "prepared": true
+        },
+        {
+          "id": "spell-summon-eidolon",
+          "spell": { "id": null, "name": "Summon Eidolon" },
+          "spellLevel": 2,
+          "prepared": true
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "currency": { "cp": 0, "sp": 0, "gp": 50, "pp": 0 },
+    "items": [
+      {
+        "id": "item-dagger",
+        "item": { "id": "weapon.dagger", "name": "Dagger" },
+        "quantity": 1,
+        "pounds": 1,
+        "location": "carried",
+        "weapon": {
+          "damageDice": "1d4",
+          "damageType": "piercing",
+          "critRange": 19,
+          "critMultiplier": 2,
+          "rangeFeet": 10
+        }
+      }
+    ],
+    "notes": "Civilian dagger only. Natural attacks live on the Attacks tab."
+  },
+  "companions": [
+    {
+      "id": "companion-eidolon",
+      "kind": "eidolon",
+      "name": "Radiant Suit",
+      "fused": {
+        "active": true,
+        "str": 18,
+        "dex": 16,
+        "con": 13,
+        "costumeHp": 39
+      },
+      "evolutions": [
+        {
+          "id": "evo-claws",
+          "evolution": { "id": "evolution.claws", "name": "Claws", "source": { "book": "APG" } },
+          "notes": "Name stamp only. Claw attack row is typed."
+        },
+        {
+          "id": "evo-bite",
+          "evolution": { "id": "evolution.bite", "name": "Bite", "source": { "book": "APG" } },
+          "notes": "Name stamp only. Bite attack row is typed."
+        },
+        {
+          "id": "evo-ability-increase",
+          "evolution": { "id": "evolution.ability-increase", "name": "Ability Increase", "source": { "book": "APG" } },
+          "notes": "Does not write fused STR."
+        },
+        {
+          "id": "evo-improved-natural-armor",
+          "evolution": { "id": "evolution.improved-natural-armor", "name": "Improved Natural Armor", "source": { "book": "APG" } },
+          "notes": "Does not write armorClass.natural."
+        },
+        {
+          "id": "evo-flight",
+          "evolution": { "id": "evolution.flight", "name": "Flight", "source": { "book": "APG" } },
+          "notes": "Does not write vitals.speeds."
+        },
+        {
+          "id": "evo-pounce",
+          "evolution": { "id": null, "name": "Pounce" },
+          "notes": "Typed custom name. Not in the APG name catalog."
+        }
+      ],
+      "notes": "Quadruped fused overlay typed at Summoner 5. Evolutions do not write scores, HP, AC, or attacks."
+    }
+  ],
+  "conditions": [],
+  "play": { "dailyResources": [] },
+  "notes": {
+    "appearance": "Golden-test fused Synthesist (Radiant Striker).",
+    "personality": "",
+    "campaign": "",
+    "other": "25-point Fragile Flower array with Half-Elf +2 Cha typed into 20. Race is custom (Human catalog only). Fused STR 18 / DEX 16 / CON 13 and costume HP 39 are typed overlay; pilot HD max stays 38. Summoner 5 slots 4/2 + CHA 20 bonus 2/1 = 6/3. Mage Armor and natural armor are Combat inputs. Evolutions are documentary."
+  },
+  "overrides": {},
+  "extensions": {}
+}

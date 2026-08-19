@@ -75,9 +75,9 @@ Do not scrape third-party SRD sites into `content/` even after that PR. Curate b
 
 ## 6. 1.0 APG pack
 
-Slice 2 landed: `content/pf1e/apg/` with documentary evolution **names** and a fused STR/DEX/CON overlay + costume HP. **Never** `class.summoner` inside `content/pf1e/crb/`.
+Slice 2 landed: `content/pf1e/apg/` with documentary evolution **names** and a fused STR/DEX/CON overlay + costume HP. Synthesist golden landed. **Never** `class.summoner` inside `content/pf1e/crb/`.
 
-- Next slice: Synthesist golden. Apply does not auto-write fused scores or evolution math.
+- Next: Spanish. Apply does not auto-write fused scores or evolution math.
 - Evolution and eidolon **rules text** wait for the OGL increment in §4.
 - Magical Child / other APG classes stay out until a later pack slice.
 
@@ -96,3 +96,4 @@ No Remaster encyclopedia in this review. ORC import remains later (ADR 0003). PF
 | 2026-08-18 | First review. CRB pack is mechanics-only; OGL notice deferred until rules text; 1.0 APG pack same bar |
 | 2026-08-18 | APG slice 1 landed (Summoner tags + Synthesist name) |
 | 2026-08-19 | APG slice 2: documentary evolution names + fused overlay |
+| 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker) |

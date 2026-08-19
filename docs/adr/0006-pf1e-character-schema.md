@@ -33,7 +33,7 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 - Iterative attacks follow CRB: extra attacks when BAB ≥ 6, in −5 steps, maximum four from BAB. Fighter 5 is a **single** +5 attack, not +5/+0.
 - Migrations required when PF1e `schemaVersion` increments.
 
-**Postscript (2026-08-19):** Optional `companions[]` `kind: eidolon` with `fused` overlay and documentary `evolutions[]` for 1.0 Synthesist. Does not bump `schemaVersion`. Evolutions do not write fused scores. Goldens omit the fields.
+**Postscript (2026-08-19):** Optional `companions[]` `kind: eidolon` with `fused` overlay and documentary `evolutions[]` for 1.0 Synthesist. Does not bump `schemaVersion`. Evolutions do not write fused scores. CRB goldens omit the fields; the Synthesist golden uses them.
 
 ## References
 
@@ -41,6 +41,7 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 - [`../../fixtures/characters/golden/pf1e/fighter-5.json`](../../fixtures/characters/golden/pf1e/fighter-5.json)
 - [`../../fixtures/characters/golden/pf1e/wizard-5.json`](../../fixtures/characters/golden/pf1e/wizard-5.json)
 - [`../../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json`](../../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json)
+- [`../../fixtures/characters/golden/pf1e/synthesist-5.json`](../../fixtures/characters/golden/pf1e/synthesist-5.json)
 - [`../pf1e-schema-design-notes.md`](../pf1e-schema-design-notes.md)
 - [`../pf1e-character-sheet-design.md`](../pf1e-character-sheet-design.md)
 - [`0002-character-schema.md`](0002-character-schema.md) — PF2e documents only

@@ -53,4 +53,4 @@ Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr
 
 Schemas: `../schemas/character.schema.json` (PF2e), `../schemas/pf1e/character.schema.json` (PF1e)
 
-Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e), `../fixtures/characters/golden/pf1e/wizard-5.json` (PF1e), `../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json` (PF1e)
+Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e), `../fixtures/characters/golden/pf1e/wizard-5.json` (PF1e), `../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json` (PF1e), `../fixtures/characters/golden/pf1e/synthesist-5.json` (PF1e Synthesist)

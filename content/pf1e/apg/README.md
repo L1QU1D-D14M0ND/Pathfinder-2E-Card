@@ -11,4 +11,4 @@ Curated **mechanics-only** data for the PF1e sheet. Not a copy of the Advanced P
 
 **License:** app is MIT. This folder is **mechanics-only** (ids, names, numbers). No Product Identity, no class flavor, no eidolon or spell text. OGL 1.0a / Section 15 is **not** attached until a later increment ships Open Game Content prose. See [`docs/content-licensing.md`](../../../docs/content-licensing.md) and [ADR 0007](../../../docs/adr/0007-content-licensing.md).
 
-See [`docs/pf1e-apg-pack-design.md`](../../../docs/pf1e-apg-pack-design.md). **Next:** Synthesist golden (still not auto-applied evolutions). Spanish is a separate 1.0 track.
+See [`docs/pf1e-apg-pack-design.md`](../../../docs/pf1e-apg-pack-design.md). **Next:** Spanish. Synthesist golden: [`fixtures/characters/golden/pf1e/synthesist-5.json`](../../../fixtures/characters/golden/pf1e/synthesist-5.json). Evolutions are still not auto-applied.

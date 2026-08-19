@@ -161,6 +161,21 @@ describe('APG slice 1: Summoner catalog + Synthesist name', () => {
     expect(lookupCrbClass(fighter.classes[0]?.class.id)).not.toBeNull()
     expect(fighter.classes[0]?.class.id).not.toBe('class.summoner')
   })
+
+  it('loads the Synthesist golden from the APG pack, not CRB', () => {
+    const character = parseCharacterJson(
+      readRepoFile('fixtures/characters/golden/pf1e/synthesist-5.json'),
+    )
+    expect(lookupCrbClass(character.classes[0]?.class.id)).toBeNull()
+    expect(lookupApgClass(character.classes[0]?.class.id)?.id).toBe(
+      'class.summoner',
+    )
+    expect(lookupApgArchetype(character.classes[0]?.archetype?.id)?.id).toBe(
+      'archetype.synthesist',
+    )
+    expect(character.companions[0]?.kind).toBe('eidolon')
+    expect(character.companions[0]?.fused?.active).toBe(true)
+  })
 })
 
 describe('APG slice 2: documentary evolutions + fused overlay', () => {

@@ -1,6 +1,6 @@
 # Pathfinder First Edition — Character sheet (system spec)
 
-**Status:** System specification locked (ADR 0003). PF1e **0.9 bar landed**. **1.0** Synthesist in progress (APG slice 2).  
+**Status:** System specification locked (ADR 0003). PF1e **0.9 bar landed**. **1.0** Synthesist golden landed; Spanish remains.  
 **Parent:** [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md)  
 **Schema:** [ADR 0006](adr/0006-pf1e-character-schema.md), [`pf1e-schema-design-notes.md`](pf1e-schema-design-notes.md), [`../schemas/pf1e/character.schema.json`](../schemas/pf1e/character.schema.json)  
 **Priority:** **First** system to take to a playable 0.9 bar (ahead of remaining PF2e work)
@@ -162,7 +162,7 @@ Engineering fixtures. Assert core outputs. Until catalog batches 8–10 land, go
 
 Exact ability scores, feats, and spell picks are chosen when writing the fixture. Roles above stay covered.
 
-Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 5 + companion, prestige smoke test. **1.0 required:** Synthesist Summoner golden.
+Optional later (not 0.9): Cleric 5 (domains/channel as daily resources), Ranger 5 + companion, prestige smoke test. **1.0 Synthesist golden:** landed (`synthesist-5.json`).
 
 ---
 
@@ -172,9 +172,9 @@ Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Re
 
 Batch 1–13 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed). Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
 
-License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **Next:** Synthesist golden ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish is a separate 1.0 track.
+License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **Next:** Spanish ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Synthesist golden landed.
 
-**1.0 (not this CRB pack):** Playable APG Synthesist Summoner. Do not add `class.summoner` to `content/pf1e/crb/`. Slice 2 landed: evolution names + fused overlay.
+**1.0 (not this CRB pack):** Playable APG Synthesist Summoner. Do not add `class.summoner` to `content/pf1e/crb/`. Slice 3 landed: Synthesist golden.
 
 ---
 
@@ -216,3 +216,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-18 | APG slice 1: Summoner catalog + Synthesist name. Next is evolutions + fused overlay. |
 | 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; 1.0 in progress. |
 | 2026-08-19 | APG slice 2: documentary evolutions + fused overlay. Next is Synthesist golden. |
+| 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker). Next is Spanish. |

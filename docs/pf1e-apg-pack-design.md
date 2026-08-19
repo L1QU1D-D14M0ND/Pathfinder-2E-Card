@@ -1,9 +1,10 @@
 # PF1e Advanced Player’s Guide pack (1.0 Synthesist)
 
-**Status:** Slice 2 landed (documentary evolution names + fused overlay). **Next:** Synthesist golden. Spanish is a separate 1.0 track.  
+**Status:** Synthesist golden landed (Half-Elf Radiant Striker). **Next:** Spanish (`es`) is a separate 1.0 track.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) decisions 16 and 20, [ADR 0007](adr/0007-content-licensing.md)  
 **On disk:** [`../content/pf1e/apg/`](../content/pf1e/apg/)  
-**Code:** `app/src/systems/pf1e/content/apgPack.ts` (apply reuses the CRB class path)
+**Code:** `app/src/systems/pf1e/content/apgPack.ts` (apply reuses the CRB class path)  
+**Golden:** [`../fixtures/characters/golden/pf1e/synthesist-5.json`](../fixtures/characters/golden/pf1e/synthesist-5.json)
 
 This pack is **not** the CRB folder. **Never** add `class.summoner` to `content/pf1e/crb/`.
 
@@ -58,10 +59,25 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 
 ---
 
+## Slice 3 — Synthesist golden
+
+**Pairing:** One table fixture that uses slice 1 + 2 together.
+
+**In this slice:**
+
+| Piece | What landed |
+| --- | --- |
+| Fixture | `fixtures/characters/golden/pf1e/synthesist-5.json` — Half-Elf Radiant Striker, Summoner 5 Synthesist, fused overlay on, documentary evolutions |
+| Honesty | Race is custom Half-Elf (Human catalog only). Fused STR/DEX/CON and costume HP are typed. Ability Increase / Flight / Improved Natural Armor do not write scores, speeds, or AC. Pounce is a custom name. Summoner spells are typed rows (no APG spell catalog). Summoner stays out of CRB |
+| Tests | `synthesist5.golden.test.ts` plus schema Load and APG pack assertions |
+
+**Out:** Auto-applied evolutions, Summoner spell list, Magical Child, Spanish.
+
+---
+
 ## Later slices (not this change)
 
-1. Synthesist golden (Half-Elf Radiant Striker is the intended first table character when that increment starts).
-2. Spanish (`es`) catalog — 1.0, independent of remaining Synthesist math.
+1. Spanish (`es`) catalog — 1.0, independent of remaining Synthesist math.
 
 ---
 
@@ -71,3 +87,4 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 | --- | --- |
 | 2026-08-18 | Slice 1: Summoner catalog + Synthesist name stamp; fused overlay waits |
 | 2026-08-19 | Slice 2: documentary evolution names + fused STR/DEX/CON overlay and costume HP |
+| 2026-08-19 | Slice 3: Synthesist golden (Half-Elf Radiant Striker) |

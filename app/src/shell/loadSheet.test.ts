@@ -40,6 +40,20 @@ describe('parseLoadedSheet', () => {
     }
   })
 
+  it('loads the PF1e Synthesist golden as pf1e', () => {
+    const loaded = parseLoadedSheet(
+      readRepoFile('fixtures/characters/golden/pf1e/synthesist-5.json'),
+    )
+    expect(loaded.system).toBe('pf1e')
+    if (loaded.system === 'pf1e') {
+      expect(loaded.character.classes[0]?.class.id).toBe('class.summoner')
+      expect(loaded.character.classes[0]?.archetype?.id).toBe(
+        'archetype.synthesist',
+      )
+      expect(loaded.character.companions[0]?.kind).toBe('eidolon')
+    }
+  })
+
   it('round-trips empty sheets for both systems', () => {
     const pf1e = parseLoadedSheet(serializePf1e(createPf1e()))
     const pf2e = parseLoadedSheet(serializePf2e(createPf2e()))
