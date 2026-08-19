@@ -2,7 +2,7 @@
 
 **TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
-**Current phase:** **1.0 in progress** — APG slice 2 (evolution names + fused overlay). **Next:** Synthesist golden. Spanish is a separate 1.0 track. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [APG pack](docs/pf1e-apg-pack-design.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
+**Current phase:** **1.0 landed** — Spanish UI catalog + playable APG Synthesist (Half-Elf Radiant Striker golden). PF2e panel literals remain English. Sidebar tools wait until the sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [APG pack](docs/pf1e-apg-pack-design.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
 
 The GitHub repository name is unchanged.
 
@@ -17,7 +17,7 @@ npm run dev
 - React + TypeScript + Vite
 - Save/Load `.json` (Ajv). Missing `system` loads as PF2e; Save writes `"system": "pf1e"` or `"pf2e"`
 - Layout: `app/src/shared` kernel, `app/src/shell` (chrome + empty Tools sidebar), `app/src/systems/pf1e`, `app/src/systems/pf2e`
-- PF1e martial + spell calc (Fighter 5, Wizard 5, and Fighter 2 / Wizard 3 goldens) and PF2e core calc engine (Fighter 5 and Wizard 5 goldens)
+- PF1e martial + spell calc (Fighter 5, Wizard 5, Fighter 2 / Wizard 3, and Synthesist 5 goldens) and PF2e core calc engine (Fighter 5, Wizard 5, and Bard 5 goldens)
 - Spreadsheet editors per system (PF1e: identity/classes, abilities, skills, combat, spells, inventory, play)
 - **Later:** **Attack Helper**, **Actions List**, and **Budget Calculator** sidebar tools after the sheet is ~90% done (no dice roller)
 
@@ -56,11 +56,13 @@ npm run dev
 - [`fixtures/characters/new-sheet.example.json`](fixtures/characters/new-sheet.example.json)
 - [`fixtures/characters/golden/fighter-5.json`](fixtures/characters/golden/fighter-5.json) — PF2e Fighter 5
 - [`fixtures/characters/golden/wizard-5.json`](fixtures/characters/golden/wizard-5.json) — PF2e Wizard 5
+- [`fixtures/characters/golden/bard-5.json`](fixtures/characters/golden/bard-5.json) — PF2e Bard 5 (spontaneous occult)
 - [`fixtures/characters/golden/pf1e/fighter-5.json`](fixtures/characters/golden/pf1e/fighter-5.json) — PF1e Fighter 5
 - [`fixtures/characters/golden/pf1e/wizard-5.json`](fixtures/characters/golden/pf1e/wizard-5.json) — PF1e Wizard 5
 - [`fixtures/characters/golden/pf1e/fighter-2-wizard-3.json`](fixtures/characters/golden/pf1e/fighter-2-wizard-3.json) — PF1e Fighter 2 / Wizard 3
 - [`fixtures/characters/golden/pf1e/synthesist-5.json`](fixtures/characters/golden/pf1e/synthesist-5.json) — PF1e Summoner 5 Synthesist (Radiant Striker)
-- [`content/pf1e/crb/`](content/pf1e/crb/) — PF1e CRB pack (batches 1–2 landed; next review AC/CMB — see pack design §6)
+- [`content/pf1e/crb/`](content/pf1e/crb/) — PF1e CRB pack (batches 1–13 complete; mechanics-only)
+- [`content/pf1e/apg/`](content/pf1e/apg/) — PF1e APG pack (Summoner / Synthesist; mechanics-only)
 
 ## License
 

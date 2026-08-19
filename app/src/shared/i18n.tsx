@@ -90,8 +90,16 @@ interface I18nContextValue {
 
 const I18nContext = createContext<I18nContextValue | null>(null)
 
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(readStoredLocale)
+export function I18nProvider({
+  children,
+  initialLocale,
+}: {
+  children: ReactNode
+  initialLocale?: Locale
+}) {
+  const [locale, setLocaleState] = useState<Locale>(
+    () => initialLocale ?? readStoredLocale(),
+  )
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next)
     writeStoredLocale(next)

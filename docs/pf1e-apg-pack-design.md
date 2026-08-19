@@ -1,6 +1,6 @@
 # PF1e Advanced Player’s Guide pack (1.0 Synthesist)
 
-**Status:** Synthesist golden landed (Half-Elf Radiant Striker). **Next:** Spanish (`es`) is a separate 1.0 track.  
+**Status:** Synthesist golden landed (Half-Elf Radiant Striker). Spanish UI catalog landed (`es.json`). **1.0 landed.**  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) decisions 16 and 20, [ADR 0007](adr/0007-content-licensing.md)  
 **On disk:** [`../content/pf1e/apg/`](../content/pf1e/apg/)  
 **Code:** `app/src/systems/pf1e/content/apgPack.ts` (apply reuses the CRB class path)  
@@ -77,7 +77,7 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 
 ## Later slices (not this change)
 
-1. Spanish (`es`) catalog — 1.0, independent of remaining Synthesist math.
+None for 1.0 APG mechanics. Spanish UI lives in `app/src/locales/es.json`, not this pack. Auto-applied evolutions and a Summoner spell list wait.
 
 ---
 
@@ -88,3 +88,5 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 | 2026-08-18 | Slice 1: Summoner catalog + Synthesist name stamp; fused overlay waits |
 | 2026-08-19 | Slice 2: documentary evolution names + fused STR/DEX/CON overlay and costume HP |
 | 2026-08-19 | Slice 3: Synthesist golden (Half-Elf Radiant Striker) |
+| 2026-08-19 | Spanish UI catalog landed outside this pack (`es.json`) |
+| 2026-08-19 | 1.0 stability; this pack unchanged |

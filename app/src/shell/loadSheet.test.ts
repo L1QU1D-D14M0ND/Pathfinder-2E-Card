@@ -17,6 +17,17 @@ describe('parseLoadedSheet', () => {
     }
   })
 
+  it('loads the PF2e Bard 5 golden as pf2e', () => {
+    const loaded = parseLoadedSheet(
+      readRepoFile('fixtures/characters/golden/bard-5.json'),
+    )
+    expect(loaded.system).toBe('pf2e')
+    if (loaded.system === 'pf2e') {
+      expect(loaded.character.identity.class.id).toBe('class.bard')
+      expect(loaded.character.spellcasting[0]?.castType).toBe('spontaneous')
+    }
+  })
+
   it('loads a PF1e golden as pf1e', () => {
     const loaded = parseLoadedSheet(
       readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),

@@ -742,7 +742,7 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** Spanish. Synthesist golden landed. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
+**Next product work:** leftover PF2e goldens (Cleric 5 next; Bard 5 landed) / companion. 1.0 landed. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 
@@ -773,3 +773,5 @@ The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the ne
 | 2026-08-19 | Pack `status` records batches 1–13 complete. Next product work is still APG overlay, not more CRB encyclopedia rows |
 | 2026-08-19 | APG slice 2 landed in the separate pack; this folder stays CRB-only |
 | 2026-08-19 | Synthesist golden landed in fixtures; this folder stays CRB-only |
+| 2026-08-19 | Spanish UI catalog landed; this folder stays English mechanics-only names |
+| 2026-08-19 | 1.0 stability; this folder stays CRB-only |

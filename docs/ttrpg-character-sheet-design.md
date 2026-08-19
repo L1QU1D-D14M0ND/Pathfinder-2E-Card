@@ -1,7 +1,7 @@
 # TTRPG Character Sheet — Product design
 
 **Status:** Product direction lock (ADR 0003) — 2026-08-18  
-**Implementation:** PF1e **0.9 bar landed**. **1.0 in progress** — Synthesist golden landed (Half-Elf Radiant Striker). **Next:** Spanish ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
+**Implementation:** PF1e **0.9 bar landed**. **1.0 landed** — Synthesist golden + Spanish UI catalog + stability. PF2e panel literals remain. Sidebar tools wait until the sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
 **Repo context:** `Pathfinder-2E-Card` (name unchanged)  
 **Audience:** Product / engineering  
@@ -249,7 +249,7 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 - **Core calcs** for 0.9/1.0 with expansion hooks.
 - **No** campaign house-rule flags, dice, cloud, or VTT.
 - **English in 0.9**, **Spanish in 1.0**.
-- Later: leftover PF2e catalog/goldens, sidebar tools, more systems.
+- Later: leftover PF2e catalog/goldens (Bard 5 exists), sidebar tools, more systems.
 
 ---
 
@@ -273,3 +273,6 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-18 | Progress snapshot: PF1e 0.9 bar landed; 1.0 Synthesist in progress |
 | 2026-08-19 | APG slice 2: documentary evolutions + fused overlay |
 | 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker); next is Spanish |
+| 2026-08-19 | Spanish UI catalog (`es.json`); PF2e panel literals remain |
+| 2026-08-19 | 1.0 stability pass; next is leftover PF2e work |
+| 2026-08-19 | PF2e Bard 5 golden; next leftover is Cleric 5 |

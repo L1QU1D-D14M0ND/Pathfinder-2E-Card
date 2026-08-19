@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **Spanish** (`es.json` is still a stub). The Synthesist golden landed (Half-Elf Radiant Striker). APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–13 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is leftover **PF2e** work (Cleric 5 golden, companion editor, Remaster packs). **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5 golden landed (spontaneous occult). APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–13 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -24,7 +24,7 @@ The next **code** increment is **Spanish** (`es.json` is still a stub). The Synt
 | PF1e development priority; PF2e slice must not regress | ADR 0003 |
 | Existing Load files without `system` are PF2e | ADR 0003 |
 | One sheet; Save/Load `.json`; no library, dice, VTT, house-rule flags | ADR 0003 |
-| English 0.9 / Spanish 1.0; locale runtime + PF1e catalogs landed; `es.json` is a stub | ADR 0003 (T4′) |
+| English 0.9 / Spanish 1.0; locale runtime + PF1e catalogs landed; `es.json` covers chrome + PF1e | ADR 0003 (T4′) |
 | PF2e documents still validate against `schemas/character.schema.json` until a dedicated move is part of Phase M | ADR 0002 |
 | Core calcs only; unknown `effects[]` ignored | ADR 0003 |
 | Sidebar host when a sheet is loaded; tools TBD; empty host OK for 0.9 | ADR 0005 |
@@ -42,8 +42,8 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Schema | PF2e `character.schema.json`; PF1e `schemas/pf1e/character.schema.json` |
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
-| Goldens | PF2e `fighter-5.json`, `wizard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
-| Content | `content/pf1e/crb/` batches 1–13. `content/pf1e/apg/` slice 2 plus Synthesist golden. Next: Spanish |
+| Goldens | PF2e `fighter-5.json`, `wizard-5.json`, `bard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
+| Content | `content/pf1e/crb/` batches 1–13. `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
 
 ---
 
@@ -124,11 +124,11 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-F — i18n
 
-`en.json` + `t(key)`; `character.meta.locale`; no `es` yet.
+`en.json` + `es.json` + `t(key)`; `character.meta.locale`. PF2e panel literals remain.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 2 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). **Next: Spanish.** Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–13 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 2 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish UI catalog landed. 1.0 stability landed (goldens still compute; Save stamps `meta.locale`). Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -224,7 +224,8 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] APG slice 1: Summoner catalog + Synthesist name ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md))
 - [x] Documentary evolution names + fused overlay
 - [x] Synthesist golden (Half-Elf Radiant Striker)
-- [ ] Spanish (`es`) catalog
+- [x] Spanish (`es`) catalog
+- [x] 1.0 stability pass
 
 ### PF1e 0.9 bar
 
@@ -232,7 +233,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] Wizard 5 golden
 - [x] Multiclass golden
 - [x] Editors for those domains (no familiar nested sheet)
-- [x] `en` catalog for shell chrome + PF1e panels; locale runtime; `es.json` stub (PF2e panel literals remain)
+- [x] `en` catalog for shell chrome + PF1e panels; locale runtime; `es.json` covers those keys (PF2e panel literals remain)
 - [x] PWA dist artifacts (`verify:pwa`); runtime offline is a manual `app/README.md` step
 - [x] PF2e Fighter 5 / Wizard 5 still pass
 - [x] Sidebar host may be empty; named tools not required
@@ -261,13 +262,15 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). Local `main` (0.9 bar + APG slice 1) is the publish tip.
 
-**Still sequenced (next code is Spanish):**
+**Still sequenced (1.0 landed; leftover PF2e next):**
 
 | Item | Disposition |
 | --- | --- |
 | Documentary evolution names + fused overlay | Landed (slice 2; evolutions not auto-applied) |
 | Synthesist golden | Landed (Half-Elf Radiant Striker) |
-| Spanish (`es`) catalog | **Next** (1.0) |
+| Spanish (`es`) catalog | Landed (chrome + PF1e panels; PF2e literals remain) |
+| 1.0 stability | Landed (goldens compute; Save stamps `meta.locale`) |
+| PF2e Bard 5 golden | Landed (spontaneous occult; signature spells typed) |
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Extract when those panels next change |
@@ -309,3 +312,6 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-19 | Architecture correction: locale runtime, system registry, pack schemas, PF1e i18n + a11y, jsdom tests. Next code is evolutions + fused overlay |
 | 2026-08-19 | APG slice 2: documentary evolutions + fused overlay; next is Synthesist golden |
 | 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker); next is Spanish |
+| 2026-08-19 | Spanish catalog (`es.json`) for chrome + PF1e panels; next is 1.0 stability |
+| 2026-08-19 | 1.0 stability: locale stamped on Save; all six goldens still compute |
+| 2026-08-19 | PF2e Bard 5 golden (spontaneous occult); next is Cleric 5 |

@@ -32,6 +32,30 @@ export function createSheet(system: SystemId): LoadedSheet {
   return { system: 'pf2e', character: pf2eModule.createEmpty() }
 }
 
+/** UI locale lives in localStorage; Save/draft copy it onto `meta.locale`. */
+export function stampSheetLocale(
+  sheet: LoadedSheet,
+  locale: string,
+): LoadedSheet {
+  if (sheet.character.meta.locale === locale) return sheet
+  if (sheet.system === 'pf1e') {
+    return {
+      system: 'pf1e',
+      character: {
+        ...sheet.character,
+        meta: { ...sheet.character.meta, locale },
+      },
+    }
+  }
+  return {
+    system: 'pf2e',
+    character: {
+      ...sheet.character,
+      meta: { ...sheet.character.meta, locale },
+    },
+  }
+}
+
 export function serializeSheet(sheet: LoadedSheet): string {
   return matchSheet(sheet, {
     pf1e: (character, module) => module.serialize(character),

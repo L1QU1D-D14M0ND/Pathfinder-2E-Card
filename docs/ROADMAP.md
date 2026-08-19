@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-19  
-**Current phase:** **1.0 in progress** — Synthesist golden landed (Half-Elf Radiant Striker). **Next code:** Spanish (`es.json` is still a stub). Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **1.0 landed** — Spanish catalog + playable Synthesist. PF2e panel literals remain in English. **Next code:** leftover PF2e goldens (Cleric 5, companion user, one PC2 class) / companion editor / Remaster packs. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
@@ -135,21 +135,21 @@ See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-hos
 
 ## Phase 1–2 leftover (PF2e) — deprioritized
 
-**Status:** Frozen relative to PF1e 0.9 (that bar has landed). Do not schedule ahead of remaining **1.0** Synthesist / Spanish work.
+**Status:** In progress after PF1e 1.0. Bard 5 golden landed; remaining §12 goldens wait.
 
 Already in the repo (kept):
 
 - [x] PF2e schema v1, types, factory, Ajv, `compute()` (HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides)
-- [x] Goldens: PF2e Fighter 5; Wizard 5
+- [x] Goldens: PF2e Fighter 5; Wizard 5; Bard 5
 - [x] Spreadsheet editors except companions
 - [x] Vitest + CI
 
 Not started (after PF1e 0.9):
 
-- [ ] PF2e goldens: Bard or Sorcerer 5; Cleric 5; companion user; one Player Core 2 class
+- [ ] PF2e goldens: Cleric 5; companion user; one Player Core 2 class
 - [ ] Companion nested-sheet editor
 - [ ] Override UI (engine works; no cell editor)
-- [x] English catalogs for chrome + PF1e panels; locale runtime exists; `es.json` is a stub. PF2e panel literals remain
+- [x] English catalogs for chrome + PF1e panels; locale runtime exists; `es.json` covers those keys. PF2e panel literals remain
 - [x] IndexedDB draft buffer
 - [x] PWA dist artifacts (`verify:pwa` after build). Runtime install/offline stays a manual [`app/README.md`](../app/README.md) step
 - [ ] Remaster + legacy content packs
@@ -168,10 +168,10 @@ Not started (after PF1e 0.9):
 
 ## Phase 4 — 1.0
 
-**Status:** In progress (Synthesist golden landed; Spanish remains)
+**Status:** Done (2026-08-19)
 
-- [ ] Spanish (`es`) locale catalog
-- [ ] Stability pass on the 0.9 bar (PF1e CRB goldens + PF2e slice); still core calcs only
+- [x] Spanish (`es`) locale catalog
+- [x] Stability pass on the 0.9 bar (PF1e CRB goldens + PF2e slice); still core calcs only
 - [x] APG pack scaffold + Summoner class catalog (HD/BAB/saves/class skills) — [`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)
 - [x] Synthesist documentary archetype stamp (name only; no fused math)
 - [x] Documentary evolution names
@@ -232,15 +232,14 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 | Conditions, hero points, daily resources | Yes | Yes | n/a |
 | Notes | Yes | Yes | n/a |
 | Overrides + Save/Load | Yes | Save/Load yes; override UI no | Overrides applied |
-| i18n catalogs (`en` → `es`) | n/a | Chrome `en.json`; PF2e panel literals remain | n/a |
+| i18n catalogs (`en` → `es`) | n/a | Chrome + PF1e `es.json`; PF2e panel literals remain | n/a |
 
 ---
 
 ## Recommended next work (in order)
 
-1. **1.0 remaining (next code)** — Spanish (`es`) catalog. Synthesist golden already landed. Keep Summoner out of the CRB pack.
-2. **Only then** leftover PF2e goldens / companion / Remaster packs.
-3. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
+1. **After 1.0** — leftover PF2e goldens (Cleric 5 next) / companion / Remaster packs. Keep Summoner out of the CRB pack.
+2. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
 Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
 
@@ -299,3 +298,6 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-19 | Pre-1.0 architecture: locale runtime, system registry, pack schemas, override maps, PF1e extract + a11y, jsdom tests. Next code is again evolutions + fused overlay |
 | 2026-08-19 | APG slice 2: documentary evolution names + fused overlay; next is Synthesist golden |
 | 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker); next is Spanish |
+| 2026-08-19 | Spanish catalog (`es.json`) for chrome + PF1e panels; PF2e panel literals remain |
+| 2026-08-19 | 1.0 stability: locale stamped on Save; all goldens still compute |
+| 2026-08-19 | PF2e Bard 5 golden (spontaneous occult); next is Cleric 5 |

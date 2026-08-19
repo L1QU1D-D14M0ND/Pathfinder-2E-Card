@@ -12,6 +12,7 @@ import {
   createSheet,
   downloadSheet,
   serializeSheet,
+  stampSheetLocale,
 } from './registry'
 import { NewSheetDialog } from './NewSheetDialog'
 import { RestoreDraftDialog } from './RestoreDraftDialog'
@@ -124,17 +125,21 @@ export default function App() {
     if (draftGate !== 'ready' || !autosave) return
     const handle = window.setTimeout(() => {
       try {
-        void writeDraft(serializeSheet(sheet))
+        void writeDraft(serializeSheet(stampSheetLocale(sheet, locale)))
       } catch {
         // Invalid in-memory sheet: keep the last good draft.
       }
     }, 400)
     return () => window.clearTimeout(handle)
-  }, [sheet, draftGate, autosave])
+  }, [sheet, draftGate, autosave, locale])
+
+  useEffect(() => {
+    setSheet((prev) => stampSheetLocale(prev, locale))
+  }, [locale])
 
   function onChooseNew(system: SystemId) {
     setNewOpen(false)
-    const next = createSheet(system)
+    const next = stampSheetLocale(createSheet(system), locale)
     commitSheet(
       next,
       t('shell.newCreated', { system: t(activeNameKey(system)) }),
@@ -158,7 +163,7 @@ export default function App() {
 
   function onSave() {
     try {
-      downloadSheet(sheet)
+      downloadSheet(stampSheetLocale(sheet, locale))
       setStatus(t('shell.saved'))
     } catch (err) {
       setStatus(
@@ -206,7 +211,10 @@ export default function App() {
               value={locale}
               onChange={(event) => {
                 const next = event.target.value
-                if (next === 'en' || next === 'es') setLocale(next)
+                if (next !== 'en' && next !== 'es') return
+                setLocale(next)
+                setSheet((prev) => stampSheetLocale(prev, next))
+                setAutosave(true)
               }}
             >
               {LOCALES.map((id) => (

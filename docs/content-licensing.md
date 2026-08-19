@@ -77,7 +77,7 @@ Do not scrape third-party SRD sites into `content/` even after that PR. Curate b
 
 Slice 2 landed: `content/pf1e/apg/` with documentary evolution **names** and a fused STR/DEX/CON overlay + costume HP. Synthesist golden landed. **Never** `class.summoner` inside `content/pf1e/crb/`.
 
-- Next: Spanish. Apply does not auto-write fused scores or evolution math.
+- 1.0 landed. Spanish UI catalog landed. Apply does not auto-write fused scores or evolution math.
 - Evolution and eidolon **rules text** wait for the OGL increment in §4.
 - Magical Child / other APG classes stay out until a later pack slice.
 
@@ -97,3 +97,5 @@ No Remaster encyclopedia in this review. ORC import remains later (ADR 0003). PF
 | 2026-08-18 | APG slice 1 landed (Summoner tags + Synthesist name) |
 | 2026-08-19 | APG slice 2: documentary evolution names + fused overlay |
 | 2026-08-19 | Synthesist golden (Half-Elf Radiant Striker) |
+| 2026-08-19 | Spanish UI catalog (`es.json`); pack still mechanics-only English names |
+| 2026-08-19 | 1.0 stability; pack still mechanics-only |

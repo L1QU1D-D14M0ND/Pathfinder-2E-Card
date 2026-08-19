@@ -1,0 +1,856 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "createdAt": "2026-08-19T12:00:00.000Z",
+    "updatedAt": "2026-08-19T12:00:00.000Z",
+    "preferredRuleset": "remaster",
+    "appVersion": "0.0.0",
+    "locale": "en"
+  },
+  "identity": {
+    "characterName": "Nim Voicewell",
+    "playerName": "Golden Test",
+    "level": 5,
+    "xp": 40,
+    "ancestry": {
+      "id": "ancestry.human",
+      "name": "Human",
+      "rulesetSource": "custom"
+    },
+    "heritage": {
+      "id": "heritage.versatile-human",
+      "name": "Versatile Human",
+      "rulesetSource": "custom"
+    },
+    "background": {
+      "id": "background.entertainer",
+      "name": "Entertainer",
+      "rulesetSource": "custom"
+    },
+    "class": {
+      "id": "class.bard",
+      "name": "Bard",
+      "rulesetSource": "custom"
+    },
+    "subclass": {
+      "id": "class.bard.maestro",
+      "name": "Maestro Muse",
+      "rulesetSource": "custom"
+    },
+    "archetypes": [],
+    "size": "medium",
+    "traits": [
+      "human",
+      "humanoid"
+    ],
+    "languages": [
+      {
+        "id": "language.common",
+        "name": "Common",
+        "rulesetSource": "custom"
+      },
+      {
+        "id": "language.elven",
+        "name": "Elven",
+        "rulesetSource": "custom"
+      }
+    ],
+    "deity": null,
+    "homeRegion": "",
+    "alignment": null,
+    "edicts": "Share stories that lift spirits.",
+    "anathema": ""
+  },
+  "attributes": {
+    "str": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "dex": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "dex",
+          "amount": 2,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "con": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "con",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "int": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "int",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "wis": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "wis",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "cha": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "cha",
+          "amount": 4,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    }
+  },
+  "proficiencies": {
+    "perception": {
+      "rank": "expert",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "fortitude": {
+      "rank": "trained",
+      "attribute": "con",
+      "modifiers": {}
+    },
+    "reflex": {
+      "rank": "trained",
+      "attribute": "dex",
+      "modifiers": {}
+    },
+    "will": {
+      "rank": "expert",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "classDC": {
+      "rank": "trained",
+      "attribute": "cha",
+      "modifiers": {}
+    },
+    "armor": {
+      "unarmored": "trained",
+      "light": "trained",
+      "medium": "untrained",
+      "heavy": "untrained"
+    },
+    "weapons": {
+      "unarmed": "trained",
+      "simple": "trained",
+      "martial": "trained",
+      "advanced": "untrained",
+      "specific": []
+    }
+  },
+  "vitals": {
+    "ancestryHp": 8,
+    "classHpPerLevel": 8,
+    "bonuses": [],
+    "currentHp": 53,
+    "temporaryHp": 0,
+    "dying": 0,
+    "wounded": 0,
+    "doomed": 0,
+    "resistances": [],
+    "immunities": [],
+    "weaknesses": [],
+    "speeds": [
+      {
+        "kind": "land",
+        "feet": 25
+      }
+    ],
+    "senses": []
+  },
+  "armorClass": {
+    "equippedArmorItemId": "item-leather",
+    "equippedShieldItemId": null,
+    "shieldRaised": false,
+    "dexCapOverride": null,
+    "modifiers": {},
+    "notes": ""
+  },
+  "skills": [
+    {
+      "key": "acrobatics",
+      "name": "Acrobatics",
+      "attribute": "dex",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "arcana",
+      "name": "Arcana",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "athletics",
+      "name": "Athletics",
+      "attribute": "str",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "crafting",
+      "name": "Crafting",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "deception",
+      "name": "Deception",
+      "attribute": "cha",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "diplomacy",
+      "name": "Diplomacy",
+      "attribute": "cha",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "intimidation",
+      "name": "Intimidation",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "medicine",
+      "name": "Medicine",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "nature",
+      "name": "Nature",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "occultism",
+      "name": "Occultism",
+      "attribute": "int",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "performance",
+      "name": "Performance",
+      "attribute": "cha",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "religion",
+      "name": "Religion",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "society",
+      "name": "Society",
+      "attribute": "int",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "stealth",
+      "name": "Stealth",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "survival",
+      "name": "Survival",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "thievery",
+      "name": "Thievery",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    }
+  ],
+  "feats": [
+    {
+      "id": "feat-lingering-composition",
+      "category": "class",
+      "feat": {
+        "id": "feat.lingering-composition",
+        "name": "Lingering Composition",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "traits": [],
+      "summary": "Focus spent to extend a composition.",
+      "effects": []
+    },
+    {
+      "id": "feat-reach-spell",
+      "category": "class",
+      "feat": {
+        "id": "feat.reach-spell",
+        "name": "Reach Spell",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "traits": [
+        "manipulate"
+      ],
+      "summary": "Increase a spell's range.",
+      "effects": []
+    },
+    {
+      "id": "feat-virtuosic-performer",
+      "category": "skill",
+      "feat": {
+        "id": "feat.virtuosic-performer",
+        "name": "Virtuosic Performer",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 2,
+      "traits": [],
+      "summary": "Bonus to one Performance style.",
+      "effects": []
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-occult-spellcasting",
+      "feature": {
+        "id": "feature.occult-spellcasting",
+        "name": "Occult Spellcasting",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "summary": "Spontaneous occult spells.",
+      "effects": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "action-cast",
+      "name": "Cast a Spell",
+      "actionType": "action",
+      "actionCost": null,
+      "traits": [
+        "concentrate",
+        "manipulate"
+      ],
+      "frequency": "",
+      "summary": "Cast a spontaneous spell.",
+      "sourceFeatId": null,
+      "effects": []
+    }
+  ],
+  "strikes": [
+    {
+      "id": "strike-shortbow",
+      "name": "Shortbow",
+      "strikeType": "ranged",
+      "weaponCategory": "martial",
+      "itemId": "item-shortbow",
+      "attackAttribute": "dex",
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "traits": [
+        "deadly-d10"
+      ],
+      "rangeFeet": 60,
+      "reload": "0",
+      "ammoItemId": null,
+      "modifiers": {},
+      "notes": ""
+    }
+  ],
+  "spellcasting": [
+    {
+      "id": "cast-bard",
+      "name": "Bard Spellcasting",
+      "tradition": "occult",
+      "castType": "spontaneous",
+      "attribute": "cha",
+      "proficiency": {
+        "rank": "trained",
+        "attribute": "cha",
+        "modifiers": {}
+      },
+      "slots": [
+        {
+          "rank": 1,
+          "max": 3,
+          "remaining": 2
+        },
+        {
+          "rank": 2,
+          "max": 3,
+          "remaining": 3
+        },
+        {
+          "rank": 3,
+          "max": 2,
+          "remaining": 2
+        },
+        {
+          "rank": 4,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 5,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 6,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 7,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 8,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 9,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 10,
+          "max": 0,
+          "remaining": 0
+        }
+      ],
+      "cantrips": [
+        {
+          "id": "spell-detect-magic",
+          "spell": {
+            "id": "spell.detect-magic",
+            "name": "Detect Magic",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-prestidigitation",
+          "spell": {
+            "id": "spell.prestidigitation",
+            "name": "Prestidigitation",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-telekinetic-projectile",
+          "spell": {
+            "id": "spell.telekinetic-projectile",
+            "name": "Telekinetic Projectile",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-light",
+          "spell": {
+            "id": "spell.light",
+            "name": "Light",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-inspire-courage",
+          "spell": {
+            "id": "spell.inspire-courage",
+            "name": "Inspire Courage",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [
+            "composition",
+            "emotion",
+            "mental"
+          ],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "spells": [
+        {
+          "id": "spell-soothe",
+          "spell": {
+            "id": "spell.soothe",
+            "name": "Soothe",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-fear",
+          "spell": {
+            "id": "spell.fear",
+            "name": "Fear",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": true,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-sound-burst",
+          "spell": {
+            "id": "spell.sound-burst",
+            "name": "Sound Burst",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-invisibility",
+          "spell": {
+            "id": "spell.invisibility",
+            "name": "Invisibility",
+            "rulesetSource": "custom"
+          },
+          "rank": 2,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": true,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-calm",
+          "spell": {
+            "id": "spell.calm",
+            "name": "Calm",
+            "rulesetSource": "custom"
+          },
+          "rank": 2,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-haste",
+          "spell": {
+            "id": "spell.haste",
+            "name": "Haste",
+            "rulesetSource": "custom"
+          },
+          "rank": 3,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "focusSpells": [
+        {
+          "id": "spell-counter-performance",
+          "spell": {
+            "id": "spell.counter-performance",
+            "name": "Counter Performance",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "occult",
+          "prepared": false,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [
+            "composition"
+          ],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "innateSpells": [],
+      "rituals": [],
+      "effects": []
+    }
+  ],
+  "inventory": {
+    "currency": {
+      "cp": 0,
+      "sp": 8,
+      "gp": 12,
+      "pp": 0
+    },
+    "items": [
+      {
+        "id": "item-leather",
+        "item": {
+          "id": "armor.leather",
+          "name": "Leather Armor",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "worn",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "armor": {
+          "category": "light",
+          "acBonus": 1,
+          "dexCap": 4,
+          "checkPenalty": -1,
+          "speedPenalty": 0,
+          "strength": 0,
+          "potencyRune": 0,
+          "resilientRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [],
+        "notes": ""
+      },
+      {
+        "id": "item-shortbow",
+        "item": {
+          "id": "weapon.shortbow",
+          "name": "Shortbow",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "readied",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "weapon": {
+          "category": "martial",
+          "group": "bow",
+          "damageDice": "1d6",
+          "damageType": "piercing",
+          "hands": "1+",
+          "rangeFeet": 60,
+          "reload": "0",
+          "potencyRune": 0,
+          "strikingRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [
+          "deadly-d10"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "item-instrument",
+        "item": {
+          "id": null,
+          "name": "Handheld instrument",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 0.1,
+        "location": "stowed",
+        "invested": false,
+        "equipped": false,
+        "containerId": null,
+        "traits": [],
+        "notes": ""
+      }
+    ],
+    "bulkBonus": 0,
+    "notes": ""
+  },
+  "companions": [],
+  "conditions": [],
+  "play": {
+    "heroPoints": 1,
+    "focusPool": 2,
+    "focusRemaining": 2,
+    "initiativeModifier": null,
+    "dailyResources": []
+  },
+  "notes": {
+    "appearance": "",
+    "personality": "",
+    "campaign": "Engineering golden: Bard 5",
+    "other": ""
+  },
+  "overrides": {},
+  "extensions": {}
+}
