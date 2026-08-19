@@ -742,7 +742,7 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 The 0.9 character-basics queue (batches 1–13) is done. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** leftover PF2e goldens (Cleric 5 next; Bard 5 landed) / companion. 1.0 landed. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
+**Next product work:** leftover PF2e goldens (companion user next; Bard 5 and Cleric 5 landed) / companion. 1.0 landed. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the sheet is ~90% done.
 
 ---
 

@@ -1,0 +1,887 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "createdAt": "2026-08-19T14:00:00.000Z",
+    "updatedAt": "2026-08-19T14:00:00.000Z",
+    "preferredRuleset": "remaster",
+    "appVersion": "0.0.0",
+    "locale": "en"
+  },
+  "identity": {
+    "characterName": "Orrin Lampkeep",
+    "playerName": "Golden Test",
+    "level": 5,
+    "xp": 40,
+    "ancestry": {
+      "id": "ancestry.human",
+      "name": "Human",
+      "rulesetSource": "custom"
+    },
+    "heritage": {
+      "id": "heritage.versatile-human",
+      "name": "Versatile Human",
+      "rulesetSource": "custom"
+    },
+    "background": {
+      "id": "background.acolyte",
+      "name": "Acolyte",
+      "rulesetSource": "custom"
+    },
+    "class": {
+      "id": "class.cleric",
+      "name": "Cleric",
+      "rulesetSource": "custom"
+    },
+    "subclass": {
+      "id": "class.cleric.cloistered",
+      "name": "Cloistered",
+      "rulesetSource": "custom"
+    },
+    "archetypes": [],
+    "size": "medium",
+    "traits": [
+      "human",
+      "humanoid"
+    ],
+    "languages": [
+      {
+        "id": "language.common",
+        "name": "Common",
+        "rulesetSource": "custom"
+      },
+      {
+        "id": "language.dwarven",
+        "name": "Dwarven",
+        "rulesetSource": "custom"
+      }
+    ],
+    "deity": {
+      "id": null,
+      "name": "The First Hymn",
+      "rulesetSource": "custom"
+    },
+    "homeRegion": "",
+    "alignment": null,
+    "edicts": "Tend the hurt and keep a light burning.",
+    "anathema": ""
+  },
+  "attributes": {
+    "str": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "dex": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "dex",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "con": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "con",
+          "amount": 2,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "int": {
+      "boosts": [],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "wis": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "wis",
+          "amount": 4,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    },
+    "cha": {
+      "boosts": [
+        {
+          "kind": "free",
+          "attribute": "cha",
+          "amount": 1,
+          "label": "User-entered total"
+        }
+      ],
+      "legacyScore": null,
+      "modifierOverride": null
+    }
+  },
+  "proficiencies": {
+    "perception": {
+      "rank": "trained",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "fortitude": {
+      "rank": "expert",
+      "attribute": "con",
+      "modifiers": {}
+    },
+    "reflex": {
+      "rank": "trained",
+      "attribute": "dex",
+      "modifiers": {}
+    },
+    "will": {
+      "rank": "expert",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "classDC": {
+      "rank": "trained",
+      "attribute": "wis",
+      "modifiers": {}
+    },
+    "armor": {
+      "unarmored": "trained",
+      "light": "trained",
+      "medium": "untrained",
+      "heavy": "untrained"
+    },
+    "weapons": {
+      "unarmed": "trained",
+      "simple": "trained",
+      "martial": "untrained",
+      "advanced": "untrained",
+      "specific": []
+    }
+  },
+  "vitals": {
+    "ancestryHp": 8,
+    "classHpPerLevel": 8,
+    "bonuses": [],
+    "currentHp": 58,
+    "temporaryHp": 0,
+    "dying": 0,
+    "wounded": 0,
+    "doomed": 0,
+    "resistances": [],
+    "immunities": [],
+    "weaknesses": [],
+    "speeds": [
+      {
+        "kind": "land",
+        "feet": 25
+      }
+    ],
+    "senses": []
+  },
+  "armorClass": {
+    "equippedArmorItemId": "item-leather",
+    "equippedShieldItemId": null,
+    "shieldRaised": false,
+    "dexCapOverride": null,
+    "modifiers": {},
+    "notes": ""
+  },
+  "skills": [
+    {
+      "key": "acrobatics",
+      "name": "Acrobatics",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "arcana",
+      "name": "Arcana",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "athletics",
+      "name": "Athletics",
+      "attribute": "str",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "crafting",
+      "name": "Crafting",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "deception",
+      "name": "Deception",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "diplomacy",
+      "name": "Diplomacy",
+      "attribute": "cha",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "intimidation",
+      "name": "Intimidation",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "medicine",
+      "name": "Medicine",
+      "attribute": "wis",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "nature",
+      "name": "Nature",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "occultism",
+      "name": "Occultism",
+      "attribute": "int",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "performance",
+      "name": "Performance",
+      "attribute": "cha",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "religion",
+      "name": "Religion",
+      "attribute": "wis",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "society",
+      "name": "Society",
+      "attribute": "int",
+      "rank": "trained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "stealth",
+      "name": "Stealth",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "survival",
+      "name": "Survival",
+      "attribute": "wis",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": false,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    },
+    {
+      "key": "thievery",
+      "name": "Thievery",
+      "attribute": "dex",
+      "rank": "untrained",
+      "isLore": false,
+      "armorPenaltyApplies": true,
+      "modifiers": {},
+      "notes": "",
+      "effects": []
+    }
+  ],
+  "feats": [
+    {
+      "id": "feat-domain-initiate",
+      "category": "class",
+      "feat": {
+        "id": "feat.domain-initiate",
+        "name": "Domain Initiate",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "traits": [],
+      "summary": "Gain a domain focus spell.",
+      "effects": []
+    },
+    {
+      "id": "feat-reach-spell",
+      "category": "class",
+      "feat": {
+        "id": "feat.reach-spell",
+        "name": "Reach Spell",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "traits": [
+        "manipulate"
+      ],
+      "summary": "Increase a spell's range.",
+      "effects": []
+    },
+    {
+      "id": "feat-battle-medicine",
+      "category": "skill",
+      "feat": {
+        "id": "feat.battle-medicine",
+        "name": "Battle Medicine",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 2,
+      "traits": [
+        "healing",
+        "manipulate"
+      ],
+      "summary": "Treat Wounds in combat once per day per target.",
+      "effects": []
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-divine-spellcasting",
+      "feature": {
+        "id": "feature.divine-spellcasting",
+        "name": "Divine Spellcasting",
+        "rulesetSource": "custom"
+      },
+      "levelGained": 1,
+      "summary": "Prepared divine spells.",
+      "effects": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "action-cast",
+      "name": "Cast a Spell",
+      "actionType": "action",
+      "actionCost": null,
+      "traits": [
+        "concentrate",
+        "manipulate"
+      ],
+      "frequency": "",
+      "summary": "Cast a prepared spell.",
+      "sourceFeatId": null,
+      "effects": []
+    }
+  ],
+  "strikes": [
+    {
+      "id": "strike-mace",
+      "name": "Mace",
+      "strikeType": "melee",
+      "weaponCategory": "simple",
+      "itemId": "item-mace",
+      "attackAttribute": "str",
+      "damageAttribute": "str",
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "traits": [
+        "shove"
+      ],
+      "rangeFeet": null,
+      "reload": null,
+      "ammoItemId": null,
+      "modifiers": {},
+      "notes": ""
+    }
+  ],
+  "spellcasting": [
+    {
+      "id": "cast-cleric",
+      "name": "Cleric Spellcasting",
+      "tradition": "divine",
+      "castType": "prepared",
+      "attribute": "wis",
+      "proficiency": {
+        "rank": "trained",
+        "attribute": "wis",
+        "modifiers": {}
+      },
+      "slots": [
+        {
+          "rank": 1,
+          "max": 4,
+          "remaining": 3
+        },
+        {
+          "rank": 2,
+          "max": 4,
+          "remaining": 4
+        },
+        {
+          "rank": 3,
+          "max": 3,
+          "remaining": 3
+        },
+        {
+          "rank": 4,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 5,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 6,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 7,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 8,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 9,
+          "max": 0,
+          "remaining": 0
+        },
+        {
+          "rank": 10,
+          "max": 0,
+          "remaining": 0
+        }
+      ],
+      "cantrips": [
+        {
+          "id": "spell-detect-magic",
+          "spell": {
+            "id": "spell.detect-magic",
+            "name": "Detect Magic",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-stabilize",
+          "spell": {
+            "id": "spell.stabilize",
+            "name": "Stabilize",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-light",
+          "spell": {
+            "id": "spell.light",
+            "name": "Light",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-divine-lance",
+          "spell": {
+            "id": "spell.divine-lance",
+            "name": "Divine Lance",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-guidance",
+          "spell": {
+            "id": "spell.guidance",
+            "name": "Guidance",
+            "rulesetSource": "custom"
+          },
+          "rank": 0,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "spells": [
+        {
+          "id": "spell-heal-1",
+          "spell": {
+            "id": "spell.heal",
+            "name": "Heal",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [
+            "healing",
+            "vitality"
+          ],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-bless",
+          "spell": {
+            "id": "spell.bless",
+            "name": "Bless",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-fear",
+          "spell": {
+            "id": "spell.fear",
+            "name": "Fear",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-dispel-magic",
+          "spell": {
+            "id": "spell.dispel-magic",
+            "name": "Dispel Magic",
+            "rulesetSource": "custom"
+          },
+          "rank": 2,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-heal-2",
+          "spell": {
+            "id": "spell.heal",
+            "name": "Heal",
+            "rulesetSource": "custom"
+          },
+          "rank": 2,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [
+            "healing",
+            "vitality"
+          ],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-heroism",
+          "spell": {
+            "id": "spell.heroism",
+            "name": "Heroism",
+            "rulesetSource": "custom"
+          },
+          "rank": 3,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [],
+          "summary": "",
+          "effects": []
+        },
+        {
+          "id": "spell-heal-3",
+          "spell": {
+            "id": "spell.heal",
+            "name": "Heal",
+            "rulesetSource": "custom"
+          },
+          "rank": 3,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [
+            "healing",
+            "vitality"
+          ],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "focusSpells": [
+        {
+          "id": "spell-healers-blessing",
+          "spell": {
+            "id": "spell.healers-blessing",
+            "name": "Healer's Blessing",
+            "rulesetSource": "custom"
+          },
+          "rank": 1,
+          "tradition": "divine",
+          "prepared": true,
+          "signature": false,
+          "usesPerDay": null,
+          "usesRemaining": null,
+          "traits": [
+            "healing"
+          ],
+          "summary": "",
+          "effects": []
+        }
+      ],
+      "innateSpells": [],
+      "rituals": [],
+      "effects": []
+    }
+  ],
+  "inventory": {
+    "currency": {
+      "cp": 0,
+      "sp": 5,
+      "gp": 14,
+      "pp": 0
+    },
+    "items": [
+      {
+        "id": "item-leather",
+        "item": {
+          "id": "armor.leather",
+          "name": "Leather Armor",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "worn",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "armor": {
+          "category": "light",
+          "acBonus": 1,
+          "dexCap": 4,
+          "checkPenalty": -1,
+          "speedPenalty": 0,
+          "strength": 0,
+          "potencyRune": 0,
+          "resilientRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [],
+        "notes": ""
+      },
+      {
+        "id": "item-mace",
+        "item": {
+          "id": "weapon.mace",
+          "name": "Mace",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 1,
+        "location": "readied",
+        "invested": false,
+        "equipped": true,
+        "containerId": null,
+        "weapon": {
+          "category": "simple",
+          "group": "club",
+          "damageDice": "1d6",
+          "damageType": "bludgeoning",
+          "hands": "1",
+          "rangeFeet": null,
+          "reload": null,
+          "potencyRune": 0,
+          "strikingRune": "none",
+          "propertyRunes": []
+        },
+        "traits": [
+          "shove"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "item-religious-symbol",
+        "item": {
+          "id": null,
+          "name": "Religious symbol",
+          "rulesetSource": "custom"
+        },
+        "quantity": 1,
+        "bulk": 0.1,
+        "location": "stowed",
+        "invested": false,
+        "equipped": false,
+        "containerId": null,
+        "traits": [],
+        "notes": ""
+      }
+    ],
+    "bulkBonus": 0,
+    "notes": ""
+  },
+  "companions": [],
+  "conditions": [],
+  "play": {
+    "heroPoints": 1,
+    "focusPool": 1,
+    "focusRemaining": 1,
+    "initiativeModifier": null,
+    "dailyResources": [
+      {
+        "id": "res-divine-font",
+        "name": "Divine Font",
+        "max": 4,
+        "remaining": 3,
+        "resetsOn": "daily"
+      }
+    ]
+  },
+  "notes": {
+    "appearance": "",
+    "personality": "",
+    "campaign": "Engineering golden: Cleric 5",
+    "other": ""
+  },
+  "overrides": {},
+  "extensions": {}
+}

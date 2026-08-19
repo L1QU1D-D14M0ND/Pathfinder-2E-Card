@@ -249,7 +249,7 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 - **Core calcs** for 0.9/1.0 with expansion hooks.
 - **No** campaign house-rule flags, dice, cloud, or VTT.
 - **English in 0.9**, **Spanish in 1.0**.
-- Later: leftover PF2e catalog/goldens (Bard 5 exists), sidebar tools, more systems.
+- Later: leftover PF2e catalog/goldens (Bard 5 and Cleric 5 exist), sidebar tools, more systems.
 
 ---
 
@@ -276,3 +276,4 @@ Live checkboxes: [`ROADMAP.md`](ROADMAP.md).
 | 2026-08-19 | Spanish UI catalog (`es.json`); PF2e panel literals remain |
 | 2026-08-19 | 1.0 stability pass; next is leftover PF2e work |
 | 2026-08-19 | PF2e Bard 5 golden; next leftover is Cleric 5 |
+| 2026-08-19 | PF2e Cleric 5 golden; next leftover is a companion user |

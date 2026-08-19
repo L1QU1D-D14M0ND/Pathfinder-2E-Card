@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-19  
-**Current phase:** **1.0 landed** — Spanish catalog + playable Synthesist. PF2e panel literals remain in English. **Next code:** leftover PF2e goldens (Cleric 5, companion user, one PC2 class) / companion editor / Remaster packs. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **1.0 landed** — Spanish catalog + playable Synthesist. PF2e panel literals remain in English. **Next code:** leftover PF2e goldens (companion user, one PC2 class) / companion editor / Remaster packs. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
@@ -135,18 +135,18 @@ See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-hos
 
 ## Phase 1–2 leftover (PF2e) — deprioritized
 
-**Status:** In progress after PF1e 1.0. Bard 5 golden landed; remaining §12 goldens wait.
+**Status:** In progress after PF1e 1.0. Bard 5 and Cleric 5 goldens landed; remaining §12 goldens wait.
 
 Already in the repo (kept):
 
 - [x] PF2e schema v1, types, factory, Ajv, `compute()` (HP, AC, skills, strikes, spell attack/DC, bulk, investiture, overrides)
-- [x] Goldens: PF2e Fighter 5; Wizard 5; Bard 5
+- [x] Goldens: PF2e Fighter 5; Wizard 5; Bard 5; Cleric 5
 - [x] Spreadsheet editors except companions
 - [x] Vitest + CI
 
 Not started (after PF1e 0.9):
 
-- [ ] PF2e goldens: Cleric 5; companion user; one Player Core 2 class
+- [ ] PF2e goldens: companion user; one Player Core 2 class
 - [ ] Companion nested-sheet editor
 - [ ] Override UI (engine works; no cell editor)
 - [x] English catalogs for chrome + PF1e panels; locale runtime exists; `es.json` covers those keys. PF2e panel literals remain
@@ -238,7 +238,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **After 1.0** — leftover PF2e goldens (Cleric 5 next) / companion / Remaster packs. Keep Summoner out of the CRB pack.
+1. **After 1.0** — leftover PF2e goldens (companion user next) / companion editor / Remaster packs. Keep Summoner out of the CRB pack.
 2. **Sidebar tools** when the character sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during schema/engine work.
 
 Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
@@ -301,3 +301,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-19 | Spanish catalog (`es.json`) for chrome + PF1e panels; PF2e panel literals remain |
 | 2026-08-19 | 1.0 stability: locale stamped on Save; all goldens still compute |
 | 2026-08-19 | PF2e Bard 5 golden (spontaneous occult); next is Cleric 5 |
+| 2026-08-19 | PF2e Cleric 5 golden (prepared divine); next is a companion user |

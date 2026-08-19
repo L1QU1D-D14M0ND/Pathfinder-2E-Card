@@ -123,7 +123,7 @@ PF2e leftover editors/goldens/content are **deprioritized** behind PF1e ([roadma
 2. ~~Empty-sheet factory: auto-seed 16 skills; `schemaVersion: 1`.~~  
 3. ~~Save sheet serializer that strips `derived`.~~  
 4. ~~Validate Load and Save against `schemas/character.schema.json`.~~  
-5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5 and Bard 5 goldens exist; remaining PF2e goldens deferred.  
+5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5, Bard 5, and Cleric 5 goldens exist; remaining PF2e goldens deferred.  
 6. Companion nested-sheet editor still missing (after PF1e 0.9).  
 7. Externalize English UI strings (may land as T4′ during Phase M).  
 8. Optional IndexedDB draft buffer for refresh safety.
@@ -141,3 +141,4 @@ Current sequencing: [`next-increment-multi-system.md`](next-increment-multi-syst
 | 2026-08-13 | Schema v1 lock notes |
 | 2026-08-17 | Relabeled PF2e-only; point leftover work at ADR 0003 sequencing |
 | 2026-08-19 | Bard 5 golden exists; remaining leftover PF2e goldens deferred |
+| 2026-08-19 | Cleric 5 golden exists; remaining leftover is companion user + PC2 class |

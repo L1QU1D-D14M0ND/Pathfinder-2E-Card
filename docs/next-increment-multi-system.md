@@ -12,7 +12,7 @@ This document **does** change product sequencing: PF1e is first; remaining PF2e 
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is leftover **PF2e** work (Cleric 5 golden, companion editor, Remaster packs). **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5 golden landed (spontaneous occult). APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–13 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is leftover **PF2e** work (companion-user golden, companion editor, Remaster packs). **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5 and Cleric 5 goldens landed. APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–13 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the character sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -42,7 +42,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Schema | PF2e `character.schema.json`; PF1e `schemas/pf1e/character.schema.json` |
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
-| Goldens | PF2e `fighter-5.json`, `wizard-5.json`, `bard-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
+| Goldens | PF2e `fighter-5.json`, `wizard-5.json`, `bard-5.json`, `cleric-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
 | Content | `content/pf1e/crb/` batches 1–13. `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
 
 ---
@@ -271,6 +271,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | Spanish (`es`) catalog | Landed (chrome + PF1e panels; PF2e literals remain) |
 | 1.0 stability | Landed (goldens compute; Save stamps `meta.locale`) |
 | PF2e Bard 5 golden | Landed (spontaneous occult; signature spells typed) |
+| PF2e Cleric 5 golden | Landed (prepared divine; Divine Font typed) |
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Extract when those panels next change |
@@ -315,3 +316,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-19 | Spanish catalog (`es.json`) for chrome + PF1e panels; next is 1.0 stability |
 | 2026-08-19 | 1.0 stability: locale stamped on Save; all six goldens still compute |
 | 2026-08-19 | PF2e Bard 5 golden (spontaneous occult); next is Cleric 5 |
+| 2026-08-19 | PF2e Cleric 5 golden (prepared divine); next is a companion user |

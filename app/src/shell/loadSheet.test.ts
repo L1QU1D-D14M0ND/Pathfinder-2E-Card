@@ -28,6 +28,18 @@ describe('parseLoadedSheet', () => {
     }
   })
 
+  it('loads the PF2e Cleric 5 golden as pf2e', () => {
+    const loaded = parseLoadedSheet(
+      readRepoFile('fixtures/characters/golden/cleric-5.json'),
+    )
+    expect(loaded.system).toBe('pf2e')
+    if (loaded.system === 'pf2e') {
+      expect(loaded.character.identity.class.id).toBe('class.cleric')
+      expect(loaded.character.spellcasting[0]?.tradition).toBe('divine')
+      expect(loaded.character.spellcasting[0]?.castType).toBe('prepared')
+    }
+  })
+
   it('loads a PF1e golden as pf1e', () => {
     const loaded = parseLoadedSheet(
       readRepoFile('fixtures/characters/golden/pf1e/fighter-5.json'),

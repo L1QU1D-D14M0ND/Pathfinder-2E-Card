@@ -26,7 +26,7 @@ npm run build
 - `system: "pf2e"` written on PF2e Save; files without `system` still load as PF2e
 - `system: "pf1e"` required on PF1e documents
 - Auto-seeded standard skills per system
-- PF1e martial + spell calc (Fighter 5, Wizard 5, Fighter 2 / Wizard 3, and Synthesist 5 goldens) and PF2e core calc (Fighter 5, Wizard 5, Bard 5)
+- PF1e martial + spell calc (Fighter 5, Wizard 5, Fighter 2 / Wizard 3, and Synthesist 5 goldens) and PF2e core calc (Fighter 5, Wizard 5, Bard 5, Cleric 5)
 - CRB pack batches 1–13 landed (including Batch 7). Mechanics-only ([ADR 0007](../docs/adr/0007-content-licensing.md)). APG pack: Summoner + Synthesist overlay + Radiant Striker golden ([`../docs/pf1e-apg-pack-design.md`](../docs/pf1e-apg-pack-design.md)). Do not add Summoner to the CRB folder.
 - Save export strips `derived`
 - Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the sheet is ~90% done)
@@ -53,4 +53,4 @@ Product lock: [`../docs/adr/0003-multi-system-product-direction.md`](../docs/adr
 
 Schemas: `../schemas/character.schema.json` (PF2e), `../schemas/pf1e/character.schema.json` (PF1e)
 
-Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/bard-5.json` (PF2e Bard 5), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e), `../fixtures/characters/golden/pf1e/wizard-5.json` (PF1e), `../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json` (PF1e), `../fixtures/characters/golden/pf1e/synthesist-5.json` (PF1e Synthesist)
+Golden fixtures: `../fixtures/characters/golden/fighter-5.json` (PF2e), `../fixtures/characters/golden/wizard-5.json` (PF2e), `../fixtures/characters/golden/bard-5.json` (PF2e Bard 5), `../fixtures/characters/golden/cleric-5.json` (PF2e Cleric 5), `../fixtures/characters/golden/pf1e/fighter-5.json` (PF1e), `../fixtures/characters/golden/pf1e/wizard-5.json` (PF1e), `../fixtures/characters/golden/pf1e/fighter-2-wizard-3.json` (PF1e), `../fixtures/characters/golden/pf1e/synthesist-5.json` (PF1e Synthesist)
