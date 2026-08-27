@@ -35,7 +35,7 @@ Engine formulas (ability modifier, BAB tables, spell DC, bonus spells, heavy loa
 | --- | --- |
 | `content/pf1e/crb/classes.json` | 11 CRB class ids; HD / BAB / saves / skill points / class-skill keys; `source.book: CRB`. No Summoner. No flavor |
 | `races.json` | Seven CRB player race names + size; no Golarion PI |
-| `items.json` | Golden weapons/armor/spellbook plus Batches 16–18 simple and martial weapons (including two-handed, bows, arrows): pounds and documentary combat fields. Remaining exotic weapons and armor are queued (pack design §7); magic items are not in this folder yet. Later `weapon.properties` is a multi-tag array (pack design §7.6), not a single property |
+| `items.json` | Golden weapons/armor/spellbook plus Batches 16–19 simple, martial, and exotic weapons (and their ammo): pounds and documentary combat fields. Remaining armor and shields are queued (pack design §7); magic items are not in this folder yet. Later `weapon.properties` is a multi-tag array (pack design §7.6), not a single property |
 | `feats.json` | Five golden feat ids; name + category |
 | `spells.json` | Four golden spell ids; name + spell level. No descriptions |
 | `pack.json` | Batch notes are **our** review comments, not book text |

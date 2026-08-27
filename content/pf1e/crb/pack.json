@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-14-16-18-complete",
+  "status": "batches-1-14-16-19-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -92,6 +92,11 @@
       "id": 18,
       "mechanics": ["martial-two-handed", "martial-ranged-and-arrows"],
       "notes": "Documentary CRB martial two-handed weapons and martial bows plus arrows bundle. Composite Strength rating stays typed. Combat stays typed. No Special tags yet."
+    },
+    {
+      "id": 19,
+      "mechanics": ["exotic-melee", "exotic-ranged-and-repeating-bolts"],
+      "notes": "Documentary CRB exotic melee and exotic ranged weapons plus repeating bolts. Double weapons stamp the primary head only. Combat stays typed. No Special tags yet."
     }
   ]
 }

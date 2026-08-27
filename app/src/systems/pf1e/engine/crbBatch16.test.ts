@@ -263,9 +263,8 @@ describe('CRB batch 16: simple ranged and ammo', () => {
     }
   })
 
-  it('leaves two-handed, exotic, and ammo ids unknown', () => {
-    expect(lookupCrbItem('weapon.kama')).toBeNull()
-    expect(lookupCrbItem('item.repeating-crossbow-bolts')).toBeNull()
+  it('leaves remaining armor unknown', () => {
+    expect(lookupCrbItem('armor.padded')).toBeNull()
   })
 })
 

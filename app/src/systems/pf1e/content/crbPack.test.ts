@@ -117,14 +117,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–14 and 16–18', () => {
+  it('pack manifest records batches 1–14 and 16–19', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batches-1-14-16-18-complete')
+    expect(pack.status).toBe('batches-1-14-16-19-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18,
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19,
     ])
   })
 })
@@ -318,6 +318,26 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
       'weapon.composite-longbow',
       'weapon.shortbow',
       'weapon.composite-shortbow',
+      'weapon.kama',
+      'weapon.nunchaku',
+      'weapon.sai',
+      'weapon.siangham',
+      'weapon.bastard-sword',
+      'weapon.dwarven-waraxe',
+      'weapon.whip',
+      'weapon.orc-double-axe',
+      'weapon.elven-curve-blade',
+      'weapon.dire-flail',
+      'weapon.gnome-hooked-hammer',
+      'weapon.two-bladed-sword',
+      'weapon.dwarven-urgrosh',
+      'weapon.bolas',
+      'weapon.hand-crossbow',
+      'weapon.repeating-heavy-crossbow',
+      'weapon.repeating-light-crossbow',
+      'weapon.net',
+      'weapon.shuriken',
+      'weapon.halfling-sling-staff',
       'armor.chain-shirt',
       'armor.chainmail',
       'item.spellbook',
@@ -325,6 +345,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
       'item.crossbow-bolts',
       'item.sling-bullets',
       'item.arrows',
+      'item.repeating-crossbow-bolts',
     ])
     expect(lookupCrbItem('armor.chainmail')).toMatchObject({
       name: 'Chainmail',
@@ -339,7 +360,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
   })
 
   it('returns null for an unknown item id', () => {
-    expect(lookupCrbItem('weapon.kama')).toBeNull()
+    expect(lookupCrbItem('armor.padded')).toBeNull()
     expect(lookupCrbItem(null)).toBeNull()
     expect(lookupCrbItem('')).toBeNull()
   })
@@ -376,7 +397,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
 
   it('unknown apply clears id and leaves the rest of the row', () => {
     const row = applyCrbItem(createEmptyItem(), 'weapon.longsword')
-    const custom = applyCrbItem(row, 'weapon.kama')
+    const custom = applyCrbItem(row, 'armor.padded')
     expect(custom.item.id).toBeNull()
     expect(custom.item.name).toBe('Longsword')
     expect(custom.pounds).toBe(4)

@@ -278,7 +278,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Later PF2e *release* (when those panels next change) |
-| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batches 16–18 weapons landed; next is exotic, then Special tags one type at a time as a multi-value `weapon.properties` list) |
+| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batches 16–19 weapons landed; next catalog is Special tags one type at a time as a multi-value `weapon.properties` list, then armor) |
 | Leftover PF2e (PC2 golden, companion editor, Remaster packs) | Later *release* |
 
 ---
@@ -330,3 +330,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-27 | CRB batch 17: martial light + remaining martial one-handed; next is martial two-handed + bows |
 | 2026-08-27 | CRB Special tags (reach, brace, trip, disarm, monk, nonlethal, double) queued one type per PR after all weapon ids; `weapon.properties` is an array (2+ tags; later magic uses the same list) |
 | 2026-08-27 | CRB batch 18: martial two-handed + martial ranged and arrows; next is exotic weapons |
+| 2026-08-27 | CRB batch 19: exotic melee + exotic ranged and repeating bolts; next catalog is W1 reach |

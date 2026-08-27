@@ -220,10 +220,8 @@ describe('CRB batch 18: martial ranged and arrows', () => {
     )
   })
 
-  it('leaves exotic ids unknown', () => {
-    expect(lookupCrbItem('weapon.kama')).toBeNull()
-    expect(lookupCrbItem('weapon.bastard-sword')).toBeNull()
-    expect(lookupCrbItem('item.repeating-crossbow-bolts')).toBeNull()
+  it('leaves remaining armor unknown', () => {
+    expect(lookupCrbItem('armor.padded')).toBeNull()
   })
 })
 

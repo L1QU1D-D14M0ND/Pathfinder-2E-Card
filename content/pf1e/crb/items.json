@@ -668,6 +668,269 @@
     "source": { "book": "CRB" }
   },
   {
+    "id": "weapon.kama",
+    "name": "Kama",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.nunchaku",
+    "name": "Nunchaku",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.sai",
+    "name": "Sai",
+    "kind": "weapon",
+    "pounds": 1,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.siangham",
+    "name": "Siangham",
+    "kind": "weapon",
+    "pounds": 1,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.bastard-sword",
+    "name": "Bastard sword",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "slashing",
+      "critRange": 19,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.dwarven-waraxe",
+    "name": "Dwarven waraxe",
+    "kind": "weapon",
+    "pounds": 8,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.whip",
+    "name": "Whip",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d3",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.orc-double-axe",
+    "name": "Orc double axe",
+    "kind": "weapon",
+    "pounds": 15,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.elven-curve-blade",
+    "name": "Elven curve blade",
+    "kind": "weapon",
+    "pounds": 7,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "slashing",
+      "critRange": 18,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.dire-flail",
+    "name": "Dire flail",
+    "kind": "weapon",
+    "pounds": 10,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.gnome-hooked-hammer",
+    "name": "Gnome hooked hammer",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.two-bladed-sword",
+    "name": "Two-bladed sword",
+    "kind": "weapon",
+    "pounds": 10,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 19,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.dwarven-urgrosh",
+    "name": "Dwarven urgrosh",
+    "kind": "weapon",
+    "pounds": 12,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.bolas",
+    "name": "Bolas",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.hand-crossbow",
+    "name": "Hand crossbow",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "piercing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "rangeFeet": 30
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.repeating-heavy-crossbow",
+    "name": "Repeating heavy crossbow",
+    "kind": "weapon",
+    "pounds": 12,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "piercing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "rangeFeet": 120
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.repeating-light-crossbow",
+    "name": "Repeating light crossbow",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "rangeFeet": 80
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.net",
+    "name": "Net",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "rangeFeet": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.shuriken",
+    "name": "Shuriken",
+    "kind": "weapon",
+    "pounds": 0.5,
+    "weapon": {
+      "damageDice": "1d2",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.halfling-sling-staff",
+    "name": "Halfling sling staff",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 3,
+      "rangeFeet": 80
+    },
+    "source": { "book": "CRB" }
+  },
+  {
     "id": "armor.chain-shirt",
     "name": "Chain shirt",
     "kind": "armor",
@@ -726,6 +989,13 @@
     "name": "Arrows",
     "kind": "item",
     "pounds": 3,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.repeating-crossbow-bolts",
+    "name": "Repeating crossbow bolts",
+    "kind": "item",
+    "pounds": 1,
     "source": { "book": "CRB" }
   }
 ]
