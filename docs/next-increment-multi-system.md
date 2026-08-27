@@ -1,6 +1,6 @@
 # Next increment — multi-system refactor, then PF1e
 
-**Status:** Active sequencing document (2026-08-19)  
+**Status:** Active sequencing document (2026-08-27)  
 **Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [ADR 0007](adr/0007-content-licensing.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
@@ -12,7 +12,7 @@ This document **does** change product sequencing: **finish First Edition** in th
 
 The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
 
-The next **code** increment is **finish First Edition** (class spells-per-day tables, remaining CRB catalog, APG follow-through). Remaining **PF2e** work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). The PF2e slice stays in the app and must not regress. **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5, Cleric 5, and Ranger 5 goldens landed. APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–14 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the **PF1e** sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **finish First Edition** (class spells-per-day tables, then mundane CRB weapons/armor in batches 16–21, then remaining feats/spells, then APG follow-through). Magic weapons and armor stay later. Remaining **PF2e** work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). The PF2e slice stays in the app and must not regress. **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5, Cleric 5, and Ranger 5 goldens landed. APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–14 and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the **PF1e** sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
 
 ---
 
@@ -147,7 +147,7 @@ After goldens can be typed by hand. Review CRB character mechanics **two at a ti
 | 8 | Platform | IndexedDB draft; PWA install/offline proof |
 | 9 | 0.9 | English; PF1e bar; PF2e slice still works; sidebar host may be empty |
 | 10 | Phase 4 | `es` + playable APG Synthesist = 1.0 |
-| 11 | 1x | Finish First Edition (CRB fill-out, APG follow-through) |
+| 11 | 1x | Finish First Edition (spells-per-day, mundane equipment 16–21, remaining catalog, APG follow-through) |
 | 12 | Later release | Leftover PF2e goldens/content; **sidebar tools** after the PF1e sheet is ~90% done; more systems |
 
 Steps 2–4 are the **next development increments** after this documentation change.
@@ -278,7 +278,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Later PF2e *release* (when those panels next change) |
-| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batch 14 races landed; next is spells-per-day tables) |
+| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batch 15 spells-per-day, then mundane equipment 16–21; magic weapons/armor later) |
 | Leftover PF2e (PC2 golden, companion editor, Remaster packs) | Later *release* |
 
 ---
@@ -325,3 +325,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-19 | PF2e Ranger 5 golden (nested wolf companion); next is a PC2 class |
 | 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release |
 | 2026-08-19 | CRB batch 14: remaining player races + size stamp; next is spells-per-day tables |
+| 2026-08-27 | Remaining mundane CRB weapons/armor locked as batches 16–21; magic gear reserved later |

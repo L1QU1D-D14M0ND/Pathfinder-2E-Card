@@ -170,7 +170,7 @@ Optional later (this First Edition finish): Cleric 5 (domains/channel as daily r
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–14 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed); remaining CRB player races + size stamp (ability adjustments stay typed). Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
+Batch 1–14 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed); remaining CRB player races + size stamp (ability adjustments stay typed). Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); magic weapons/armor are a later overlay, not plus-N catalog rows. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
 
 License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **1.0 landed.** Spanish UI catalog: [`../app/src/locales/es.json`](../app/src/locales/es.json). Synthesist golden landed.
 
@@ -221,3 +221,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-19 | 1.0 stability. Next is leftover PF2e work. |
 | 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release. |
 | 2026-08-19 | CRB batch 14: remaining player races + size stamp. Next is spells-per-day tables. |
+| 2026-08-27 | Remaining mundane CRB weapons/armor queued as batches 16–21; magic gear reserved later. |

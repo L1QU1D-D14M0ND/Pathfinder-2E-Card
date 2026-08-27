@@ -35,7 +35,7 @@ Engine formulas (ability modifier, BAB tables, spell DC, bonus spells, heavy loa
 | --- | --- |
 | `content/pf1e/crb/classes.json` | 11 CRB class ids; HD / BAB / saves / skill points / class-skill keys; `source.book: CRB`. No Summoner. No flavor |
 | `races.json` | Seven CRB player race names + size; no Golarion PI |
-| `items.json` | Golden weapons/armor/spellbook: pounds and documentary combat fields |
+| `items.json` | Golden weapons/armor/spellbook: pounds and documentary combat fields. Remaining mundane CRB weapons/armor are queued (pack design §7); magic items are not in this folder yet |
 | `feats.json` | Five golden feat ids; name + category |
 | `spells.json` | Four golden spell ids; name + spell level. No descriptions |
 | `pack.json` | Batch notes are **our** review comments, not book text |

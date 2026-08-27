@@ -49,8 +49,16 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **12** | Feats on the three goldens | Documentary feat ids; Combat math stays typed | Catalog | Done |
 | **13** | Spell metadata on the goldens | Documentary spell ids; slots/DCs/prepared stay typed | Catalog | Done |
 | **14** | Remaining CRB player races; stamp catalog size | Identity already lists `CRB_RACES`; Gnome/Halfling are Small; ability adjustments stay typed | Catalog | Done |
+| **15** | Class spells-per-day tables; hybrid Max | Bonus-slot math from batch 7 needs the class table to fill Max | Catalog + engine/UI | Next |
+| **16** | Remaining simple melee; simple ranged + simple ammo | CRB simple weapon table, two halves. Skip packed dagger/quarterstaff | Catalog | Queued |
+| **17** | Martial light; remaining martial one-handed | CRB martial melee that is not two-handed. Skip packed longsword | Catalog | Queued |
+| **18** | Martial two-handed; martial ranged + arrows | Rest of the martial table | Catalog | Queued |
+| **19** | Exotic melee; exotic ranged + repeating bolts | CRB exotic table, two halves. Double weapons stay one row / primary head | Catalog | Queued |
+| **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Queued |
+| **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
+| **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Remaining work after this table is in [§6](#6-recommended-upcoming-work).
+The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batch 15 is still the next code change. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor) — one pair per PR, never the whole weapon or armor chapter at once.
 
 ---
 
@@ -62,7 +70,7 @@ content/pf1e/crb/
   pack.json          # manifest + which batches have landed
   classes.json       # HD/BAB/saves + class skills + skill points (11 CRB base classes)
   races.json         # race id + name + size (batch 8 Human; batch 14 remaining CRB player races)
-  items.json         # weapon/armor/gear ids (batch 10: golden rows only)
+  items.json         # weapon/armor/gear ids (batch 10 goldens; 16–21 remaining mundane; magic later)
   feats.json         # feat id + name + category (batch 12: golden rows only)
   spells.json        # spell id + name + spellLevel (batch 13: golden rows only)
 ```
@@ -538,7 +546,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** The golden weapon ids resolve. Quarterstaff is stored as a **single 1d6** to match the golden attack row, not the CRB double-weapon listing. The Fighter 5 dagger row has no `weapon` subobject; the catalog still lists 1d4 / 10 ft for a fresh apply.
 
-**Gaps:** Remaining CRB weapons; magic weapons; priced treasure; two-weapon / double-weapon attack rows.
+**Gaps:** Remaining mundane weapons are queued in [§7](#7-remaining-mundane-weapons-and-armor) (batches 16–19). Magic weapons are reserved later (not plus-N catalog rows). Priced treasure and two-weapon / double-weapon attack rows wait.
 
 **Pack slice:** weapon rows needed by the goldens.
 
@@ -559,7 +567,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** Equipping catalog chainmail on an empty sheet leaves **AC 10**. Fighter 5 still computes AC 18 from the typed `armorBonus` 6.
 
-**Gaps:** Remaining CRB armor/shields; auto-sum of equipped AC / ACP / max Dex stays **out of 0.9**.
+**Gaps:** Remaining mundane armor and shields are queued in [§7](#7-remaining-mundane-weapons-and-armor) (batches 20–21). Magic armor is reserved later. Auto-sum of equipped AC / ACP / max Dex stays **out of 0.9**.
 
 **Pack slice:** armor and gear rows needed by the goldens.
 
@@ -781,7 +789,245 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** class spells-per-day tables, then remaining catalog rows, then APG follow-through. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** class spells-per-day tables (batch 15), then mundane equipment fill-out in **batches 16–21** ([§7](#7-remaining-mundane-weapons-and-armor)), then remaining feats/spells and other catalog tags, then APG follow-through. Magic weapons and magic armor stay **later** — leave schema room, do not pack them in 16–21. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+
+---
+
+## 7. Remaining mundane weapons and armor
+
+Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
+
+**Already packed (do not duplicate):** `weapon.dagger`, `weapon.longsword`, `weapon.quarterstaff`, `armor.chain-shirt`, `armor.chainmail`, `item.spellbook`.
+
+### 7.1 Shared locks (every 16–21 PR)
+
+| Lock | Rule |
+| --- | --- |
+| Scope | Core Rulebook Chapter 6 tables only. No APG / Ultimate Combat / Adventurer’s Armory rows |
+| Combat | Apply does **not** rewrite `armorClass` or `attacks` |
+| Quarterstaff | Stays a **single 1d6** row. Do not split it into a double-weapon pair here |
+| Double weapons (exotic 2H) | One catalog row; stamp the **primary** head only. Second head / two-weapon attack rows wait |
+| Composite bows | One row each (`weapon.composite-longbow`, `weapon.composite-shortbow`). Strength rating stays typed / notes — no `str-2` ids |
+| Unarmed strike | **Not** an inventory catalog item. Pack `weapon.gauntlet` only |
+| Shield bash / spiked armor | **Not** weapon-table ids in 16–19. They wait with shields / extras in batch 21 |
+| Ammo | Pack with the ranged mechanic that uses it (`item.*`, `kind: item`) |
+| Masterwork | Same overlay pattern as magic. **No** separate masterwork catalog rows |
+| Magic | **Do not pack** in 16–21. See [§7.5](#75-reserved-magic-weapons-and-armor) |
+| Cost | Optional `costGp` may land with a later priced-treasure slice. Not required to add a weapon/armor row |
+| Tests | New ids resolve; goldens still resolve; apply still leaves AC 10 on an empty sheet |
+
+Id pattern stays `weapon.<kebab>`, `armor.<kebab>`, `item.<kebab>`. Batch 21 adds `shield.<kebab>` when `kind: "shield"` lands.
+
+### 7.2 Weapons — batches 16–19
+
+67 remaining weapon ids (packed 3; skip unarmed strike and the five armor/shield-as-weapon table lines).
+
+#### Batch 16 — simple melee remainder + simple ranged
+
+**Mechanic A — remaining simple melee** (11). Packed dagger and quarterstaff stay as they are.
+
+| Id | Name | Group |
+| --- | --- | --- |
+| `weapon.gauntlet` | Gauntlet | Unarmed |
+| `weapon.punching-dagger` | Punching dagger | Light |
+| `weapon.spiked-gauntlet` | Spiked gauntlet | Light |
+| `weapon.light-mace` | Light mace | Light |
+| `weapon.sickle` | Sickle | Light |
+| `weapon.club` | Club | One-handed |
+| `weapon.heavy-mace` | Heavy mace | One-handed |
+| `weapon.morningstar` | Morningstar | One-handed |
+| `weapon.shortspear` | Shortspear | One-handed |
+| `weapon.longspear` | Longspear | Two-handed |
+| `weapon.spear` | Spear | Two-handed |
+
+**Mechanic B — simple ranged + simple ammo** (6 weapons + 3 ammo).
+
+| Id | Name |
+| --- | --- |
+| `weapon.blowgun` | Blowgun |
+| `weapon.heavy-crossbow` | Heavy crossbow |
+| `weapon.light-crossbow` | Light crossbow |
+| `weapon.dart` | Dart |
+| `weapon.javelin` | Javelin |
+| `weapon.sling` | Sling |
+| `item.blowgun-darts` | Blowgun darts |
+| `item.crossbow-bolts` | Crossbow bolts |
+| `item.sling-bullets` | Sling bullets |
+
+Hand crossbow and repeating crossbows also use bolts; they wait for batch 19 and reuse `item.crossbow-bolts` / `item.repeating-crossbow-bolts`.
+
+#### Batch 17 — martial light + remaining martial one-handed
+
+**Mechanic A — martial light** (8). Skip light-shield bash, spiked armor, and light spiked shield.
+
+| Id | Name |
+| --- | --- |
+| `weapon.throwing-axe` | Throwing axe |
+| `weapon.light-hammer` | Light hammer |
+| `weapon.handaxe` | Handaxe |
+| `weapon.kukri` | Kukri |
+| `weapon.light-pick` | Light pick |
+| `weapon.sap` | Sap |
+| `weapon.starknife` | Starknife |
+| `weapon.short-sword` | Short sword |
+
+**Mechanic B — remaining martial one-handed** (7). Packed longsword stays. Skip heavy-shield bash and heavy spiked shield.
+
+| Id | Name |
+| --- | --- |
+| `weapon.battleaxe` | Battleaxe |
+| `weapon.flail` | Flail |
+| `weapon.heavy-pick` | Heavy pick |
+| `weapon.rapier` | Rapier |
+| `weapon.scimitar` | Scimitar |
+| `weapon.trident` | Trident |
+| `weapon.warhammer` | Warhammer |
+
+#### Batch 18 — martial two-handed + martial ranged
+
+**Mechanic A — martial two-handed** (11).
+
+| Id | Name |
+| --- | --- |
+| `weapon.falchion` | Falchion |
+| `weapon.glaive` | Glaive |
+| `weapon.greataxe` | Greataxe |
+| `weapon.greatclub` | Greatclub |
+| `weapon.heavy-flail` | Heavy flail |
+| `weapon.greatsword` | Greatsword |
+| `weapon.guisarme` | Guisarme |
+| `weapon.halberd` | Halberd |
+| `weapon.lance` | Lance |
+| `weapon.ranseur` | Ranseur |
+| `weapon.scythe` | Scythe |
+
+**Mechanic B — martial ranged + arrows** (4 weapons + 1 ammo).
+
+| Id | Name |
+| --- | --- |
+| `weapon.longbow` | Longbow |
+| `weapon.composite-longbow` | Composite longbow |
+| `weapon.shortbow` | Shortbow |
+| `weapon.composite-shortbow` | Composite shortbow |
+| `item.arrows` | Arrows |
+
+#### Batch 19 — exotic melee + exotic ranged
+
+**Mechanic A — exotic melee** (13). Light + one-handed + two-handed in one mechanic so the exotic table stays one PR pair.
+
+| Id | Name | Group |
+| --- | --- | --- |
+| `weapon.kama` | Kama | Light |
+| `weapon.nunchaku` | Nunchaku | Light |
+| `weapon.sai` | Sai | Light |
+| `weapon.siangham` | Siangham | Light |
+| `weapon.bastard-sword` | Bastard sword | One-handed |
+| `weapon.dwarven-waraxe` | Dwarven waraxe | One-handed |
+| `weapon.whip` | Whip | One-handed |
+| `weapon.orc-double-axe` | Orc double axe | Two-handed |
+| `weapon.elven-curve-blade` | Elven curve blade | Two-handed |
+| `weapon.dire-flail` | Dire flail | Two-handed |
+| `weapon.gnome-hooked-hammer` | Gnome hooked hammer | Two-handed |
+| `weapon.two-bladed-sword` | Two-bladed sword | Two-handed |
+| `weapon.dwarven-urgrosh` | Dwarven urgrosh | Two-handed |
+
+**Mechanic B — exotic ranged + repeating bolts** (7 weapons + 1 ammo).
+
+| Id | Name |
+| --- | --- |
+| `weapon.bolas` | Bolas |
+| `weapon.hand-crossbow` | Hand crossbow |
+| `weapon.repeating-heavy-crossbow` | Repeating heavy crossbow |
+| `weapon.repeating-light-crossbow` | Repeating light crossbow |
+| `weapon.net` | Net |
+| `weapon.shuriken` | Shuriken |
+| `weapon.halfling-sling-staff` | Halfling sling staff |
+| `item.repeating-crossbow-bolts` | Repeating crossbow bolts |
+
+### 7.3 Armor and shields — batches 20–21
+
+10 remaining armor ids (packed 2) plus 6 shields. Extras stay with batch 21.
+
+#### Batch 20 — remaining light armor + remaining medium armor
+
+**Mechanic A — remaining light armor** (3). Packed chain shirt stays.
+
+| Id | Name |
+| --- | --- |
+| `armor.padded` | Padded |
+| `armor.leather` | Leather |
+| `armor.studded-leather` | Studded leather |
+
+**Mechanic B — remaining medium armor** (3). Packed chainmail stays.
+
+| Id | Name |
+| --- | --- |
+| `armor.hide` | Hide |
+| `armor.scale-mail` | Scale mail |
+| `armor.breastplate` | Breastplate |
+
+Stamp the same `armor` subobject as chainmail (`acBonus`, `maxDex`, `armorCheckPenalty`, `spellFailurePercent`). Still do not write Combat.
+
+#### Batch 21 — heavy armor + shields
+
+**Mechanic A — heavy armor** (4).
+
+| Id | Name |
+| --- | --- |
+| `armor.splint-mail` | Splint mail |
+| `armor.banded-mail` | Banded mail |
+| `armor.half-plate` | Half-plate |
+| `armor.full-plate` | Full plate |
+
+**Mechanic B — shields** (6) plus mundane extras.
+
+| Id | Name |
+| --- | --- |
+| `shield.buckler` | Buckler |
+| `shield.light-wooden` | Light wooden shield |
+| `shield.light-steel` | Light steel shield |
+| `shield.heavy-wooden` | Heavy wooden shield |
+| `shield.heavy-steel` | Heavy steel shield |
+| `shield.tower` | Tower shield |
+
+This is the PR that may add `kind: "shield"` to the item catalog schema and stamp `ItemEntry.shield` (and clear `armor` / `weapon`). Tower shield needs `maxDex` and spell failure on the shield stats — extend `ShieldItemStats` here if those fields are still missing. Do not auto-write `armorClass.shieldBonus`.
+
+Mundane extras in the same mechanic (still not magic; not counted in the 67 remaining weapon-table ids):
+
+| Id | Name |
+| --- | --- |
+| `item.armor-spikes` | Armor spikes |
+| `item.shield-spikes` | Shield spikes |
+| `weapon.locked-gauntlet` | Locked gauntlet |
+
+Shield-bash damage may live as an optional `weapon` subobject on the shield row later; do not mint `weapon.light-shield` ids.
+
+### 7.4 Packed vs remaining counts
+
+| Kind | Packed now | Remaining in 16–21 | Skip / later |
+| --- | --- | --- | --- |
+| Weapons | 3 | 67 | Unarmed strike; shield-bash and spiked-armor weapon-table lines |
+| Armor | 2 | 10 | Magic armor |
+| Shields | 0 | 6 | Magic shields |
+| Ammo / extras | spellbook | 5 ammo + 3 extras | Priced treasure as a later slice |
+| Magic weapons / armor | 0 | 0 | Entirely [§7.5](#75-reserved-magic-weapons-and-armor) |
+
+### 7.5 Reserved: magic weapons and armor
+
+**Do not implement in batches 16–21.** Leave the door open so mundane rows do not have to be renamed later.
+
+| Decision | Lock |
+| --- | --- |
+| Mundane id is stable | A +1 longsword is still `weapon.longsword`. Never add `weapon.longsword-plus-1` or `armor.full-plate-plus-2` |
+| Enhancement is a sheet overlay | Later: optional enhancement (and special-ability tags) on the **inventory row** (`ItemEntry` / weapon-armor-shield stats), not a second catalog copy of every table weapon |
+| Named items later | A later catalog may add specific magic items (`weapon.holy-avenger`, …) with an optional `baseItemId` pointing at the mundane row. That is its own pair of mechanics, after 21 |
+| Masterwork | Same overlay as enhancement. Not a catalog row per weapon |
+| Combat | Magic attack/damage/AC still stay typed until a batch says otherwise |
+| License | Still mechanics-only until the first pack **prose**. Names of specific items are labels; do not copy item body text without OGL / Section 15 |
+
+Schema work that is allowed when magic *starts* (not now): optional `baseItemId` on a catalog row; optional `enhancementBonus` on character item stats; keep `additionalProperties: false` so mundane JSON does not grow unused keys.
+
+After batch 21, the next catalog work is remaining **feats** and **spells**, not this magic pair, unless a later lock says otherwise.
 
 ---
 
@@ -815,3 +1061,4 @@ The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the rem
 | 2026-08-19 | Spanish UI catalog landed; this folder stays English mechanics-only names |
 | 2026-08-19 | 1.0 stability; this folder stays CRB-only |
 | 2026-08-19 | Batch 14: remaining CRB player races + size stamp; ability adjustments stay typed; next is spells-per-day tables |
+| 2026-08-27 | Locked remaining mundane weapons/armor into batches 16–21; magic weapons/armor reserved as a later overlay, not plus-N rows |

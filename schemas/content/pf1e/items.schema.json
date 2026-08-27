@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ttrpg-sheet.local/schemas/content/pf1e/items.schema.json",
   "title": "PF1e item catalog",
+  "description": "Mundane CRB item rows (ids, names, pounds, documentary weapon/armor stats). Fill-out is batches 16–21 in docs/pf1e-crb-pack-design.md §7. Magic weapons and armor are a later overlay on these ids — do not add plus-N copies.",
   "type": "array",
   "items": {
     "type": "object",

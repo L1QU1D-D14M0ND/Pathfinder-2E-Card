@@ -2,8 +2,8 @@
 
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
-**Status date:** 2026-08-19  
-**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Status date:** 2026-08-27  
+**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). Remaining mundane CRB weapons/armor are queued as batches 16–21; magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
@@ -196,7 +196,15 @@ Bar: a player can build and play PF1e from catalog beyond the four goldens, stil
 Recommended order:
 
 - [x] **CRB Batch 14** — remaining player races + size stamp (ability adjustments stay typed)
-- [ ] **CRB pack fill-out** remainder — class spells-per-day tables; remaining player catalog rows. Combat/spell math stays typed unless a batch says otherwise. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
+- [ ] **CRB Batch 15** — class spells-per-day tables + hybrid Max
+- [ ] **CRB Batch 16** — remaining simple melee + simple ranged (and simple ammo)
+- [ ] **CRB Batch 17** — martial light + remaining martial one-handed
+- [ ] **CRB Batch 18** — martial two-handed + martial ranged (and arrows)
+- [ ] **CRB Batch 19** — exotic melee + exotic ranged
+- [ ] **CRB Batch 20** — remaining light + medium armor
+- [ ] **CRB Batch 21** — heavy armor + shields
+- [ ] **CRB magic weapons / armor** — reserved later. Overlay on mundane ids; no plus-N catalog rows. Do not start in 16–21. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.5
+- [ ] **CRB pack fill-out** remainder — remaining feats/spells and other catalog tags. Combat/spell math stays typed unless a batch says otherwise. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [ ] **APG follow-through** — Summoner spell catalog (mechanics-only); other APG classes as separate slices (Magical Child, etc.). Auto-applied evolutions only if a later slice says so. [`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)
 - [ ] **Optional PF1e goldens** (system spec §6) — Cleric 5 (domains/channel as daily resources); prestige smoke test; PF1e familiar/companion table fixture if the stub needs one
 - [ ] **OGL notice + Section 15** — same change as the first pack **rules text** ([ADR 0007](adr/0007-content-licensing.md))
@@ -330,3 +338,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-19 | PF2e Ranger 5 golden (nested wolf companion); next is a PC2 class |
 | 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release |
 | 2026-08-19 | Phase 1x batch 14: remaining CRB player races + size stamp; next is spells-per-day tables |
+| 2026-08-27 | Locked remaining mundane CRB weapons/armor into batches 16–21; magic weapons/armor reserved later |
