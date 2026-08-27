@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-14-16-17-complete",
+  "status": "batches-1-14-16-18-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -87,6 +87,11 @@
       "id": 17,
       "mechanics": ["martial-light", "martial-one-handed-remainder"],
       "notes": "Documentary CRB martial light and remaining martial one-handed weapons. Skip packed longsword. No shield-bash or spiked-armor rows. Combat stays typed."
+    },
+    {
+      "id": 18,
+      "mechanics": ["martial-two-handed", "martial-ranged-and-arrows"],
+      "notes": "Documentary CRB martial two-handed weapons and martial bows plus arrows bundle. Composite Strength rating stays typed. Combat stays typed. No Special tags yet."
     }
   ]
 }

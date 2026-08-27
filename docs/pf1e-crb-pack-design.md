@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–14, 16, and 17 landed (Batch 17 is martial light + remaining one-handed). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–14 and 16–18 landed (Batch 18 is martial two-handed + martial ranged). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -52,8 +52,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **15** | Class spells-per-day tables; hybrid Max | Bonus-slot math from batch 7 needs the class table to fill Max | Catalog + engine/UI | Next |
 | **16** | Remaining simple melee; simple ranged + simple ammo | CRB simple weapon table, two halves. Skip packed dagger/quarterstaff | Catalog | Done |
 | **17** | Martial light; remaining martial one-handed | CRB martial melee that is not two-handed. Skip packed longsword | Catalog | Done |
-| **18** | Martial two-handed; martial ranged + arrows | Rest of the martial table | Catalog | Next |
-| **19** | Exotic melee; exotic ranged + repeating bolts | CRB exotic table, two halves. Double weapons stay one row / primary head | Catalog | Queued |
+| **18** | Martial two-handed; martial ranged + arrows | Rest of the martial table | Catalog | Done |
+| **19** | Exotic melee; exotic ranged + repeating bolts | CRB exotic table, two halves. Double weapons stay one row / primary head | Catalog | Next |
 | **W1** | Reach | First Special tag after all weapon ids exist | Catalog | Queued |
 | **W2** | Brace | One CRB Special quality | Catalog | Queued |
 | **W3** | Trip | One CRB Special quality | Catalog | Queued |
@@ -65,7 +65,7 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batches 16–17 landed remaining simple weapons and martial light/one-handed. Next mundane equipment is batch 18. After all weapon **ids** (19), CRB Special tags land **one property type per PR** ([§7.6](#76-weapon-properties-after-all-weapon-ids)). Batch 15 (spells-per-day) remains **Next** if that PR is not merged yet.
+The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batches 16–18 landed remaining simple weapons and martial weapons. Next mundane equipment is batch 19 (exotic). After all weapon **ids** (19), CRB Special tags land **one property type per PR** ([§7.6](#76-weapon-properties-after-all-weapon-ids)). The property **feature** is a list: a weapon may carry **more than one** tag (some CRB rows have two or more Specials; later magic properties use the same entry). Batch 15 (spells-per-day) remains **Next** if that PR is not merged yet.
 
 ---
 
@@ -782,7 +782,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** six simple ranged weapons and three ammo ids.
 
-**Tests:** Published range and dice; ammo has no weapon subobject; `weapon.greatsword` and `item.arrows` stay null.
+**Tests:** Published range and dice; ammo has no weapon subobject; exotic ids (`weapon.kama`) stay null.
 
 ---
 
@@ -820,7 +820,39 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** seven remaining martial one-handed weapons.
 
-**Tests:** Table numbers; longsword still 1d8/19–20; apply rapier leaves AC 10; `weapon.greatsword` stays null.
+**Tests:** Table numbers; longsword still 1d8/19–20; apply rapier leaves AC 10.
+
+---
+
+## Batch 18 — two mechanics
+
+### 4.35 Martial two-handed
+
+**CRB (player-facing):** Martial two-handed melee weapons list Medium damage, crit, type, and weight. Reach / trip / brace wait for the property queue after all weapon ids.
+
+**App today / this batch:** eleven ids. Documentary stamp only. Combat stays typed.
+
+**Verdict:** Falchion is 2d4 / 18–20. Greatsword is 2d6 / 19–20. Halberd and scythe store “piercing or slashing.” Reach is not tagged yet.
+
+**Gaps:** Special tags ([§7.6](#76-weapon-properties-after-all-weapon-ids)); Small-size dice; auto-filling attack rows.
+
+**Pack slice:** eleven martial two-handed weapons.
+
+**Tests:** Table of Medium numbers; apply greatsword leaves AC 10.
+
+### 4.36 Martial ranged and arrows
+
+**CRB (player-facing):** Longbow and shortbow (and their composites) list damage, crit, range increment, and weight. Arrows are sold as a 20-count bundle (3 lb). Composite Strength rating is a player choice, not extra catalog ids.
+
+**App today / this batch:** four bow ids plus `item.arrows` (bundle weight 3 lb).
+
+**Verdict:** Composite longbow range 110 ft and composite shortbow 70 ft on one row each. No `str-2` ids.
+
+**Gaps:** Strength rating for composites; loading; exotic bows (batch 19).
+
+**Pack slice:** four martial ranged weapons and arrows.
+
+**Tests:** Published range and dice; arrows have no weapon subobject; `weapon.kama` stays null.
 
 ---
 
@@ -876,9 +908,9 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Batches 16–17 landed remaining simple weapons and martial light/one-handed. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Batches 16–18 landed remaining simple weapons and martial weapons. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** class spells-per-day tables (batch 15, if not merged), then martial two-handed + martial ranged (batch 18), then exotic weapons (19), then **weapon properties one type at a time** ([§7.6](#76-weapon-properties-after-all-weapon-ids)), then armor/shields (20–21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** class spells-per-day tables (batch 15, if not merged), then exotic weapons (19), then **weapon properties one type at a time** ([§7.6](#76-weapon-properties-after-all-weapon-ids); `weapon.properties` is an **array** so a row can hold two or more tags and later magic properties), then armor/shields (20–21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -886,7 +918,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the rem
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** Batch 10 goldens plus Batch 16 simple melee/ranged/ammo and Batch 17 martial light/one-handed. Skip those ids in later weapon batches.
+**Already packed (do not duplicate):** Batch 10 goldens plus Batch 16 simple melee/ranged/ammo, Batch 17 martial light/one-handed, and Batch 18 martial two-handed/ranged/arrows. Skip those ids in later weapon batches.
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -975,7 +1007,7 @@ Hand crossbow and repeating crossbows also use bolts; they wait for batch 19 and
 
 #### Batch 18 — martial two-handed + martial ranged
 
-**Mechanic A — martial two-handed** (11).
+**Landed.** Eleven martial two-handed weapons, four bows, and arrows (3 lb bundle). Composite Strength rating stays typed. No Special tags.
 
 | Id | Name |
 | --- | --- |
@@ -1002,6 +1034,8 @@ Hand crossbow and repeating crossbows also use bolts; they wait for batch 19 and
 | `item.arrows` | Arrows |
 
 #### Batch 19 — exotic melee + exotic ranged
+
+**Next.** Thirteen exotic melee weapons, seven exotic ranged, and repeating bolts. Double weapons stay one row / primary head. No Special tags.
 
 **Mechanic A — exotic melee** (13). Light + one-handed + two-handed in one mechanic so the exotic table stays one PR pair.
 
@@ -1094,12 +1128,12 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 
 ### 7.4 Packed vs remaining counts
 
-| Kind | Packed now | Remaining in 18–21 | Skip / later |
+| Kind | Packed now | Remaining in 19–21 | Skip / later |
 | --- | --- | --- | --- |
-| Weapons | 35 (3 goldens + 17 simple + 15 martial light/1H) | 35 | Unarmed strike; shield-bash lines; Special tags wait for [§7.6](#76-weapon-properties-after-all-weapon-ids) |
+| Weapons | 50 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows) | 20 (exotic) | Unarmed strike; shield-bash lines; Special tags wait for [§7.6](#76-weapon-properties-after-all-weapon-ids) |
 | Armor | 2 | 10 | Magic armor |
 | Shields | 0 | 6 | Magic shields |
-| Ammo / extras | spellbook + 3 simple ammo | 2 ammo + 3 extras | Priced treasure as a later slice |
+| Ammo / extras | spellbook + 4 ammo (3 simple + arrows) | 1 ammo + 3 extras | Priced treasure as a later slice |
 | Magic weapons / armor | 0 | 0 | Entirely [§7.5](#75-reserved-magic-weapons-and-armor) |
 
 ### 7.5 Reserved: magic weapons and armor
@@ -1109,7 +1143,7 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 | Decision | Lock |
 | --- | --- |
 | Mundane id is stable | A +1 longsword is still `weapon.longsword`. Never add `weapon.longsword-plus-1` or `armor.full-plate-plus-2` |
-| Enhancement is a sheet overlay | Later: optional enhancement (and special-ability tags) on the **inventory row** (`ItemEntry` / weapon-armor-shield stats), not a second catalog copy of every table weapon |
+| Enhancement is a sheet overlay | Later: optional enhancement bonus on the **inventory row** (`ItemEntry` / weapon-armor-shield stats), not a second catalog copy of every table weapon. Magic **properties** (`flaming`, `keen`, …) append to the same `weapon.properties` array as CRB Special tags — not a second field |
 | Named items later | A later catalog may add specific magic items (`weapon.holy-avenger`, …) with an optional `baseItemId` pointing at the mundane row. That is its own pair of mechanics, after 21 |
 | Masterwork | Same overlay as enhancement. Not a catalog row per weapon |
 | Combat | Magic attack/damage/AC still stay typed until a batch says otherwise |
@@ -1121,11 +1155,13 @@ After batch 21, the next catalog work is remaining **feats** and **spells**, not
 
 ### 7.6 Weapon properties (after all weapon ids)
 
-CRB Chapter 6 **Special** is a closed list. Do **not** tag these during batches 16–19. Finish the remaining weapon **rows** first (18–19), then add **one property type per PR**.
+CRB Chapter 6 **Special** is a closed list of mundane tags. Do **not** tag these during batches 16–19. Finish the remaining weapon **rows** first (19), then add **one property type per PR**.
 
-Thrown range is already `rangeFeet`. Net “see text,” crossbow loading, and later-book qualities (performance, deadly, grapple, …) stay out.
+The storage shape **and the Inventory / Combat feature** are a **list**, not a single slot. Some CRB weapons have **two or more** Specials (guisarme: reach and trip; ranseur: reach and disarm; whip: reach, disarm, nonlethal, trip). Later magic properties (`flaming`, `keen`, …) slot into **this same list on the inventory entry** — do not add a second property field for magic, and do not ship a one-value dropdown that would have to be replaced.
 
-| Batch | Property | CRB weapons that get the tag (after 18–19 exist) |
+Thrown range is already `rangeFeet`. Net “see text,” crossbow loading, and later-book qualities (performance, deadly, grapple, …) stay out until their own slice.
+
+| Batch | Property | CRB weapons that get the tag (after 19 exists) |
 | --- | --- | --- |
 | **W1** | `reach` | Longspear, glaive, guisarme, lance, ranseur, whip |
 | **W2** | `brace` | Longspear, spear, trident, halberd, dwarven urgrosh |
@@ -1135,15 +1171,19 @@ Thrown range is already `rangeFeet`. Net “see text,” crossbow loading, and l
 | **W6** | `nonlethal` | Sap, whip, bolas |
 | **W7** | `double` | Quarterstaff, orc double axe, dire flail, gnome hooked hammer, two-bladed sword, dwarven urgrosh |
 
-Each W-batch is two mechanics: (1) tag that one quality on the matching catalog rows; (2) apply stamps it onto the inventory `weapon` subobject and **does not** rewrite `attacks` / CMB / reach math.
+Each W-batch is two mechanics: (1) **append** that one quality on the matching catalog rows (keep any tags already present); (2) apply stamps the full list onto the inventory `weapon` subobject and **does not** rewrite `attacks` / CMB / reach math.
 
 | Lock | Rule |
 | --- | --- |
-| Schema | First property PR adds optional `weapon.properties` as an array of those seven enums. Rows omit the field until tagged. Do not add unused keys in 18–19 |
-| One type | Do not land reach and trip in the same PR |
+| List | `weapon.properties` is an **array**. Zero, one, or **many** tags per weapon. Never a single enum field. A one-property control is wrong: some CRB weapons already have two Specials |
+| Append | W3 trip on a guisarme that already has reach from W1 yields `["reach", "trip"]`. Do not replace the array |
+| Magic later | The same array on that inventory entry is where later magic properties go (`flaming`, `keen`, ghost touch, …). Enhancement bonus stays a separate overlay. Do not mint plus-N ids and do not add a second “magic properties” field |
+| Feature / UI | When W1 lands, Inventory (and any Combat display of the stamp) must allow **more than one** property: add/remove tags, show the full list. A single-select “property” dropdown is not allowed |
+| Schema | First property PR adds optional `weapon.properties` as an array of kebab-case strings. Do **not** close the enum to only the seven CRB tags — that would block magic later. Unique tags; omit the field when empty. Do not add unused keys in 18–19 |
+| One type per PR | Do not land reach and trip in the same change. Multiple tags on one weapon accumulate across PRs |
 | Combat | Still typed. Reach does not change threatened area in the engine until a later batch says so |
 | Double last | W7 may add a second documentary head. Until then, one row / primary head only (existing 16–19 lock) |
-| Display | Inventory does not have to show the tags until W1. A muted label is allowed in that PR |
+| Display | Inventory does not have to show the tags until W1. When it does, list **all** current tags, not only the first |
 | License | Tags are mechanic labels, not Special-quality prose |
 
 ---
@@ -1181,4 +1221,5 @@ Each W-batch is two mechanics: (1) tag that one quality on the matching catalog 
 | 2026-08-27 | Locked remaining mundane weapons/armor into batches 16–21; magic weapons/armor reserved as a later overlay, not plus-N rows |
 | 2026-08-27 | Batch 16: remaining simple melee + simple ranged and ammo; Combat stays typed; next mundane equipment is martial weapons (17) |
 | 2026-08-27 | Batch 17: martial light + remaining martial one-handed; skip shield-bash ids; next is martial two-handed + bows (18) |
-| 2026-08-27 | After all weapon ids, CRB Special tags (reach, brace, trip, disarm, monk, nonlethal, double) land one type per PR; not in 16–19 |
+| 2026-08-27 | After all weapon ids, CRB Special tags (reach, brace, trip, disarm, monk, nonlethal, double) land one type per PR; not in 16–19. `weapon.properties` is an array (2+ tags per weapon; later magic properties use the same list) |
+| 2026-08-27 | Batch 18: martial two-handed + martial ranged and arrows; Combat stays typed; next is exotic weapons (19) |

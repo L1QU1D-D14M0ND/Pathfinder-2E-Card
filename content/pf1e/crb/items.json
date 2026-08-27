@@ -469,6 +469,205 @@
     "source": { "book": "CRB" }
   },
   {
+    "id": "weapon.falchion",
+    "name": "Falchion",
+    "kind": "weapon",
+    "pounds": 8,
+    "weapon": {
+      "damageDice": "2d4",
+      "damageType": "slashing",
+      "critRange": 18,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.glaive",
+    "name": "Glaive",
+    "kind": "weapon",
+    "pounds": 10,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.greataxe",
+    "name": "Greataxe",
+    "kind": "weapon",
+    "pounds": 12,
+    "weapon": {
+      "damageDice": "1d12",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.greatclub",
+    "name": "Greatclub",
+    "kind": "weapon",
+    "pounds": 8,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.heavy-flail",
+    "name": "Heavy flail",
+    "kind": "weapon",
+    "pounds": 10,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.greatsword",
+    "name": "Greatsword",
+    "kind": "weapon",
+    "pounds": 8,
+    "weapon": {
+      "damageDice": "2d6",
+      "damageType": "slashing",
+      "critRange": 19,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.guisarme",
+    "name": "Guisarme",
+    "kind": "weapon",
+    "pounds": 12,
+    "weapon": {
+      "damageDice": "2d4",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.halberd",
+    "name": "Halberd",
+    "kind": "weapon",
+    "pounds": 12,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "piercing or slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.lance",
+    "name": "Lance",
+    "kind": "weapon",
+    "pounds": 10,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.ranseur",
+    "name": "Ranseur",
+    "kind": "weapon",
+    "pounds": 12,
+    "weapon": {
+      "damageDice": "2d4",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.scythe",
+    "name": "Scythe",
+    "kind": "weapon",
+    "pounds": 10,
+    "weapon": {
+      "damageDice": "2d4",
+      "damageType": "piercing or slashing",
+      "critRange": 20,
+      "critMultiplier": 4
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.longbow",
+    "name": "Longbow",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3,
+      "rangeFeet": 100
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.composite-longbow",
+    "name": "Composite longbow",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3,
+      "rangeFeet": 110
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.shortbow",
+    "name": "Shortbow",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3,
+      "rangeFeet": 60
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.composite-shortbow",
+    "name": "Composite shortbow",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3,
+      "rangeFeet": 70
+    },
+    "source": { "book": "CRB" }
+  },
+  {
     "id": "armor.chain-shirt",
     "name": "Chain shirt",
     "kind": "armor",
@@ -520,6 +719,13 @@
     "name": "Sling bullets",
     "kind": "item",
     "pounds": 5,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.arrows",
+    "name": "Arrows",
+    "kind": "item",
+    "pounds": 3,
     "source": { "book": "CRB" }
   }
 ]

@@ -117,14 +117,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–14, 16, and 17', () => {
+  it('pack manifest records batches 1–14 and 16–18', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batches-1-14-16-17-complete')
+    expect(pack.status).toBe('batches-1-14-16-18-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17,
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18,
     ])
   })
 })
@@ -303,12 +303,28 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
       'weapon.scimitar',
       'weapon.trident',
       'weapon.warhammer',
+      'weapon.falchion',
+      'weapon.glaive',
+      'weapon.greataxe',
+      'weapon.greatclub',
+      'weapon.heavy-flail',
+      'weapon.greatsword',
+      'weapon.guisarme',
+      'weapon.halberd',
+      'weapon.lance',
+      'weapon.ranseur',
+      'weapon.scythe',
+      'weapon.longbow',
+      'weapon.composite-longbow',
+      'weapon.shortbow',
+      'weapon.composite-shortbow',
       'armor.chain-shirt',
       'armor.chainmail',
       'item.spellbook',
       'item.blowgun-darts',
       'item.crossbow-bolts',
       'item.sling-bullets',
+      'item.arrows',
     ])
     expect(lookupCrbItem('armor.chainmail')).toMatchObject({
       name: 'Chainmail',
@@ -323,7 +339,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
   })
 
   it('returns null for an unknown item id', () => {
-    expect(lookupCrbItem('weapon.greatsword')).toBeNull()
+    expect(lookupCrbItem('weapon.kama')).toBeNull()
     expect(lookupCrbItem(null)).toBeNull()
     expect(lookupCrbItem('')).toBeNull()
   })
@@ -360,7 +376,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
 
   it('unknown apply clears id and leaves the rest of the row', () => {
     const row = applyCrbItem(createEmptyItem(), 'weapon.longsword')
-    const custom = applyCrbItem(row, 'weapon.greatsword')
+    const custom = applyCrbItem(row, 'weapon.kama')
     expect(custom.item.id).toBeNull()
     expect(custom.item.name).toBe('Longsword')
     expect(custom.pounds).toBe(4)

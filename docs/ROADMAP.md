@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-27  
-**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). CRB simple weapons and martial light/one-handed are packed (batches 16–17); remaining weapon rows are 18–19, then Special tags one type at a time, then armor 20–21. Magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). CRB simple and martial weapons are packed (batches 16–18); remaining weapon rows are exotic (19), then Special tags one type at a time (`weapon.properties` is an array so a weapon can hold two or more tags and later magic properties), then armor 20–21. Magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
@@ -199,9 +199,9 @@ Recommended order:
 - [ ] **CRB Batch 15** — class spells-per-day tables + hybrid Max
 - [x] **CRB Batch 16** — remaining simple melee + simple ranged (and simple ammo)
 - [x] **CRB Batch 17** — martial light + remaining martial one-handed
-- [ ] **CRB Batch 18** — martial two-handed + martial ranged (and arrows)
+- [x] **CRB Batch 18** — martial two-handed + martial ranged (and arrows)
 - [ ] **CRB Batch 19** — exotic melee + exotic ranged
-- [ ] **CRB weapon properties** — after all weapon ids, one Special type per PR (reach, brace, trip, disarm, monk, nonlethal, then double). [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.6
+- [ ] **CRB weapon properties** — after all weapon ids, one Special type per PR (reach, brace, trip, disarm, monk, nonlethal, then double). `weapon.properties` is an **array**: a weapon may have two or more tags, and later magic properties (`flaming`, `keen`, …) use the same list on that inventory entry. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.6
 - [ ] **CRB Batch 20** — remaining light + medium armor
 - [ ] **CRB Batch 21** — heavy armor + shields
 - [ ] **CRB magic weapons / armor** — reserved later. Overlay on mundane ids; no plus-N catalog rows. Do not start in 16–21. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.5
@@ -342,4 +342,5 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-27 | Locked remaining mundane CRB weapons/armor into batches 16–21; magic weapons/armor reserved later |
 | 2026-08-27 | Phase 1x batch 16: remaining simple melee + simple ranged; next mundane equipment is martial weapons |
 | 2026-08-27 | Phase 1x batch 17: martial light + remaining martial one-handed; next is martial two-handed + bows |
-| 2026-08-27 | Weapon Special tags queued one type per PR after all weapon ids (not in 16–19) |
+| 2026-08-27 | Weapon Special tags queued one type per PR after all weapon ids (not in 16–19); `weapon.properties` is an array (2+ tags; later magic uses the same list) |
+| 2026-08-27 | Phase 1x batch 18: martial two-handed + martial ranged and arrows; next is exotic weapons |

@@ -645,6 +645,7 @@
     },
     "WeaponItemStats": {
       "type": "object",
+      "description": "Documentary weapon stats. Later optional properties is an array of kebab-case strings so a weapon can hold two or more CRB Specials and later magic properties on the same inventory entry. Do not add that field until the first property PR after all weapon ids.",
       "additionalProperties": false,
       "properties": {
         "damageDice": { "type": "string" },

@@ -217,6 +217,7 @@ export interface ArmorItemStats {
   spellFailurePercent?: number
 }
 
+/** Documentary combat fields. Later optional `properties: string[]` (two or more tags; magic uses the same list). Do not add until the first property PR after all weapon ids. */
 export interface WeaponItemStats {
   damageDice?: string
   damageType?: string
