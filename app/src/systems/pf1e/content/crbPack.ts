@@ -171,7 +171,15 @@ export function applyCrbItem(row: ItemEntry, id: string | null): ItemEntry {
       source: found.source,
     },
     pounds: found.pounds,
-    weapon: kind === 'weapon' && found.weapon ? { ...found.weapon } : undefined,
+    weapon:
+      kind === 'weapon' && found.weapon
+        ? {
+            ...found.weapon,
+            ...(found.weapon.properties
+              ? { properties: [...found.weapon.properties] }
+              : {}),
+          }
+        : undefined,
     armor: kind === 'armor' && found.armor ? { ...found.armor } : undefined,
   }
 }

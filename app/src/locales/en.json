@@ -300,7 +300,12 @@
       "equipped": "equipped",
       "carried": "carried",
       "stowed": "stowed",
-      "dropped": "dropped"
+      "dropped": "dropped",
+      "properties": "Properties",
+      "addProperty": "Add property",
+      "removeProperty": "Remove property {tag}",
+      "propertyPlaceholder": "reach, flaming, …",
+      "propertiesHelp": "N tags: one is valid (reach), many are valid (later trip, magic). Reach does not change threatened area yet."
     },
     "hp": {
       "title": "Max HP breakdown",

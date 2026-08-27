@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ttrpg-sheet.local/schemas/content/pf1e/items.schema.json",
   "title": "PF1e item catalog",
-  "description": "Mundane CRB item rows (ids, names, pounds, documentary weapon/armor stats). Fill-out is batches 16–21 in docs/pf1e-crb-pack-design.md §7. CRB Special tags (reach, brace, trip, disarm, monk, nonlethal, double) wait until after all weapon ids, one type per PR (§7.6). When they land, optional weapon.properties is an array of kebab-case strings — a weapon may have two or more tags, and later magic properties use the same list. Do not add a single-enum property field. Magic weapons and armor are a later overlay on these ids — do not add plus-N copies.",
+  "description": "Mundane CRB item rows (ids, names, pounds, documentary weapon/armor stats). Fill-out is batches 16–21 in docs/pf1e-crb-pack-design.md §7. Optional weapon.properties is an array of N kebab-case strings (one tag or many). W1 lands reach; later types append. Magic properties use the same list. Do not add a single-enum property field. Magic weapons and armor are a later overlay on these ids — do not add plus-N copies.",
   "type": "array",
   "items": {
     "type": "object",
@@ -21,7 +21,14 @@
           "damageType": { "type": "string" },
           "critRange": { "type": "integer", "minimum": 1, "maximum": 20 },
           "critMultiplier": { "type": "integer", "minimum": 2 },
-          "rangeFeet": { "type": ["number", "null"] }
+          "rangeFeet": { "type": ["number", "null"] },
+          "properties": {
+            "type": "array",
+            "description": "N kebab-case tags. Omit when empty. One tag is valid (longspear: reach). Many tags are valid (whip later; magic later). Not a single enum.",
+            "items": { "type": "string", "minLength": 1 },
+            "minItems": 1,
+            "uniqueItems": true
+          }
         }
       },
       "armor": {

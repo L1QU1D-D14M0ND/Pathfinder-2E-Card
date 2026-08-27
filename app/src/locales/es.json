@@ -300,7 +300,12 @@
       "equipped": "equipado",
       "carried": "llevado",
       "stowed": "guardado",
-      "dropped": "soltado"
+      "dropped": "soltado",
+      "properties": "Propiedades",
+      "addProperty": "Añadir propiedad",
+      "removeProperty": "Quitar propiedad {tag}",
+      "propertyPlaceholder": "reach, flaming, …",
+      "propertiesHelp": "N etiquetas: una vale (reach), varias valen (luego trip, magia). Alcance no cambia el área amenazada todavía."
     },
     "hp": {
       "title": "Desglose de PG máximos",

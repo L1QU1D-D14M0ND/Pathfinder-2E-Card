@@ -80,6 +80,7 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['reach'],
     },
   },
   {
@@ -262,13 +263,11 @@ describe('CRB batch 19: exotic melee', () => {
     })
   })
 
-  it('does not pack Special tags yet', () => {
-    expect(lookupCrbItem('weapon.whip')?.weapon).not.toHaveProperty(
-      'properties',
-    )
+  it('does not pack other Special tags yet', () => {
     expect(lookupCrbItem('weapon.kama')?.weapon).not.toHaveProperty(
       'properties',
     )
+    expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toEqual(['reach'])
   })
 })
 

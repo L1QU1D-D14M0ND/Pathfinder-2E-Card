@@ -141,7 +141,8 @@
       "damageDice": "1d8",
       "damageType": "piercing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["reach"]
     },
     "source": { "book": "CRB" }
   },
@@ -490,7 +491,8 @@
       "damageDice": "1d10",
       "damageType": "slashing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["reach"]
     },
     "source": { "book": "CRB" }
   },
@@ -555,7 +557,8 @@
       "damageDice": "2d4",
       "damageType": "slashing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["reach"]
     },
     "source": { "book": "CRB" }
   },
@@ -581,7 +584,8 @@
       "damageDice": "1d8",
       "damageType": "piercing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["reach"]
     },
     "source": { "book": "CRB" }
   },
@@ -594,7 +598,8 @@
       "damageDice": "2d4",
       "damageType": "piercing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["reach"]
     },
     "source": { "book": "CRB" }
   },
@@ -754,7 +759,8 @@
       "damageDice": "1d3",
       "damageType": "slashing",
       "critRange": 20,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["reach"]
     },
     "source": { "book": "CRB" }
   },

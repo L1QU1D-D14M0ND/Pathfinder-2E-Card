@@ -25,6 +25,7 @@ const MARTIAL_TWO_HANDED = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['reach'],
     },
   },
   {
@@ -80,6 +81,7 @@ const MARTIAL_TWO_HANDED = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['reach'],
     },
   },
   {
@@ -102,6 +104,7 @@ const MARTIAL_TWO_HANDED = [
       damageType: 'piercing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['reach'],
     },
   },
   {
@@ -113,6 +116,7 @@ const MARTIAL_TWO_HANDED = [
       damageType: 'piercing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['reach'],
     },
   },
   {

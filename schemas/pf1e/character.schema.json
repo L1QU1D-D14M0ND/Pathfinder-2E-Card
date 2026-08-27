@@ -645,14 +645,20 @@
     },
     "WeaponItemStats": {
       "type": "object",
-      "description": "Documentary weapon stats. Later optional properties is an array of kebab-case strings so a weapon can hold two or more CRB Specials and later magic properties on the same inventory entry. Do not add that field until the first property PR after all weapon ids.",
+      "description": "Documentary weapon stats. Optional properties is an array of N kebab-case strings: one tag is valid, many tags are valid, omit when empty. CRB Specials and later magic share this list.",
       "additionalProperties": false,
       "properties": {
         "damageDice": { "type": "string" },
         "damageType": { "type": "string" },
         "critRange": { "type": "integer", "minimum": 1, "maximum": 20 },
         "critMultiplier": { "type": "integer", "minimum": 2 },
-        "rangeFeet": { "type": ["integer", "null"] }
+        "rangeFeet": { "type": ["integer", "null"] },
+        "properties": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        }
       }
     },
     "ShieldItemStats": {
