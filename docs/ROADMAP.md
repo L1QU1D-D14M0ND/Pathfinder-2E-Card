@@ -197,7 +197,7 @@ Recommended order:
 
 - [x] **CRB Batch 14** — remaining player races + size stamp (ability adjustments stay typed)
 - [ ] **CRB Batch 15** — class spells-per-day tables + hybrid Max
-- [ ] **CRB Batch 16** — remaining simple melee + simple ranged (and simple ammo)
+- [x] **CRB Batch 16** — remaining simple melee + simple ranged (and simple ammo)
 - [ ] **CRB Batch 17** — martial light + remaining martial one-handed
 - [ ] **CRB Batch 18** — martial two-handed + martial ranged (and arrows)
 - [ ] **CRB Batch 19** — exotic melee + exotic ranged
@@ -339,3 +339,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release |
 | 2026-08-19 | Phase 1x batch 14: remaining CRB player races + size stamp; next is spells-per-day tables |
 | 2026-08-27 | Locked remaining mundane CRB weapons/armor into batches 16–21; magic weapons/armor reserved later |
+| 2026-08-27 | Phase 1x batch 16: remaining simple melee + simple ranged; next mundane equipment is martial weapons |

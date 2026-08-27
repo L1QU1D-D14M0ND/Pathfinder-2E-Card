@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–14 landed (Batch 14 is 1x fill-out). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–14 and 16 landed (Batch 16 is 1x simple weapons). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -50,15 +50,15 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **13** | Spell metadata on the goldens | Documentary spell ids; slots/DCs/prepared stay typed | Catalog | Done |
 | **14** | Remaining CRB player races; stamp catalog size | Identity already lists `CRB_RACES`; Gnome/Halfling are Small; ability adjustments stay typed | Catalog | Done |
 | **15** | Class spells-per-day tables; hybrid Max | Bonus-slot math from batch 7 needs the class table to fill Max | Catalog + engine/UI | Next |
-| **16** | Remaining simple melee; simple ranged + simple ammo | CRB simple weapon table, two halves. Skip packed dagger/quarterstaff | Catalog | Queued |
-| **17** | Martial light; remaining martial one-handed | CRB martial melee that is not two-handed. Skip packed longsword | Catalog | Queued |
+| **16** | Remaining simple melee; simple ranged + simple ammo | CRB simple weapon table, two halves. Skip packed dagger/quarterstaff | Catalog | Done |
+| **17** | Martial light; remaining martial one-handed | CRB martial melee that is not two-handed. Skip packed longsword | Catalog | Next |
 | **18** | Martial two-handed; martial ranged + arrows | Rest of the martial table | Catalog | Queued |
 | **19** | Exotic melee; exotic ranged + repeating bolts | CRB exotic table, two halves. Double weapons stay one row / primary head | Catalog | Queued |
 | **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Queued |
 | **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batch 15 is still the next code change. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor) — one pair per PR, never the whole weapon or armor chapter at once.
+The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batch 16 (simple weapons) landed; next mundane equipment is batch 17. Batch 15 (spells-per-day) remains **Next** if that PR is not merged yet. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor) — one pair per PR, never the whole weapon or armor chapter at once.
 
 ---
 
@@ -735,6 +735,50 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 16 — two mechanics
+
+### 4.31 Remaining simple melee
+
+**CRB (player-facing):** The simple melee table lists unarmed, light, one-handed, and two-handed weapons with **Medium damage dice, crit, type, range (if thrown), and weight**. The player copies those onto an attack row. Reach / brace / trip tags are special properties, not Combat auto-math.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `content/pf1e/crb/items.json` | Remaining simple melee ids from [§7.2](#72-weapons--batches-1619). Dagger and quarterstaff already existed |
+| Apply | `applyCrbItem` | Stamps name, pounds, and `weapon` subobject. Does **not** rewrite `armorClass` or `attacks` |
+| Goldens | Fighter 5 dagger; Wizard 5 quarterstaff | Unchanged. Quarterstaff stays a **single 1d6** |
+
+**Verdict:** Medium table numbers resolve. Unarmed strike is not a catalog item. Gauntlet is packed.
+
+**Gaps:** Small-size damage dice; reach/brace/trip tags; auto-filling attack rows.
+
+**Pack slice:** eleven remaining simple melee weapons.
+
+**Tests:** Table of Medium numbers; unarmed strike id is null; apply spear leaves AC 10.
+
+### 4.32 Simple ranged weapons and ammo
+
+**CRB (player-facing):** Simple ranged weapons list damage, crit, range increment, and weight. Ammunition is sold in listed bundles (10 darts / bolts / bullets) with a bundle weight.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `items.json` | Blowgun, heavy/light crossbow, dart, javelin, sling. Ammo rows are `kind: item` with the published **bundle** weight |
+| Apply | existing | Weapons stamp `weapon`. Ammo stamps pounds only |
+| Combat | `attacks` | Unchanged |
+
+**Verdict:** Sling weight is **0** (table dash). Dart is ½ lb. Ammo quantity is packs of 10; pounds are the bundle line, not per shot.
+
+**Gaps:** Loading actions; composite/repeating crossbows (exotic, batch 19); arrows (martial, batch 18).
+
+**Pack slice:** six simple ranged weapons and three ammo ids.
+
+**Tests:** Published range and dice; ammo has no weapon subobject; `weapon.greatsword` and `item.arrows` stay null.
+
+---
+
 ## Batch 7 — two mechanics
 
 ### 4.25 Spell DC
@@ -787,9 +831,9 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Batch 16 landed remaining simple melee and simple ranged weapons. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** class spells-per-day tables (batch 15), then mundane equipment fill-out in **batches 16–21** ([§7](#7-remaining-mundane-weapons-and-armor)), then remaining feats/spells and other catalog tags, then APG follow-through. Magic weapons and magic armor stay **later** — leave schema room, do not pack them in 16–21. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** class spells-per-day tables (batch 15, if not merged), then martial weapons (batch 17), then batches 18–21, then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later** — leave schema room, do not pack them in 16–21. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -797,7 +841,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the rem
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** `weapon.dagger`, `weapon.longsword`, `weapon.quarterstaff`, `armor.chain-shirt`, `armor.chainmail`, `item.spellbook`.
+**Already packed (do not duplicate):** Batch 10 goldens plus Batch 16 simple melee/ranged/ammo. Skip those ids in later weapon batches.
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -824,7 +868,7 @@ Id pattern stays `weapon.<kebab>`, `armor.<kebab>`, `item.<kebab>`. Batch 21 add
 
 #### Batch 16 — simple melee remainder + simple ranged
 
-**Mechanic A — remaining simple melee** (11). Packed dagger and quarterstaff stay as they are.
+**Landed.** Remaining simple melee (11) and simple ranged + ammo (6 + 3). Packed dagger/quarterstaff unchanged. Unarmed strike not packed.
 
 | Id | Name | Group |
 | --- | --- | --- |
@@ -1004,12 +1048,12 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 
 ### 7.4 Packed vs remaining counts
 
-| Kind | Packed now | Remaining in 16–21 | Skip / later |
+| Kind | Packed now | Remaining in 17–21 | Skip / later |
 | --- | --- | --- | --- |
-| Weapons | 3 | 67 | Unarmed strike; shield-bash and spiked-armor weapon-table lines |
+| Weapons | 20 (3 goldens + 17 simple) | 50 | Unarmed strike; shield-bash and spiked-armor weapon-table lines |
 | Armor | 2 | 10 | Magic armor |
 | Shields | 0 | 6 | Magic shields |
-| Ammo / extras | spellbook | 5 ammo + 3 extras | Priced treasure as a later slice |
+| Ammo / extras | spellbook + 3 simple ammo | 2 ammo + 3 extras | Priced treasure as a later slice |
 | Magic weapons / armor | 0 | 0 | Entirely [§7.5](#75-reserved-magic-weapons-and-armor) |
 
 ### 7.5 Reserved: magic weapons and armor
@@ -1062,3 +1106,4 @@ After batch 21, the next catalog work is remaining **feats** and **spells**, not
 | 2026-08-19 | 1.0 stability; this folder stays CRB-only |
 | 2026-08-19 | Batch 14: remaining CRB player races + size stamp; ability adjustments stay typed; next is spells-per-day tables |
 | 2026-08-27 | Locked remaining mundane weapons/armor into batches 16–21; magic weapons/armor reserved as a later overlay, not plus-N rows |
+| 2026-08-27 | Batch 16: remaining simple melee + simple ranged and ammo; Combat stays typed; next mundane equipment is martial weapons (17) |

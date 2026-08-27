@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-14-complete",
+  "status": "batches-1-14-16-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -77,6 +77,11 @@
       "id": 14,
       "mechanics": ["remaining-crb-races", "race-size-stamp"],
       "notes": "Dwarf, Elf, Gnome, Half-Elf, Half-Orc, Halfling plus Human size. Apply stamps identity.size. Ability adjustments stay typed. Languages and speeds are not stamped."
+    },
+    {
+      "id": 16,
+      "mechanics": ["simple-melee-remainder", "simple-ranged-and-ammo"],
+      "notes": "Documentary CRB simple weapons except packed dagger/quarterstaff, plus simple ammo bundles. Combat stays typed. No unarmed strike. No martial/exotic."
     }
   ]
 }

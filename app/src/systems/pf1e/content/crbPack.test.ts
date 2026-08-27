@@ -117,14 +117,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–14', () => {
+  it('pack manifest records batches 1–14 and 16', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batches-1-14-complete')
+    expect(pack.status).toBe('batches-1-14-16-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16,
     ])
   })
 })
@@ -268,12 +268,32 @@ describe('CRB pack batch 9: class skills', () => {
 describe('CRB pack batch 10: weapons and armor catalog', () => {
   it('lists the golden item ids', () => {
     expect(CRB_ITEMS.map((row) => row.id)).toEqual([
+      'weapon.gauntlet',
       'weapon.dagger',
-      'weapon.longsword',
+      'weapon.punching-dagger',
+      'weapon.spiked-gauntlet',
+      'weapon.light-mace',
+      'weapon.sickle',
+      'weapon.club',
+      'weapon.heavy-mace',
+      'weapon.morningstar',
+      'weapon.shortspear',
+      'weapon.longspear',
       'weapon.quarterstaff',
+      'weapon.spear',
+      'weapon.blowgun',
+      'weapon.heavy-crossbow',
+      'weapon.light-crossbow',
+      'weapon.dart',
+      'weapon.javelin',
+      'weapon.sling',
+      'weapon.longsword',
       'armor.chain-shirt',
       'armor.chainmail',
       'item.spellbook',
+      'item.blowgun-darts',
+      'item.crossbow-bolts',
+      'item.sling-bullets',
     ])
     expect(lookupCrbItem('armor.chainmail')).toMatchObject({
       name: 'Chainmail',

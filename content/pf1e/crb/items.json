@@ -1,5 +1,18 @@
 [
   {
+    "id": "weapon.gauntlet",
+    "name": "Gauntlet",
+    "kind": "weapon",
+    "pounds": 1,
+    "weapon": {
+      "damageDice": "1d3",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
     "id": "weapon.dagger",
     "name": "Dagger",
     "kind": "weapon",
@@ -14,15 +27,121 @@
     "source": { "book": "CRB" }
   },
   {
-    "id": "weapon.longsword",
-    "name": "Longsword",
+    "id": "weapon.punching-dagger",
+    "name": "Punching dagger",
+    "kind": "weapon",
+    "pounds": 1,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.spiked-gauntlet",
+    "name": "Spiked gauntlet",
+    "kind": "weapon",
+    "pounds": 1,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.light-mace",
+    "name": "Light mace",
     "kind": "weapon",
     "pounds": 4,
     "weapon": {
-      "damageDice": "1d8",
-      "damageType": "slashing",
-      "critRange": 19,
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "critRange": 20,
       "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.sickle",
+    "name": "Sickle",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.club",
+    "name": "Club",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.heavy-mace",
+    "name": "Heavy mace",
+    "kind": "weapon",
+    "pounds": 8,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.morningstar",
+    "name": "Morningstar",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "bludgeoning and piercing",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.shortspear",
+    "name": "Shortspear",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.longspear",
+    "name": "Longspear",
+    "kind": "weapon",
+    "pounds": 9,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3
     },
     "source": { "book": "CRB" }
   },
@@ -35,6 +154,117 @@
       "damageDice": "1d6",
       "damageType": "bludgeoning",
       "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.spear",
+    "name": "Spear",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3,
+      "rangeFeet": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.blowgun",
+    "name": "Blowgun",
+    "kind": "weapon",
+    "pounds": 1,
+    "weapon": {
+      "damageDice": "1d2",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.heavy-crossbow",
+    "name": "Heavy crossbow",
+    "kind": "weapon",
+    "pounds": 8,
+    "weapon": {
+      "damageDice": "1d10",
+      "damageType": "piercing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "rangeFeet": 120
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.light-crossbow",
+    "name": "Light crossbow",
+    "kind": "weapon",
+    "pounds": 4,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 19,
+      "critMultiplier": 2,
+      "rangeFeet": 80
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.dart",
+    "name": "Dart",
+    "kind": "weapon",
+    "pounds": 0.5,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.javelin",
+    "name": "Javelin",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 30
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.sling",
+    "name": "Sling",
+    "kind": "weapon",
+    "pounds": 0,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 50
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.longsword",
+    "name": "Longsword",
+    "kind": "weapon",
+    "pounds": 4,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 19,
       "critMultiplier": 2
     },
     "source": { "book": "CRB" }
@@ -70,6 +300,27 @@
     "name": "Spellbook",
     "kind": "item",
     "pounds": 3,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.blowgun-darts",
+    "name": "Blowgun darts",
+    "kind": "item",
+    "pounds": 1,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.crossbow-bolts",
+    "name": "Crossbow bolts",
+    "kind": "item",
+    "pounds": 1,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.sling-bullets",
+    "name": "Sling bullets",
+    "kind": "item",
+    "pounds": 5,
     "source": { "book": "CRB" }
   }
 ]
