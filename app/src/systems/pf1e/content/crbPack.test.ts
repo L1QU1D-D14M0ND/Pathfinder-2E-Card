@@ -117,14 +117,14 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–14 and 16', () => {
+  it('pack manifest records batches 1–14, 16, and 17', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number }>
     }
-    expect(pack.status).toBe('batches-1-14-16-complete')
+    expect(pack.status).toBe('batches-1-14-16-17-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16,
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17,
     ])
   })
 })
@@ -287,7 +287,22 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
       'weapon.dart',
       'weapon.javelin',
       'weapon.sling',
+      'weapon.throwing-axe',
+      'weapon.light-hammer',
+      'weapon.handaxe',
+      'weapon.kukri',
+      'weapon.light-pick',
+      'weapon.sap',
+      'weapon.starknife',
+      'weapon.short-sword',
+      'weapon.battleaxe',
+      'weapon.flail',
       'weapon.longsword',
+      'weapon.heavy-pick',
+      'weapon.rapier',
+      'weapon.scimitar',
+      'weapon.trident',
+      'weapon.warhammer',
       'armor.chain-shirt',
       'armor.chainmail',
       'item.spellbook',

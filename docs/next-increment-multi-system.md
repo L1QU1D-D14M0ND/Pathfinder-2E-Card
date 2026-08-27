@@ -278,7 +278,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Later PF2e *release* (when those panels next change) |
-| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batch 16 simple weapons landed; next mundane equipment is martial 17. Batch 15 spells-per-day if unmerged) |
+| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batches 16–17 weapons landed; next mundane equipment is martial two-handed + bows. Batch 15 spells-per-day if unmerged) |
 | Leftover PF2e (PC2 golden, companion editor, Remaster packs) | Later *release* |
 
 ---
@@ -327,3 +327,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-08-19 | CRB batch 14: remaining player races + size stamp; next is spells-per-day tables |
 | 2026-08-27 | Remaining mundane CRB weapons/armor locked as batches 16–21; magic gear reserved later |
 | 2026-08-27 | CRB batch 16: remaining simple melee + simple ranged; next mundane equipment is martial weapons |
+| 2026-08-27 | CRB batch 17: martial light + remaining martial one-handed; next is martial two-handed + bows |

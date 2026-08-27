@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-14-16-complete",
+  "status": "batches-1-14-16-17-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -82,6 +82,11 @@
       "id": 16,
       "mechanics": ["simple-melee-remainder", "simple-ranged-and-ammo"],
       "notes": "Documentary CRB simple weapons except packed dagger/quarterstaff, plus simple ammo bundles. Combat stays typed. No unarmed strike. No martial/exotic."
+    },
+    {
+      "id": 17,
+      "mechanics": ["martial-light", "martial-one-handed-remainder"],
+      "notes": "Documentary CRB martial light and remaining martial one-handed weapons. Skip packed longsword. No shield-bash or spiked-armor rows. Combat stays typed."
     }
   ]
 }

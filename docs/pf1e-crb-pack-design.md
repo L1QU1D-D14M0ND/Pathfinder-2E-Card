@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–14 and 16 landed (Batch 16 is 1x simple weapons). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–14, 16, and 17 landed (Batch 17 is martial light + remaining one-handed). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -51,14 +51,14 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **14** | Remaining CRB player races; stamp catalog size | Identity already lists `CRB_RACES`; Gnome/Halfling are Small; ability adjustments stay typed | Catalog | Done |
 | **15** | Class spells-per-day tables; hybrid Max | Bonus-slot math from batch 7 needs the class table to fill Max | Catalog + engine/UI | Next |
 | **16** | Remaining simple melee; simple ranged + simple ammo | CRB simple weapon table, two halves. Skip packed dagger/quarterstaff | Catalog | Done |
-| **17** | Martial light; remaining martial one-handed | CRB martial melee that is not two-handed. Skip packed longsword | Catalog | Next |
-| **18** | Martial two-handed; martial ranged + arrows | Rest of the martial table | Catalog | Queued |
+| **17** | Martial light; remaining martial one-handed | CRB martial melee that is not two-handed. Skip packed longsword | Catalog | Done |
+| **18** | Martial two-handed; martial ranged + arrows | Rest of the martial table | Catalog | Next |
 | **19** | Exotic melee; exotic ranged + repeating bolts | CRB exotic table, two halves. Double weapons stay one row / primary head | Catalog | Queued |
 | **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Queued |
 | **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batch 16 (simple weapons) landed; next mundane equipment is batch 17. Batch 15 (spells-per-day) remains **Next** if that PR is not merged yet. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor) — one pair per PR, never the whole weapon or armor chapter at once.
+The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batches 16–17 landed remaining simple weapons and martial light/one-handed. Next mundane equipment is batch 18. Batch 15 (spells-per-day) remains **Next** if that PR is not merged yet. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor) — one pair per PR, never the whole weapon or armor chapter at once.
 
 ---
 
@@ -779,6 +779,44 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 17 — two mechanics
+
+### 4.33 Martial light weapons
+
+**CRB (player-facing):** Martial light melee weapons list Medium damage, crit, type, thrown range if any, and weight. Shield bash, spiked armor, and spiked shields sit on the same table; they wait with armor (batch 21).
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `items.json` | Eight martial light ids from [§7.2](#72-weapons--batches-1619) |
+| Apply | `applyCrbItem` | Stamps name, pounds, and `weapon`. Does **not** rewrite Combat |
+| Skip | shield-bash / spikes | Not packed as `weapon.*` ids |
+
+**Verdict:** Medium table numbers resolve, including kukri 18–20 and light pick ×4. Sap is documentary 1d6 bludgeoning; nonlethal is not a catalog field.
+
+**Gaps:** Nonlethal sap tag; Small-size dice; auto-filling attack rows.
+
+**Pack slice:** eight martial light weapons.
+
+**Tests:** Table of Medium numbers; `weapon.light-shield` is null.
+
+### 4.34 Remaining martial one-handed
+
+**CRB (player-facing):** Martial one-handed weapons use the same columns. Longsword already exists from the goldens. Heavy shield bash waits with shields.
+
+**App today / this batch:** seven remaining ids. Packed longsword is unchanged.
+
+**Verdict:** Rapier and scimitar stamp crit 18. Trident has a 10 ft range increment. Flail trip/disarm is not a catalog field.
+
+**Gaps:** Flail trip/disarm tags; two-handed martial (batch 18).
+
+**Pack slice:** seven remaining martial one-handed weapons.
+
+**Tests:** Table numbers; longsword still 1d8/19–20; apply rapier leaves AC 10; `weapon.greatsword` stays null.
+
+---
+
 ## Batch 7 — two mechanics
 
 ### 4.25 Spell DC
@@ -831,9 +869,9 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Batch 16 landed remaining simple melee and simple ranged weapons. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Batches 16–17 landed remaining simple weapons and martial light/one-handed. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** class spells-per-day tables (batch 15, if not merged), then martial weapons (batch 17), then batches 18–21, then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later** — leave schema room, do not pack them in 16–21. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** class spells-per-day tables (batch 15, if not merged), then martial two-handed + martial ranged (batch 18), then batches 19–21, then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -841,7 +879,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the rem
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** Batch 10 goldens plus Batch 16 simple melee/ranged/ammo. Skip those ids in later weapon batches.
+**Already packed (do not duplicate):** Batch 10 goldens plus Batch 16 simple melee/ranged/ammo and Batch 17 martial light/one-handed. Skip those ids in later weapon batches.
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -902,7 +940,7 @@ Hand crossbow and repeating crossbows also use bolts; they wait for batch 19 and
 
 #### Batch 17 — martial light + remaining martial one-handed
 
-**Mechanic A — martial light** (8). Skip light-shield bash, spiked armor, and light spiked shield.
+**Landed.** Eight martial light weapons and seven remaining martial one-handed. Packed longsword unchanged. Shield-bash / spiked-armor lines wait for batch 21.
 
 | Id | Name |
 | --- | --- |
@@ -1048,9 +1086,9 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 
 ### 7.4 Packed vs remaining counts
 
-| Kind | Packed now | Remaining in 17–21 | Skip / later |
+| Kind | Packed now | Remaining in 18–21 | Skip / later |
 | --- | --- | --- | --- |
-| Weapons | 20 (3 goldens + 17 simple) | 50 | Unarmed strike; shield-bash and spiked-armor weapon-table lines |
+| Weapons | 35 (3 goldens + 17 simple + 15 martial light/1H) | 35 | Unarmed strike; shield-bash and spiked-armor weapon-table lines |
 | Armor | 2 | 10 | Magic armor |
 | Shields | 0 | 6 | Magic shields |
 | Ammo / extras | spellbook + 3 simple ammo | 2 ammo + 3 extras | Priced treasure as a later slice |
@@ -1107,3 +1145,4 @@ After batch 21, the next catalog work is remaining **feats** and **spells**, not
 | 2026-08-19 | Batch 14: remaining CRB player races + size stamp; ability adjustments stay typed; next is spells-per-day tables |
 | 2026-08-27 | Locked remaining mundane weapons/armor into batches 16–21; magic weapons/armor reserved as a later overlay, not plus-N rows |
 | 2026-08-27 | Batch 16: remaining simple melee + simple ranged and ammo; Combat stays typed; next mundane equipment is martial weapons (17) |
+| 2026-08-27 | Batch 17: martial light + remaining martial one-handed; skip shield-bash ids; next is martial two-handed + bows (18) |

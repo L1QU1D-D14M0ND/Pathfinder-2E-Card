@@ -257,6 +257,139 @@
     "source": { "book": "CRB" }
   },
   {
+    "id": "weapon.throwing-axe",
+    "name": "Throwing axe",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.light-hammer",
+    "name": "Light hammer",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.handaxe",
+    "name": "Handaxe",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.kukri",
+    "name": "Kukri",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "slashing",
+      "critRange": 18,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.light-pick",
+    "name": "Light pick",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 4
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.sap",
+    "name": "Sap",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.starknife",
+    "name": "Starknife",
+    "kind": "weapon",
+    "pounds": 3,
+    "weapon": {
+      "damageDice": "1d4",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 3,
+      "rangeFeet": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.short-sword",
+    "name": "Short sword",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 19,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.battleaxe",
+    "name": "Battleaxe",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "slashing",
+      "critRange": 20,
+      "critMultiplier": 3
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.flail",
+    "name": "Flail",
+    "kind": "weapon",
+    "pounds": 5,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
     "id": "weapon.longsword",
     "name": "Longsword",
     "kind": "weapon",
@@ -266,6 +399,72 @@
       "damageType": "slashing",
       "critRange": 19,
       "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.heavy-pick",
+    "name": "Heavy pick",
+    "kind": "weapon",
+    "pounds": 6,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 4
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.rapier",
+    "name": "Rapier",
+    "kind": "weapon",
+    "pounds": 2,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "piercing",
+      "critRange": 18,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.scimitar",
+    "name": "Scimitar",
+    "kind": "weapon",
+    "pounds": 4,
+    "weapon": {
+      "damageDice": "1d6",
+      "damageType": "slashing",
+      "critRange": 18,
+      "critMultiplier": 2
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.trident",
+    "name": "Trident",
+    "kind": "weapon",
+    "pounds": 4,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "piercing",
+      "critRange": 20,
+      "critMultiplier": 2,
+      "rangeFeet": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.warhammer",
+    "name": "Warhammer",
+    "kind": "weapon",
+    "pounds": 5,
+    "weapon": {
+      "damageDice": "1d8",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 3
     },
     "source": { "book": "CRB" }
   },
