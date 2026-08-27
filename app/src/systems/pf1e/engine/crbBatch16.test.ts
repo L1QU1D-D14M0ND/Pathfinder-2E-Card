@@ -115,7 +115,7 @@ const SIMPLE_MELEE = [
       damageType: 'piercing',
       critRange: 20,
       critMultiplier: 3,
-      properties: ['reach'],
+      properties: ['reach', 'brace'],
     },
   },
   {
@@ -128,6 +128,7 @@ const SIMPLE_MELEE = [
       critRange: 20,
       critMultiplier: 3,
       rangeFeet: 20,
+      properties: ['brace'],
     },
   },
 ] as const

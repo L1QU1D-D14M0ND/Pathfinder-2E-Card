@@ -93,6 +93,7 @@ const MARTIAL_TWO_HANDED = [
       damageType: 'piercing or slashing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['brace'],
     },
   },
   {

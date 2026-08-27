@@ -142,7 +142,7 @@
       "damageType": "piercing",
       "critRange": 20,
       "critMultiplier": 3,
-      "properties": ["reach"]
+      "properties": ["reach", "brace"]
     },
     "source": { "book": "CRB" }
   },
@@ -169,7 +169,8 @@
       "damageType": "piercing",
       "critRange": 20,
       "critMultiplier": 3,
-      "rangeFeet": 20
+      "rangeFeet": 20,
+      "properties": ["brace"]
     },
     "source": { "book": "CRB" }
   },
@@ -452,7 +453,8 @@
       "damageType": "piercing",
       "critRange": 20,
       "critMultiplier": 2,
-      "rangeFeet": 10
+      "rangeFeet": 10,
+      "properties": ["brace"]
     },
     "source": { "book": "CRB" }
   },
@@ -571,7 +573,8 @@
       "damageDice": "1d10",
       "damageType": "piercing or slashing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["brace"]
     },
     "source": { "book": "CRB" }
   },
@@ -838,7 +841,8 @@
       "damageDice": "1d8",
       "damageType": "slashing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["brace"]
     },
     "source": { "book": "CRB" }
   },

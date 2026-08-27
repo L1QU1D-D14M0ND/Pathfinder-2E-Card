@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-14-16-19-w1-complete",
+  "status": "batches-1-14-16-19-w1-w2-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -102,6 +102,11 @@
       "id": "W1",
       "mechanics": ["reach-tag", "properties-list-n-tags"],
       "notes": "Append reach on matching catalog rows. weapon.properties is an array of N tags (one or many; omit when empty). Apply stamps the list. Combat reach math stays typed."
+    },
+    {
+      "id": "W2",
+      "mechanics": ["brace-tag", "append-without-replacing"],
+      "notes": "Append brace on matching catalog rows. Longspear keeps reach and adds brace. Spear/trident/halberd/urgrosh are N=1 brace. Combat stays typed."
     }
   ]
 }

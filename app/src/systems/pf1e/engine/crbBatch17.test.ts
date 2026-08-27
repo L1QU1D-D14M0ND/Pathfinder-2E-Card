@@ -164,6 +164,7 @@ const MARTIAL_ONE_HANDED = [
       critRange: 20,
       critMultiplier: 2,
       rangeFeet: 10,
+      properties: ['brace'],
     },
   },
   {

@@ -147,6 +147,7 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['brace'],
     },
   },
 ] as const

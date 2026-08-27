@@ -23,7 +23,27 @@ function InventoryHarness() {
 describe('InventoryPanel weapon properties', () => {
   afterEach(cleanup)
 
-  it('stamps a single reach tag and allows adding a second', () => {
+  it('stamps a single brace tag and allows adding a second', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.spear' },
+    })
+    expect(screen.getByText('brace')).toBeInTheDocument()
+    expect(screen.queryByText('reach')).not.toBeInTheDocument()
+    fireEvent.change(screen.getByLabelText('Add property'), {
+      target: { value: 'trip' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Add property' }))
+    expect(screen.getByText('brace')).toBeInTheDocument()
+    expect(screen.getByText('trip')).toBeInTheDocument()
+  })
+
+  it('stamps reach and brace together on a longspear', () => {
     render(
       <I18nProvider>
         <InventoryHarness />
@@ -34,12 +54,7 @@ describe('InventoryPanel weapon properties', () => {
       target: { value: 'weapon.longspear' },
     })
     expect(screen.getByText('reach')).toBeInTheDocument()
-    fireEvent.change(screen.getByLabelText('Add property'), {
-      target: { value: 'trip' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: 'Add property' }))
-    expect(screen.getByText('reach')).toBeInTheDocument()
-    expect(screen.getByText('trip')).toBeInTheDocument()
+    expect(screen.getByText('brace')).toBeInTheDocument()
   })
 
   it('can drop back to a single tag', () => {
@@ -50,14 +65,14 @@ describe('InventoryPanel weapon properties', () => {
     )
     fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
     fireEvent.change(screen.getByLabelText('CRB item'), {
-      target: { value: 'weapon.longspear' },
+      target: { value: 'weapon.spear' },
     })
     fireEvent.change(screen.getByLabelText('Add property'), {
       target: { value: 'flaming' },
     })
     fireEvent.click(screen.getByRole('button', { name: 'Add property' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Remove property reach' }))
-    expect(screen.queryByText('reach')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Remove property brace' }))
+    expect(screen.queryByText('brace')).not.toBeInTheDocument()
     expect(screen.getByText('flaming')).toBeInTheDocument()
   })
 })

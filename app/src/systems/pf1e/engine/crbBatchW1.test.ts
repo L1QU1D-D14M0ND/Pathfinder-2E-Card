@@ -14,24 +14,20 @@ const REACH_IDS = [
 ] as const
 
 describe('CRB W1: reach', () => {
-  it('appends reach as a one-tag list on matching weapons', () => {
+  it('appends reach on matching weapons', () => {
     for (const id of REACH_IDS) {
-      expect(lookupCrbItem(id)?.weapon?.properties).toEqual(['reach'])
+      expect(lookupCrbItem(id)?.weapon?.properties).toContain('reach')
       const stamped = applyCrbItem(createEmptyItem(), id)
-      expect(stamped.weapon?.properties).toEqual(['reach'])
+      expect(stamped.weapon?.properties).toContain('reach')
     }
   })
 
-  it('does not require a second tag on W1 rows', () => {
-    expect(lookupCrbItem('weapon.longspear')?.weapon?.properties).toHaveLength(1)
-    expect(lookupCrbItem('weapon.glaive')?.weapon?.properties).toHaveLength(1)
+  it('allows a reach-only row (N = 1) on weapons that are not also brace', () => {
+    expect(lookupCrbItem('weapon.glaive')?.weapon?.properties).toEqual(['reach'])
   })
 
-  it('leaves other weapons without a properties field', () => {
+  it('leaves unrelated weapons without a properties field', () => {
     expect(lookupCrbItem('weapon.longsword')?.weapon).not.toHaveProperty(
-      'properties',
-    )
-    expect(lookupCrbItem('weapon.spear')?.weapon).not.toHaveProperty(
       'properties',
     )
     expect(lookupCrbItem('weapon.kama')?.weapon).not.toHaveProperty(
@@ -63,6 +59,6 @@ describe('CRB W1: Combat stays typed', () => {
     expect(character.armorClass).toEqual(beforeAc)
     expect(character.attacks[0]).toEqual(beforeAttack)
     expect(view.ac).toBe(10)
-    expect(row.weapon?.properties).toEqual(['reach'])
+    expect(row.weapon?.properties).toContain('reach')
   })
 })

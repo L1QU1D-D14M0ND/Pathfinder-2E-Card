@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–14, 16–19, and W1 landed (W1 is reach on a multi-tag `weapon.properties` list). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–14, 16–19, W1, and W2 landed (W2 is brace, appended on the N-tag `weapon.properties` list). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -55,8 +55,8 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **18** | Martial two-handed; martial ranged + arrows | Rest of the martial table | Catalog | Done |
 | **19** | Exotic melee; exotic ranged + repeating bolts | CRB exotic table, two halves. Double weapons stay one row / primary head | Catalog | Done |
 | **W1** | Reach | First Special tag after all weapon ids exist | Catalog | Done |
-| **W2** | Brace | One CRB Special quality | Catalog | Next |
-| **W3** | Trip | One CRB Special quality | Catalog | Queued |
+| **W2** | Brace | One CRB Special quality | Catalog | Done |
+| **W3** | Trip | One CRB Special quality | Catalog | Next |
 | **W4** | Disarm | One CRB Special quality | Catalog | Queued |
 | **W5** | Monk | One CRB Special quality | Catalog | Queued |
 | **W6** | Nonlethal | One CRB Special quality | Catalog | Queued |
@@ -65,7 +65,7 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1** landed `reach` on a `weapon.properties` array of **N** tags (one is valid; many are valid). Next catalog work is **W2** (`brace`). After all seven property types, armor/shields are batches 20–21. Later magic properties use the same list. Batch 15 (spells-per-day) remains **Next** if that PR is not merged yet.
+The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W2** landed `reach` and `brace` on a `weapon.properties` array of **N** tags (one is valid; many are valid). Next catalog work is **W3** (`trip`). After all seven property types, armor/shields are batches 20–21. Later magic properties use the same list. Batch 15 (spells-per-day) remains **Next** if that PR is not merged yet.
 
 ---
 
@@ -896,13 +896,13 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **App today / this batch:** those six catalog rows append `reach` to `weapon.properties`. Combat threatened area stays typed.
 
-**Verdict:** Each of these six currently has **one** tag (`["reach"]`). That is a valid length. Guisarme / ranseur / whip will grow the same array in later W-PRs.
+**Verdict:** At landing, each of these six had **one** tag (`["reach"]`). W2 later appends `brace` on the longspear so that row is N = 2. Glaive / lance / ranseur / guisarme / whip stay reach-only until their later types.
 
-**Gaps:** Threatened area; brace / trip / disarm / monk / nonlethal / double.
+**Gaps:** Threatened area; trip / disarm / monk / nonlethal / double.
 
 **Pack slice:** `properties: ["reach"]` on the six reach weapons.
 
-**Tests:** Those six stamp `["reach"]`; spear / longsword / kama omit the field; apply longspear leaves AC 10.
+**Tests:** Those six include `reach`; glaive is still N = 1; apply longspear leaves AC 10.
 
 ### 4.40 Properties list of N tags
 
@@ -916,7 +916,39 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** schema + Inventory list control. No extra weapon ids.
 
-**Tests:** Normalize 0 / 1 / many; Inventory can stamp reach, add a second tag, and drop back to one.
+**Tests:** Normalize 0 / 1 / many; Inventory can stamp a one-tag row, add a second tag, and drop back to one.
+
+---
+
+## W2 — two mechanics
+
+### 4.41 Brace tag
+
+**CRB (player-facing):** Brace is a Special quality on longspear, spear, trident, halberd, and dwarven urgrosh.
+
+**App today / this batch:** append `brace` on those five rows. Do not replace tags already present.
+
+**Verdict:** Longspear is `["reach", "brace"]` (N = 2). Spear, trident, halberd, and urgrosh are `["brace"]` (N = 1). Both lengths are valid.
+
+**Gaps:** Brace vs charge math in Combat; remaining Specials.
+
+**Pack slice:** append `brace` on the five brace weapons.
+
+**Tests:** Longspear keeps reach; brace-only rows are length 1; glaive still reach-only; apply spear leaves AC 10.
+
+### 4.42 Append without replacing
+
+**CRB (player-facing):** A weapon can have more than one Special. Adding brace does not remove reach.
+
+**App today / this batch:** W2 only appends. Inventory already lists N tags.
+
+**Verdict:** The same control shows one chip on a spear and two chips on a longspear.
+
+**Gaps:** none for this mechanic.
+
+**Pack slice:** none beyond 4.41.
+
+**Tests:** Inventory spear is brace-only; longspear shows reach and brace.
 
 ---
 
@@ -972,9 +1004,9 @@ Those bonus slots are added to the class table’s spells per day. In 0.9 the pl
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1 landed reach. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W2 landed reach and brace. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** class spells-per-day tables (batch 15, if not merged), then **W2** `brace` ([§7.6](#76-weapon-properties-after-all-weapon-ids); `weapon.properties` is **N** tags — one or many), then remaining property types, then armor/shields (20–21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** class spells-per-day tables (batch 15, if not merged), then **W3** `trip` ([§7.6](#76-weapon-properties-after-all-weapon-ids); `weapon.properties` is **N** tags — one or many), then remaining property types, then armor/shields (20–21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -982,7 +1014,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the rem
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1 reach is on the six reach weapons. Skip those ids in later batches. Next catalog is W2 (`brace`).
+**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1 reach and W2 brace are on the matching weapons. Skip those ids in later batches. Next catalog is W3 (`trip`).
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -1194,7 +1226,7 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 
 | Kind | Packed now | Remaining in 20–21 | Skip / later |
 | --- | --- | --- | --- |
-| Weapons | 70 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows + 20 exotic) | 0 | Unarmed strike; shield-bash lines; spiked chain was not in the locked 13; W1 reach is in; remaining Specials wait for W2–W7 |
+| Weapons | 70 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows + 20 exotic) | 0 | Unarmed strike; shield-bash lines; spiked chain was not in the locked 13; W1 reach and W2 brace are in; remaining Specials wait for W3–W7 |
 | Armor | 2 | 10 | Magic armor |
 | Shields | 0 | 6 | Magic shields |
 | Ammo / extras | spellbook + 5 ammo | 3 extras | Priced treasure as a later slice |
@@ -1227,8 +1259,8 @@ Thrown range is already `rangeFeet`. Net “see text,” crossbow loading, and l
 
 | Batch | Property | CRB weapons that get the tag (after 19 exists) |
 | --- | --- | --- |
-| **W1** | `reach` | Longspear, glaive, guisarme, lance, ranseur, whip (**Landed** — each of these currently has N = 1) |
-| **W2** | `brace` | Longspear, spear, trident, halberd, dwarven urgrosh |
+| **W1** | `reach` | Longspear, glaive, guisarme, lance, ranseur, whip (**Landed**) |
+| **W2** | `brace` | Longspear, spear, trident, halberd, dwarven urgrosh (**Landed** — longspear is N = 2; the other four are N = 1) |
 | **W3** | `trip` | Sickle, flail, heavy flail, guisarme, halberd, scythe, kama, whip, gnome hooked hammer, dire flail, bolas |
 | **W4** | `disarm` | Flail, heavy flail, ranseur, nunchaku, sai, whip, dire flail |
 | **W5** | `monk` | Quarterstaff, kama, nunchaku, sai, siangham, shuriken |
@@ -1289,3 +1321,4 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | 2026-08-27 | Batch 18: martial two-handed + martial ranged and arrows; Combat stays typed; next is exotic weapons (19) |
 | 2026-08-27 | Batch 19: exotic melee + exotic ranged and repeating bolts; double weapons primary head only; next catalog is W1 reach |
 | 2026-08-27 | W1: reach on a `weapon.properties` array of N tags (one or many); Inventory add/remove; next is W2 brace |
+| 2026-08-27 | W2: brace appended (longspear keeps reach; spear/trident/halberd/urgrosh are N = 1); next is W3 trip |
