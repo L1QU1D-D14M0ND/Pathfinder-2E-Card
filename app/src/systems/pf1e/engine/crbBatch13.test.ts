@@ -18,7 +18,7 @@ describe('CRB batch 13: catalog spells do not fill slots or DCs', () => {
     character.spellcasting = [entry]
     const view = compute(character)
     expect(entry.slots).toEqual(beforeSlots)
-    expect(entry.slots.every((row) => row.max === 0 && row.remaining === 0)).toBe(
+    expect(entry.slots.every((row) => row.max == null && row.remaining === 0)).toBe(
       true,
     )
     expect(entry.spells[0]?.prepared).toBe(false)
@@ -27,7 +27,7 @@ describe('CRB batch 13: catalog spells do not fill slots or DCs', () => {
     expect(view.spellcasting[entry.id]?.bonusSlotsByLevel[3]).toBe(0)
   })
 
-  it('still uses typed slots and INT DC on Wizard 5', () => {
+  it('still uses typed remaining and INT DC on Wizard 5', () => {
     const character = parseCharacterJson(
       readRepoFile('fixtures/characters/golden/pf1e/wizard-5.json'),
     )
@@ -38,9 +38,10 @@ describe('CRB batch 13: catalog spells do not fill slots or DCs', () => {
     )
     expect(entry?.slots.find((row) => row.spellLevel === 3)).toEqual({
       spellLevel: 3,
-      max: 2,
+      max: null,
       remaining: 1,
     })
+    expect(view.spellcasting[entry!.id]?.slotMaxByLevel[3]).toBe(2)
     expect(view.spellcasting[entry!.id]?.dcByLevel[3]).toBe(17)
   })
 })

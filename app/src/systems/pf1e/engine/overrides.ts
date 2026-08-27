@@ -144,7 +144,9 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
   if (
     parts.length === 5 &&
     parts[1] === 'spellcasting' &&
-    (parts[3] === 'dcByLevel' || parts[3] === 'bonusSlotsByLevel') &&
+    (parts[3] === 'dcByLevel' ||
+      parts[3] === 'bonusSlotsByLevel' ||
+      parts[3] === 'slotMaxByLevel') &&
     parts[2]
   ) {
     if (!isFiniteNumber(value)) return false
@@ -153,7 +155,9 @@ function applyOne(view: DerivedView, path: string, value: unknown): boolean {
     const index = Number(parts[4])
     if (!Number.isInteger(index) || index < 0 || index > 9) return false
     if (parts[3] === 'dcByLevel') existing.dcByLevel[index] = value
-    else existing.bonusSlotsByLevel[index] = value
+    else if (parts[3] === 'bonusSlotsByLevel') {
+      existing.bonusSlotsByLevel[index] = value
+    } else existing.slotMaxByLevel[index] = value
     return true
   }
 

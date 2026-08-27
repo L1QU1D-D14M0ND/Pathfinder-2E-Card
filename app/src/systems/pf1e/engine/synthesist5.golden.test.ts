@@ -133,6 +133,8 @@ describe('golden PF1e Synthesist 5 (Radiant Striker)', () => {
     expect(casting.dcByLevel[1]).toBe(16)
     expect(casting.dcByLevel[2]).toBe(17)
     expect(casting.bonusSlotsByLevel.slice(0, 4)).toEqual([0, 2, 1, 1])
+    expect(casting.slotMaxByLevel[1]).toBe(6)
+    expect(casting.slotMaxByLevel[2]).toBe(3)
     expect(character.spellcasting[0]?.slots).toEqual([
       { spellLevel: 1, max: 6, remaining: 5 },
       { spellLevel: 2, max: 3, remaining: 3 },

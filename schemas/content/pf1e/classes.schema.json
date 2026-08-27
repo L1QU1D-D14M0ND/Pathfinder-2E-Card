@@ -35,6 +35,18 @@
         "type": "array",
         "items": { "type": "string", "minLength": 1 }
       },
+      "spellsPerDay": {
+        "description": "20 class-level rows (1–20), each 10 spell levels (0–9). null means the class cannot cast that level yet. 0 means the table lists 0 (bonus spells still apply).",
+        "type": "array",
+        "minItems": 20,
+        "maxItems": 20,
+        "items": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": { "type": ["integer", "null"], "minimum": 0 }
+        }
+      },
       "source": {
         "type": "object",
         "additionalProperties": false,

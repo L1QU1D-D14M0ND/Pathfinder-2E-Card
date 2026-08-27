@@ -63,7 +63,7 @@ npm run dev
 - [`fixtures/characters/golden/pf1e/wizard-5.json`](fixtures/characters/golden/pf1e/wizard-5.json) — PF1e Wizard 5
 - [`fixtures/characters/golden/pf1e/fighter-2-wizard-3.json`](fixtures/characters/golden/pf1e/fighter-2-wizard-3.json) — PF1e Fighter 2 / Wizard 3
 - [`fixtures/characters/golden/pf1e/synthesist-5.json`](fixtures/characters/golden/pf1e/synthesist-5.json) — PF1e Summoner 5 Synthesist (Radiant Striker)
-- [`content/pf1e/crb/`](content/pf1e/crb/) — PF1e CRB pack (batches 1–14 complete; mechanics-only)
+- [`content/pf1e/crb/`](content/pf1e/crb/) — PF1e CRB pack (batches 1–15 complete; mechanics-only)
 - [`content/pf1e/apg/`](content/pf1e/apg/) — PF1e APG pack (Summoner / Synthesist; mechanics-only)
 
 ## License

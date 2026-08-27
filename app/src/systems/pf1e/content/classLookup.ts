@@ -70,4 +70,19 @@ export function skillPointsPerLevelFor(row: ClassEntry): number {
   return lookupClassProgression(row.class.id)?.skillPointsPerLevel ?? 0
 }
 
+/**
+ * Class spells-per-day row for a class level (1–20).
+ * null = no table (non-caster, unknown id, or level < 1).
+ * Cell null = cannot cast that spell level yet. 0 = table lists 0.
+ */
+export function classSpellsPerDayRow(
+  classId: string | null | undefined,
+  classLevel: number,
+): Array<number | null> | null {
+  const found = lookupClassProgression(classId)
+  if (!found?.spellsPerDay || classLevel < 1) return null
+  const index = Math.min(20, classLevel) - 1
+  return found.spellsPerDay[index] ?? null
+}
+
 export { lookupClassProgression }

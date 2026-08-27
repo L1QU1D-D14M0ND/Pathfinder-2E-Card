@@ -31,7 +31,7 @@ Do not extend the PF2e schema with optional 1E fields. PF1e has its own document
 1. **One file = one PC.** Familiars/companions are a stub array (not in 0.9 UI).
 2. **Inputs + play state are authoritative.**
 3. **Multiclass is normal.** Identity is `classes[]`, not a single `identity.class`. `identity.level` is **not stored**; level is derived from the class sum.
-4. **User-entered where tables are large** (spells per day, HD rolled). **Engine-owned where tables are small** (BAB/save/HD types, ability modifiers, iterative steps, encumbrance thresholds).
+4. **User-entered where tables are large or play-state** (HD rolled, slot remaining). **Engine-owned where tables are small** (BAB/save/HD types, ability modifiers, iterative steps, encumbrance thresholds). **Hybrid** for class spells per day: computed default Max, click to override.
 5. **`effects[]` on rows** for later automation; unknown `type` ignored.
 6. **No campaign-options block** in 0.9.
 
@@ -114,7 +114,7 @@ Catalog ids may contain `.` as a namespace separator (`class.fighter`). **Skill 
 | Weight | Pounds as numbers (allow 0.5 for light items). No bulk |
 | Ability input | Final **score**, not PF2e boosts |
 | BAB | Derived from class progressions; not a user total unless override |
-| Spell slots | User-entered max/remaining |
+| Spell slots | Default Max from class table + bonus; `max` null uses that default. Remaining stays user-entered |
 | Focus / hero points | Omit from 0.9 PF1e document |
 | Dying track | Omit; `currentHp` may be negative |
 | Dual schema | Never store a PF1e character inside the PF2e schema |
@@ -160,3 +160,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-19 | Spanish UI catalog (`es.json`); pack names stay English |
 | 2026-08-19 | 1.0 stability; Save stamps `meta.locale` |
 | 2026-08-19 | CRB batch 14: remaining player races + optional catalog `size`; ability adjustments stay typed |
+| 2026-08-27 | CRB batch 15: `slots[].max` nullable; default Max is class table + bonus |

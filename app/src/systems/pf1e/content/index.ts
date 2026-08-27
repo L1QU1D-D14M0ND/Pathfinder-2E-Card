@@ -6,6 +6,7 @@ export {
   applyCrbRace,
   applyCrbSpell,
   classSkillKeySet,
+  classSpellsPerDayRow,
   lookupCrbClass,
   lookupCrbFeat,
   lookupCrbItem,
