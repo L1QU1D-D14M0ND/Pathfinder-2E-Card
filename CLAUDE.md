@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A local-first, installable PWA **player** character sheet for tabletop systems, built spreadsheet-style (Build + Play, no dice roller, no VTT). Working title: **TTRPG Character Sheet**. Repo name `Pathfinder-2E-Card` is unchanged from an earlier PF2e-only phase and is not indicative of current scope.
+A local-first, installable PWA **player** character sheet for tabletop systems, built spreadsheet-style (Build + Play, no dice roller, no VTT). Working title: **TTRPG Character Sheet**. Repo and npm package are named `ttrpg-character-sheet`, renamed from the earlier PF2e-only-phase name `Pathfinder-2E-Card` / `pathfinder-2e-character-sheet` (see [ADR 0008](docs/adr/0008-repo-package-rename.md)); the name is not indicative of current scope beyond that.
 
 **Current product priority (read before making scope calls):** Pathfinder **First Edition (PF1e)** is the system under active development; Pathfinder **Second Edition (PF2e)** is an existing, working vertical slice that **must not regress** but is not being extended right now. If a task looks like "add a PF2e feature," check [`docs/ROADMAP.md`](docs/ROADMAP.md) and [ADR 0003](docs/adr/0003-multi-system-product-direction.md) first — that work is explicitly deferred to a later release unless the user says otherwise.
 

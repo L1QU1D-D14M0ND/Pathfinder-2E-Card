@@ -1,10 +1,10 @@
-# Pathfinder-2E-Card
+# ttrpg-character-sheet
 
 **TTRPG Character Sheet** (working title) — installable local PWA for **player** characters. **Pathfinder First Edition** is the development priority; **Pathfinder Second Edition** is the system that currently computes (Build + Play).
 
 **Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable APG Synthesist). PF2e slice stays in the app and must not regress; remaining PF2e work waits for a **later release**. Sidebar tools wait until the PF1e sheet is ~90% done. See the [roadmap](docs/ROADMAP.md), [ADR 0003](docs/adr/0003-multi-system-product-direction.md), [APG pack](docs/pf1e-apg-pack-design.md), and [CRB pack](docs/pf1e-crb-pack-design.md).
 
-The GitHub repository name is unchanged.
+The repository and npm package were renamed from `Pathfinder-2E-Card` / `pathfinder-2e-character-sheet` to `ttrpg-character-sheet` — see [ADR 0008](docs/adr/0008-repo-package-rename.md).
 
 ## App
 

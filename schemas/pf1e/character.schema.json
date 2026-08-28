@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/L1QU1D-D14M0ND/Pathfinder-2E-Card/schemas/pf1e/character.schema.json",
+  "$id": "https://github.com/L1QU1D-D14M0ND/ttrpg-character-sheet/schemas/pf1e/character.schema.json",
   "title": "PF1e Character Sheet Document",
   "description": "Versioned save format for one Pathfinder First Edition player character (Core Rulebook player-facing). schemaVersion 1 is independent of the PF2e document version. `system` must be `pf1e`. Inputs and play state are authoritative; derived.* is optional cache and MUST be omitted from Save sheet exports.",
   "type": "object",

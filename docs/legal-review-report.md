@@ -2,6 +2,9 @@
 
 **Status:** Informational report, not an ADR.
 **Date:** 2026-08-28
+**Addendum (2026-08-28):** §4's repo/package-name gap is closed — the stakeholder
+triggered the rename to `ttrpg-character-sheet`; see [ADR 0008](adr/0008-repo-package-rename.md).
+The body below is left as the dated snapshot that motivated that decision.
 **Not legal advice.** This is an engineering-level inventory of where the
 project touches licensing, trademark, and privacy law, written to help a
 maintainer or an actual lawyer decide what (if anything) needs review before
