@@ -119,7 +119,7 @@ const MARTIAL_ONE_HANDED = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['trip'],
+      properties: ['trip', 'disarm'],
     },
   },
   {

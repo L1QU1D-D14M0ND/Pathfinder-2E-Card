@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-14-16-19-w1-w2-w3-complete",
+  "status": "batches-1-14-16-19-w1-w2-w3-w4-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -112,6 +112,11 @@
       "id": "W3",
       "mechanics": ["trip-tag", "append-without-replacing"],
       "notes": "Append trip on matching catalog rows. Guisarme and whip keep reach; halberd keeps brace. Sickle/kama and the other trip-only rows are N=1. Combat CMB/trip math stays typed."
+    },
+    {
+      "id": "W4",
+      "mechanics": ["disarm-tag", "append-without-replacing"],
+      "notes": "Append disarm on matching catalog rows. Nunchaku and sai are N=1. Flails keep trip; ranseur keeps reach; whip keeps reach and trip. Combat CMB/disarm math stays typed."
     }
   ]
 }

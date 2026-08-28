@@ -72,6 +72,36 @@ describe('InventoryPanel weapon properties', () => {
     expect(screen.getByText('trip')).toBeInTheDocument()
   })
 
+  it('stamps a single disarm tag on a nunchaku', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.nunchaku' },
+    })
+    expect(screen.getByText('disarm')).toBeInTheDocument()
+    expect(screen.queryByText('reach')).not.toBeInTheDocument()
+    expect(screen.queryByText('trip')).not.toBeInTheDocument()
+  })
+
+  it('stamps reach, trip, and disarm together on a whip', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.whip' },
+    })
+    expect(screen.getByText('reach')).toBeInTheDocument()
+    expect(screen.getByText('trip')).toBeInTheDocument()
+    expect(screen.getByText('disarm')).toBeInTheDocument()
+  })
+
   it('stamps reach and brace together on a longspear', () => {
     render(
       <I18nProvider>

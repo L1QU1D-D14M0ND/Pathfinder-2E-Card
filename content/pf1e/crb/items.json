@@ -389,7 +389,7 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["trip"]
+      "properties": ["trip", "disarm"]
     },
     "source": { "book": "CRB" }
   },
@@ -536,7 +536,7 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["trip"]
+      "properties": ["trip", "disarm"]
     },
     "source": { "book": "CRB" }
   },
@@ -605,7 +605,7 @@
       "damageType": "piercing",
       "critRange": 20,
       "critMultiplier": 3,
-      "properties": ["reach"]
+      "properties": ["reach", "disarm"]
     },
     "source": { "book": "CRB" }
   },
@@ -702,7 +702,8 @@
       "damageDice": "1d6",
       "damageType": "bludgeoning",
       "critRange": 20,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["disarm"]
     },
     "source": { "book": "CRB" }
   },
@@ -715,7 +716,8 @@
       "damageDice": "1d4",
       "damageType": "bludgeoning",
       "critRange": 20,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["disarm"]
     },
     "source": { "book": "CRB" }
   },
@@ -768,7 +770,7 @@
       "damageType": "slashing",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["reach", "trip"]
+      "properties": ["reach", "trip", "disarm"]
     },
     "source": { "book": "CRB" }
   },
@@ -808,7 +810,7 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["trip"]
+      "properties": ["trip", "disarm"]
     },
     "source": { "book": "CRB" }
   },

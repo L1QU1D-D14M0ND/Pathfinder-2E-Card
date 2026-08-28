@@ -20,12 +20,9 @@ const TRIP_IDS = [
 
 const TRIP_ONLY_IDS = [
   'weapon.sickle',
-  'weapon.flail',
-  'weapon.heavy-flail',
   'weapon.scythe',
   'weapon.kama',
   'weapon.gnome-hooked-hammer',
-  'weapon.dire-flail',
   'weapon.bolas',
 ] as const
 
@@ -67,16 +64,21 @@ describe('CRB W3: trip', () => {
   it('appends trip without replacing reach on the whip', () => {
     expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toContain('reach')
     expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toContain('trip')
-    expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toEqual([
-      'reach',
-      'trip',
-    ])
   })
 
-  it('does not pack disarm, monk, or nonlethal yet', () => {
+  it('keeps trip on flails after later tags append', () => {
+    expect(lookupCrbItem('weapon.flail')?.weapon?.properties).toContain('trip')
+    expect(lookupCrbItem('weapon.heavy-flail')?.weapon?.properties).toContain(
+      'trip',
+    )
+    expect(lookupCrbItem('weapon.dire-flail')?.weapon?.properties).toContain(
+      'trip',
+    )
+  })
+
+  it('does not pack monk or nonlethal yet', () => {
     for (const id of TRIP_IDS) {
       const tags = lookupCrbItem(id)?.weapon?.properties ?? []
-      expect(tags).not.toContain('disarm')
       expect(tags).not.toContain('monk')
       expect(tags).not.toContain('nonlethal')
     }

@@ -305,7 +305,7 @@
       "addProperty": "Añadir propiedad",
       "removeProperty": "Quitar propiedad {tag}",
       "propertyPlaceholder": "reach, flaming, …",
-      "propertiesHelp": "N etiquetas: una vale (trip), varias valen (reach + trip, luego magia). Alcance no cambia el área amenazada todavía."
+      "propertiesHelp": "N etiquetas: una vale (disarm), varias valen (reach + trip + disarm, luego magia). Alcance no cambia el área amenazada todavía."
     },
     "hp": {
       "title": "Desglose de PG máximos",

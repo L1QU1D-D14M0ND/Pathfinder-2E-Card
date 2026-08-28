@@ -26,6 +26,7 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['disarm'],
     },
   },
   {
@@ -37,6 +38,7 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['disarm'],
     },
   },
   {
@@ -81,7 +83,7 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['reach', 'trip'],
+      properties: ['reach', 'trip', 'disarm'],
     },
   },
   {
@@ -115,7 +117,7 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['trip'],
+      properties: ['trip', 'disarm'],
     },
   },
   {
@@ -268,13 +270,17 @@ describe('CRB batch 19: exotic melee', () => {
     })
   })
 
-  it('does not pack disarm, monk, or nonlethal yet', () => {
+  it('does not pack monk or nonlethal yet', () => {
     expect(lookupCrbItem('weapon.kama')?.weapon?.properties).toEqual(['trip'])
     expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toEqual([
       'reach',
       'trip',
+      'disarm',
     ])
-    expect(lookupCrbItem('weapon.nunchaku')?.weapon).not.toHaveProperty(
+    expect(lookupCrbItem('weapon.nunchaku')?.weapon?.properties).toEqual([
+      'disarm',
+    ])
+    expect(lookupCrbItem('weapon.siangham')?.weapon).not.toHaveProperty(
       'properties',
     )
   })
