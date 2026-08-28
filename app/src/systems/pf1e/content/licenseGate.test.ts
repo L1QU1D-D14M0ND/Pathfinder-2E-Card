@@ -1,21 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { readRepoJson } from '../../../test/readRepoFile'
+import { listRepoFiles, readRepoJson } from '../../../test/readRepoFile'
 
-const ENTITY_FILES = [
-  'content/pf1e/crb/classes.json',
-  'content/pf1e/crb/races.json',
-  'content/pf1e/crb/items.json',
-  'content/pf1e/crb/feats.json',
-  'content/pf1e/crb/spells.json',
-  'content/pf1e/apg/classes.json',
-  'content/pf1e/apg/archetypes.json',
-  'content/pf1e/apg/evolutions.json',
-] as const
-
-const PACK_FILES = [
-  'content/pf1e/crb/pack.json',
-  'content/pf1e/apg/pack.json',
-] as const
+// Globbed, not enumerated: ADR 0007 is a hard rule, so a pack file added later
+// must be scanned automatically rather than when someone remembers a list.
+const ALL_PACK_JSON = listRepoFiles('content/pf1e')
+const PACK_FILES = ALL_PACK_JSON.filter((file) => file.endsWith('/pack.json'))
+const ENTITY_FILES = ALL_PACK_JSON.filter(
+  (file) => !file.endsWith('/pack.json'),
+)
 
 const FORBIDDEN_KEYS = new Set([
   'benefit',
@@ -67,6 +59,13 @@ function walk(
 }
 
 describe('pack license gate (ADR 0007)', () => {
+  it('actually found pack files to scan', () => {
+    // Without this the globbed suites below would pass vacuously if the
+    // content tree were moved or renamed.
+    expect(PACK_FILES.length).toBeGreaterThanOrEqual(2)
+    expect(ENTITY_FILES.length).toBeGreaterThanOrEqual(8)
+  })
+
   it('marks pack.json mechanics-only with no OGL notice required', () => {
     for (const file of PACK_FILES) {
       const pack = readRepoJson(file) as {

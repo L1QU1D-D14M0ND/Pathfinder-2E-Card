@@ -11,7 +11,10 @@ export { isOverridden }
 
 const ABILITY_KEYS: AbilityKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
-const SCALARS: Record<string, (view: DerivedView, value: number) => void> = {
+export const SCALARS: Record<
+  string,
+  (view: DerivedView, value: number) => void
+> = {
   level: (view, value) => {
     view.level = value
   },

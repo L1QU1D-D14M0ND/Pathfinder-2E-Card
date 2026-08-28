@@ -8,4 +8,6 @@ dev-dist/
 app/node_modules/
 app/dist/
 app/dev-dist/
+coverage/
+app/coverage/
 *.tsbuildinfo
