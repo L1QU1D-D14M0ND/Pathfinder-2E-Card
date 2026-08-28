@@ -6,6 +6,8 @@ export { signed } from './types'
 export type { DerivedView, AttackDerived, SpellcastingDerived } from './types'
 export {
   bonusSpellsFromAbility,
+  defaultSlotMax,
+  effectiveSlotMax,
   spellDc,
 } from './spellcasting'
 export { toDerivedCache } from './types'

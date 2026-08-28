@@ -151,9 +151,9 @@
       "classRowId": "class-row-wizard",
       "casterLevelOverride": null,
       "slots": [
-        { "spellLevel": 0, "max": 4, "remaining": 4 },
-        { "spellLevel": 1, "max": 3, "remaining": 2 },
-        { "spellLevel": 2, "max": 2, "remaining": 2 }
+        { "spellLevel": 0, "max": null, "remaining": 4 },
+        { "spellLevel": 1, "max": null, "remaining": 2 },
+        { "spellLevel": 2, "max": null, "remaining": 2 }
       ],
       "cantrips": [
         {

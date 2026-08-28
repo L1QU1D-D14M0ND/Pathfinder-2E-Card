@@ -149,7 +149,7 @@ export function createEmptySpellcasting(): SpellcastingEntry {
     casterLevelOverride: null,
     slots: Array.from({ length: 10 }, (_, i) => ({
       spellLevel: i,
-      max: 0,
+      max: null,
       remaining: 0,
     })),
     cantrips: [],

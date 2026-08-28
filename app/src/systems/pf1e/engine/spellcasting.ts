@@ -1,4 +1,5 @@
 import type { AbilityKey, ClassEntry, SpellcastingEntry } from '../character/types'
+import { classSpellsPerDayRow } from '../content'
 
 /** Spell DC = 10 + spell level + ability modifier (CRB). */
 export function spellDc(spellLevel: number, abilityMod: number): number {
@@ -43,12 +44,53 @@ export function casterLevelForEntry(
   return 0
 }
 
+/** Ability score needed to cast a spell of this level (10 + spell level). */
+export function minAbilityToCast(spellLevel: number): number {
+  return 10 + spellLevel
+}
+
+/**
+ * Default max slots: class table + ability bonus, only if the class can
+ * already cast that level and the score meets 10 + spell level.
+ * No table (or a dash) → 0. Domain/specialist extras are not added.
+ */
+export function defaultSlotMax(
+  classSlot: number | null,
+  abilityScore: number,
+  spellLevel: number,
+): number {
+  if (classSlot == null) return 0
+  if (abilityScore < minAbilityToCast(spellLevel)) return 0
+  return classSlot + bonusSpellsFromAbility(abilityScore, spellLevel)
+}
+
+export function storedSlotMax(
+  entry: SpellcastingEntry,
+  spellLevel: number,
+): number | null {
+  const row = entry.slots.find((slot) => slot.spellLevel === spellLevel)
+  return row?.max ?? null
+}
+
+export function effectiveSlotMax(
+  entry: SpellcastingEntry,
+  spellLevel: number,
+  classSlot: number | null,
+  abilityScore: number,
+): number {
+  const custom = storedSlotMax(entry, spellLevel)
+  if (custom != null) return custom
+  return defaultSlotMax(classSlot, abilityScore, spellLevel)
+}
+
 export interface SpellcastingDerived {
   casterLevel: number
   ability: AbilityKey
   abilityMod: number
   dcByLevel: number[]
   bonusSlotsByLevel: number[]
+  classSlotsByLevel: Array<number | null>
+  slotMaxByLevel: number[]
 }
 
 export function spellcastingDerived(
@@ -60,12 +102,25 @@ export function spellcastingDerived(
   const result: Record<string, SpellcastingDerived> = {}
   for (const entry of entries) {
     const abilityMod = mods[entry.ability]
+    const abilityScore = scores[entry.ability]
+    const classRow = entry.classRowId
+      ? classes.find((cls) => cls.id === entry.classRowId)
+      : undefined
+    const table = classSpellsPerDayRow(classRow?.class.id, classRow?.levels ?? 0)
+    const classSlotsByLevel: Array<number | null> = Array.from(
+      { length: 10 },
+      (_, spellLevel) => table?.[spellLevel] ?? null,
+    )
     result[entry.id] = {
       casterLevel: casterLevelForEntry(entry, classes),
       ability: entry.ability,
       abilityMod,
       dcByLevel: dcByLevel(abilityMod),
-      bonusSlotsByLevel: bonusSlotsByLevel(scores[entry.ability]),
+      bonusSlotsByLevel: bonusSlotsByLevel(abilityScore),
+      classSlotsByLevel,
+      slotMaxByLevel: classSlotsByLevel.map((classSlot, spellLevel) =>
+        effectiveSlotMax(entry, spellLevel, classSlot, abilityScore),
+      ),
     }
   }
   return result

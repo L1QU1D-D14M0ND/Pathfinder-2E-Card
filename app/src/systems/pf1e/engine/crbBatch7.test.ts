@@ -97,7 +97,7 @@ describe('CRB batch 7: bonus spells from ability', () => {
     expect(bonusSpellsFromAbility(30, 0)).toBe(0)
   })
 
-  it('matches Wizard 5 INT 18 bonus 1/1/1/1 and does not write them into max', () => {
+  it('matches Wizard 5 INT 18 bonus 1/1/1/1 and fills default max from the class table', () => {
     const character = parseCharacterJson(
       readRepoFile('fixtures/characters/golden/pf1e/wizard-5.json'),
     )
@@ -105,9 +105,10 @@ describe('CRB batch 7: bonus spells from ability', () => {
     expect(view.spellcasting['cast-wizard'].bonusSlotsByLevel.slice(0, 5)).toEqual(
       [0, 1, 1, 1, 1],
     )
-    expect(character.spellcasting[0]?.slots.find((row) => row.spellLevel === 1)?.max).toBe(
-      4,
-    )
+    expect(character.spellcasting[0]?.slots.find((row) => row.spellLevel === 1)?.max).toBeNull()
+    expect(view.spellcasting['cast-wizard'].slotMaxByLevel.slice(0, 5)).toEqual([
+      4, 4, 3, 2, 0,
+    ])
   })
 
   it('keeps empty-sheet slot max at 0 while showing INT 18 bonus slots', () => {
@@ -119,7 +120,10 @@ describe('CRB batch 7: bonus spells from ability', () => {
     const before = structuredClone(entry.slots)
     const view = compute(character)
     expect(entry.slots).toEqual(before)
-    expect(entry.slots.every((row) => row.max === 0)).toBe(true)
+    expect(entry.slots.every((row) => row.max == null)).toBe(true)
+    expect(view.spellcasting['cast-empty'].slotMaxByLevel.slice(0, 5)).toEqual([
+      0, 0, 0, 0, 0,
+    ])
     expect(view.spellcasting['cast-empty'].bonusSlotsByLevel.slice(0, 5)).toEqual(
       [0, 1, 1, 1, 1],
     )

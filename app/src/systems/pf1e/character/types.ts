@@ -182,7 +182,8 @@ export interface AttackEntry {
 
 export interface SpellSlotLevel {
   spellLevel: number
-  max: number
+  /** Custom total. null/omitted uses class table + ability bonus. */
+  max?: number | null
   remaining: number
 }
 

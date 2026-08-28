@@ -53,6 +53,28 @@
       "knowledge-planes",
       "knowledge-religion"
     ],
+    "spellsPerDay": [
+      [null, 1, null, null, null, null, null, null, null, null],
+      [null, 2, null, null, null, null, null, null, null, null],
+      [null, 3, null, null, null, null, null, null, null, null],
+      [null, 3, 1, null, null, null, null, null, null, null],
+      [null, 4, 2, null, null, null, null, null, null, null],
+      [null, 4, 3, null, null, null, null, null, null, null],
+      [null, 4, 3, 1, null, null, null, null, null, null],
+      [null, 4, 4, 2, null, null, null, null, null, null],
+      [null, 5, 4, 3, null, null, null, null, null, null],
+      [null, 5, 4, 3, 1, null, null, null, null, null],
+      [null, 5, 4, 4, 2, null, null, null, null, null],
+      [null, 5, 5, 4, 3, null, null, null, null, null],
+      [null, 5, 5, 4, 3, 1, null, null, null, null],
+      [null, 5, 5, 4, 4, 2, null, null, null, null],
+      [null, 5, 5, 5, 4, 3, null, null, null, null],
+      [null, 5, 5, 5, 4, 3, 1, null, null, null],
+      [null, 5, 5, 5, 4, 4, 2, null, null, null],
+      [null, 5, 5, 5, 5, 4, 3, null, null, null],
+      [null, 5, 5, 5, 5, 5, 4, null, null, null],
+      [null, 5, 5, 5, 5, 5, 5, null, null, null]
+    ],
     "source": { "book": "CRB" }
   },
   {
@@ -75,6 +97,28 @@
       "knowledge-planes",
       "knowledge-religion"
     ],
+    "spellsPerDay": [
+      [3, 1, null, null, null, null, null, null, null, null],
+      [4, 2, null, null, null, null, null, null, null, null],
+      [4, 2, 1, null, null, null, null, null, null, null],
+      [4, 3, 2, null, null, null, null, null, null, null],
+      [4, 3, 2, 1, null, null, null, null, null, null],
+      [4, 3, 3, 2, null, null, null, null, null, null],
+      [4, 4, 3, 2, 1, null, null, null, null, null],
+      [4, 4, 3, 3, 2, null, null, null, null, null],
+      [4, 4, 4, 3, 2, 1, null, null, null, null],
+      [4, 4, 4, 3, 3, 2, null, null, null, null],
+      [4, 4, 4, 4, 3, 2, 1, null, null, null],
+      [4, 4, 4, 4, 3, 3, 2, null, null, null],
+      [4, 4, 4, 4, 4, 3, 2, 1, null, null],
+      [4, 4, 4, 4, 4, 3, 3, 2, null, null],
+      [4, 4, 4, 4, 4, 4, 3, 2, 1, null],
+      [4, 4, 4, 4, 4, 4, 3, 3, 2, null],
+      [4, 4, 4, 4, 4, 4, 4, 3, 2, 1],
+      [4, 4, 4, 4, 4, 4, 4, 3, 3, 2],
+      [4, 4, 4, 4, 4, 4, 4, 4, 3, 3],
+      [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+    ],
     "source": { "book": "CRB" }
   },
   {
@@ -96,6 +140,28 @@
       "swim",
       "knowledge-geography",
       "knowledge-nature"
+    ],
+    "spellsPerDay": [
+      [3, 1, null, null, null, null, null, null, null, null],
+      [4, 2, null, null, null, null, null, null, null, null],
+      [4, 2, 1, null, null, null, null, null, null, null],
+      [4, 3, 2, null, null, null, null, null, null, null],
+      [4, 3, 2, 1, null, null, null, null, null, null],
+      [4, 3, 3, 2, null, null, null, null, null, null],
+      [4, 4, 3, 2, 1, null, null, null, null, null],
+      [4, 4, 3, 3, 2, null, null, null, null, null],
+      [4, 4, 4, 3, 2, 1, null, null, null, null],
+      [4, 4, 4, 3, 3, 2, null, null, null, null],
+      [4, 4, 4, 4, 3, 2, 1, null, null, null],
+      [4, 4, 4, 4, 3, 3, 2, null, null, null],
+      [4, 4, 4, 4, 4, 3, 2, 1, null, null],
+      [4, 4, 4, 4, 4, 3, 3, 2, null, null],
+      [4, 4, 4, 4, 4, 4, 3, 2, 1, null],
+      [4, 4, 4, 4, 4, 4, 3, 3, 2, null],
+      [4, 4, 4, 4, 4, 4, 4, 3, 2, 1],
+      [4, 4, 4, 4, 4, 4, 4, 3, 3, 2],
+      [4, 4, 4, 4, 4, 4, 4, 4, 3, 3],
+      [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
     ],
     "source": { "book": "CRB" }
   },
@@ -157,6 +223,28 @@
       "knowledge-nobility",
       "knowledge-religion"
     ],
+    "spellsPerDay": [
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, 0, null, null, null, null, null, null, null, null],
+      [null, 1, null, null, null, null, null, null, null, null],
+      [null, 1, null, null, null, null, null, null, null, null],
+      [null, 1, 0, null, null, null, null, null, null, null],
+      [null, 1, 1, null, null, null, null, null, null, null],
+      [null, 2, 1, null, null, null, null, null, null, null],
+      [null, 2, 1, 0, null, null, null, null, null, null],
+      [null, 2, 1, 1, null, null, null, null, null, null],
+      [null, 2, 2, 1, null, null, null, null, null, null],
+      [null, 3, 2, 1, 0, null, null, null, null, null],
+      [null, 3, 2, 1, 1, null, null, null, null, null],
+      [null, 3, 2, 2, 1, null, null, null, null, null],
+      [null, 3, 3, 2, 1, null, null, null, null, null],
+      [null, 4, 3, 2, 1, null, null, null, null, null],
+      [null, 4, 3, 2, 2, null, null, null, null, null],
+      [null, 4, 3, 3, 2, null, null, null, null, null],
+      [null, 4, 4, 3, 3, null, null, null, null, null]
+    ],
     "source": { "book": "CRB" }
   },
   {
@@ -180,6 +268,28 @@
       "knowledge-dungeoneering",
       "knowledge-geography",
       "knowledge-nature"
+    ],
+    "spellsPerDay": [
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null, null, null, null],
+      [null, 0, null, null, null, null, null, null, null, null],
+      [null, 1, null, null, null, null, null, null, null, null],
+      [null, 1, null, null, null, null, null, null, null, null],
+      [null, 1, 0, null, null, null, null, null, null, null],
+      [null, 1, 1, null, null, null, null, null, null, null],
+      [null, 2, 1, null, null, null, null, null, null, null],
+      [null, 2, 1, 0, null, null, null, null, null, null],
+      [null, 2, 1, 1, null, null, null, null, null, null],
+      [null, 2, 2, 1, null, null, null, null, null, null],
+      [null, 3, 2, 1, 0, null, null, null, null, null],
+      [null, 3, 2, 1, 1, null, null, null, null, null],
+      [null, 3, 2, 2, 1, null, null, null, null, null],
+      [null, 3, 3, 2, 1, null, null, null, null, null],
+      [null, 4, 3, 2, 1, null, null, null, null, null],
+      [null, 4, 3, 2, 2, null, null, null, null, null],
+      [null, 4, 3, 3, 2, null, null, null, null, null],
+      [null, 4, 4, 3, 3, null, null, null, null, null]
     ],
     "source": { "book": "CRB" }
   },
@@ -228,6 +338,28 @@
       "use-magic-device",
       "knowledge-arcana"
     ],
+    "spellsPerDay": [
+      [null, 3, null, null, null, null, null, null, null, null],
+      [null, 4, null, null, null, null, null, null, null, null],
+      [null, 5, null, null, null, null, null, null, null, null],
+      [null, 6, 3, null, null, null, null, null, null, null],
+      [null, 6, 4, null, null, null, null, null, null, null],
+      [null, 6, 5, 3, null, null, null, null, null, null],
+      [null, 6, 6, 4, null, null, null, null, null, null],
+      [null, 6, 6, 5, 3, null, null, null, null, null],
+      [null, 6, 6, 6, 4, null, null, null, null, null],
+      [null, 6, 6, 6, 5, 3, null, null, null, null],
+      [null, 6, 6, 6, 6, 4, null, null, null, null],
+      [null, 6, 6, 6, 6, 5, 3, null, null, null],
+      [null, 6, 6, 6, 6, 6, 4, null, null, null],
+      [null, 6, 6, 6, 6, 6, 5, 3, null, null],
+      [null, 6, 6, 6, 6, 6, 6, 4, null, null],
+      [null, 6, 6, 6, 6, 6, 6, 5, 3, null],
+      [null, 6, 6, 6, 6, 6, 6, 6, 4, null],
+      [null, 6, 6, 6, 6, 6, 6, 6, 5, 3],
+      [null, 6, 6, 6, 6, 6, 6, 6, 6, 4],
+      [null, 6, 6, 6, 6, 6, 6, 6, 6, 6]
+    ],
     "source": { "book": "CRB" }
   },
   {
@@ -252,6 +384,28 @@
       "knowledge-nobility",
       "knowledge-planes",
       "knowledge-religion"
+    ],
+    "spellsPerDay": [
+      [3, 1, null, null, null, null, null, null, null, null],
+      [4, 2, null, null, null, null, null, null, null, null],
+      [4, 2, 1, null, null, null, null, null, null, null],
+      [4, 3, 2, null, null, null, null, null, null, null],
+      [4, 3, 2, 1, null, null, null, null, null, null],
+      [4, 3, 3, 2, null, null, null, null, null, null],
+      [4, 4, 3, 2, 1, null, null, null, null, null],
+      [4, 4, 3, 3, 2, null, null, null, null, null],
+      [4, 4, 4, 3, 2, 1, null, null, null, null],
+      [4, 4, 4, 3, 3, 2, null, null, null, null],
+      [4, 4, 4, 4, 3, 2, 1, null, null, null],
+      [4, 4, 4, 4, 3, 3, 2, null, null, null],
+      [4, 4, 4, 4, 4, 3, 2, 1, null, null],
+      [4, 4, 4, 4, 4, 3, 3, 2, null, null],
+      [4, 4, 4, 4, 4, 4, 3, 2, 1, null],
+      [4, 4, 4, 4, 4, 4, 3, 3, 2, null],
+      [4, 4, 4, 4, 4, 4, 4, 3, 2, 1],
+      [4, 4, 4, 4, 4, 4, 4, 3, 3, 2],
+      [4, 4, 4, 4, 4, 4, 4, 4, 3, 3],
+      [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
     ],
     "source": { "book": "CRB" }
   }

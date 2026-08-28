@@ -79,10 +79,12 @@ describe('golden PF1e Fighter 2 / Wizard 3', () => {
     expect(casting.dcByLevel[1]).toBe(14)
     expect(casting.dcByLevel[2]).toBe(15)
     expect(casting.bonusSlotsByLevel.slice(0, 4)).toEqual([0, 1, 1, 1])
+    expect(casting.classSlotsByLevel.slice(0, 4)).toEqual([4, 2, 1, null])
+    expect(casting.slotMaxByLevel.slice(0, 4)).toEqual([4, 3, 2, 0])
     expect(character.spellcasting[0]?.slots).toEqual([
-      { spellLevel: 0, max: 4, remaining: 4 },
-      { spellLevel: 1, max: 3, remaining: 2 },
-      { spellLevel: 2, max: 2, remaining: 2 },
+      { spellLevel: 0, max: null, remaining: 4 },
+      { spellLevel: 1, max: null, remaining: 2 },
+      { spellLevel: 2, max: null, remaining: 2 },
     ])
   })
 

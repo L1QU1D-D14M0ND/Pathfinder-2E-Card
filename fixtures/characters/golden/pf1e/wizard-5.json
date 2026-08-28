@@ -157,10 +157,10 @@
       "classRowId": "class-row-wizard",
       "casterLevelOverride": null,
       "slots": [
-        { "spellLevel": 0, "max": 4, "remaining": 4 },
-        { "spellLevel": 1, "max": 4, "remaining": 3 },
-        { "spellLevel": 2, "max": 3, "remaining": 3 },
-        { "spellLevel": 3, "max": 2, "remaining": 1 }
+        { "spellLevel": 0, "max": null, "remaining": 4 },
+        { "spellLevel": 1, "max": null, "remaining": 3 },
+        { "spellLevel": 2, "max": null, "remaining": 3 },
+        { "spellLevel": 3, "max": null, "remaining": 1 }
       ],
       "cantrips": [
         {
@@ -216,7 +216,7 @@
         "location": "carried"
       }
     ],
-    "notes": "Light load. Slots max includes INT bonus spells."
+    "notes": "Light load. Slot max is class table + INT bonus; remaining is play state."
   },
   "companions": [],
   "conditions": [],

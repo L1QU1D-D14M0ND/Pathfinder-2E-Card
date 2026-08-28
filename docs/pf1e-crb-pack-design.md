@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–14 landed (Batch 14 is 1x fill-out). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–15 landed (Batch 14–15 are 1x fill-out). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
 **Code:** `app/src/systems/pf1e/content/` (lookup only; unknown ids do not fail Load)
@@ -49,8 +49,9 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **12** | Feats on the three goldens | Documentary feat ids; Combat math stays typed | Catalog | Done |
 | **13** | Spell metadata on the goldens | Documentary spell ids; slots/DCs/prepared stay typed | Catalog | Done |
 | **14** | Remaining CRB player races; stamp catalog size | Identity already lists `CRB_RACES`; Gnome/Halfling are Small; ability adjustments stay typed | Catalog | Done |
+| **15** | Class spells-per-day tables; hybrid Max (computed default + click-to-override) | Bonus-slot math from batch 7 needs the class table to fill Max | Catalog + engine/UI | Done |
 
-The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Remaining work after this table is in [§6](#6-recommended-upcoming-work).
+The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Remaining work after this table is in [§6](#6-recommended-upcoming-work).
 
 ---
 
@@ -60,7 +61,7 @@ The 0.9 character-basics write-ups are in §4. Batch 14 is 1x fill-out. Remainin
 content/pf1e/crb/
   README.md          # license / what is in this folder
   pack.json          # manifest + which batches have landed
-  classes.json       # HD/BAB/saves + class skills + skill points (11 CRB base classes)
+  classes.json       # HD/BAB/saves + class skills + skill points + spells/day (casters)
   races.json         # race id + name + size (batch 8 Human; batch 14 remaining CRB player races)
   items.json         # weapon/armor/gear ids (batch 10: golden rows only)
   feats.json         # feat id + name + category (batch 12: golden rows only)
@@ -78,9 +79,10 @@ A class catalog row in this phase is **not** a class description. It is:
 | `saves.fort/ref/will` | `good` / `poor` |
 | `skillPointsPerLevel` | Ranks per level before Int (all 11 CRB classes) |
 | `classSkills` | Seeded skill keys that stamp checkboxes (batch 9) |
+| `spellsPerDay` | Optional 20×10 table (batch 15). null cell = cannot cast yet; 0 = table lists 0. Cleric omits domain +1. |
 | `source.book` | `"CRB"` — page omitted until we cite without copying tables as images |
 
-Features, spells/day, and proficiency lists wait for later batches. Craft/Perform/Profession wildcards are not in `classSkills`.
+Features, proficiency lists, and domain/specialist extra slots wait. Craft/Perform/Profession wildcards are not in `classSkills`.
 
 ---
 
@@ -756,32 +758,68 @@ Spell Focus and similar feats raise DC for a school. They are a player choice, n
 
 **CRB (player-facing):** A high spellcasting ability grants **bonus spells per day** from the Ability Modifiers and Bonus Spells table. Cantrips (level 0) never receive bonus slots. A score of 10–11 grants none. 12–13 grants +1 1st; 18–19 grants +1 at 1st through 4th; 20–21 grants +2 1st and +1 at 2nd through 5th. Odd and even scores in a pair share a row. You only receive a bonus slot of a level you can already cast.
 
-Those bonus slots are added to the class table’s spells per day. In 0.9 the player types the total into **Max**.
+Those bonus slots are added to the class table’s spells per day. Batch 15 fills **Max** from that sum unless the player types a custom amount.
 
 **App today / this batch:**
 
 | Piece | Where | Behavior |
 | --- | --- | --- |
 | Engine | `bonusSpellsFromAbility`, `bonusSlotsByLevel` | Table from the ability **score** (`tempScore` included; `tempModifier` is not) |
-| Input | `spellcasting[].slots[].max` / `remaining` | User-entered. Compute does not add bonus into max |
-| UI | Spells tab Bonus slots column (derived) next to Max / Left | Note: add them into max yourself |
-| Goldens | Wizard 5 INT 18 → bonus `[0, 1, 1, 1, 1]`; typed max 4/4/3/2 is class 4/3/2/1 plus those bonuses | Unchanged |
+| Input | `spellcasting[].slots[].max` / `remaining` | Max null = default (batch 15). Remaining stays user-entered. Compute does not rewrite the document |
+| UI | Spells tab Bonus slots column (derived) next to Max / Left | Max shows class + bonus; click to customize |
+| Goldens | Wizard 5 INT 18 → bonus `[0, 1, 1, 1, 1]`; default max 4/4/3/2 is class 4/3/2/1 plus those bonuses | Unchanged as bonus snapshot; Max now derived in batch 15 |
 
 **Verdict:** The table matches CRB for scores 10–30. Empty INT 18 still shows bonus 1st-level +1 with slot max 0.
 
-**Gaps:** Auto-adding bonus into max; class spells-per-day table; specialist/domain extra slots; “only if you can cast that level.”
+**Gaps:** Auto-adding bonus into max waited for batch 15. Specialist/domain extra slots still wait. The bonus **column** still shows the raw ability table even for levels the class cannot cast; those levels stay 0 in default Max.
 
-**Pack slice:** none.
+**Pack slice:** none in this batch.
 
-**Tests:** Published bonus columns for 10–30 (odd scores share the even score below); no bonus cantrips at INT 30; Wizard 5 bonus 1/1/1/1 with typed max 4 at 1st; empty INT 18 leaves max 0; `tempScore` +2 (score 20) grants two bonus 1sts.
+**Tests:** Published bonus columns for 10–30 (odd scores share the even score below); no bonus cantrips at INT 30; Wizard 5 bonus 1/1/1/1; empty INT 18 leaves default max 0 without a class table; `tempScore` +2 (score 20) grants two bonus 1sts.
+
+---
+
+## Batch 15 — two mechanics
+
+### 4.29 Class spells-per-day tables
+
+**CRB (player-facing):** Each casting class has a **spells per day** table by class level. A dash means the class cannot cast that spell level yet. A **0** means the class can cast that level but the table grants none — bonus spells from ability still apply. Cleric domain slots are written as `+1` on the published table; they are extra slots, not this base table. Sorcerer and Bard have no 0-level slots per day (cantrips at will). Paladin and Ranger begin at 4th level.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `classes.json` `spellsPerDay` | 20×10 grid on Bard, Cleric, Druid, Paladin, Ranger, Sorcerer, Wizard. Non-casters omit the field |
+| Lookup | `classSpellsPerDayRow` | Unknown id / no table / level < 1 → null. Never throws |
+| Goldens | Wizard 5 and Fighter 2 / Wizard 3 | `slots[].max` null so Max uses the table. Synthesist keeps typed max (no APG table yet) |
+
+**Verdict:** Cleric numbers match Wizard/Druid (no domain +1). Paladin 4 1st-level `0` is stored as 0, not a dash.
+
+**Gaps:** Domain/school extra slots; spells known; APG Summoner table.
+
+**Pack slice:** `spellsPerDay` on the seven CRB casting classes.
+
+**Tests:** Full Wizard 1–20; Cleric/Druid match Wizard; Bard 1/5/16, Sorcerer 1/5, Paladin 3–4, Ranger 4/13 snapshots; Fighter/Summoner have no table.
+
+### 4.30 Hybrid Max (computed default + click-to-override)
+
+**CRB (player-facing):** Daily allotment is class table + bonus spells from ability, only for levels the class can already cast, and only if the ability score is at least 10 + spell level.
+
+**App today / this batch:** Default Max = that sum. Click the Max cell to type a custom amount. Leave the field **empty** to return to the default. `remaining` is still play state. Compute does not rewrite `slots[].max`.
+
+**Gaps:** Remaining does not auto-fill from Max. Specialist/domain extras still typed.
+
+**Pack slice:** none (uses 4.29).
+
+**Tests:** Wizard 5 INT 18 → 4/4/3/2; INT 10 zeros 1st–3rd; Paladin 4 CHA 18 → 1st max 1; Cleric 1 has no domain extra; typed 7 stays 7; empty sheet with no class table stays 0; Spells tab click / type / clear.
 
 ---
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the remaining CRB player races and size stamp. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** class spells-per-day tables, then remaining catalog rows, then APG follow-through. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** remaining catalog rows, then APG follow-through. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -815,3 +853,4 @@ The 0.9 character-basics queue (batches 1–13) is done. Batch 14 landed the rem
 | 2026-08-19 | Spanish UI catalog landed; this folder stays English mechanics-only names |
 | 2026-08-19 | 1.0 stability; this folder stays CRB-only |
 | 2026-08-19 | Batch 14: remaining CRB player races + size stamp; ability adjustments stay typed; next is spells-per-day tables |
+| 2026-08-27 | Batch 15: class spells-per-day tables + hybrid Max (click to customize, empty resets); next is remaining catalog rows |
