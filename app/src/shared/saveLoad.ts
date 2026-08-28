@@ -14,12 +14,21 @@ export class CharacterSaveError extends Error {
 
 export const SAVE_FILE_EXTENSION = '.json'
 
+// Keep Unicode letters and digits: character names are routinely accented
+// (Spanish is a shipped locale) and stripping them mangles the filename.
+const UNSAFE_FILENAME_CHARS = /[^\p{L}\p{N}\-_ ]+/gu
+
 export function suggestedSaveFilename(
   characterName: string,
   extension = SAVE_FILE_EXTENSION,
 ): string {
   const raw = characterName.trim() || 'character'
-  const safe = raw.replace(/[^\w\- ]+/g, '').replace(/\s+/g, '-').slice(0, 64)
+  // Collapse whitespace first: tabs and newlines are not in the allowed set,
+  // so stripping before collapsing would glue neighbouring words together.
+  const safe = raw
+    .replace(/\s+/g, '-')
+    .replace(UNSAFE_FILENAME_CHARS, '')
+    .slice(0, 64)
   return `${safe || 'character'}${extension}`
 }
 

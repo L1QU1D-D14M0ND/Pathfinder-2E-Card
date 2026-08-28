@@ -11,7 +11,10 @@ export { isOverridden }
 
 const ATTRIBUTE_KEYS: AttributeKey[] = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
-const SCALARS: Record<string, (view: DerivedView, value: number) => void> = {
+export const SCALARS: Record<
+  string,
+  (view: DerivedView, value: number) => void
+> = {
   ac: (view, value) => {
     view.ac = value
   },

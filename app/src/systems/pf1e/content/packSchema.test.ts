@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createSchemaValidator, formatAjvErrors } from '../../../shared/validate'
-import { readRepoJson } from '../../../test/readRepoFile'
+import { listRepoFiles, readRepoJson } from '../../../test/readRepoFile'
 import packSchema from '../../../../../schemas/content/pf1e/pack.schema.json'
 import classesSchema from '../../../../../schemas/content/pf1e/classes.schema.json'
 import racesSchema from '../../../../../schemas/content/pf1e/races.schema.json'
@@ -10,23 +10,39 @@ import spellsSchema from '../../../../../schemas/content/pf1e/spells.schema.json
 import archetypesSchema from '../../../../../schemas/content/pf1e/archetypes.schema.json'
 import evolutionsSchema from '../../../../../schemas/content/pf1e/evolutions.schema.json'
 
-const FILES: Array<{ file: string; schema: object }> = [
-  { file: 'content/pf1e/crb/pack.json', schema: packSchema },
-  { file: 'content/pf1e/apg/pack.json', schema: packSchema },
-  { file: 'content/pf1e/crb/classes.json', schema: classesSchema },
-  { file: 'content/pf1e/apg/classes.json', schema: classesSchema },
-  { file: 'content/pf1e/crb/races.json', schema: racesSchema },
-  { file: 'content/pf1e/crb/items.json', schema: itemsSchema },
-  { file: 'content/pf1e/crb/feats.json', schema: featsSchema },
-  { file: 'content/pf1e/crb/spells.json', schema: spellsSchema },
-  { file: 'content/pf1e/apg/archetypes.json', schema: archetypesSchema },
-  { file: 'content/pf1e/apg/evolutions.json', schema: evolutionsSchema },
-]
+// Schema per file *name*, so globbing picks up new packs automatically.
+const SCHEMA_BY_BASENAME: Record<string, object> = {
+  'pack.json': packSchema,
+  'classes.json': classesSchema,
+  'races.json': racesSchema,
+  'items.json': itemsSchema,
+  'feats.json': featsSchema,
+  'spells.json': spellsSchema,
+  'archetypes.json': archetypesSchema,
+  'evolutions.json': evolutionsSchema,
+}
+
+const FILES = listRepoFiles('content/pf1e')
 
 describe('PF1e content pack JSON Schema', () => {
+  it('actually found pack files to validate', () => {
+    expect(FILES.length).toBeGreaterThanOrEqual(10)
+  })
+
+  it('knows a schema for every pack file under content/pf1e/', () => {
+    // A new entity kind must arrive with a schema rather than skipping
+    // validation because no list mentions it.
+    const unmapped = FILES.filter(
+      (file) => !(file.split('/').pop()! in SCHEMA_BY_BASENAME),
+    )
+    expect(unmapped).toEqual([])
+  })
+
   it('accepts every pack file under content/pf1e/', () => {
     const failures: string[] = []
-    for (const { file, schema } of FILES) {
+    for (const file of FILES) {
+      const schema = SCHEMA_BY_BASENAME[file.split('/').pop()!]
+      if (!schema) continue
       const validate = createSchemaValidator(schema)
       if (!validate(readRepoJson(file))) {
         failures.push(`${file}: ${formatAjvErrors(validate.errors)}`)

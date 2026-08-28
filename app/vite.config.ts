@@ -61,5 +61,12 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      include: ['src/**/*.{ts,tsx}'],
+      // Entry point and type-only modules carry no logic worth measuring.
+      exclude: ['src/main.tsx', 'src/**/types.ts', 'src/test/**'],
+    },
   },
 })
