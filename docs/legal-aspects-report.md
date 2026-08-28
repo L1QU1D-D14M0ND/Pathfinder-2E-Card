@@ -32,15 +32,13 @@ Engine math (ability modifier, BAB/save progressions, iterative attacks, size, e
 
 ## 3. Software license (MIT)
 
-[`LICENSE`](../LICENSE) is the MIT License, Copyright (c) 2026 L1QU1D-D14M0ND, plus a short project note:
-
-> The MIT License covers the software in this repository. Catalog files under content/ are mechanics-only metadata, not a reprint of the Pathfinder Core Rulebook.
+[`LICENSE`](../LICENSE) is the MIT License, Copyright (c) 2026 L1QU1D-D14M0ND. Catalog posture and an unofficial/trademark notice live in the [README](../README.md) License section so GitHub can detect MIT.
 
 **Implications:**
 
 - Downstream users may use, copy, modify, and sell the **software**, subject to keeping the copyright notice.
 - MIT does **not** grant rights in Paizo’s copyrights or trademarks. A fork that adds spell text, Golarion gazetteer, or a Pathfinder logo is not licensed by this MIT file.
-- GitHub currently reports the repo license as **“Other”** (`licenseInfo.key: other`), not MIT. The extra paragraph after the standard MIT text is the likely cause. That is a metadata issue, not a change of terms. If SPDX/GitHub detection matters, keep the extra paragraph in `README` / `docs/content-licensing.md` instead of inside `LICENSE`.
+- Keep extra project notes out of `LICENSE`. Catalog rules and the unofficial disclaimer belong in the README (and ADR 0007), not as a postscript on the MIT text.
 
 There is no `NOTICE`, `CONTRIBUTING`, `SECURITY`, `CODE_OF_CONDUCT`, or privacy policy in the tree.
 
@@ -96,13 +94,13 @@ The 2026-08-18 review described engine formulas as “published table **numbers*
 
 If counsel concludes those grids are OGC in use, the fix is the already-planned increment: attach OGL 1.0a + Section 15 **next to the pack** (do not rewrite the app MIT `LICENSE`), designate which fields are OGC, and still omit PI.
 
-### 4.4 Product Identity word list (enforced, short)
+### 4.4 Product Identity word list (enforced, tripwire)
 
-[`licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) rejects these substrings in pack **entity** JSON:
+[`licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) rejects these substrings in **all** pack JSON under `content/pf1e/` (entity files **and** `pack.json` notes):
 
-Golarion, Absalom, Cheliax, Varisia, Sandpoint, Paizo, Pathfinder Society, Inner Sea.
+Golarion, Absalom, Cheliax, Varisia, Sandpoint, Paizo, Pathfinder Society, Inner Sea, Aldori, Korvosa, Osirion, Runelord, and a short list of core Golarion deity names (Abadar, Asmodeus, Calistria, Cayden, Desna, Erastil, Gorum, Gozreh, Iomedae, Irori, Lamashtu, Nethys, Norgorber, Pharasma, Rovagug, Sarenrae, Shelyn, Torag, Urgathoa, Zon-Kuthon).
 
-That list is a tripwire, not a gazetteer. It will not catch Osirion, Korvosa, Iomedae, Aldori, Runelord, and many other PI terms. Expanding the list is a product/test change, not a substitute for not adding setting text.
+That list is a tripwire, not a gazetteer. It will not catch every PI term. Expanding it is not a substitute for not adding setting text. Goldens and UI chrome are out of scope on purpose.
 
 ---
 
@@ -129,7 +127,7 @@ PF2e panel UI strings are still partly hardcoded English (i18n deferred). That i
 - GitHub repository name: `Pathfinder-2E-Card`.
 - npm `package.json` `"name"`: `pathfinder-2e-character-sheet` (`private: true`, not published).
 
-[ADR 0007](adr/0007-content-licensing.md) §7: no official Paizo compatibility logo and no Community Use artwork in 0.9/1.0 unless a later ADR says so.
+[ADR 0007](adr/0007-content-licensing.md) §7: no official Paizo compatibility logo and no Community Use artwork in 0.9/1.0 unless a later ADR says so. The README License section states the project is unofficial and not affiliated with Paizo; that is a disclaimer, not CUP artwork or a compatibility mark.
 
 **Community Use Policy (CUP)** is Paizo’s fan-work safe harbor (attribution, unofficial, restrictions on charging for CUP material, approved logos only). This repo **does not** claim CUP and **does not** include CUP attribution. Fan tools often rely instead on **nominative fair use** (using the mark to name the game the tool is for). Whether that is enough for a given distribution (especially a **paid** one under MIT’s commercial grant) is a counsel question. CUP and MIT-commercial are in tension if someone sells a build that still says “Pathfinder” as product branding.
 
@@ -172,19 +170,19 @@ No GPL/AGPL runtime dependency showed up in a lockfile scan for this report. MPL
 | Check | What it does |
 | --- | --- |
 | Pack manifests | `contentKind === "mechanics-only"` and `oglNoticeRequired === false` |
-| Forbidden keys | `benefit`, `body`, `description`, `flavor`, `flavortext`, `fulltext`, `prose`, `rules`, `special`, `summary`, `text` |
-| PI regex | Short list in §4.4, entity JSON only |
+| Forbidden keys | `benefit`, `body`, `description`, `flavor`, `flavortext`, `fulltext`, `prose`, `rules`, `special`, `summary`, `text` (every pack JSON file) |
+| PI regex | Tripwire list in §4.4, including `pack.json` notes |
+| Scrape URLs | d20pfsrd, aonprd, Archives of Nethys, Hero Lab, Foundry VTT dump strings |
+| Page keys | No `page` key (ADR 0007 omits page numbers) |
+| App `LICENSE` | Stock MIT; no catalog/Pathfinder postscript |
 | Summoner split | No Summoner in CRB `classes.json`; APG `classes.json` is exactly `class.summoner` |
 
 CI (`.github/workflows/ci.yml`) runs the full Vitest suite, so the gate is on every PR.
 
-**Gaps the gate does not cover:**
+**Gaps the gate still does not cover:**
 
-- `pack.json` notes (intentionally “our comments”); PI regex is entity-only.
 - Locales, UI chrome, PWA description, README, goldens, engine source.
-- `source.page` (schema allows it; ADR says omit it; tests do not assert `page` is absent).
-- Completeness of the PI word list.
-- Third-party scrape provenance (policy + review, not a test).
+- Completeness of the PI word list (still a tripwire).
 - PF2e (no pack to scan).
 
 Forbidden-key `special` means a JSON field named `special` cannot hold weapon special-quality **prose**. The project uses `weapon.properties` (tag list) instead, which is allowed.
@@ -235,7 +233,7 @@ Until those are answered, the safe engineering default remains the current ADR: 
 
 | Document | Role |
 | --- | --- |
-| [`LICENSE`](../LICENSE) | MIT + pointer at catalog posture |
+| [`LICENSE`](../LICENSE) | Stock MIT. Catalog and unofficial notices are in the README |
 | [ADR 0007](adr/0007-content-licensing.md) | Product lock (OGL / PI gate) |
 | [`content-licensing.md`](content-licensing.md) | 2026-08-18 review (updated for later weapon batches in §3) |
 | [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §4 | CRB folder license notes |
@@ -257,3 +255,4 @@ Until those are answered, the safe engineering default remains the current ADR: 
 | later | Batch 15 `spellsPerDay` grids | First large verbatim class tables in JSON |
 | later | Batches 16–19 weapons; W1–W4 property tags | Weapon table rows + tags; still `oglNoticeRequired: false` |
 | 2026-08-28 | This report | Inventory only; lock unchanged |
+| 2026-08-28 | License-gate hardening | Page omission, scrape URLs, wider PI tripwire, `pack.json` notes, stock MIT `LICENSE`, README unofficial notice |

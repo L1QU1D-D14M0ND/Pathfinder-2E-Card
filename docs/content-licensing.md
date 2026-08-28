@@ -42,7 +42,7 @@ Engine formulas (ability modifier, BAB tables, spell DC, bonus spells, heavy loa
 | PF1e goldens | Feat/feature `summary` values are sheet honesty notes (“Not auto-applied”), not feat benefits |
 | PF2e golden Wizard | `identity.homeRegion` may be a Golarion place name. That is **character identity**, not pack content |
 
-Forbidden in pack JSON until an OGL increment: `description`, `summary`, `flavor`, `text`, `benefit`, spell bodies, class feature paragraphs. Enforced by [`app/src/systems/pf1e/content/licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts).
+Forbidden in pack JSON until an OGL increment: `description`, `summary`, `flavor`, `text`, `benefit`, spell bodies, class feature paragraphs, `source.page`, and third-party SRD scrape URLs. Enforced by [`app/src/systems/pf1e/content/licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) on every `content/pf1e/**/*.json` file, including `pack.json` notes. The app [`LICENSE`](../LICENSE) is stock MIT; catalog and unofficial notices live in the [README](../README.md).
 
 ---
 
@@ -100,3 +100,4 @@ No Remaster encyclopedia in this review. ORC import remains later (ADR 0003). PF
 | 2026-08-19 | Spanish UI catalog (`es.json`); pack still mechanics-only English names |
 | 2026-08-19 | 1.0 stability; pack still mechanics-only |
 | 2026-08-19 | CRB batch 14: remaining player race names + size; still no PI |
+| 2026-08-28 | License gate: omit `page`, scrape URLs, pack.json notes, wider PI tripwire; stock MIT `LICENSE` |

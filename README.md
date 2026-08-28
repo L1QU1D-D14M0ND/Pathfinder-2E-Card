@@ -69,4 +69,8 @@ npm run dev
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) covers the software in this repository.
+
+Catalog files under [`content/`](content/) are mechanics-only metadata (ids, names, numbers), not a reprint of the Pathfinder Core Rulebook. Do not paste book text, Product Identity, or third-party SRD HTML into that tree. See [ADR 0007](docs/adr/0007-content-licensing.md), [content licensing](docs/content-licensing.md), and the [legal aspects report](docs/legal-aspects-report.md).
+
+This is an unofficial fan project. It is not affiliated with, endorsed, or sponsored by Paizo Inc. Pathfinder and associated marks are trademarks of Paizo Inc., used here only to identify the game systems the sheet supports.

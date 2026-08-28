@@ -109,7 +109,7 @@ Review landed 2026-08-18: [ADR 0007](adr/0007-content-licensing.md), [`content-l
 - **This pack:** curated **game mechanics numbers** (ids, names, HD/BAB/save tags, pounds, documentary weapon/armor fields, spell level). No Paizo logos, no Golarion gazetteer, no copied feat/spell/class **prose**.
 - Do not scrape d20pfsrd / Archives of Nethys / Hero Lab as the ship pack.
 - **OGL 1.0a / Section 15 is not in the repo yet.** Add it in the same change that first ships Open Game Content **rules text**. `pack.json` has `contentKind: mechanics-only` and `oglNoticeRequired: false`.
-- Vitest [`licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) scans entity JSON for forbidden prose keys and a short Product Identity word list. `class.summoner` is not in this folder.
+- Vitest [`licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) scans every pack JSON file (including `pack.json` notes) for forbidden prose keys, a Product Identity tripwire, omitted `page` keys, and third-party SRD scrape URLs. `class.summoner` is not in this folder.
 
 ---
 

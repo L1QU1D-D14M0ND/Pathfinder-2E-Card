@@ -26,12 +26,15 @@ The app is MIT. Phase 3c shipped a PF1e Core Rulebook **player catalog** of ids,
 ## Consequences
 
 - Adding spell/feat **summaries** copied from a book is a **new increment** that includes the OGL 1.0a text plus a Section 15 that lists the sources used, and a designation of which pack fields are Open Game Content.
-- Vitest scans the CRB pack for forbidden prose keys and a short Product Identity word list.
+- Vitest scans every `content/pf1e/**/*.json` file for forbidden prose keys, a Product Identity tripwire, omitted `page` keys, and third-party SRD scrape URLs (`licenseGate.test.ts`). Goldens and chrome stay out of that scan.
 - Encyclopedia sidebar tools remain license-gated ([ADR 0005](0005-sidebar-host.md)).
 
 ## References
 
 - [`../content-licensing.md`](../content-licensing.md)
+- [`../legal-aspects-report.md`](../legal-aspects-report.md)
 - [`../../content/pf1e/crb/`](../../content/pf1e/crb/)
 - [`../pf1e-crb-pack-design.md`](../pf1e-crb-pack-design.md)
 - [`0003-multi-system-product-direction.md`](0003-multi-system-product-direction.md)
+
+**Postscript (2026-08-28):** The lock is unchanged (mechanics-only; no OGL until rules text). The license gate now also omits `page` keys, scrape URLs, and `pack.json` notes, and uses a wider PI tripwire. App `LICENSE` is stock MIT; catalog and unofficial notices live in the README.

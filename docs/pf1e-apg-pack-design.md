@@ -17,7 +17,7 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 - Ids, names, HD / BAB / save tags, class-skill keys, skill points per level.
 - No class flavor, eidolon prose, evolution **text**, or spell descriptions.
 - `pack.json` has `contentKind: mechanics-only` and `oglNoticeRequired: false`.
-- Vitest [`licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) scans this folder with the CRB pack.
+- Vitest [`licenseGate.test.ts`](../app/src/systems/pf1e/content/licenseGate.test.ts) scans this folder with the CRB pack (prose keys, PI tripwire, omitted `page`, scrape URLs, including `pack.json` notes).
 
 ---
 
