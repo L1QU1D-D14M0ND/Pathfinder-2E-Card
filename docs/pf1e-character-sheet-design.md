@@ -30,7 +30,7 @@ Ruleset target: **Core Rulebook**, player-facing, for **0.9**. No GM-exclusive b
 | 7 | Attacks | Iterative attacks from BAB (−5 steps). MAP is a PF2e concept — do not reuse |
 | 8 | HP | Max at level 1 HD + Con; later levels user-entered rolled/fixed HD + Con (+ favored class HP if chosen). Engine sums; does not roll |
 | 9 | Spell DC | `10 + spell level + ability mod` per spellcasting class entry. Caster level from class levels in that class |
-| 10 | Spells per day | **User-entered** max + remaining in 0.9; bonus spells from ability **are** derived (table). Domain/school slots are extra rows, not auto-granted until content packs |
+| 10 | Spells per day | Default Max = class table + bonus spells from ability. Click to type a custom amount; empty resets to default. Domain/school slots are extra rows, not auto-granted |
 | 11 | Encumbrance | Item **pounds**; total weight derived. Light/medium/heavy from Strength table (engine). No PF2e bulk |
 | 12 | Play / dying | Negative HP allowed; dead at −Con (display threshold). **No** PF2e dying/wounded/doomed track, **no** hero points in 0.9 (optional later as a custom resource) |
 | 13 | Alignment | First-class identity field (nine alignments + optional deity) |
@@ -170,7 +170,7 @@ Optional later (this First Edition finish): Cleric 5 (domains/channel as daily r
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–14 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability (slots stay typed); Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids (slots/DCs/prepared stay typed); remaining CRB player races + size stamp (ability adjustments stay typed). Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); **batches 16–19 landed** (simple, martial, and exotic weapons). **W1–W4 landed** `reach`, `brace`, `trip`, and `disarm` on `weapon.properties`, an **array of N tags** (one is valid; many are valid; later magic uses the same list) ([pack design §7.6](pf1e-crb-pack-design.md)). Magic weapons/armor are a later overlay, not plus-N catalog rows. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, and auto-filled spellbooks are not auto-written.
+Batch 1–15 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability; Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids; remaining CRB player races + size stamp; class spells-per-day tables with hybrid Max. Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); **batches 16–19 landed** (simple, martial, and exotic weapons). **W1–W4 landed** `reach`, `brace`, `trip`, and `disarm` on `weapon.properties`, an **array of N tags** (one is valid; many are valid; later magic uses the same list) ([pack design §7.6](pf1e-crb-pack-design.md)). Magic weapons/armor are a later overlay, not plus-N catalog rows. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, domain/specialist extras, and auto-filled spellbooks are not auto-written.
 
 License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **1.0 landed.** Spanish UI catalog: [`../app/src/locales/es.json`](../app/src/locales/es.json). Synthesist golden landed.
 
@@ -221,6 +221,7 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-19 | 1.0 stability. Next is leftover PF2e work. |
 | 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release. |
 | 2026-08-19 | CRB batch 14: remaining player races + size stamp. Next is spells-per-day tables. |
+| 2026-08-27 | CRB batch 15: class spells-per-day tables + hybrid Max. Next is remaining catalog rows. |
 | 2026-08-27 | Remaining mundane CRB weapons/armor queued as batches 16–21; magic gear reserved later. |
 | 2026-08-27 | CRB batch 16: remaining simple melee + simple ranged. Next mundane equipment is martial weapons. |
 | 2026-08-27 | CRB batch 17: martial light + remaining martial one-handed. Next is martial two-handed + bows. |

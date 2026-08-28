@@ -568,10 +568,14 @@
     "SpellSlotLevel": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["spellLevel", "max", "remaining"],
+      "required": ["spellLevel", "remaining"],
       "properties": {
         "spellLevel": { "type": "integer", "minimum": 0, "maximum": 9 },
-        "max": { "type": "integer", "minimum": 0 },
+        "max": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Custom spells-per-day total. null or omitted uses class table + ability bonus."
+        },
         "remaining": { "type": "integer", "minimum": 0 }
       }
     },

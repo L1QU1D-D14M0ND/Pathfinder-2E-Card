@@ -205,7 +205,7 @@
       "savePoor": "pobre"
     },
     "spells": {
-      "help": "Los espacios los escribe el jugador. La CD es 10 + nivel del conjuro + característica. Los espacios extra por característica son derivados (súmalos tú al máximo en 0.9). Foco en conjuros no cambia la CD. Los conjuros del catálogo sellan nombre y nivel: no rellenan espacios ni un libro de conjuros.",
+      "help": "El máximo es la tabla de conjuros diarios de la clase más los espacios extra por característica. Pulsa Máx. para escribir una cantidad propia; déjalo vacío para volver al valor por defecto. No se añaden espacios de dominio ni de especialista. Restantes es el estado de juego. Foco en conjuros no cambia la CD. Los conjuros del catálogo sellan nombre y nivel.",
       "entries": "Entradas de lanzamiento",
       "addEntry": "Añadir lanzamiento",
       "empty": "Aún no hay entradas de lanzamiento.",
@@ -220,6 +220,9 @@
       "dc": "CD",
       "bonusSlots": "Espacios extra",
       "max": "Máx.",
+      "maxHint": "Pulsa para fijar un máximo propio. Déjalo vacío para usar el valor por defecto ({default}).",
+      "maxEdit": "Espacios máximos del nivel {level}",
+      "maxOverride": "Espacios máximos del nivel {level}: {max}. Pulsa para personalizar.",
       "left": "Restantes",
       "cantripLevel": "0 (trucos)",
       "cantrips": "Trucos / oraciones",

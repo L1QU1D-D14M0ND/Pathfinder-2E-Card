@@ -121,6 +121,7 @@ export { applyClassProgression as applyCrbClassProgression } from './classLookup
 export {
   applyClassProgression,
   classSkillKeySet,
+  classSpellsPerDayRow,
   skillPointsPerLevelFor,
   stampClassSkills,
 } from './classLookup'

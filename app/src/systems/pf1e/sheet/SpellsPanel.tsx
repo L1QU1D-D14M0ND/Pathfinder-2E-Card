@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react'
 import {
   createEmptySpellListEntry,
   createEmptySpellcasting,
@@ -198,7 +199,7 @@ function SpellcastingBlock({
             const slot =
               entry.slots.find((row) => row.spellLevel === spellLevel) ?? {
                 spellLevel,
-                max: 0,
+                max: null,
                 remaining: 0,
               }
             return (
@@ -225,17 +226,14 @@ function SpellcastingBlock({
                   />
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    min={0}
-                    aria-label={`${t('pf1e.spells.max')} ${spellLevel}`}
-                    value={slot.max}
-                    onChange={(e) =>
+                  <SlotMaxCell
+                    spellLevel={spellLevel}
+                    displayed={derived?.slotMaxByLevel[spellLevel] ?? 0}
+                    custom={slot.max ?? null}
+                    onChange={(max) =>
                       onPatch((current) => ({
                         ...current,
-                        slots: upsertSlot(current.slots, spellLevel, {
-                          max: Math.max(0, Number(e.target.value) || 0),
-                        }),
+                        slots: upsertSlot(current.slots, spellLevel, { max }),
                       }))
                     }
                   />
@@ -281,20 +279,95 @@ function SpellcastingBlock({
 function upsertSlot(
   slots: SpellcastingEntry['slots'],
   spellLevel: number,
-  patch: Partial<{ max: number; remaining: number }>,
+  patch: Partial<{ max: number | null; remaining: number }>,
 ): SpellcastingEntry['slots'] {
   const next = [...slots]
   const index = next.findIndex((row) => row.spellLevel === spellLevel)
   if (index === -1) {
     next.push({
       spellLevel,
-      max: patch.max ?? 0,
+      max: patch.max ?? null,
       remaining: patch.remaining ?? 0,
     })
     return next
   }
   next[index] = { ...next[index], ...patch }
   return next
+}
+
+function SlotMaxCell({
+  spellLevel,
+  displayed,
+  custom,
+  onChange,
+}: {
+  spellLevel: number
+  displayed: number
+  custom: number | null
+  onChange: (max: number | null) => void
+}) {
+  const t = useT()
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState('')
+  const skipBlur = useRef(false)
+  const overridden = custom != null
+
+  function commit(raw: string) {
+    const trimmed = raw.trim()
+    if (trimmed === '') onChange(null)
+    else onChange(Math.max(0, Number(trimmed) || 0))
+    setEditing(false)
+  }
+
+  if (editing) {
+    return (
+      <input
+        type="number"
+        min={0}
+        autoFocus
+        placeholder={String(displayed)}
+        aria-label={t('pf1e.spells.maxEdit', { level: spellLevel })}
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={() => {
+          if (skipBlur.current) {
+            skipBlur.current = false
+            return
+          }
+          commit(draft)
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            e.preventDefault()
+            skipBlur.current = true
+            setEditing(false)
+          }
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            commit(draft)
+          }
+        }}
+      />
+    )
+  }
+
+  return (
+    <button
+      type="button"
+      className={overridden ? 'derived-button overridden' : 'derived-button'}
+      title={t('pf1e.spells.maxHint', { default: displayed })}
+      aria-label={t('pf1e.spells.maxOverride', {
+        level: spellLevel,
+        max: displayed,
+      })}
+      onClick={() => {
+        setDraft(custom == null ? '' : String(custom))
+        setEditing(true)
+      }}
+    >
+      {displayed}
+    </button>
+  )
 }
 
 function SpellListTable({

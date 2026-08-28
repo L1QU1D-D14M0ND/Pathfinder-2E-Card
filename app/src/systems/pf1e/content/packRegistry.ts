@@ -16,6 +16,11 @@ export interface ClassProgression {
   saves: ClassSaves
   skillPointsPerLevel: number
   classSkills: string[]
+  /**
+   * 20 class-level rows × 10 spell levels (0–9).
+   * null = cannot cast that level yet. 0 = table lists 0 (bonus still applies).
+   */
+  spellsPerDay?: Array<Array<number | null>>
   source?: ContentRef['source']
 }
 

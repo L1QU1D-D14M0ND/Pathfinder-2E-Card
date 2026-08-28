@@ -35,6 +35,8 @@ Use [`schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.j
 
 **Postscript (2026-08-19):** Optional `companions[]` `kind: eidolon` with `fused` overlay and documentary `evolutions[]` for 1.0 Synthesist. Does not bump `schemaVersion`. Evolutions do not write fused scores. CRB goldens omit the fields; the Synthesist golden uses them.
 
+**Postscript (2026-08-27):** `spellcasting[].slots[].max` may be null (or omitted). Null uses class table + ability bonus as the displayed Max. A number is a custom override. Remaining stays play state. Does not bump `schemaVersion`.
+
 ## References
 
 - [`../../schemas/pf1e/character.schema.json`](../../schemas/pf1e/character.schema.json)

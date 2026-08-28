@@ -27,7 +27,7 @@ npm run build
 - `system: "pf1e"` required on PF1e documents
 - Auto-seeded standard skills per system
 - PF1e martial + spell calc (Fighter 5, Wizard 5, Fighter 2 / Wizard 3, and Synthesist 5 goldens) and PF2e core calc (Fighter 5, Wizard 5, Bard 5, Cleric 5, Ranger 5)
-- CRB pack batches 1–14 landed (including Batch 7). Mechanics-only ([ADR 0007](../docs/adr/0007-content-licensing.md)). APG pack: Summoner + Synthesist overlay + Radiant Striker golden ([`../docs/pf1e-apg-pack-design.md`](../docs/pf1e-apg-pack-design.md)). Do not add Summoner to the CRB folder.
+- CRB pack batches 1–15 landed (including Batch 7). Mechanics-only ([ADR 0007](../docs/adr/0007-content-licensing.md)). APG pack: Summoner + Synthesist overlay + Radiant Striker golden ([`../docs/pf1e-apg-pack-design.md`](../docs/pf1e-apg-pack-design.md)). Do not add Summoner to the CRB folder.
 - Save export strips `derived`
 - Collapsible Tools sidebar (empty registry; Attack Helper, Actions List, and Budget Calculator wait until the PF1e sheet is ~90% done)
 - PWA: `npm run build` emits a Workbox service worker + standalone manifest (CI `verify:pwa`). Install/offline checklist below
