@@ -218,12 +218,14 @@ export interface ArmorItemStats {
   spellFailurePercent?: number
 }
 
+/** Documentary combat fields. Optional `properties` is N kebab-case tags (one or many; omit when empty). Later magic uses the same list. */
 export interface WeaponItemStats {
   damageDice?: string
   damageType?: string
   critRange?: number
   critMultiplier?: number
   rangeFeet?: number | null
+  properties?: string[]
 }
 
 export interface ShieldItemStats {

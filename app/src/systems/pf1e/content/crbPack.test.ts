@@ -117,14 +117,15 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–15', () => {
+  it('pack manifest records batches 1–19 and W1–W4', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
-      batches: Array<{ id: number }>
+      batches: Array<{ id: number | string }>
     }
-    expect(pack.status).toBe('batches-1-15-complete')
+    expect(pack.status).toBe('batches-1-19-w1-w2-w3-w4-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 'W1',
+      'W2', 'W3', 'W4',
     ])
   })
 })
@@ -268,12 +269,84 @@ describe('CRB pack batch 9: class skills', () => {
 describe('CRB pack batch 10: weapons and armor catalog', () => {
   it('lists the golden item ids', () => {
     expect(CRB_ITEMS.map((row) => row.id)).toEqual([
+      'weapon.gauntlet',
       'weapon.dagger',
-      'weapon.longsword',
+      'weapon.punching-dagger',
+      'weapon.spiked-gauntlet',
+      'weapon.light-mace',
+      'weapon.sickle',
+      'weapon.club',
+      'weapon.heavy-mace',
+      'weapon.morningstar',
+      'weapon.shortspear',
+      'weapon.longspear',
       'weapon.quarterstaff',
+      'weapon.spear',
+      'weapon.blowgun',
+      'weapon.heavy-crossbow',
+      'weapon.light-crossbow',
+      'weapon.dart',
+      'weapon.javelin',
+      'weapon.sling',
+      'weapon.throwing-axe',
+      'weapon.light-hammer',
+      'weapon.handaxe',
+      'weapon.kukri',
+      'weapon.light-pick',
+      'weapon.sap',
+      'weapon.starknife',
+      'weapon.short-sword',
+      'weapon.battleaxe',
+      'weapon.flail',
+      'weapon.longsword',
+      'weapon.heavy-pick',
+      'weapon.rapier',
+      'weapon.scimitar',
+      'weapon.trident',
+      'weapon.warhammer',
+      'weapon.falchion',
+      'weapon.glaive',
+      'weapon.greataxe',
+      'weapon.greatclub',
+      'weapon.heavy-flail',
+      'weapon.greatsword',
+      'weapon.guisarme',
+      'weapon.halberd',
+      'weapon.lance',
+      'weapon.ranseur',
+      'weapon.scythe',
+      'weapon.longbow',
+      'weapon.composite-longbow',
+      'weapon.shortbow',
+      'weapon.composite-shortbow',
+      'weapon.kama',
+      'weapon.nunchaku',
+      'weapon.sai',
+      'weapon.siangham',
+      'weapon.bastard-sword',
+      'weapon.dwarven-waraxe',
+      'weapon.whip',
+      'weapon.orc-double-axe',
+      'weapon.elven-curve-blade',
+      'weapon.dire-flail',
+      'weapon.gnome-hooked-hammer',
+      'weapon.two-bladed-sword',
+      'weapon.dwarven-urgrosh',
+      'weapon.bolas',
+      'weapon.hand-crossbow',
+      'weapon.repeating-heavy-crossbow',
+      'weapon.repeating-light-crossbow',
+      'weapon.net',
+      'weapon.shuriken',
+      'weapon.halfling-sling-staff',
       'armor.chain-shirt',
       'armor.chainmail',
       'item.spellbook',
+      'item.blowgun-darts',
+      'item.crossbow-bolts',
+      'item.sling-bullets',
+      'item.arrows',
+      'item.repeating-crossbow-bolts',
     ])
     expect(lookupCrbItem('armor.chainmail')).toMatchObject({
       name: 'Chainmail',
@@ -288,7 +361,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
   })
 
   it('returns null for an unknown item id', () => {
-    expect(lookupCrbItem('weapon.greatsword')).toBeNull()
+    expect(lookupCrbItem('armor.padded')).toBeNull()
     expect(lookupCrbItem(null)).toBeNull()
     expect(lookupCrbItem('')).toBeNull()
   })
@@ -325,7 +398,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
 
   it('unknown apply clears id and leaves the rest of the row', () => {
     const row = applyCrbItem(createEmptyItem(), 'weapon.longsword')
-    const custom = applyCrbItem(row, 'weapon.greatsword')
+    const custom = applyCrbItem(row, 'armor.padded')
     expect(custom.item.id).toBeNull()
     expect(custom.item.name).toBe('Longsword')
     expect(custom.pounds).toBe(4)

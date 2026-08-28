@@ -84,7 +84,7 @@ One `spellcasting[]` entry per casting class (wizard, cleric, …). Ability key,
 
 ### 3.7 Inventory & wealth
 
-Items with pounds, equipped/carried, weapon/armor/shield subfields (enhancement bonus, armor bonus, max Dex, ACP, spell failure). Currency (pp/gp/sp/cp). Derived weight and load category. **Ignore weight** opts out of load category (pounds still sum). Medium/heavy load penalties are not auto-written onto ACP / max Dex / speed.
+Items with pounds, equipped/carried, weapon/armor/shield subfields (enhancement bonus, armor bonus, max Dex, ACP, spell failure). `weapon.properties` is a **list of N kebab-case tags** on that inventory entry — one tag is valid (nunchaku: disarm), many tags are valid (whip: reach + trip + disarm; later magic `flaming` / `keen`), and empty omits the field. Currency (pp/gp/sp/cp). Derived weight and load category. **Ignore weight** opts out of load category (pounds still sum). Medium/heavy load penalties are not auto-written onto ACP / max Dex / speed.
 
 ### 3.8 Play
 
@@ -170,7 +170,7 @@ Optional later (this First Edition finish): Cleric 5 (domains/channel as daily r
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–15 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability; Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids; remaining CRB player races + size stamp; class spells-per-day tables with hybrid Max. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, domain/specialist extras, and auto-filled spellbooks are not auto-written.
+Batch 1–15 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability; Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids; remaining CRB player races + size stamp; class spells-per-day tables with hybrid Max. Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); **batches 16–19 landed** (simple, martial, and exotic weapons). **W1–W4 landed** `reach`, `brace`, `trip`, and `disarm` on `weapon.properties`, an **array of N tags** (one is valid; many are valid; later magic uses the same list) ([pack design §7.6](pf1e-crb-pack-design.md)). Magic weapons/armor are a later overlay, not plus-N catalog rows. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, domain/specialist extras, and auto-filled spellbooks are not auto-written.
 
 License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **1.0 landed.** Spanish UI catalog: [`../app/src/locales/es.json`](../app/src/locales/es.json). Synthesist golden landed.
 
@@ -222,3 +222,13 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-19 | Finish First Edition this release; leftover PF2e waits for a later release. |
 | 2026-08-19 | CRB batch 14: remaining player races + size stamp. Next is spells-per-day tables. |
 | 2026-08-27 | CRB batch 15: class spells-per-day tables + hybrid Max. Next is remaining catalog rows. |
+| 2026-08-27 | Remaining mundane CRB weapons/armor queued as batches 16–21; magic gear reserved later. |
+| 2026-08-27 | CRB batch 16: remaining simple melee + simple ranged. Next mundane equipment is martial weapons. |
+| 2026-08-27 | CRB batch 17: martial light + remaining martial one-handed. Next is martial two-handed + bows. |
+| 2026-08-27 | Weapon Special tags queued one type per PR after all weapon ids; not in 16–19. `weapon.properties` is an array (2+ tags; later magic properties use the same list). |
+| 2026-08-27 | CRB batch 18: martial two-handed + martial ranged and arrows. Next is exotic weapons. |
+| 2026-08-27 | CRB batch 19: exotic melee + exotic ranged and repeating bolts. Next catalog is W1 reach. |
+| 2026-08-27 | W1: reach on `weapon.properties` (N tags: one or many). Next is W2 brace. |
+| 2026-08-27 | W2: brace appended. Next is W3 trip. |
+| 2026-08-27 | W3: trip appended. Next is W4 disarm. |
+| 2026-08-28 | W4: disarm appended. Next is W5 monk. |

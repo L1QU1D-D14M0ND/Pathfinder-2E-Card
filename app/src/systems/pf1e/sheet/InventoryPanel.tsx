@@ -1,5 +1,10 @@
+import { useState } from 'react'
 import { createEmptyItem, type CharacterDocument } from '../character'
 import type { ItemLocation } from '../character/types'
+import {
+  addWeaponProperty,
+  removeWeaponProperty,
+} from '../character/weaponProperties'
 import { applyCrbItem, CRB_ITEMS } from '../content'
 import type { DerivedView } from '../engine'
 import { formatLoadSummary } from '../engine/encumbrance'
@@ -165,6 +170,26 @@ export function InventoryPanel({
                       })
                     }
                   />
+                  {item.weapon ? (
+                    <WeaponPropertiesEditor
+                      tags={item.weapon.properties ?? []}
+                      onChange={(properties) =>
+                        update((c) => {
+                          const items = [...c.inventory.items]
+                          const current = items[index]
+                          if (!current.weapon) return c
+                          const weapon = { ...current.weapon }
+                          if (properties) weapon.properties = properties
+                          else delete weapon.properties
+                          items[index] = { ...current, weapon }
+                          return {
+                            ...c,
+                            inventory: { ...c.inventory, items },
+                          }
+                        })
+                      }
+                    />
+                  ) : null}
                 </td>
                 <td>
                   <input
@@ -257,6 +282,58 @@ export function InventoryPanel({
           )}
         </tbody>
       </table>
+    </div>
+  )
+}
+
+function WeaponPropertiesEditor({
+  tags,
+  onChange,
+}: {
+  tags: string[]
+  onChange: (next: string[] | undefined) => void
+}) {
+  const t = useT()
+  const [draft, setDraft] = useState('')
+  const addDraft = () => {
+    onChange(addWeaponProperty(tags, draft))
+    setDraft('')
+  }
+  return (
+    <div className="weapon-properties">
+      <span className="muted">{t('pf1e.inventory.properties')}</span>
+      <ul className="property-list" aria-label={t('pf1e.inventory.properties')}>
+        {tags.map((tag) => (
+          <li key={tag} className="property-chip">
+            <span>{tag}</span>
+            <button
+              type="button"
+              aria-label={t('pf1e.inventory.removeProperty', { tag })}
+              onClick={() => onChange(removeWeaponProperty(tags, tag))}
+            >
+              ×
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="property-add">
+        <input
+          aria-label={t('pf1e.inventory.addProperty')}
+          value={draft}
+          placeholder={t('pf1e.inventory.propertyPlaceholder')}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              addDraft()
+            }
+          }}
+        />
+        <button type="button" onClick={addDraft}>
+          {t('pf1e.inventory.addProperty')}
+        </button>
+      </div>
+      <p className="muted">{t('pf1e.inventory.propertiesHelp')}</p>
     </div>
   )
 }
