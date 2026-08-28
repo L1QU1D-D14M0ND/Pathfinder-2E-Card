@@ -51,7 +51,7 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 - ADR 0001 is historical for the PF2e-only lock. PF2e **system** rules in [the PF2e design](../pf2e-dynamic-character-sheet-design.md) and [ADR 0002](0002-character-schema.md) remain in force for PF2e documents.
 - Next **code** increment is a multi-system refactor (move PF2e under a system module; add `system` on save/load) **before** a PF1e schema/engine. Existing PF2e goldens stay green through that refactor.
 - Do not delete or freeze-rot the PF2e engine to “make room” for 1E.
-- GitHub repository name `Pathfinder-2E-Card` is unchanged until a later rename decision.
+- GitHub repository name `Pathfinder-2E-Card` is unchanged until a later rename decision. **Superseded 2026-08-28 — see [ADR 0008](0008-repo-package-rename.md).**
 - 0.9 is redefined: a playable **PF1e** sheet plus a non-regressed PF2e slice, not “finish every PF2e golden.”
 - Content Phase 3 splits per system; PF1e Core pack is sequenced before the PF2e Remaster pack.
 - Shared vs forked code is locked in [ADR 0004](0004-shared-kernel.md). Phase M extracts the kernel with PF2e as the first consumer.
@@ -61,6 +61,8 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 **Postscript (2026-08-18):** Phase 3c continues through CRB feat/spell catalog ids. **1.0** is Spanish **plus** a playable APG **Synthesist Summoner** (fused eidolon). 0.9 stays Core Rulebook goldens. Summoner does not go in the CRB pack. APG slice 1 (Summoner tags + Synthesist name) landed 2026-08-18. See [`pf1e-apg-pack-design.md`](../pf1e-apg-pack-design.md).
 
 **Postscript (2026-08-18, licensing):** Content licensing review is [ADR 0007](0007-content-licensing.md). The CRB pack stays mechanics-only (no OGL notice until rules text). 1.0 APG pack follows the same bar.
+
+**Postscript (2026-08-28, rename):** Stakeholder triggered the "Repo / npm package rename" override from the table below. Repo and npm package renamed to `ttrpg-character-sheet` — see [ADR 0008](0008-repo-package-rename.md). The Consequences line above about the repo name being unchanged is superseded by that ADR.
 
 **Postscript (2026-08-19):** Stakeholder override: **finish First Edition** in this release. Remaining PF2e work (PC2 golden, companion editor, Remaster packs, PF2e panel i18n) waits for a **later release**. The PF2e slice stays in the app and must not regress. See [`ROADMAP.md`](../ROADMAP.md) Phase 1x.
 

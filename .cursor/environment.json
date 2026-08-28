@@ -1,5 +1,5 @@
 {
-  "name": "Pathfinder-2E-Card",
+  "name": "ttrpg-character-sheet",
   "install": "npm --prefix app ci",
   "terminals": [
     {

@@ -1,6 +1,6 @@
 # Schemas
 
-JSON Schema definitions for TTRPG Character Sheet save formats (repo: Pathfinder-2E-Card).
+JSON Schema definitions for TTRPG Character Sheet save formats (repo: ttrpg-character-sheet).
 
 | File | Purpose |
 | --- | --- |

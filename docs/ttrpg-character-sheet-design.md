@@ -3,7 +3,7 @@
 **Status:** Product direction lock (ADR 0003) — 2026-08-18  
 **Implementation:** PF1e **0.9 bar landed**. **1.0 landed** — Synthesist golden + Spanish UI catalog + stability. **Next:** finish First Edition this release. Remaining PF2e work waits for a **later release**. Sidebar tools wait until the PF1e sheet is ~90% done (Attack Helper, Actions List, Budget Calculator specified).  
 **Next coding increment:** [`next-increment-multi-system.md`](next-increment-multi-system.md)  
-**Repo context:** `Pathfinder-2E-Card` (name unchanged)  
+**Repo context:** `ttrpg-character-sheet` (renamed from `Pathfinder-2E-Card`, [ADR 0008](adr/0008-repo-package-rename.md))  
 **Audience:** Product / engineering  
 **Working display name:** TTRPG Character Sheet
 
