@@ -43,6 +43,35 @@ describe('InventoryPanel weapon properties', () => {
     expect(screen.getByText('trip')).toBeInTheDocument()
   })
 
+  it('stamps a single trip tag on a kama', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.kama' },
+    })
+    expect(screen.getByText('trip')).toBeInTheDocument()
+    expect(screen.queryByText('reach')).not.toBeInTheDocument()
+    expect(screen.queryByText('brace')).not.toBeInTheDocument()
+  })
+
+  it('stamps reach and trip together on a guisarme', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.guisarme' },
+    })
+    expect(screen.getByText('reach')).toBeInTheDocument()
+    expect(screen.getByText('trip')).toBeInTheDocument()
+  })
+
   it('stamps reach and brace together on a longspear', () => {
     render(
       <I18nProvider>

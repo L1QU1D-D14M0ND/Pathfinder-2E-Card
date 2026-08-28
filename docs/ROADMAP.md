@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-08-27  
-**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). CRB simple, martial, and exotic weapons are packed (batches 16–19); W1–W2 landed `reach` and `brace` on an N-tag `weapon.properties` list (one tag is valid; many are valid). Next catalog is remaining Special types one at a time, then armor 20–21. Magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). CRB simple, martial, and exotic weapons are packed (batches 16–19); W1–W3 landed `reach`, `brace`, and `trip` on an N-tag `weapon.properties` list (one tag is valid; many are valid). Next catalog is remaining Special types one at a time, then armor 20–21. Magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
 ---
@@ -203,7 +203,8 @@ Recommended order:
 - [x] **CRB Batch 19** — exotic melee + exotic ranged
 - [x] **CRB weapon properties W1** — `reach` on a `weapon.properties` array of N tags (one or many). [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.6
 - [x] **CRB weapon properties W2** — `brace` appended on the same list (longspear keeps reach).
-- [ ] **CRB weapon properties W3–W7** — trip, disarm, monk, nonlethal, then double. Same array; each PR appends one type.
+- [x] **CRB weapon properties W3** — `trip` appended on the same list (guisarme keeps reach; kama is N = 1).
+- [ ] **CRB weapon properties W4–W7** — disarm, monk, nonlethal, then double. Same array; each PR appends one type.
 - [ ] **CRB Batch 20** — remaining light + medium armor
 - [ ] **CRB Batch 21** — heavy armor + shields
 - [ ] **CRB magic weapons / armor** — reserved later. Overlay on mundane ids; no plus-N catalog rows. Do not start in 16–21. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.5
@@ -349,3 +350,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-27 | Phase 1x batch 19: exotic melee + exotic ranged and repeating bolts; next catalog is W1 reach |
 | 2026-08-27 | Phase 1x W1: reach as N-tag `weapon.properties` (one or many); next is W2 brace |
 | 2026-08-27 | Phase 1x W2: brace appended (N = 1 or 2); next is W3 trip |
+| 2026-08-27 | Phase 1x W3: trip appended (N = 1 or 2); next is W4 disarm |

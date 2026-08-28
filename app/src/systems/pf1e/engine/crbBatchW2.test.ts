@@ -7,7 +7,6 @@ import { compute } from './compute'
 const BRACE_ONLY_IDS = [
   'weapon.spear',
   'weapon.trident',
-  'weapon.halberd',
   'weapon.dwarven-urgrosh',
 ] as const
 
@@ -29,18 +28,22 @@ describe('CRB W2: brace', () => {
     }
   })
 
-  it('leaves non-brace reach weapons as a single reach tag', () => {
+  it('keeps brace on the halberd after later tags append', () => {
+    expect(lookupCrbItem('weapon.halberd')?.weapon?.properties).toContain(
+      'brace',
+    )
+  })
+
+  it('leaves non-brace reach weapons with reach still present', () => {
     expect(lookupCrbItem('weapon.glaive')?.weapon?.properties).toEqual([
       'reach',
     ])
-    expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toEqual(['reach'])
+    expect(lookupCrbItem('weapon.lance')?.weapon?.properties).toContain('reach')
+    expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toContain('reach')
   })
 
   it('leaves unrelated weapons without a properties field', () => {
     expect(lookupCrbItem('weapon.longsword')?.weapon).not.toHaveProperty(
-      'properties',
-    )
-    expect(lookupCrbItem('weapon.kama')?.weapon).not.toHaveProperty(
       'properties',
     )
   })

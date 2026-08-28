@@ -58,6 +58,7 @@ const SIMPLE_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['trip'],
     },
   },
   {

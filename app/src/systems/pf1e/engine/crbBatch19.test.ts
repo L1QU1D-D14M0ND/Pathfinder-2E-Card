@@ -14,6 +14,7 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['trip'],
     },
   },
   {
@@ -80,7 +81,7 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['reach'],
+      properties: ['reach', 'trip'],
     },
   },
   {
@@ -114,6 +115,7 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['trip'],
     },
   },
   {
@@ -125,6 +127,7 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['trip'],
     },
   },
   {
@@ -163,6 +166,7 @@ const EXOTIC_RANGED = [
       critRange: 20,
       critMultiplier: 2,
       rangeFeet: 10,
+      properties: ['trip'],
     },
   },
   {
@@ -264,11 +268,15 @@ describe('CRB batch 19: exotic melee', () => {
     })
   })
 
-  it('does not pack other Special tags yet', () => {
-    expect(lookupCrbItem('weapon.kama')?.weapon).not.toHaveProperty(
+  it('does not pack disarm, monk, or nonlethal yet', () => {
+    expect(lookupCrbItem('weapon.kama')?.weapon?.properties).toEqual(['trip'])
+    expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toEqual([
+      'reach',
+      'trip',
+    ])
+    expect(lookupCrbItem('weapon.nunchaku')?.weapon).not.toHaveProperty(
       'properties',
     )
-    expect(lookupCrbItem('weapon.whip')?.weapon?.properties).toEqual(['reach'])
   })
 })
 

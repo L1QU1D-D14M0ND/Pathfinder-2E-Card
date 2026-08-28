@@ -30,9 +30,6 @@ describe('CRB W1: reach', () => {
     expect(lookupCrbItem('weapon.longsword')?.weapon).not.toHaveProperty(
       'properties',
     )
-    expect(lookupCrbItem('weapon.kama')?.weapon).not.toHaveProperty(
-      'properties',
-    )
   })
 
   it('does not close the tag list to a seven-value enum', () => {

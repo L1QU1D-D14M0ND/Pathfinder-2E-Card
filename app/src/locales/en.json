@@ -305,7 +305,7 @@
       "addProperty": "Add property",
       "removeProperty": "Remove property {tag}",
       "propertyPlaceholder": "reach, flaming, …",
-      "propertiesHelp": "N tags: one is valid (reach), many are valid (later trip, magic). Reach does not change threatened area yet."
+      "propertiesHelp": "N tags: one is valid (trip), many are valid (reach + trip, later magic). Reach does not change threatened area yet."
     },
     "hp": {
       "title": "Max HP breakdown",
