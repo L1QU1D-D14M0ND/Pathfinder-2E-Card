@@ -1,7 +1,7 @@
 # Content licensing review (2026-08-18)
 
 **Status:** Landed. Product lock: [ADR 0007](adr/0007-content-licensing.md).  
-**Not legal advice.**
+**Not legal advice.** Later inventory (tables vs prose, trademarks, privacy, npm): [`legal-aspects-report.md`](legal-aspects-report.md).
 
 This is the OGL / Product Identity review that Phase 3c deferred until before **rules text**. It does not add text to the pack. It does not start Synthesist.
 

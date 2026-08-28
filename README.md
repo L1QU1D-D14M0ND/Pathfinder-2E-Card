@@ -45,6 +45,7 @@ npm run dev
 - [ADR 0006 — PF1e character JSON schema](docs/adr/0006-pf1e-character-schema.md)
 - [ADR 0007 — Content licensing (OGL / PI)](docs/adr/0007-content-licensing.md)
 - [Content licensing review](docs/content-licensing.md)
+- [Legal aspects report](docs/legal-aspects-report.md) (inventory; not legal advice)
 - [PF2e schema design notes](docs/schema-design-notes.md)
 - [PF1e schema design notes](docs/pf1e-schema-design-notes.md)
 
