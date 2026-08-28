@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { listRepoFiles, readRepoJson } from '../../../test/readRepoFile'
+import { listRepoFiles, readRepoFile, readRepoJson } from '../../../test/readRepoFile'
 
 // Globbed, not enumerated: ADR 0007 is a hard rule, so a pack file added later
 // must be scanned automatically rather than when someone remembers a list.
@@ -23,6 +23,7 @@ const FORBIDDEN_KEYS = new Set([
   'text',
 ])
 
+/** Tripwire, not a gazetteer. Goldens and UI chrome are out of scope. */
 const PRODUCT_IDENTITY = [
   /golarion/i,
   /absalom/i,
@@ -32,6 +33,42 @@ const PRODUCT_IDENTITY = [
   /paizo/i,
   /pathfinder society/i,
   /inner sea/i,
+  /aldori/i,
+  /korvosa/i,
+  /osirion/i,
+  /runelord/i,
+  /abadar/i,
+  /asmodeus/i,
+  /calistria/i,
+  /cayden/i,
+  /desna/i,
+  /erastil/i,
+  /gorum/i,
+  /gozreh/i,
+  /iomedae/i,
+  /irori/i,
+  /lamashtu/i,
+  /nethys/i,
+  /norgorber/i,
+  /pharasma/i,
+  /rovagug/i,
+  /sarenrae/i,
+  /shelyn/i,
+  /torag/i,
+  /urgathoa/i,
+  /zon.?kuthon/i,
+]
+
+const SCRAPE_SOURCES = [
+  /d20pfsrd/i,
+  /aonprd/i,
+  /archives\s*of\s*nethys/i,
+  /archivesofnethys/i,
+  /hero\s*lab/i,
+  /herolab/i,
+  /foundryvtt/i,
+  /foundry\.vtt/i,
+  /foundry-vtt/i,
 ]
 
 function walk(
@@ -58,6 +95,51 @@ function walk(
   }
 }
 
+function collectPageKeys(value: unknown, trail: string): string[] {
+  const hits: string[] = []
+  walk(
+    value,
+    trail,
+    (key, parent) => {
+      if (key.toLowerCase() === 'page') hits.push(`${parent}.${key}`)
+    },
+    () => {},
+  )
+  return hits
+}
+
+function collectPatternHits(
+  value: unknown,
+  trail: string,
+  patterns: readonly RegExp[],
+): string[] {
+  const hits: string[] = []
+  walk(
+    value,
+    trail,
+    () => {},
+    (text, at) => {
+      for (const pattern of patterns) {
+        if (pattern.test(text)) hits.push(`${at}: ${pattern}`)
+      }
+    },
+  )
+  return hits
+}
+
+function collectForbiddenKeys(value: unknown, trail: string): string[] {
+  const hits: string[] = []
+  walk(
+    value,
+    trail,
+    (key, parent) => {
+      if (FORBIDDEN_KEYS.has(key.toLowerCase())) hits.push(`${parent}.${key}`)
+    },
+    () => {},
+  )
+  return hits
+}
+
 describe('pack license gate (ADR 0007)', () => {
   it('actually found pack files to scan', () => {
     // Without this the globbed suites below would pass vacuously if the
@@ -77,40 +159,60 @@ describe('pack license gate (ADR 0007)', () => {
     }
   })
 
-  it('keeps entity JSON free of rules-text keys', () => {
+  it('keeps pack JSON free of rules-text keys', () => {
     const hits: string[] = []
-    for (const file of ENTITY_FILES) {
-      walk(
-        readRepoJson(file),
-        file,
-        (key, trail) => {
-          if (FORBIDDEN_KEYS.has(key.toLowerCase())) {
-            hits.push(`${trail}.${key}`)
-          }
-        },
-        () => {},
-      )
+    for (const file of ALL_PACK_JSON) {
+      hits.push(...collectForbiddenKeys(readRepoJson(file), file))
     }
     expect(hits).toEqual([])
   })
 
-  it('keeps Product Identity terms out of entity JSON', () => {
+  it('omits source.page (and any page key) from pack JSON', () => {
     const hits: string[] = []
-    for (const file of ENTITY_FILES) {
-      walk(
-        readRepoJson(file),
-        file,
-        () => {},
-        (text, trail) => {
-          for (const pattern of PRODUCT_IDENTITY) {
-            if (pattern.test(text)) {
-              hits.push(`${trail}: ${pattern}`)
-            }
-          }
-        },
-      )
+    for (const file of ALL_PACK_JSON) {
+      hits.push(...collectPageKeys(readRepoJson(file), file))
     }
     expect(hits).toEqual([])
+  })
+
+  it('keeps Product Identity terms out of pack JSON including pack.json notes', () => {
+    const hits: string[] = []
+    for (const file of ALL_PACK_JSON) {
+      hits.push(...collectPatternHits(readRepoJson(file), file, PRODUCT_IDENTITY))
+    }
+    expect(hits).toEqual([])
+  })
+
+  it('rejects third-party SRD scrape URLs in pack JSON', () => {
+    const hits: string[] = []
+    for (const file of ALL_PACK_JSON) {
+      hits.push(...collectPatternHits(readRepoJson(file), file, SCRAPE_SOURCES))
+    }
+    expect(hits).toEqual([])
+  })
+
+  it('flags page keys, scrape URLs, and PI in a sample object', () => {
+    const sample = {
+      source: { book: 'CRB', page: 142 },
+      notes: 'copied from https://www.d20pfsrd.com/',
+      name: 'Aldori dueling sword of Iomedae',
+    }
+    expect(collectPageKeys(sample, 'sample')).toEqual(['sample.source.page'])
+    expect(collectPatternHits(sample, 'sample', SCRAPE_SOURCES)).toEqual([
+      'sample.notes: /d20pfsrd/i',
+    ])
+    expect(collectPatternHits(sample, 'sample', PRODUCT_IDENTITY)).toEqual([
+      'sample.name: /aldori/i',
+      'sample.name: /iomedae/i',
+    ])
+  })
+
+  it('keeps the app LICENSE as stock MIT without catalog prose', () => {
+    const license = readRepoFile('LICENSE')
+    expect(license.startsWith('MIT License\n')).toBe(true)
+    expect(license).toMatch(/Copyright \(c\) 2026 L1QU1D-D14M0ND/)
+    expect(license).not.toMatch(/Pathfinder/i)
+    expect(license).not.toMatch(/content\//)
   })
 
   it('does not put Summoner in the CRB class catalog', () => {
