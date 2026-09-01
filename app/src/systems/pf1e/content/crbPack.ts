@@ -74,6 +74,7 @@ export const CRB_ITEMS: ItemCatalogRow[] = itemRows.map((row) => ({
   kind: row.kind,
   weapon: row.kind === 'weapon' ? row.weapon : undefined,
   armor: row.kind === 'armor' ? row.armor : undefined,
+  shield: row.kind === 'shield' ? row.shield : undefined,
 }))
 
 export const CRB_FEATS: FeatCatalogRow[] = featRows.map((row) => ({ ...row }))
@@ -151,7 +152,7 @@ export function applyCrbRace(identity: Identity, id: string | null): Identity {
 }
 
 /**
- * Stamp catalog id, name, pounds, and documentary weapon/armor fields.
+ * Stamp catalog id, name, pounds, and documentary weapon/armor/shield fields.
  * Does not rewrite quantity, location, armorClass, or attacks.
  * Unknown id clears `item.id` and leaves the rest of the row.
  */
@@ -185,6 +186,7 @@ export function applyCrbItem(row: ItemEntry, id: string | null): ItemEntry {
           }
         : undefined,
     armor: kind === 'armor' && found.armor ? { ...found.armor } : undefined,
+    shield: kind === 'shield' && found.shield ? { ...found.shield } : undefined,
   }
 }
 

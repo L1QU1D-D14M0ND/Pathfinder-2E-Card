@@ -129,10 +129,8 @@ describe('CRB batch 20: remaining medium armor', () => {
     })
   })
 
-  it('leaves remaining heavy armor and shields unknown', () => {
-    expect(lookupCrbItem('armor.full-plate')).toBeNull()
-    expect(lookupCrbItem('armor.splint-mail')).toBeNull()
-    expect(lookupCrbItem('shield.buckler')).toBeNull()
+  it('leaves later gear unknown', () => {
+    expect(lookupCrbItem('item.bedroll')).toBeNull()
   })
 })
 

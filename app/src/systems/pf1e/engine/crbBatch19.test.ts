@@ -360,9 +360,8 @@ describe('CRB batch 19: exotic ranged and repeating bolts', () => {
     expect(stamped.weapon).toBeUndefined()
   })
 
-  it('leaves remaining heavy armor and shields unknown', () => {
-    expect(lookupCrbItem('armor.full-plate')).toBeNull()
-    expect(lookupCrbItem('shield.buckler')).toBeNull()
+  it('leaves later gear unknown', () => {
+    expect(lookupCrbItem('item.bedroll')).toBeNull()
   })
 })
 
