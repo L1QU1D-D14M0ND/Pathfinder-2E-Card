@@ -13,11 +13,7 @@ const MONK_IDS = [
   'weapon.shuriken',
 ] as const
 
-const MONK_ONLY_IDS = [
-  'weapon.quarterstaff',
-  'weapon.siangham',
-  'weapon.shuriken',
-] as const
+const MONK_ONLY_IDS = ['weapon.siangham', 'weapon.shuriken'] as const
 
 describe('CRB W5: monk', () => {
   it('appends monk on matching weapons', () => {
@@ -60,11 +56,16 @@ describe('CRB W5: monk', () => {
     expect(sai.weapon?.properties).toEqual(['disarm', 'monk'])
   })
 
-  it('does not pack nonlethal or double yet', () => {
+  it('keeps monk on the quarterstaff after later tags append', () => {
+    expect(lookupCrbItem('weapon.quarterstaff')?.weapon?.properties).toContain(
+      'monk',
+    )
+  })
+
+  it('does not pack nonlethal yet', () => {
     for (const id of MONK_IDS) {
       const tags = lookupCrbItem(id)?.weapon?.properties ?? []
       expect(tags).not.toContain('nonlethal')
-      expect(tags).not.toContain('double')
     }
   })
 

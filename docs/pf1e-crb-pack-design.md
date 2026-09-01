@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–19 and W1–W5 landed (Batch 15 is class spells-per-day + hybrid Max; W5 is monk, appended on the N-tag `weapon.properties` list). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–21 and W1–W7 landed (Batch 15 is class spells-per-day + hybrid Max; W7 is double plus a documentary second head; Batch 20 is remaining light + medium armor; Batch 21 is heavy armor + shields). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
@@ -60,13 +60,13 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **W3** | Trip | One CRB Special quality | Catalog | Done |
 | **W4** | Disarm | One CRB Special quality | Catalog | Done |
 | **W5** | Monk | One CRB Special quality | Catalog | Done |
-| **W6** | Nonlethal | One CRB Special quality | Catalog | Next |
-| **W7** | Double (second head) | Last: needs a second documentary head, not only a tag | Catalog | Queued |
-| **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Queued |
-| **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
+| **W6** | Nonlethal | One CRB Special quality | Catalog | Done |
+| **W7** | Double (second head) | Last: needs a second documentary head, not only a tag | Catalog | Done |
+| **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Done |
+| **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Done |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W5** landed `reach`, `brace`, `trip`, `disarm`, and `monk` on a `weapon.properties` array of **N** tags (one is valid; many are valid). Next catalog work is **W6** (`nonlethal`). After all seven property types, armor/shields are batches 20–21. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor).
+The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W7** landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on a `weapon.properties` array of **N** tags (one is valid; many are valid). W7 also stamps a documentary `secondHead`. **Batches 20–21** landed remaining armor and shields. Next catalog work is remaining **feats/spells**. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor).
 
 ---
 
@@ -784,7 +784,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** six simple ranged weapons and three ammo ids.
 
-**Tests:** Published range and dice; ammo has no weapon subobject; remaining armor (`armor.padded`) stays null.
+**Tests:** Published range and dice; ammo has no weapon subobject; later gear (`item.bedroll`) stays null.
 
 ---
 
@@ -854,7 +854,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** four martial ranged weapons and arrows.
 
-**Tests:** Published range and dice; arrows have no weapon subobject; remaining armor (`armor.padded`) stays null.
+**Tests:** Published range and dice; arrows have no weapon subobject; later gear (`item.bedroll`) stays null.
 
 ---
 
@@ -886,7 +886,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** seven exotic ranged weapons and repeating bolts.
 
-**Tests:** Published range and dice; repeating bolts have no weapon subobject; `armor.padded` stays null.
+**Tests:** Published range and dice; repeating bolts have no weapon subobject; `item.bedroll` stays null.
 
 ---
 
@@ -996,7 +996,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** Nunchaku and sai are `["disarm"]` (N = 1) at landing. Flail, heavy flail, and dire flail are `["trip", "disarm"]`. Ranseur is `["reach", "disarm"]`. Whip is `["reach", "trip", "disarm"]` (N = 3). W5 later appends `monk` on nunchaku and sai so those rows are N = 2. One, two, and three tags are all valid.
 
-**Gaps:** Disarm CMB math in Combat; remaining Specials (nonlethal, double).
+**Gaps:** Disarm CMB math in Combat; remaining Specials none (W7 landed double).
 
 **Pack slice:** append `disarm` on the seven disarm weapons.
 
@@ -1028,7 +1028,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** Quarterstaff, siangham, and shuriken are `["monk"]` (N = 1). Kama is `["trip", "monk"]`. Nunchaku and sai are `["disarm", "monk"]`. One tag and two tags are both valid.
 
-**Gaps:** Monk flurry / weapon list in Combat; remaining Specials (nonlethal, double).
+**Gaps:** Monk flurry / weapon list in Combat; remaining Specials none (W7 landed double).
 
 **Pack slice:** append `monk` on the six monk weapons.
 
@@ -1047,6 +1047,144 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 **Pack slice:** none beyond 4.47.
 
 **Tests:** Inventory siangham is monk-only; kama shows trip and monk.
+
+---
+
+## W6 — two mechanics
+
+### 4.49 Nonlethal tag
+
+**CRB (player-facing):** Nonlethal is a Special quality on sap, whip, and bolas.
+
+**App today / this batch:** append `nonlethal` on those three rows. Do not replace tags already present.
+
+**Verdict:** Sap is `["nonlethal"]` (N = 1). Bolas is `["trip", "nonlethal"]`. Whip is `["reach", "trip", "disarm", "nonlethal"]` (N = 4). One tag and many tags are both valid.
+
+**Gaps:** Nonlethal damage math in Combat; remaining Special none (W7 landed double).
+
+**Pack slice:** append `nonlethal` on the three nonlethal weapons.
+
+**Tests:** Those three include `nonlethal`; sap is length 1; bolas keeps trip; whip keeps reach, trip, and disarm; apply sap leaves AC 10.
+
+### 4.50 Append without replacing
+
+**CRB (player-facing):** A weapon can have more than one Special. Adding nonlethal does not remove reach, trip, or disarm.
+
+**App today / this batch:** W6 only appends. Inventory already lists N tags.
+
+**Verdict:** The same control shows one chip on a sap and four chips on a whip.
+
+**Gaps:** none for this mechanic.
+
+**Pack slice:** none beyond 4.49.
+
+**Tests:** Inventory sap is nonlethal-only; whip shows reach, trip, disarm, and nonlethal.
+
+---
+
+## W7 — two mechanics
+
+### 4.51 Double tag
+
+**CRB (player-facing):** Double is a Special quality on quarterstaff, orc double axe, dire flail, gnome hooked hammer, two-bladed sword, and dwarven urgrosh.
+
+**App today / this batch:** append `double` on those six rows. Do not replace tags already present.
+
+**Verdict:** Orc double axe and two-bladed sword are `["double"]` (N = 1). Quarterstaff is `["monk", "double"]`. Dire flail is `["trip", "disarm", "double"]`. Gnome hooked hammer is `["trip", "double"]`. Dwarven urgrosh is `["brace", "double"]`.
+
+**Gaps:** Two-weapon / double-weapon **attack rows** stay typed; this tag does not write Combat.
+
+**Pack slice:** append `double` on the six double weapons.
+
+**Tests:** Those six include `double`; double-only rows are length 1; quarterstaff keeps monk; dire flail keeps trip and disarm; apply two-bladed sword leaves AC 10.
+
+### 4.52 Second documentary head
+
+**CRB (player-facing):** A double weapon lists two Medium damage heads. The gnome hooked hammer is 1d8 B ×3 / 1d6 P ×4. The dwarven urgrosh is 1d8 S ×3 / 1d6 P ×3. Matching heads (quarterstaff, orc double axe, dire flail, two-bladed sword) repeat the primary dice on the second head.
+
+**App today / this batch:** optional `weapon.secondHead` stores that off-hand documentary head. Primary `damageDice` stays a **single** string (no slash). Apply stamps `secondHead` onto the inventory weapon subobject. Attack rows stay typed.
+
+**Verdict:** Primary head is unchanged from batches 16–19. Second head is Medium table numbers. A longsword has no `secondHead`.
+
+**Gaps:** Inventory does not edit dice fields (primary or second); two-weapon attack rows wait.
+
+**Pack slice:** `secondHead` on the six double weapons. Character and catalog schemas allow the nested object.
+
+**Tests:** Those six have `secondHead` matching the CRB Medium off-hand; primary `damageDice` has no `/`; longsword has no `secondHead`.
+
+---
+
+## Batch 20 — two mechanics
+
+### 4.53 Remaining light armor
+
+**CRB (player-facing):** Light armor lists Medium armor bonus, max Dex, armor check penalty, arcane spell failure, and weight. Padded, leather, and studded leather sit above the packed chain shirt.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `items.json` | Remaining light ids from [§7.3](#73-armor-and-shields--batches-2021). Packed chain shirt stays |
+| Apply | `applyCrbItem` | Stamps name, pounds, and `armor` (`acBonus`, `maxDex`, `armorCheckPenalty`, `spellFailurePercent`). Does **not** rewrite `armorClass` |
+
+**Verdict:** Medium table numbers resolve. Padded and leather stamp ACP 0. Studded leather is −1 / 15%.
+
+**Gaps:** Speed reduction; Armor Training raising max Dex; auto-writing Combat AC.
+
+**Pack slice:** three remaining light armor ids.
+
+**Tests:** Table of Medium numbers; packed chain shirt unchanged; apply breastplate leaves AC 10.
+
+### 4.54 Remaining medium armor
+
+**CRB (player-facing):** Medium armor uses the same columns. Hide, scale mail, and breastplate sit around the packed chainmail.
+
+**App today / this batch:** three remaining ids. Packed chainmail is unchanged.
+
+**Verdict:** Hide is +4 / max Dex 4 / −3 / 20% / 25 lb. Scale mail is +5 / 3 / −4 / 25% / 30 lb. Breastplate is +6 / 3 / −4 / 25% / 30 lb (same bonus as chainmail, better max Dex).
+
+**Gaps:** Heavy armor and shields wait for batch 21. Combat still stays typed.
+
+**Pack slice:** hide, scale mail, breastplate.
+
+**Tests:** Table of Medium numbers; packed chainmail unchanged; `item.bedroll` stays null.
+
+---
+
+## Batch 21 — two mechanics
+
+### 4.55 Heavy armor
+
+**CRB (player-facing):** Heavy armor lists Medium armor bonus, max Dex, armor check penalty, arcane spell failure, and weight. Splint mail and half-plate cap Dex at 0. Full plate is +9 / max Dex 1 / −6 / 35% / 50 lb.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `items.json` | Four heavy ids from [§7.3](#73-armor-and-shields--batches-2021) |
+| Apply | `applyCrbItem` | Stamps name, pounds, and `armor`. Does **not** rewrite `armorClass` |
+
+**Verdict:** Medium table numbers resolve. Splint mail and banded mail share +7 with different max Dex / ACP / weight.
+
+**Gaps:** Speed reduction; Armor Training; auto-writing Combat AC.
+
+**Pack slice:** splint mail, banded mail, half-plate, full plate.
+
+**Tests:** Table of Medium numbers; packed chainmail/breastplate unchanged; apply full plate leaves AC 10.
+
+### 4.56 Shields and mundane extras
+
+**CRB (player-facing):** Shields list a shield bonus, ACP, spell failure, and weight. Most have no Dex cap (table dash). The tower shield is +4 / max Dex 2 / −10 / 50% / 45 lb. Armor spikes, shield spikes, and a locked gauntlet are extras on the same chapter, not weapon-table bash ids.
+
+**App today / this batch:** catalog `kind: "shield"` stamps `ItemEntry.shield` and clears `armor` / `weapon`. `ShieldItemStats` gains `maxDex` and `spellFailurePercent`. Tower stamps max Dex 2. Other shields stamp `maxDex: null`. Extras: armor spikes 10 lb and shield spikes 5 lb as `kind: item`; locked gauntlet is a 5 lb weapon with gauntlet dice (1d3 B). Do not mint `weapon.light-shield`.
+
+**Verdict:** Six shield ids resolve. Switching chainmail to a buckler drops the armor subobject. Combat `shieldBonus` stays typed.
+
+**Gaps:** Shield-bash damage on the shield row; auto-writing Combat AC; Inventory does not edit shield numbers (same as armor).
+
+**Pack slice:** six shields plus three extras.
+
+**Tests:** Table of Medium shield numbers; tower max Dex 2 / 50% ASF; `weapon.light-shield` is null; Save/Load round-trips a tower shield; apply full plate + tower leaves AC 10.
 
 ---
 
@@ -1138,9 +1276,9 @@ Those bonus slots are added to the class table’s spells per day. Batch 15 fill
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W5 landed reach, brace, trip, disarm, and monk. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W7 landed reach, brace, trip, disarm, monk, nonlethal, and double (plus a documentary second head). Batches 20–21 landed remaining armor and shields. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** **W6** `nonlethal` ([§7.6](#76-weapon-properties-after-all-weapon-ids); `weapon.properties` is **N** tags — one or many), then remaining property types, then armor/shields (20–21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** remaining **feats/spells**, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -1148,7 +1286,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed 
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1 reach, W2 brace, W3 trip, W4 disarm, and W5 monk are on the matching weapons. Skip those ids in later batches. Next catalog is W6 (`nonlethal`).
+**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1–W7 Special tags (and W7 `secondHead`) are on the matching weapons. Batches 20–21 remaining armor, shields, and mundane extras. Skip those ids in later batches. Next catalog is remaining feats/spells.
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -1168,7 +1306,7 @@ Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id,
 | Cost | Optional `costGp` may land with a later priced-treasure slice. Not required to add a weapon/armor row |
 | Tests | New ids resolve; goldens still resolve; apply still leaves AC 10 on an empty sheet |
 
-Id pattern stays `weapon.<kebab>`, `armor.<kebab>`, `item.<kebab>`. Batch 21 adds `shield.<kebab>` when `kind: "shield"` lands.
+Id pattern stays `weapon.<kebab>`, `armor.<kebab>`, `item.<kebab>`, `shield.<kebab>`.
 
 ### 7.2 Weapons — batches 16–19
 
@@ -1300,9 +1438,11 @@ Hand crossbow and repeating crossbows also use bolts; they wait for batch 19 and
 
 ### 7.3 Armor and shields — batches 20–21
 
-10 remaining armor ids (packed 2) plus 6 shields. Extras stay with batch 21.
+Mundane armor and shields from the CRB table are packed (batches 20–21). Extras (armor spikes, shield spikes, locked gauntlet) landed with batch 21.
 
 #### Batch 20 — remaining light armor + remaining medium armor
+
+**Landed.** Remaining light armor (3) and remaining medium armor (3). Packed chain shirt and chainmail unchanged.
 
 **Mechanic A — remaining light armor** (3). Packed chain shirt stays.
 
@@ -1323,6 +1463,8 @@ Hand crossbow and repeating crossbows also use bolts; they wait for batch 19 and
 Stamp the same `armor` subobject as chainmail (`acBonus`, `maxDex`, `armorCheckPenalty`, `spellFailurePercent`). Still do not write Combat.
 
 #### Batch 21 — heavy armor + shields
+
+**Landed.** Four heavy armor ids, six shields (`kind: shield`), and three mundane extras.
 
 **Mechanic A — heavy armor** (4).
 
@@ -1358,12 +1500,12 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 
 ### 7.4 Packed vs remaining counts
 
-| Kind | Packed now | Remaining in 20–21 | Skip / later |
+| Kind | Packed now | Remaining in 16–21 | Skip / later |
 | --- | --- | --- | --- |
-| Weapons | 70 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows + 20 exotic) | 0 | Unarmed strike; shield-bash lines; spiked chain was not in the locked 13; W1–W5 reach/brace/trip/disarm/monk are in; remaining Specials wait for W6–W7 |
-| Armor | 2 | 10 | Magic armor |
-| Shields | 0 | 6 | Magic shields |
-| Ammo / extras | spellbook + 5 ammo | 3 extras | Priced treasure as a later slice |
+| Weapons | 71 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows + 20 exotic + locked gauntlet extra) | 0 | Unarmed strike; shield-bash lines; spiked chain was not in the locked 13; W1–W7 Special tags are in; W7 stamps a documentary second head |
+| Armor | 12 (2 goldens + 3 light + 3 medium + 4 heavy) | 0 | Magic armor |
+| Shields | 6 | 0 | Magic shields |
+| Ammo / extras | spellbook + 5 ammo + armor spikes + shield spikes | 0 | Priced treasure as a later slice |
 | Magic weapons / armor | 0 | 0 | Entirely [§7.5](#75-reserved-magic-weapons-and-armor) |
 
 ### 7.5 Reserved: magic weapons and armor
@@ -1387,7 +1529,7 @@ After batch 21, the next catalog work is remaining **feats** and **spells**, not
 
 CRB Chapter 6 **Special** is a closed list of mundane tags. Do **not** tag these during batches 16–19. Finish the remaining weapon **rows** first (19), then add **one property type per PR**.
 
-The storage shape **and the Inventory feature** are a list of **N** tags, not a single slot and not a “must have two” widget. Some CRB weapons have **one** Special (glaive: reach; siangham: monk). Some have **two or more** (guisarme: reach and trip; ranseur: reach and disarm; whip: reach, trip, and disarm; whip later also nonlethal). Later magic properties (`flaming`, `keen`, …) slot into **this same list on the inventory entry**.
+The storage shape **and the Inventory feature** are a list of **N** tags, not a single slot and not a “must have two” widget. Some CRB weapons have **one** Special (glaive: reach; siangham: monk; sap: nonlethal). Some have **two or more** (guisarme: reach and trip; ranseur: reach and disarm; whip: reach, trip, disarm, and nonlethal). Later magic properties (`flaming`, `keen`, …) slot into **this same list on the inventory entry**.
 
 Thrown range is already `rangeFeet`. Net “see text,” crossbow loading, and later-book qualities (performance, deadly, grapple, …) stay out until their own slice.
 
@@ -1395,24 +1537,24 @@ Thrown range is already `rangeFeet`. Net “see text,” crossbow loading, and l
 | --- | --- | --- |
 | **W1** | `reach` | Longspear, glaive, guisarme, lance, ranseur, whip (**Landed**) |
 | **W2** | `brace` | Longspear, spear, trident, halberd, dwarven urgrosh (**Landed** — longspear is N = 2; spear/trident/urgrosh are N = 1; W3 later appends trip on the halberd) |
-| **W3** | `trip` | Sickle, flail, heavy flail, guisarme, halberd, scythe, kama, whip, gnome hooked hammer, dire flail, bolas (**Landed** — sickle/scythe/hooked hammer/bolas stay N = 1; W5 later appends monk on the kama; W4 later appends disarm on the flails and whip) |
-| **W4** | `disarm` | Flail, heavy flail, ranseur, nunchaku, sai, whip, dire flail (**Landed** — flails keep trip; ranseur keeps reach; whip is N = 3; W5 later appends monk on nunchaku/sai) |
+| **W3** | `trip` | Sickle, flail, heavy flail, guisarme, halberd, scythe, kama, whip, gnome hooked hammer, dire flail, bolas (**Landed** — sickle/scythe/hooked hammer stay N = 1; W5 later appends monk on the kama; W4 later appends disarm on the flails and whip; W6 later appends nonlethal on bolas and whip) |
+| **W4** | `disarm` | Flail, heavy flail, ranseur, nunchaku, sai, whip, dire flail (**Landed** — flails keep trip; ranseur keeps reach; W5 later appends monk on nunchaku/sai; W6 later appends nonlethal on the whip) |
 | **W5** | `monk` | Quarterstaff, kama, nunchaku, sai, siangham, shuriken (**Landed** — quarterstaff/siangham/shuriken are N = 1; kama keeps trip; nunchaku/sai keep disarm) |
-| **W6** | `nonlethal` | Sap, whip, bolas |
-| **W7** | `double` | Quarterstaff, orc double axe, dire flail, gnome hooked hammer, two-bladed sword, dwarven urgrosh |
+| **W6** | `nonlethal` | Sap, whip, bolas (**Landed** — sap is N = 1; bolas keeps trip; whip is N = 4) |
+| **W7** | `double` | Quarterstaff, orc double axe, dire flail, gnome hooked hammer, two-bladed sword, dwarven urgrosh (**Landed** — orc double axe / two-bladed sword are N = 1; quarterstaff keeps monk; dire flail keeps trip and disarm; hooked hammer keeps trip; urgrosh keeps brace; `secondHead` is documentary Medium numbers) |
 
 Each W-batch is two mechanics: (1) **append** that one quality on the matching catalog rows (keep any tags already present); (2) apply stamps the full list onto the inventory `weapon` subobject and **does not** rewrite `attacks` / CMB / reach math.
 
 | Lock | Rule |
 | --- | --- |
-| List | `weapon.properties` is an **array of N tags**. N = 0 (omit the field), N = 1 (siangham: `["monk"]`; glaive: `["reach"]`), or N ≥ 2 (whip: `["reach", "trip", "disarm"]`). Never a single enum field. A control that only works for two-or-more tags is wrong |
+| List | `weapon.properties` is an **array of N tags**. N = 0 (omit the field), N = 1 (siangham: `["monk"]`; sap: `["nonlethal"]`; glaive: `["reach"]`), or N ≥ 2 (whip: `["reach", "trip", "disarm", "nonlethal"]`). Never a single enum field. A control that only works for two-or-more tags is wrong |
 | Append | W3 trip on a guisarme that already has reach from W1 yields `["reach", "trip"]`. Do not replace the array |
 | Magic later | The same array on that inventory entry is where later magic properties go (`flaming`, `keen`, ghost touch, …). Enhancement bonus stays a separate overlay. Do not mint plus-N ids and do not add a second “magic properties” field |
 | Feature / UI | Inventory lists **every** current tag and can add/remove. Works for a weapon with only one property and still accepts a second. A single-select “property” dropdown is not allowed |
 | Schema | Optional `weapon.properties` is an array of kebab-case strings. Do **not** close the enum to only the seven CRB tags — that would block magic later. Unique tags; omit the field when empty |
 | One type per PR | Do not land reach and trip in the same change. Multiple tags on one weapon accumulate across PRs |
 | Combat | Still typed. Reach does not change threatened area in the engine until a later batch says so |
-| Double last | W7 may add a second documentary head. Until then, one row / primary head only (existing 16–19 lock) |
+| Double last | W7 landed `double` and a documentary `secondHead`. Primary `damageDice` stays a single string. Two-weapon attack rows still wait |
 | Display | List **all** current tags, not only the first |
 | License | Tags are mechanic labels, not Special-quality prose |
 
@@ -1460,3 +1602,7 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | 2026-08-27 | W3: trip appended (guisarme/whip keep reach; halberd keeps brace; sickle/kama and the other trip-only rows are N = 1); next is W4 disarm |
 | 2026-08-28 | W4: disarm appended (nunchaku/sai are N = 1; flails keep trip; ranseur keeps reach; whip is N = 3); next is W5 monk |
 | 2026-09-01 | W5: monk appended (quarterstaff/siangham/shuriken are N = 1; kama keeps trip; nunchaku/sai keep disarm); next is W6 nonlethal |
+| 2026-09-01 | W6: nonlethal appended (sap is N = 1; bolas keeps trip; whip is N = 4); next is W7 double |
+| 2026-09-01 | W7: double appended plus documentary secondHead; primary dice stay a single string; next is Batch 20 armor |
+| 2026-09-01 | Batch 20: remaining light + medium armor; Combat stays typed; next is heavy armor + shields (21) |
+| 2026-09-01 | Batch 21: heavy armor + shields (kind shield) + extras; Combat stays typed; next is remaining feats/spells |

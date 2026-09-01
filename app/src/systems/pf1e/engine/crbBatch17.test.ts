@@ -71,6 +71,7 @@ const MARTIAL_LIGHT = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['nonlethal'],
     },
   },
   {
@@ -219,8 +220,8 @@ describe('CRB batch 17: remaining martial one-handed', () => {
     expect(lookupCrbItem('weapon.heavy-spiked-shield')).toBeNull()
   })
 
-  it('leaves remaining armor unknown', () => {
-    expect(lookupCrbItem('armor.padded')).toBeNull()
+  it('leaves later gear unknown', () => {
+    expect(lookupCrbItem('item.bedroll')).toBeNull()
   })
 })
 

@@ -31,7 +31,7 @@ export interface RaceCatalogRow {
   source?: ContentRef['source']
 }
 
-export type ItemKind = 'weapon' | 'armor' | 'item'
+export type ItemKind = 'weapon' | 'armor' | 'shield' | 'item'
 
 export interface ItemCatalogRow {
   id: string
@@ -40,6 +40,7 @@ export interface ItemCatalogRow {
   pounds: number
   weapon?: ItemEntry['weapon']
   armor?: ItemEntry['armor']
+  shield?: ItemEntry['shield']
   source?: ContentRef['source']
 }
 

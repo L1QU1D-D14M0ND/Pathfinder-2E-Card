@@ -117,15 +117,15 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–19 and W1–W5', () => {
+  it('pack manifest records batches 1–21 and W1–W7', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number | string }>
     }
-    expect(pack.status).toBe('batches-1-19-w1-w2-w3-w4-w5-complete')
+    expect(pack.status).toBe('batches-1-21-w1-w2-w3-w4-w5-w6-w7-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 'W1',
-      'W2', 'W3', 'W4', 'W5',
+      'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 20, 21,
     ])
   })
 })
@@ -341,6 +341,25 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
       'weapon.halfling-sling-staff',
       'armor.chain-shirt',
       'armor.chainmail',
+      'armor.padded',
+      'armor.leather',
+      'armor.studded-leather',
+      'armor.hide',
+      'armor.scale-mail',
+      'armor.breastplate',
+      'armor.splint-mail',
+      'armor.banded-mail',
+      'armor.half-plate',
+      'armor.full-plate',
+      'shield.buckler',
+      'shield.light-wooden',
+      'shield.light-steel',
+      'shield.heavy-wooden',
+      'shield.heavy-steel',
+      'shield.tower',
+      'item.armor-spikes',
+      'item.shield-spikes',
+      'weapon.locked-gauntlet',
       'item.spellbook',
       'item.blowgun-darts',
       'item.crossbow-bolts',
@@ -361,7 +380,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
   })
 
   it('returns null for an unknown item id', () => {
-    expect(lookupCrbItem('armor.padded')).toBeNull()
+    expect(lookupCrbItem('item.bedroll')).toBeNull()
     expect(lookupCrbItem(null)).toBeNull()
     expect(lookupCrbItem('')).toBeNull()
   })
@@ -393,12 +412,17 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
     const gear = applyCrbItem(longsword, 'item.spellbook')
     expect(gear.weapon).toBeUndefined()
     expect(gear.armor).toBeUndefined()
+    expect(gear.shield).toBeUndefined()
     expect(gear.pounds).toBe(3)
+    const buckler = applyCrbItem(gear, 'shield.buckler')
+    expect(buckler.shield?.acBonus).toBe(1)
+    expect(buckler.armor).toBeUndefined()
+    expect(buckler.weapon).toBeUndefined()
   })
 
   it('unknown apply clears id and leaves the rest of the row', () => {
     const row = applyCrbItem(createEmptyItem(), 'weapon.longsword')
-    const custom = applyCrbItem(row, 'armor.padded')
+    const custom = applyCrbItem(row, 'item.bedroll')
     expect(custom.item.id).toBeNull()
     expect(custom.item.name).toBe('Longsword')
     expect(custom.pounds).toBe(4)

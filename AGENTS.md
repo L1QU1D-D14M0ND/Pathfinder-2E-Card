@@ -2,9 +2,9 @@
 
 ## Testing
 
-### CRB catalog fill-out (W6–W7 and armor 20–21)
+### CRB catalog fill-out (remaining feats/spells)
 
-These batches append catalog numbers and `weapon.properties` tags (or remaining armor/shield rows). The Inventory chip list already exists.
+These batches append remaining catalog rows. Inventory already lists chips for weapon properties.
 
 - From `app/`, run `npx vitest run src/systems/pf1e`.
 - Do **not** record a demo video or upload Inventory screenshots unless the Inventory UI itself changed.

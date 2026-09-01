@@ -157,7 +157,13 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["monk"]
+      "properties": ["monk", "double"],
+      "secondHead": {
+        "damageDice": "1d6",
+        "damageType": "bludgeoning",
+        "critRange": 20,
+        "critMultiplier": 2
+      }
     },
     "source": { "book": "CRB" }
   },
@@ -336,7 +342,8 @@
       "damageDice": "1d6",
       "damageType": "bludgeoning",
       "critRange": 20,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["nonlethal"]
     },
     "source": { "book": "CRB" }
   },
@@ -772,7 +779,7 @@
       "damageType": "slashing",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["reach", "trip", "disarm"]
+      "properties": ["reach", "trip", "disarm", "nonlethal"]
     },
     "source": { "book": "CRB" }
   },
@@ -785,7 +792,14 @@
       "damageDice": "1d8",
       "damageType": "slashing",
       "critRange": 20,
-      "critMultiplier": 3
+      "critMultiplier": 3,
+      "properties": ["double"],
+      "secondHead": {
+        "damageDice": "1d8",
+        "damageType": "slashing",
+        "critRange": 20,
+        "critMultiplier": 3
+      }
     },
     "source": { "book": "CRB" }
   },
@@ -812,7 +826,13 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["trip", "disarm"]
+      "properties": ["trip", "disarm", "double"],
+      "secondHead": {
+        "damageDice": "1d8",
+        "damageType": "bludgeoning",
+        "critRange": 20,
+        "critMultiplier": 2
+      }
     },
     "source": { "book": "CRB" }
   },
@@ -826,7 +846,13 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 3,
-      "properties": ["trip"]
+      "properties": ["trip", "double"],
+      "secondHead": {
+        "damageDice": "1d6",
+        "damageType": "piercing",
+        "critRange": 20,
+        "critMultiplier": 4
+      }
     },
     "source": { "book": "CRB" }
   },
@@ -839,7 +865,14 @@
       "damageDice": "1d8",
       "damageType": "slashing",
       "critRange": 19,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["double"],
+      "secondHead": {
+        "damageDice": "1d8",
+        "damageType": "slashing",
+        "critRange": 19,
+        "critMultiplier": 2
+      }
     },
     "source": { "book": "CRB" }
   },
@@ -853,7 +886,13 @@
       "damageType": "slashing",
       "critRange": 20,
       "critMultiplier": 3,
-      "properties": ["brace"]
+      "properties": ["brace", "double"],
+      "secondHead": {
+        "damageDice": "1d6",
+        "damageType": "piercing",
+        "critRange": 20,
+        "critMultiplier": 3
+      }
     },
     "source": { "book": "CRB" }
   },
@@ -868,7 +907,7 @@
       "critRange": 20,
       "critMultiplier": 2,
       "rangeFeet": 10,
-      "properties": ["trip"]
+      "properties": ["trip", "nonlethal"]
     },
     "source": { "book": "CRB" }
   },
@@ -976,6 +1015,241 @@
       "maxDex": 2,
       "armorCheckPenalty": -5,
       "spellFailurePercent": 30
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.padded",
+    "name": "Padded",
+    "kind": "armor",
+    "pounds": 10,
+    "armor": {
+      "acBonus": 1,
+      "maxDex": 8,
+      "armorCheckPenalty": 0,
+      "spellFailurePercent": 5
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.leather",
+    "name": "Leather",
+    "kind": "armor",
+    "pounds": 15,
+    "armor": {
+      "acBonus": 2,
+      "maxDex": 6,
+      "armorCheckPenalty": 0,
+      "spellFailurePercent": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.studded-leather",
+    "name": "Studded leather",
+    "kind": "armor",
+    "pounds": 20,
+    "armor": {
+      "acBonus": 3,
+      "maxDex": 5,
+      "armorCheckPenalty": -1,
+      "spellFailurePercent": 15
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.hide",
+    "name": "Hide",
+    "kind": "armor",
+    "pounds": 25,
+    "armor": {
+      "acBonus": 4,
+      "maxDex": 4,
+      "armorCheckPenalty": -3,
+      "spellFailurePercent": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.scale-mail",
+    "name": "Scale mail",
+    "kind": "armor",
+    "pounds": 30,
+    "armor": {
+      "acBonus": 5,
+      "maxDex": 3,
+      "armorCheckPenalty": -4,
+      "spellFailurePercent": 25
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.breastplate",
+    "name": "Breastplate",
+    "kind": "armor",
+    "pounds": 30,
+    "armor": {
+      "acBonus": 6,
+      "maxDex": 3,
+      "armorCheckPenalty": -4,
+      "spellFailurePercent": 25
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.splint-mail",
+    "name": "Splint mail",
+    "kind": "armor",
+    "pounds": 45,
+    "armor": {
+      "acBonus": 7,
+      "maxDex": 0,
+      "armorCheckPenalty": -7,
+      "spellFailurePercent": 40
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.banded-mail",
+    "name": "Banded mail",
+    "kind": "armor",
+    "pounds": 35,
+    "armor": {
+      "acBonus": 7,
+      "maxDex": 1,
+      "armorCheckPenalty": -6,
+      "spellFailurePercent": 35
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.half-plate",
+    "name": "Half-plate",
+    "kind": "armor",
+    "pounds": 50,
+    "armor": {
+      "acBonus": 8,
+      "maxDex": 0,
+      "armorCheckPenalty": -7,
+      "spellFailurePercent": 40
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.full-plate",
+    "name": "Full plate",
+    "kind": "armor",
+    "pounds": 50,
+    "armor": {
+      "acBonus": 9,
+      "maxDex": 1,
+      "armorCheckPenalty": -6,
+      "spellFailurePercent": 35
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "shield.buckler",
+    "name": "Buckler",
+    "kind": "shield",
+    "pounds": 5,
+    "shield": {
+      "acBonus": 1,
+      "maxDex": null,
+      "armorCheckPenalty": -1,
+      "spellFailurePercent": 5
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "shield.light-wooden",
+    "name": "Light wooden shield",
+    "kind": "shield",
+    "pounds": 5,
+    "shield": {
+      "acBonus": 1,
+      "maxDex": null,
+      "armorCheckPenalty": -1,
+      "spellFailurePercent": 5
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "shield.light-steel",
+    "name": "Light steel shield",
+    "kind": "shield",
+    "pounds": 6,
+    "shield": {
+      "acBonus": 1,
+      "maxDex": null,
+      "armorCheckPenalty": -1,
+      "spellFailurePercent": 5
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "shield.heavy-wooden",
+    "name": "Heavy wooden shield",
+    "kind": "shield",
+    "pounds": 10,
+    "shield": {
+      "acBonus": 2,
+      "maxDex": null,
+      "armorCheckPenalty": -2,
+      "spellFailurePercent": 15
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "shield.heavy-steel",
+    "name": "Heavy steel shield",
+    "kind": "shield",
+    "pounds": 15,
+    "shield": {
+      "acBonus": 2,
+      "maxDex": null,
+      "armorCheckPenalty": -2,
+      "spellFailurePercent": 15
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "shield.tower",
+    "name": "Tower shield",
+    "kind": "shield",
+    "pounds": 45,
+    "shield": {
+      "acBonus": 4,
+      "maxDex": 2,
+      "armorCheckPenalty": -10,
+      "spellFailurePercent": 50
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.armor-spikes",
+    "name": "Armor spikes",
+    "kind": "item",
+    "pounds": 10,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "item.shield-spikes",
+    "name": "Shield spikes",
+    "kind": "item",
+    "pounds": 5,
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "weapon.locked-gauntlet",
+    "name": "Locked gauntlet",
+    "kind": "weapon",
+    "pounds": 5,
+    "weapon": {
+      "damageDice": "1d3",
+      "damageType": "bludgeoning",
+      "critRange": 20,
+      "critMultiplier": 2
     },
     "source": { "book": "CRB" }
   },

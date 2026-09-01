@@ -236,7 +236,13 @@ describe('CRB batch 16: remaining simple melee', () => {
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['monk'],
+      properties: ['monk', 'double'],
+      secondHead: {
+        damageDice: '1d6',
+        damageType: 'bludgeoning',
+        critRange: 20,
+        critMultiplier: 2,
+      },
     })
   })
 })
@@ -267,8 +273,8 @@ describe('CRB batch 16: simple ranged and ammo', () => {
     }
   })
 
-  it('leaves remaining armor unknown', () => {
-    expect(lookupCrbItem('armor.padded')).toBeNull()
+  it('leaves later gear unknown', () => {
+    expect(lookupCrbItem('item.bedroll')).toBeNull()
   })
 })
 

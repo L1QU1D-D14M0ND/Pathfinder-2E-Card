@@ -218,19 +218,25 @@ export interface ArmorItemStats {
   spellFailurePercent?: number
 }
 
-/** Documentary combat fields. Optional `properties` is N kebab-case tags (one or many; omit when empty). Later magic uses the same list. */
-export interface WeaponItemStats {
+export interface WeaponHeadStats {
   damageDice?: string
   damageType?: string
   critRange?: number
   critMultiplier?: number
+}
+
+/** Documentary combat fields. Optional `properties` is N kebab-case tags (one or many; omit when empty). Later magic uses the same list. Optional `secondHead` is the off-hand dice on a double weapon. */
+export interface WeaponItemStats extends WeaponHeadStats {
   rangeFeet?: number | null
   properties?: string[]
+  secondHead?: WeaponHeadStats
 }
 
 export interface ShieldItemStats {
   acBonus?: number
+  maxDex?: number | null
   armorCheckPenalty?: number
+  spellFailurePercent?: number
 }
 
 export interface ItemEntry {

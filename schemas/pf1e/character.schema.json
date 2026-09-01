@@ -647,9 +647,20 @@
         "spellFailurePercent": { "type": "integer", "minimum": 0, "maximum": 100 }
       }
     },
+    "WeaponHeadStats": {
+      "type": "object",
+      "description": "One head of a documentary weapon. Double weapons store the off-hand head on secondHead.",
+      "additionalProperties": false,
+      "properties": {
+        "damageDice": { "type": "string" },
+        "damageType": { "type": "string" },
+        "critRange": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "critMultiplier": { "type": "integer", "minimum": 2 }
+      }
+    },
     "WeaponItemStats": {
       "type": "object",
-      "description": "Documentary weapon stats. Optional properties is an array of N kebab-case strings: one tag is valid, many tags are valid, omit when empty. CRB Specials and later magic share this list.",
+      "description": "Documentary weapon stats. Optional properties is an array of N kebab-case strings: one tag is valid, many tags are valid, omit when empty. CRB Specials and later magic share this list. Optional secondHead is the off-hand dice on a double weapon; the primary head stays damageDice without a slash.",
       "additionalProperties": false,
       "properties": {
         "damageDice": { "type": "string" },
@@ -662,7 +673,8 @@
           "items": { "type": "string", "minLength": 1 },
           "minItems": 1,
           "uniqueItems": true
-        }
+        },
+        "secondHead": { "$ref": "#/$defs/WeaponHeadStats" }
       }
     },
     "ShieldItemStats": {
@@ -670,7 +682,9 @@
       "additionalProperties": false,
       "properties": {
         "acBonus": { "type": "integer" },
-        "armorCheckPenalty": { "type": "integer", "maximum": 0 }
+        "maxDex": { "type": ["integer", "null"] },
+        "armorCheckPenalty": { "type": "integer", "maximum": 0 },
+        "spellFailurePercent": { "type": "integer", "minimum": 0, "maximum": 100 }
       }
     },
     "ItemEntry": {

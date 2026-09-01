@@ -84,7 +84,7 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['reach', 'trip', 'disarm'],
+      properties: ['reach', 'trip', 'disarm', 'nonlethal'],
     },
   },
   {
@@ -96,6 +96,13 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['double'],
+      secondHead: {
+        damageDice: '1d8',
+        damageType: 'slashing',
+        critRange: 20,
+        critMultiplier: 3,
+      },
     },
   },
   {
@@ -118,7 +125,13 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['trip', 'disarm'],
+      properties: ['trip', 'disarm', 'double'],
+      secondHead: {
+        damageDice: '1d8',
+        damageType: 'bludgeoning',
+        critRange: 20,
+        critMultiplier: 2,
+      },
     },
   },
   {
@@ -130,7 +143,13 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 3,
-      properties: ['trip'],
+      properties: ['trip', 'double'],
+      secondHead: {
+        damageDice: '1d6',
+        damageType: 'piercing',
+        critRange: 20,
+        critMultiplier: 4,
+      },
     },
   },
   {
@@ -142,6 +161,13 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 19,
       critMultiplier: 2,
+      properties: ['double'],
+      secondHead: {
+        damageDice: '1d8',
+        damageType: 'slashing',
+        critRange: 19,
+        critMultiplier: 2,
+      },
     },
   },
   {
@@ -153,7 +179,13 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 3,
-      properties: ['brace'],
+      properties: ['brace', 'double'],
+      secondHead: {
+        damageDice: '1d6',
+        damageType: 'piercing',
+        critRange: 20,
+        critMultiplier: 3,
+      },
     },
   },
 ] as const
@@ -169,7 +201,7 @@ const EXOTIC_RANGED = [
       critRange: 20,
       critMultiplier: 2,
       rangeFeet: 10,
-      properties: ['trip'],
+      properties: ['trip', 'nonlethal'],
     },
   },
   {
@@ -272,7 +304,7 @@ describe('CRB batch 19: exotic melee', () => {
     })
   })
 
-  it('does not pack nonlethal yet', () => {
+  it('does not pack double yet', () => {
     expect(lookupCrbItem('weapon.kama')?.weapon?.properties).toEqual([
       'trip',
       'monk',
@@ -281,6 +313,7 @@ describe('CRB batch 19: exotic melee', () => {
       'reach',
       'trip',
       'disarm',
+      'nonlethal',
     ])
     expect(lookupCrbItem('weapon.nunchaku')?.weapon?.properties).toEqual([
       'disarm',
@@ -327,9 +360,8 @@ describe('CRB batch 19: exotic ranged and repeating bolts', () => {
     expect(stamped.weapon).toBeUndefined()
   })
 
-  it('leaves remaining armor unknown', () => {
-    expect(lookupCrbItem('armor.padded')).toBeNull()
-    expect(lookupCrbItem('shield.buckler')).toBeNull()
+  it('leaves later gear unknown', () => {
+    expect(lookupCrbItem('item.bedroll')).toBeNull()
   })
 })
 
