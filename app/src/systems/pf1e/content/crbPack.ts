@@ -179,6 +179,9 @@ export function applyCrbItem(row: ItemEntry, id: string | null): ItemEntry {
             ...(found.weapon.properties
               ? { properties: [...found.weapon.properties] }
               : {}),
+            ...(found.weapon.secondHead
+              ? { secondHead: { ...found.weapon.secondHead } }
+              : {}),
           }
         : undefined,
     armor: kind === 'armor' && found.armor ? { ...found.armor } : undefined,

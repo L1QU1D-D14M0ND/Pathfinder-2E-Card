@@ -28,6 +28,17 @@
             "items": { "type": "string", "minLength": 1 },
             "minItems": 1,
             "uniqueItems": true
+          },
+          "secondHead": {
+            "type": "object",
+            "description": "Off-hand documentary head on a double weapon. Primary damageDice stays a single dice string.",
+            "additionalProperties": false,
+            "properties": {
+              "damageDice": { "type": "string" },
+              "damageType": { "type": "string" },
+              "critRange": { "type": "integer", "minimum": 1, "maximum": 20 },
+              "critMultiplier": { "type": "integer", "minimum": 2 }
+            }
           }
         }
       },

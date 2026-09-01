@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–19 and W1–W6 landed (Batch 15 is class spells-per-day + hybrid Max; W6 is nonlethal, appended on the N-tag `weapon.properties` list). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–19 and W1–W7 landed (Batch 15 is class spells-per-day + hybrid Max; W7 is double plus a documentary second head). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
@@ -61,12 +61,12 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **W4** | Disarm | One CRB Special quality | Catalog | Done |
 | **W5** | Monk | One CRB Special quality | Catalog | Done |
 | **W6** | Nonlethal | One CRB Special quality | Catalog | Done |
-| **W7** | Double (second head) | Last: needs a second documentary head, not only a tag | Catalog | Next |
-| **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Queued |
+| **W7** | Double (second head) | Last: needs a second documentary head, not only a tag | Catalog | Done |
+| **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Next |
 | **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W6** landed `reach`, `brace`, `trip`, `disarm`, `monk`, and `nonlethal` on a `weapon.properties` array of **N** tags (one is valid; many are valid). Next catalog work is **W7** (`double`). After all seven property types, armor/shields are batches 20–21. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor).
+The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W7** landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on a `weapon.properties` array of **N** tags (one is valid; many are valid). W7 also stamps a documentary `secondHead`. Next catalog work is **Batch 20** (remaining light + medium armor). After armor/shields, remaining feats/spells. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor).
 
 ---
 
@@ -996,7 +996,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** Nunchaku and sai are `["disarm"]` (N = 1) at landing. Flail, heavy flail, and dire flail are `["trip", "disarm"]`. Ranseur is `["reach", "disarm"]`. Whip is `["reach", "trip", "disarm"]` (N = 3). W5 later appends `monk` on nunchaku and sai so those rows are N = 2. One, two, and three tags are all valid.
 
-**Gaps:** Disarm CMB math in Combat; remaining Specials (double).
+**Gaps:** Disarm CMB math in Combat; remaining Specials none (W7 landed double).
 
 **Pack slice:** append `disarm` on the seven disarm weapons.
 
@@ -1028,7 +1028,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** Quarterstaff, siangham, and shuriken are `["monk"]` (N = 1). Kama is `["trip", "monk"]`. Nunchaku and sai are `["disarm", "monk"]`. One tag and two tags are both valid.
 
-**Gaps:** Monk flurry / weapon list in Combat; remaining Specials (double).
+**Gaps:** Monk flurry / weapon list in Combat; remaining Specials none (W7 landed double).
 
 **Pack slice:** append `monk` on the six monk weapons.
 
@@ -1060,7 +1060,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Verdict:** Sap is `["nonlethal"]` (N = 1). Bolas is `["trip", "nonlethal"]`. Whip is `["reach", "trip", "disarm", "nonlethal"]` (N = 4). One tag and many tags are both valid.
 
-**Gaps:** Nonlethal damage math in Combat; remaining Special (double).
+**Gaps:** Nonlethal damage math in Combat; remaining Special none (W7 landed double).
 
 **Pack slice:** append `nonlethal` on the three nonlethal weapons.
 
@@ -1079,6 +1079,38 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 **Pack slice:** none beyond 4.49.
 
 **Tests:** Inventory sap is nonlethal-only; whip shows reach, trip, disarm, and nonlethal.
+
+---
+
+## W7 — two mechanics
+
+### 4.51 Double tag
+
+**CRB (player-facing):** Double is a Special quality on quarterstaff, orc double axe, dire flail, gnome hooked hammer, two-bladed sword, and dwarven urgrosh.
+
+**App today / this batch:** append `double` on those six rows. Do not replace tags already present.
+
+**Verdict:** Orc double axe and two-bladed sword are `["double"]` (N = 1). Quarterstaff is `["monk", "double"]`. Dire flail is `["trip", "disarm", "double"]`. Gnome hooked hammer is `["trip", "double"]`. Dwarven urgrosh is `["brace", "double"]`.
+
+**Gaps:** Two-weapon / double-weapon **attack rows** stay typed; this tag does not write Combat.
+
+**Pack slice:** append `double` on the six double weapons.
+
+**Tests:** Those six include `double`; double-only rows are length 1; quarterstaff keeps monk; dire flail keeps trip and disarm; apply two-bladed sword leaves AC 10.
+
+### 4.52 Second documentary head
+
+**CRB (player-facing):** A double weapon lists two Medium damage heads. The gnome hooked hammer is 1d8 B ×3 / 1d6 P ×4. The dwarven urgrosh is 1d8 S ×3 / 1d6 P ×3. Matching heads (quarterstaff, orc double axe, dire flail, two-bladed sword) repeat the primary dice on the second head.
+
+**App today / this batch:** optional `weapon.secondHead` stores that off-hand documentary head. Primary `damageDice` stays a **single** string (no slash). Apply stamps `secondHead` onto the inventory weapon subobject. Attack rows stay typed.
+
+**Verdict:** Primary head is unchanged from batches 16–19. Second head is Medium table numbers. A longsword has no `secondHead`.
+
+**Gaps:** Inventory does not edit dice fields (primary or second); two-weapon attack rows wait.
+
+**Pack slice:** `secondHead` on the six double weapons. Character and catalog schemas allow the nested object.
+
+**Tests:** Those six have `secondHead` matching the CRB Medium off-hand; primary `damageDice` has no `/`; longsword has no `secondHead`.
 
 ---
 
@@ -1170,9 +1202,9 @@ Those bonus slots are added to the class table’s spells per day. Batch 15 fill
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W6 landed reach, brace, trip, disarm, monk, and nonlethal. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W7 landed reach, brace, trip, disarm, monk, nonlethal, and double (plus a documentary second head). Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** **W7** `double` ([§7.6](#76-weapon-properties-after-all-weapon-ids); `weapon.properties` is **N** tags — one or many; may add a second documentary head), then armor/shields (20–21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** **Batch 20** remaining light + medium armor ([§7](#7-remaining-mundane-weapons-and-armor)), then heavy armor and shields (21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -1180,7 +1212,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed 
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1 reach, W2 brace, W3 trip, W4 disarm, W5 monk, and W6 nonlethal are on the matching weapons. Skip those ids in later batches. Next catalog is W7 (`double`).
+**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1–W7 Special tags (and W7 `secondHead`) are on the matching weapons. Skip those ids in later batches. Next catalog is Batch 20 (remaining light + medium armor).
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -1392,7 +1424,7 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 
 | Kind | Packed now | Remaining in 20–21 | Skip / later |
 | --- | --- | --- | --- |
-| Weapons | 70 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows + 20 exotic) | 0 | Unarmed strike; shield-bash lines; spiked chain was not in the locked 13; W1–W6 reach/brace/trip/disarm/monk/nonlethal are in; remaining Special waits for W7 |
+| Weapons | 70 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows + 20 exotic) | 0 | Unarmed strike; shield-bash lines; spiked chain was not in the locked 13; W1–W7 Special tags are in; W7 stamps a documentary second head |
 | Armor | 2 | 10 | Magic armor |
 | Shields | 0 | 6 | Magic shields |
 | Ammo / extras | spellbook + 5 ammo | 3 extras | Priced treasure as a later slice |
@@ -1431,7 +1463,7 @@ Thrown range is already `rangeFeet`. Net “see text,” crossbow loading, and l
 | **W4** | `disarm` | Flail, heavy flail, ranseur, nunchaku, sai, whip, dire flail (**Landed** — flails keep trip; ranseur keeps reach; W5 later appends monk on nunchaku/sai; W6 later appends nonlethal on the whip) |
 | **W5** | `monk` | Quarterstaff, kama, nunchaku, sai, siangham, shuriken (**Landed** — quarterstaff/siangham/shuriken are N = 1; kama keeps trip; nunchaku/sai keep disarm) |
 | **W6** | `nonlethal` | Sap, whip, bolas (**Landed** — sap is N = 1; bolas keeps trip; whip is N = 4) |
-| **W7** | `double` | Quarterstaff, orc double axe, dire flail, gnome hooked hammer, two-bladed sword, dwarven urgrosh |
+| **W7** | `double` | Quarterstaff, orc double axe, dire flail, gnome hooked hammer, two-bladed sword, dwarven urgrosh (**Landed** — orc double axe / two-bladed sword are N = 1; quarterstaff keeps monk; dire flail keeps trip and disarm; hooked hammer keeps trip; urgrosh keeps brace; `secondHead` is documentary Medium numbers) |
 
 Each W-batch is two mechanics: (1) **append** that one quality on the matching catalog rows (keep any tags already present); (2) apply stamps the full list onto the inventory `weapon` subobject and **does not** rewrite `attacks` / CMB / reach math.
 
@@ -1444,7 +1476,7 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | Schema | Optional `weapon.properties` is an array of kebab-case strings. Do **not** close the enum to only the seven CRB tags — that would block magic later. Unique tags; omit the field when empty |
 | One type per PR | Do not land reach and trip in the same change. Multiple tags on one weapon accumulate across PRs |
 | Combat | Still typed. Reach does not change threatened area in the engine until a later batch says so |
-| Double last | W7 may add a second documentary head. Until then, one row / primary head only (existing 16–19 lock) |
+| Double last | W7 landed `double` and a documentary `secondHead`. Primary `damageDice` stays a single string. Two-weapon attack rows still wait |
 | Display | List **all** current tags, not only the first |
 | License | Tags are mechanic labels, not Special-quality prose |
 
@@ -1493,3 +1525,4 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | 2026-08-28 | W4: disarm appended (nunchaku/sai are N = 1; flails keep trip; ranseur keeps reach; whip is N = 3); next is W5 monk |
 | 2026-09-01 | W5: monk appended (quarterstaff/siangham/shuriken are N = 1; kama keeps trip; nunchaku/sai keep disarm); next is W6 nonlethal |
 | 2026-09-01 | W6: nonlethal appended (sap is N = 1; bolas keeps trip; whip is N = 4); next is W7 double |
+| 2026-09-01 | W7: double appended plus documentary secondHead; primary dice stay a single string; next is Batch 20 armor |

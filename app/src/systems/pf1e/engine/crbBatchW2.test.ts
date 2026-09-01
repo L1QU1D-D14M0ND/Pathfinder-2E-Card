@@ -4,11 +4,7 @@ import { createEmptyAttack, createEmptyItem } from '../character/createRows'
 import { applyCrbItem, lookupCrbItem } from '../content'
 import { compute } from './compute'
 
-const BRACE_ONLY_IDS = [
-  'weapon.spear',
-  'weapon.trident',
-  'weapon.dwarven-urgrosh',
-] as const
+const BRACE_ONLY_IDS = ['weapon.spear', 'weapon.trident'] as const
 
 describe('CRB W2: brace', () => {
   it('appends brace without replacing reach on the longspear', () => {
@@ -30,6 +26,12 @@ describe('CRB W2: brace', () => {
 
   it('keeps brace on the halberd after later tags append', () => {
     expect(lookupCrbItem('weapon.halberd')?.weapon?.properties).toContain(
+      'brace',
+    )
+  })
+
+  it('keeps brace on the dwarven urgrosh after later tags append', () => {
+    expect(lookupCrbItem('weapon.dwarven-urgrosh')?.weapon?.properties).toContain(
       'brace',
     )
   })
