@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ttrpg-sheet.local/schemas/content/pf1e/items.schema.json",
   "title": "PF1e item catalog",
-  "description": "Mundane CRB item rows (ids, names, pounds, documentary weapon/armor stats). Fill-out is batches 16–21 in docs/pf1e-crb-pack-design.md §7. Optional weapon.properties is an array of N kebab-case strings (one tag or many). W1 lands reach; later types append. Magic properties use the same list. Do not add a single-enum property field. Magic weapons and armor are a later overlay on these ids — do not add plus-N copies.",
+  "description": "Mundane CRB item rows (ids, names, pounds, documentary weapon/armor/shield stats). Fill-out is batches 16–21 in docs/pf1e-crb-pack-design.md §7. Optional weapon.properties is an array of N kebab-case strings (one tag or many). W1 lands reach; later types append. Magic properties use the same list. Do not add a single-enum property field. Magic weapons and armor are a later overlay on these ids — do not add plus-N copies. Batch 21 adds kind shield and optional shield stats (tower needs maxDex and spell failure).",
   "type": "array",
   "items": {
     "type": "object",
@@ -11,7 +11,7 @@
     "properties": {
       "id": { "type": "string", "minLength": 1 },
       "name": { "type": "string", "minLength": 1 },
-      "kind": { "enum": ["weapon", "armor", "item"] },
+      "kind": { "enum": ["weapon", "armor", "shield", "item"] },
       "pounds": { "type": "number", "minimum": 0 },
       "weapon": {
         "type": "object",
@@ -44,6 +44,17 @@
       },
       "armor": {
         "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "acBonus": { "type": "number" },
+          "maxDex": { "type": ["number", "null"] },
+          "armorCheckPenalty": { "type": "number", "maximum": 0 },
+          "spellFailurePercent": { "type": "number", "minimum": 0 }
+        }
+      },
+      "shield": {
+        "type": "object",
+        "description": "Documentary shield stats. Tower shield stamps maxDex and spellFailurePercent; other shields use maxDex null (no Dex cap from the shield).",
         "additionalProperties": false,
         "properties": {
           "acBonus": { "type": "number" },

@@ -273,8 +273,8 @@ describe('CRB batch 16: simple ranged and ammo', () => {
     }
   })
 
-  it('leaves remaining heavy armor unknown', () => {
-    expect(lookupCrbItem('armor.full-plate')).toBeNull()
+  it('leaves later gear unknown', () => {
+    expect(lookupCrbItem('item.bedroll')).toBeNull()
   })
 })
 
