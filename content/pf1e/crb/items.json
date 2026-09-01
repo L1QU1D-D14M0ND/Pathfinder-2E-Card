@@ -156,7 +156,8 @@
       "damageDice": "1d6",
       "damageType": "bludgeoning",
       "critRange": 20,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["monk"]
     },
     "source": { "book": "CRB" }
   },
@@ -689,7 +690,7 @@
       "damageType": "slashing",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["trip"]
+      "properties": ["trip", "monk"]
     },
     "source": { "book": "CRB" }
   },
@@ -703,7 +704,7 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["disarm"]
+      "properties": ["disarm", "monk"]
     },
     "source": { "book": "CRB" }
   },
@@ -717,7 +718,7 @@
       "damageType": "bludgeoning",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["disarm"]
+      "properties": ["disarm", "monk"]
     },
     "source": { "book": "CRB" }
   },
@@ -730,7 +731,8 @@
       "damageDice": "1d6",
       "damageType": "piercing",
       "critRange": 20,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["monk"]
     },
     "source": { "book": "CRB" }
   },
@@ -932,7 +934,8 @@
       "damageType": "piercing",
       "critRange": 20,
       "critMultiplier": 2,
-      "rangeFeet": 10
+      "rangeFeet": 10,
+      "properties": ["monk"]
     },
     "source": { "book": "CRB" }
   },

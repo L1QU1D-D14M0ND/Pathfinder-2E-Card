@@ -21,7 +21,6 @@ const TRIP_IDS = [
 const TRIP_ONLY_IDS = [
   'weapon.sickle',
   'weapon.scythe',
-  'weapon.kama',
   'weapon.gnome-hooked-hammer',
   'weapon.bolas',
 ] as const
@@ -76,10 +75,13 @@ describe('CRB W3: trip', () => {
     )
   })
 
-  it('does not pack monk or nonlethal yet', () => {
+  it('keeps trip on the kama after later tags append', () => {
+    expect(lookupCrbItem('weapon.kama')?.weapon?.properties).toContain('trip')
+  })
+
+  it('does not pack nonlethal yet', () => {
     for (const id of TRIP_IDS) {
       const tags = lookupCrbItem(id)?.weapon?.properties ?? []
-      expect(tags).not.toContain('monk')
       expect(tags).not.toContain('nonlethal')
     }
   })
@@ -105,7 +107,7 @@ describe('CRB W3: Combat stays typed', () => {
     expect(character.armorClass).toEqual(beforeAc)
     expect(character.attacks[0]).toEqual(beforeAttack)
     expect(view.ac).toBe(10)
-    expect(row.weapon?.properties).toEqual(['trip'])
+    expect(row.weapon?.properties).toContain('trip')
     expect(row.pounds).toBe(2)
   })
 })

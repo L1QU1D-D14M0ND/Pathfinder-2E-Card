@@ -14,8 +14,6 @@ const DISARM_IDS = [
   'weapon.dire-flail',
 ] as const
 
-const DISARM_ONLY_IDS = ['weapon.nunchaku', 'weapon.sai'] as const
-
 describe('CRB W4: disarm', () => {
   it('appends disarm on matching weapons', () => {
     for (const id of DISARM_IDS) {
@@ -25,12 +23,11 @@ describe('CRB W4: disarm', () => {
     }
   })
 
-  it('stamps disarm as a one-tag list on weapons that only have disarm', () => {
-    for (const id of DISARM_ONLY_IDS) {
-      expect(lookupCrbItem(id)?.weapon?.properties).toEqual(['disarm'])
-      const stamped = applyCrbItem(createEmptyItem(), id)
-      expect(stamped.weapon?.properties).toEqual(['disarm'])
-    }
+  it('keeps disarm on nunchaku and sai after later tags append', () => {
+    expect(lookupCrbItem('weapon.nunchaku')?.weapon?.properties).toContain(
+      'disarm',
+    )
+    expect(lookupCrbItem('weapon.sai')?.weapon?.properties).toContain('disarm')
   })
 
   it('appends disarm without replacing trip on the flail and heavy flail', () => {
@@ -66,10 +63,9 @@ describe('CRB W4: disarm', () => {
     ])
   })
 
-  it('does not pack monk or nonlethal yet', () => {
+  it('does not pack nonlethal yet', () => {
     for (const id of DISARM_IDS) {
       const tags = lookupCrbItem(id)?.weapon?.properties ?? []
-      expect(tags).not.toContain('monk')
       expect(tags).not.toContain('nonlethal')
     }
   })
@@ -95,7 +91,7 @@ describe('CRB W4: Combat stays typed', () => {
     expect(character.armorClass).toEqual(beforeAc)
     expect(character.attacks[0]).toEqual(beforeAttack)
     expect(view.ac).toBe(10)
-    expect(row.weapon?.properties).toEqual(['disarm'])
+    expect(row.weapon?.properties).toContain('disarm')
     expect(row.pounds).toBe(2)
   })
 })

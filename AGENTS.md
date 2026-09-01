@@ -2,7 +2,7 @@
 
 ## Testing
 
-### CRB catalog fill-out (W5–W7 and armor 20–21)
+### CRB catalog fill-out (W6–W7 and armor 20–21)
 
 These batches append catalog numbers and `weapon.properties` tags (or remaining armor/shield rows). The Inventory chip list already exists.
 
