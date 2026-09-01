@@ -71,6 +71,7 @@ const MARTIAL_LIGHT = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
+      properties: ['nonlethal'],
     },
   },
   {

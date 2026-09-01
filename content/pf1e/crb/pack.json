@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-19-w1-w2-w3-w4-w5-complete",
+  "status": "batches-1-19-w1-w2-w3-w4-w5-w6-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -127,6 +127,11 @@
       "id": "W5",
       "mechanics": ["monk-tag", "append-without-replacing"],
       "notes": "Append monk on matching catalog rows. Quarterstaff, siangham, and shuriken are N=1. Kama keeps trip; nunchaku and sai keep disarm. Combat stays typed."
+    },
+    {
+      "id": "W6",
+      "mechanics": ["nonlethal-tag", "append-without-replacing"],
+      "notes": "Append nonlethal on matching catalog rows. Sap is N=1. Bolas keeps trip; whip keeps reach, trip, and disarm. Combat stays typed."
     }
   ]
 }

@@ -84,7 +84,7 @@ One `spellcasting[]` entry per casting class (wizard, cleric, …). Ability key,
 
 ### 3.7 Inventory & wealth
 
-Items with pounds, equipped/carried, weapon/armor/shield subfields (enhancement bonus, armor bonus, max Dex, ACP, spell failure). `weapon.properties` is a **list of N kebab-case tags** on that inventory entry — one tag is valid (siangham: monk), many tags are valid (whip: reach + trip + disarm; later magic `flaming` / `keen`), and empty omits the field. Currency (pp/gp/sp/cp). Derived weight and load category. **Ignore weight** opts out of load category (pounds still sum). Medium/heavy load penalties are not auto-written onto ACP / max Dex / speed.
+Items with pounds, equipped/carried, weapon/armor/shield subfields (enhancement bonus, armor bonus, max Dex, ACP, spell failure). `weapon.properties` is a **list of N kebab-case tags** on that inventory entry — one tag is valid (siangham: monk; sap: nonlethal), many tags are valid (whip: reach + trip + disarm + nonlethal; later magic `flaming` / `keen`), and empty omits the field. Currency (pp/gp/sp/cp). Derived weight and load category. **Ignore weight** opts out of load category (pounds still sum). Medium/heavy load penalties are not auto-written onto ACP / max Dex / speed.
 
 ### 3.8 Play
 
@@ -170,7 +170,7 @@ Optional later (this First Edition finish): Cleric 5 (domains/channel as daily r
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–15 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability; Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids; remaining CRB player races + size stamp; class spells-per-day tables with hybrid Max. Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); **batches 16–19 landed** (simple, martial, and exotic weapons). **W1–W5 landed** `reach`, `brace`, `trip`, `disarm`, and `monk` on `weapon.properties`, an **array of N tags** (one is valid; many are valid; later magic uses the same list) ([pack design §7.6](pf1e-crb-pack-design.md)). Magic weapons/armor are a later overlay, not plus-N catalog rows. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, domain/specialist extras, and auto-filled spellbooks are not auto-written.
+Batch 1–15 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability; Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids; remaining CRB player races + size stamp; class spells-per-day tables with hybrid Max. Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); **batches 16–19 landed** (simple, martial, and exotic weapons). **W1–W6 landed** `reach`, `brace`, `trip`, `disarm`, `monk`, and `nonlethal` on `weapon.properties`, an **array of N tags** (one is valid; many are valid; later magic uses the same list) ([pack design §7.6](pf1e-crb-pack-design.md)). Magic weapons/armor are a later overlay, not plus-N catalog rows. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, domain/specialist extras, and auto-filled spellbooks are not auto-written.
 
 License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **1.0 landed.** Spanish UI catalog: [`../app/src/locales/es.json`](../app/src/locales/es.json). Synthesist golden landed.
 
@@ -233,3 +233,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-08-27 | W3: trip appended. Next is W4 disarm. |
 | 2026-08-28 | W4: disarm appended. Next is W5 monk. |
 | 2026-09-01 | W5: monk appended. Next is W6 nonlethal. |
+| 2026-09-01 | W6: nonlethal appended. Next is W7 double. |

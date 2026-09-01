@@ -84,7 +84,7 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['reach', 'trip', 'disarm'],
+      properties: ['reach', 'trip', 'disarm', 'nonlethal'],
     },
   },
   {
@@ -169,7 +169,7 @@ const EXOTIC_RANGED = [
       critRange: 20,
       critMultiplier: 2,
       rangeFeet: 10,
-      properties: ['trip'],
+      properties: ['trip', 'nonlethal'],
     },
   },
   {
@@ -272,7 +272,7 @@ describe('CRB batch 19: exotic melee', () => {
     })
   })
 
-  it('does not pack nonlethal yet', () => {
+  it('does not pack double yet', () => {
     expect(lookupCrbItem('weapon.kama')?.weapon?.properties).toEqual([
       'trip',
       'monk',
@@ -281,6 +281,7 @@ describe('CRB batch 19: exotic melee', () => {
       'reach',
       'trip',
       'disarm',
+      'nonlethal',
     ])
     expect(lookupCrbItem('weapon.nunchaku')?.weapon?.properties).toEqual([
       'disarm',
