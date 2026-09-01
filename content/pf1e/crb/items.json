@@ -1019,6 +1019,84 @@
     "source": { "book": "CRB" }
   },
   {
+    "id": "armor.padded",
+    "name": "Padded",
+    "kind": "armor",
+    "pounds": 10,
+    "armor": {
+      "acBonus": 1,
+      "maxDex": 8,
+      "armorCheckPenalty": 0,
+      "spellFailurePercent": 5
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.leather",
+    "name": "Leather",
+    "kind": "armor",
+    "pounds": 15,
+    "armor": {
+      "acBonus": 2,
+      "maxDex": 6,
+      "armorCheckPenalty": 0,
+      "spellFailurePercent": 10
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.studded-leather",
+    "name": "Studded leather",
+    "kind": "armor",
+    "pounds": 20,
+    "armor": {
+      "acBonus": 3,
+      "maxDex": 5,
+      "armorCheckPenalty": -1,
+      "spellFailurePercent": 15
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.hide",
+    "name": "Hide",
+    "kind": "armor",
+    "pounds": 25,
+    "armor": {
+      "acBonus": 4,
+      "maxDex": 4,
+      "armorCheckPenalty": -3,
+      "spellFailurePercent": 20
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.scale-mail",
+    "name": "Scale mail",
+    "kind": "armor",
+    "pounds": 30,
+    "armor": {
+      "acBonus": 5,
+      "maxDex": 3,
+      "armorCheckPenalty": -4,
+      "spellFailurePercent": 25
+    },
+    "source": { "book": "CRB" }
+  },
+  {
+    "id": "armor.breastplate",
+    "name": "Breastplate",
+    "kind": "armor",
+    "pounds": 30,
+    "armor": {
+      "acBonus": 6,
+      "maxDex": 3,
+      "armorCheckPenalty": -4,
+      "spellFailurePercent": 25
+    },
+    "source": { "book": "CRB" }
+  },
+  {
     "id": "item.spellbook",
     "name": "Spellbook",
     "kind": "item",

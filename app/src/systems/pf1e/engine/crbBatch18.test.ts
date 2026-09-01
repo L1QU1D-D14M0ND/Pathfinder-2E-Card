@@ -227,8 +227,8 @@ describe('CRB batch 18: martial ranged and arrows', () => {
     )
   })
 
-  it('leaves remaining armor unknown', () => {
-    expect(lookupCrbItem('armor.padded')).toBeNull()
+  it('leaves remaining heavy armor unknown', () => {
+    expect(lookupCrbItem('armor.full-plate')).toBeNull()
   })
 })
 
