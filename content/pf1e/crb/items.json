@@ -336,7 +336,8 @@
       "damageDice": "1d6",
       "damageType": "bludgeoning",
       "critRange": 20,
-      "critMultiplier": 2
+      "critMultiplier": 2,
+      "properties": ["nonlethal"]
     },
     "source": { "book": "CRB" }
   },
@@ -772,7 +773,7 @@
       "damageType": "slashing",
       "critRange": 20,
       "critMultiplier": 2,
-      "properties": ["reach", "trip", "disarm"]
+      "properties": ["reach", "trip", "disarm", "nonlethal"]
     },
     "source": { "book": "CRB" }
   },
@@ -868,7 +869,7 @@
       "critRange": 20,
       "critMultiplier": 2,
       "rangeFeet": 10,
-      "properties": ["trip"]
+      "properties": ["trip", "nonlethal"]
     },
     "source": { "book": "CRB" }
   },

@@ -22,7 +22,6 @@ const TRIP_ONLY_IDS = [
   'weapon.sickle',
   'weapon.scythe',
   'weapon.gnome-hooked-hammer',
-  'weapon.bolas',
 ] as const
 
 describe('CRB W3: trip', () => {
@@ -79,10 +78,14 @@ describe('CRB W3: trip', () => {
     expect(lookupCrbItem('weapon.kama')?.weapon?.properties).toContain('trip')
   })
 
-  it('does not pack nonlethal yet', () => {
+  it('keeps trip on the bolas after later tags append', () => {
+    expect(lookupCrbItem('weapon.bolas')?.weapon?.properties).toContain('trip')
+  })
+
+  it('does not pack double yet', () => {
     for (const id of TRIP_IDS) {
       const tags = lookupCrbItem(id)?.weapon?.properties ?? []
-      expect(tags).not.toContain('nonlethal')
+      expect(tags).not.toContain('double')
     }
   })
 

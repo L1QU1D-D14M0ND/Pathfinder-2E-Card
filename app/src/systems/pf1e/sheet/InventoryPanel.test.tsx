@@ -104,7 +104,7 @@ describe('InventoryPanel weapon properties', () => {
     expect(screen.queryByText('disarm')).not.toBeInTheDocument()
   })
 
-  it('stamps reach, trip, and disarm together on a whip', () => {
+  it('stamps reach, trip, disarm, and nonlethal together on a whip', () => {
     render(
       <I18nProvider>
         <InventoryHarness />
@@ -117,6 +117,22 @@ describe('InventoryPanel weapon properties', () => {
     expect(screen.getByText('reach')).toBeInTheDocument()
     expect(screen.getByText('trip')).toBeInTheDocument()
     expect(screen.getByText('disarm')).toBeInTheDocument()
+    expect(screen.getByText('nonlethal')).toBeInTheDocument()
+  })
+
+  it('stamps a single nonlethal tag on a sap', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.sap' },
+    })
+    expect(screen.getByText('nonlethal')).toBeInTheDocument()
+    expect(screen.queryByText('trip')).not.toBeInTheDocument()
+    expect(screen.queryByText('reach')).not.toBeInTheDocument()
   })
 
   it('stamps reach and brace together on a longspear', () => {
