@@ -120,6 +120,35 @@ describe('InventoryPanel weapon properties', () => {
     expect(screen.getByText('nonlethal')).toBeInTheDocument()
   })
 
+  it('stamps a single double tag on a two-bladed sword', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.two-bladed-sword' },
+    })
+    expect(screen.getByText('double')).toBeInTheDocument()
+    expect(screen.queryByText('trip')).not.toBeInTheDocument()
+    expect(screen.queryByText('brace')).not.toBeInTheDocument()
+  })
+
+  it('stamps monk and double together on a quarterstaff', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.quarterstaff' },
+    })
+    expect(screen.getByText('monk')).toBeInTheDocument()
+    expect(screen.getByText('double')).toBeInTheDocument()
+  })
+
   it('stamps a single nonlethal tag on a sap', () => {
     render(
       <I18nProvider>

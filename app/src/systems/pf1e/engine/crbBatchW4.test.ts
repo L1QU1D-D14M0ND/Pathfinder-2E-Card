@@ -55,17 +55,12 @@ describe('CRB W4: disarm', () => {
   })
 
   it('appends disarm without replacing trip on the dire flail', () => {
-    expect(lookupCrbItem('weapon.dire-flail')?.weapon?.properties).toEqual([
+    expect(lookupCrbItem('weapon.dire-flail')?.weapon?.properties).toContain(
       'trip',
+    )
+    expect(lookupCrbItem('weapon.dire-flail')?.weapon?.properties).toContain(
       'disarm',
-    ])
-  })
-
-  it('does not pack double yet', () => {
-    for (const id of DISARM_IDS) {
-      const tags = lookupCrbItem(id)?.weapon?.properties ?? []
-      expect(tags).not.toContain('double')
-    }
+    )
   })
 
   it('leaves unrelated weapons without a properties field', () => {

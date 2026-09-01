@@ -18,11 +18,7 @@ const TRIP_IDS = [
   'weapon.bolas',
 ] as const
 
-const TRIP_ONLY_IDS = [
-  'weapon.sickle',
-  'weapon.scythe',
-  'weapon.gnome-hooked-hammer',
-] as const
+const TRIP_ONLY_IDS = ['weapon.sickle', 'weapon.scythe'] as const
 
 describe('CRB W3: trip', () => {
   it('appends trip on matching weapons', () => {
@@ -82,11 +78,10 @@ describe('CRB W3: trip', () => {
     expect(lookupCrbItem('weapon.bolas')?.weapon?.properties).toContain('trip')
   })
 
-  it('does not pack double yet', () => {
-    for (const id of TRIP_IDS) {
-      const tags = lookupCrbItem(id)?.weapon?.properties ?? []
-      expect(tags).not.toContain('double')
-    }
+  it('keeps trip on the gnome hooked hammer after later tags append', () => {
+    expect(
+      lookupCrbItem('weapon.gnome-hooked-hammer')?.weapon?.properties,
+    ).toContain('trip')
   })
 
   it('leaves unrelated weapons without a properties field', () => {

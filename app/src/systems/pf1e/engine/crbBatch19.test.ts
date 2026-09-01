@@ -96,6 +96,13 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 3,
+      properties: ['double'],
+      secondHead: {
+        damageDice: '1d8',
+        damageType: 'slashing',
+        critRange: 20,
+        critMultiplier: 3,
+      },
     },
   },
   {
@@ -118,7 +125,13 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['trip', 'disarm'],
+      properties: ['trip', 'disarm', 'double'],
+      secondHead: {
+        damageDice: '1d8',
+        damageType: 'bludgeoning',
+        critRange: 20,
+        critMultiplier: 2,
+      },
     },
   },
   {
@@ -130,7 +143,13 @@ const EXOTIC_MELEE = [
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 3,
-      properties: ['trip'],
+      properties: ['trip', 'double'],
+      secondHead: {
+        damageDice: '1d6',
+        damageType: 'piercing',
+        critRange: 20,
+        critMultiplier: 4,
+      },
     },
   },
   {
@@ -142,6 +161,13 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 19,
       critMultiplier: 2,
+      properties: ['double'],
+      secondHead: {
+        damageDice: '1d8',
+        damageType: 'slashing',
+        critRange: 19,
+        critMultiplier: 2,
+      },
     },
   },
   {
@@ -153,7 +179,13 @@ const EXOTIC_MELEE = [
       damageType: 'slashing',
       critRange: 20,
       critMultiplier: 3,
-      properties: ['brace'],
+      properties: ['brace', 'double'],
+      secondHead: {
+        damageDice: '1d6',
+        damageType: 'piercing',
+        critRange: 20,
+        critMultiplier: 3,
+      },
     },
   },
 ] as const

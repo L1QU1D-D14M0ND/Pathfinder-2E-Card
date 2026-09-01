@@ -236,7 +236,13 @@ describe('CRB batch 16: remaining simple melee', () => {
       damageType: 'bludgeoning',
       critRange: 20,
       critMultiplier: 2,
-      properties: ['monk'],
+      properties: ['monk', 'double'],
+      secondHead: {
+        damageDice: '1d6',
+        damageType: 'bludgeoning',
+        critRange: 20,
+        critMultiplier: 2,
+      },
     })
   })
 })

@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-09-01  
-**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). Class spells-per-day tables landed (hybrid Max). CRB simple, martial, and exotic weapons are packed (batches 16–19); W1–W6 landed `reach`, `brace`, `trip`, `disarm`, `monk`, and `nonlethal` on an N-tag `weapon.properties` list (one tag is valid; many are valid). Next catalog is remaining Special types one at a time, then armor 20–21. Magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). Class spells-per-day tables landed (hybrid Max). CRB simple, martial, and exotic weapons are packed (batches 16–19); W1–W7 landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on an N-tag `weapon.properties` list (one tag is valid; many are valid). Double weapons also stamp a documentary second head. Next catalog is remaining armor 20–21. Magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
 
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
@@ -209,7 +209,7 @@ Recommended order:
 - [x] **CRB weapon properties W4** — `disarm` appended on the same list (nunchaku is N = 1; whip keeps reach and trip).
 - [x] **CRB weapon properties W5** — `monk` appended on the same list (siangham is N = 1; kama keeps trip; nunchaku/sai keep disarm). [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.6
 - [x] **CRB weapon properties W6** — `nonlethal` appended on the same list (sap is N = 1; bolas keeps trip; whip keeps reach, trip, and disarm).
-- [ ] **CRB weapon properties W7** — double. Same array; may add a second documentary head.
+- [x] **CRB weapon properties W7** — `double` appended on the same list, plus a documentary `secondHead` (two-bladed sword is N = 1; quarterstaff keeps monk). Primary dice stay a single string.
 - [ ] **CRB Batch 20** — remaining light + medium armor
 - [ ] **CRB Batch 21** — heavy armor + shields
 - [ ] **CRB magic weapons / armor** — reserved later. Overlay on mundane ids; no plus-N catalog rows. Do not start in 16–21. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.5
@@ -360,3 +360,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-08-28 | Phase 1x W4: disarm appended (N = 1, 2, or 3); next is W5 monk |
 | 2026-09-01 | Phase 1x W5: monk appended (N = 1 or 2); next is W6 nonlethal |
 | 2026-09-01 | Phase 1x W6: nonlethal appended (N = 1, 2, or 4); next is W7 double |
+| 2026-09-01 | Phase 1x W7: double appended plus documentary secondHead; next is Batch 20 armor |
