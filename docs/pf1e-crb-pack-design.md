@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–19 and W1–W7 landed (Batch 15 is class spells-per-day + hybrid Max; W7 is double plus a documentary second head). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–20 and W1–W7 landed (Batch 15 is class spells-per-day + hybrid Max; W7 is double plus a documentary second head; Batch 20 is remaining light + medium armor). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
 
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
@@ -62,11 +62,11 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **W5** | Monk | One CRB Special quality | Catalog | Done |
 | **W6** | Nonlethal | One CRB Special quality | Catalog | Done |
 | **W7** | Double (second head) | Last: needs a second documentary head, not only a tag | Catalog | Done |
-| **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Next |
-| **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Queued |
+| **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Done |
+| **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Next |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W7** landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on a `weapon.properties` array of **N** tags (one is valid; many are valid). W7 also stamps a documentary `secondHead`. Next catalog work is **Batch 20** (remaining light + medium armor). After armor/shields, remaining feats/spells. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor).
+The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W7** landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on a `weapon.properties` array of **N** tags (one is valid; many are valid). W7 also stamps a documentary `secondHead`. **Batch 20** landed remaining light + medium armor. Next catalog work is **Batch 21** (heavy armor + shields). After armor/shields, remaining feats/spells. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor).
 
 ---
 
@@ -784,7 +784,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** six simple ranged weapons and three ammo ids.
 
-**Tests:** Published range and dice; ammo has no weapon subobject; remaining armor (`armor.padded`) stays null.
+**Tests:** Published range and dice; ammo has no weapon subobject; remaining heavy armor (`armor.full-plate`) stays null.
 
 ---
 
@@ -854,7 +854,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** four martial ranged weapons and arrows.
 
-**Tests:** Published range and dice; arrows have no weapon subobject; remaining armor (`armor.padded`) stays null.
+**Tests:** Published range and dice; arrows have no weapon subobject; remaining heavy armor (`armor.full-plate`) stays null.
 
 ---
 
@@ -886,7 +886,7 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 **Pack slice:** seven exotic ranged weapons and repeating bolts.
 
-**Tests:** Published range and dice; repeating bolts have no weapon subobject; `armor.padded` stays null.
+**Tests:** Published range and dice; repeating bolts have no weapon subobject; `armor.full-plate` stays null.
 
 ---
 
@@ -1114,6 +1114,43 @@ Light and medium load are still fractions of that heavy load. Strength-table pou
 
 ---
 
+## Batch 20 — two mechanics
+
+### 4.53 Remaining light armor
+
+**CRB (player-facing):** Light armor lists Medium armor bonus, max Dex, armor check penalty, arcane spell failure, and weight. Padded, leather, and studded leather sit above the packed chain shirt.
+
+**App today / this batch:**
+
+| Piece | Where | Behavior |
+| --- | --- | --- |
+| Pack | `items.json` | Remaining light ids from [§7.3](#73-armor-and-shields--batches-2021). Packed chain shirt stays |
+| Apply | `applyCrbItem` | Stamps name, pounds, and `armor` (`acBonus`, `maxDex`, `armorCheckPenalty`, `spellFailurePercent`). Does **not** rewrite `armorClass` |
+
+**Verdict:** Medium table numbers resolve. Padded and leather stamp ACP 0. Studded leather is −1 / 15%.
+
+**Gaps:** Speed reduction; Armor Training raising max Dex; auto-writing Combat AC.
+
+**Pack slice:** three remaining light armor ids.
+
+**Tests:** Table of Medium numbers; packed chain shirt unchanged; apply breastplate leaves AC 10.
+
+### 4.54 Remaining medium armor
+
+**CRB (player-facing):** Medium armor uses the same columns. Hide, scale mail, and breastplate sit around the packed chainmail.
+
+**App today / this batch:** three remaining ids. Packed chainmail is unchanged.
+
+**Verdict:** Hide is +4 / max Dex 4 / −3 / 20% / 25 lb. Scale mail is +5 / 3 / −4 / 25% / 30 lb. Breastplate is +6 / 3 / −4 / 25% / 30 lb (same bonus as chainmail, better max Dex).
+
+**Gaps:** Heavy armor and shields wait for batch 21. Combat still stays typed.
+
+**Pack slice:** hide, scale mail, breastplate.
+
+**Tests:** Table of Medium numbers; packed chainmail unchanged; `armor.full-plate` and `shield.buckler` stay null.
+
+---
+
 ## Batch 7 — two mechanics
 
 ### 4.25 Spell DC
@@ -1202,9 +1239,9 @@ Those bonus slots are added to the class table’s spells per day. Batch 15 fill
 
 ## 6. Recommended upcoming work
 
-The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W7 landed reach, brace, trip, disarm, monk, nonlethal, and double (plus a documentary second head). Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
+The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W7 landed reach, brace, trip, disarm, monk, nonlethal, and double (plus a documentary second head). Batch 20 landed remaining light + medium armor. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** **Batch 20** remaining light + medium armor ([§7](#7-remaining-mundane-weapons-and-armor)), then heavy armor and shields (21), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** **Batch 21** heavy armor and shields ([§7](#7-remaining-mundane-weapons-and-armor)), then remaining feats/spells, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
 
 ---
 
@@ -1212,7 +1249,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed 
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1–W7 Special tags (and W7 `secondHead`) are on the matching weapons. Skip those ids in later batches. Next catalog is Batch 20 (remaining light + medium armor).
+**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1–W7 Special tags (and W7 `secondHead`) are on the matching weapons. Batch 20 remaining light + medium armor. Skip those ids in later batches. Next catalog is Batch 21 (heavy armor + shields).
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -1364,9 +1401,11 @@ Hand crossbow and repeating crossbows also use bolts; they wait for batch 19 and
 
 ### 7.3 Armor and shields — batches 20–21
 
-10 remaining armor ids (packed 2) plus 6 shields. Extras stay with batch 21.
+10 remaining armor ids were queued after the two goldens; Batch 20 packed 6. **4 heavy armor ids** plus 6 shields remain for batch 21.
 
 #### Batch 20 — remaining light armor + remaining medium armor
+
+**Landed.** Remaining light armor (3) and remaining medium armor (3). Packed chain shirt and chainmail unchanged.
 
 **Mechanic A — remaining light armor** (3). Packed chain shirt stays.
 
@@ -1425,7 +1464,7 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 | Kind | Packed now | Remaining in 20–21 | Skip / later |
 | --- | --- | --- | --- |
 | Weapons | 70 (3 goldens + 17 simple + 15 martial light/1H + 11 two-handed + 4 bows + 20 exotic) | 0 | Unarmed strike; shield-bash lines; spiked chain was not in the locked 13; W1–W7 Special tags are in; W7 stamps a documentary second head |
-| Armor | 2 | 10 | Magic armor |
+| Armor | 8 (2 goldens + 3 light + 3 medium) | 4 | Magic armor |
 | Shields | 0 | 6 | Magic shields |
 | Ammo / extras | spellbook + 5 ammo | 3 extras | Priced treasure as a later slice |
 | Magic weapons / armor | 0 | 0 | Entirely [§7.5](#75-reserved-magic-weapons-and-armor) |
@@ -1526,3 +1565,4 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | 2026-09-01 | W5: monk appended (quarterstaff/siangham/shuriken are N = 1; kama keeps trip; nunchaku/sai keep disarm); next is W6 nonlethal |
 | 2026-09-01 | W6: nonlethal appended (sap is N = 1; bolas keeps trip; whip is N = 4); next is W7 double |
 | 2026-09-01 | W7: double appended plus documentary secondHead; primary dice stay a single string; next is Batch 20 armor |
+| 2026-09-01 | Batch 20: remaining light + medium armor; Combat stays typed; next is heavy armor + shields (21) |

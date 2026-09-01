@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`, `bard-5.json`, `cleric-5.json`, `ranger-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
-| Content | `content/pf1e/crb/` batches 1–19 and W1–W7. `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
+| Content | `content/pf1e/crb/` batches 1–20 and W1–W7. `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
 
 ---
 
@@ -279,7 +279,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Later PF2e *release* (when those panels next change) |
-| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batches 15–19 and W1–W7 landed; next is Batch 20 armor) |
+| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batches 15–20 and W1–W7 landed; next is Batch 21 heavy armor + shields) |
 | Leftover PF2e (PC2 golden, companion editor, Remaster packs) | Later *release* |
 
 ---
@@ -340,3 +340,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-09-01 | CRB W5: monk appended (one or many tags); next is W6 nonlethal |
 | 2026-09-01 | CRB W6: nonlethal appended (one or many tags); next is W7 double |
 | 2026-09-01 | CRB W7: double appended plus documentary secondHead; next is Batch 20 armor |
+| 2026-09-01 | CRB batch 20: remaining light + medium armor; next is heavy armor + shields |

@@ -220,8 +220,8 @@ describe('CRB batch 17: remaining martial one-handed', () => {
     expect(lookupCrbItem('weapon.heavy-spiked-shield')).toBeNull()
   })
 
-  it('leaves remaining armor unknown', () => {
-    expect(lookupCrbItem('armor.padded')).toBeNull()
+  it('leaves remaining heavy armor unknown', () => {
+    expect(lookupCrbItem('armor.full-plate')).toBeNull()
   })
 })
 

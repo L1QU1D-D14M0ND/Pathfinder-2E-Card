@@ -117,15 +117,15 @@ describe('CRB pack batch 1: class progression catalog', () => {
     expect(lookupCrbClass(mixed.classes[1]?.class.id)?.id).toBe('class.wizard')
   })
 
-  it('pack manifest records batches 1–19 and W1–W7', () => {
+  it('pack manifest records batches 1–20 and W1–W7', () => {
     const pack = readRepoJson('content/pf1e/crb/pack.json') as {
       status: string
       batches: Array<{ id: number | string }>
     }
-    expect(pack.status).toBe('batches-1-19-w1-w2-w3-w4-w5-w6-w7-complete')
+    expect(pack.status).toBe('batches-1-20-w1-w2-w3-w4-w5-w6-w7-complete')
     expect(pack.batches.map((batch) => batch.id)).toEqual([
       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 'W1',
-      'W2', 'W3', 'W4', 'W5', 'W6', 'W7',
+      'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 20,
     ])
   })
 })
@@ -341,6 +341,12 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
       'weapon.halfling-sling-staff',
       'armor.chain-shirt',
       'armor.chainmail',
+      'armor.padded',
+      'armor.leather',
+      'armor.studded-leather',
+      'armor.hide',
+      'armor.scale-mail',
+      'armor.breastplate',
       'item.spellbook',
       'item.blowgun-darts',
       'item.crossbow-bolts',
@@ -361,7 +367,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
   })
 
   it('returns null for an unknown item id', () => {
-    expect(lookupCrbItem('armor.padded')).toBeNull()
+    expect(lookupCrbItem('armor.full-plate')).toBeNull()
     expect(lookupCrbItem(null)).toBeNull()
     expect(lookupCrbItem('')).toBeNull()
   })
@@ -398,7 +404,7 @@ describe('CRB pack batch 10: weapons and armor catalog', () => {
 
   it('unknown apply clears id and leaves the rest of the row', () => {
     const row = applyCrbItem(createEmptyItem(), 'weapon.longsword')
-    const custom = applyCrbItem(row, 'armor.padded')
+    const custom = applyCrbItem(row, 'armor.full-plate')
     expect(custom.item.id).toBeNull()
     expect(custom.item.name).toBe('Longsword')
     expect(custom.pounds).toBe(4)
