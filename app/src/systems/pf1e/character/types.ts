@@ -234,7 +234,9 @@ export interface WeaponItemStats extends WeaponHeadStats {
 
 export interface ShieldItemStats {
   acBonus?: number
+  maxDex?: number | null
   armorCheckPenalty?: number
+  spellFailurePercent?: number
 }
 
 export interface ItemEntry {

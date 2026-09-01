@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-20-w1-w2-w3-w4-w5-w6-w7-complete",
+  "status": "batches-1-21-w1-w2-w3-w4-w5-w6-w7-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -142,6 +142,11 @@
       "id": 20,
       "mechanics": ["remaining-light-armor", "remaining-medium-armor"],
       "notes": "Documentary CRB remaining light and medium armor. Skip packed chain shirt and chainmail. Stamp acBonus, maxDex, armorCheckPenalty, and spellFailurePercent. Combat stays typed. No heavy armor or shields."
+    },
+    {
+      "id": 21,
+      "mechanics": ["heavy-armor", "shields-and-extras"],
+      "notes": "Documentary CRB heavy armor plus shields (kind shield stamps ItemEntry.shield) and mundane extras. Tower shield stamps maxDex and spell failure. Do not write armorClass. No shield-bash weapon ids. No magic gear."
     }
   ]
 }

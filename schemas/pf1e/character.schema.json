@@ -682,7 +682,9 @@
       "additionalProperties": false,
       "properties": {
         "acBonus": { "type": "integer" },
-        "armorCheckPenalty": { "type": "integer", "maximum": 0 }
+        "maxDex": { "type": ["integer", "null"] },
+        "armorCheckPenalty": { "type": "integer", "maximum": 0 },
+        "spellFailurePercent": { "type": "integer", "minimum": 0, "maximum": 100 }
       }
     },
     "ItemEntry": {
