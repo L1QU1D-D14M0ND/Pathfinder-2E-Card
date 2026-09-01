@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-19-w1-w2-w3-w4-complete",
+  "status": "batches-1-19-w1-w2-w3-w4-w5-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -122,6 +122,11 @@
       "id": "W4",
       "mechanics": ["disarm-tag", "append-without-replacing"],
       "notes": "Append disarm on matching catalog rows. Nunchaku and sai are N=1. Flails keep trip; ranseur keeps reach; whip keeps reach and trip. Combat CMB/disarm math stays typed."
+    },
+    {
+      "id": "W5",
+      "mechanics": ["monk-tag", "append-without-replacing"],
+      "notes": "Append monk on matching catalog rows. Quarterstaff, siangham, and shuriken are N=1. Kama keeps trip; nunchaku and sai keep disarm. Combat stays typed."
     }
   ]
 }

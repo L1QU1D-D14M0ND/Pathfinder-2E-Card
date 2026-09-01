@@ -43,7 +43,7 @@ describe('InventoryPanel weapon properties', () => {
     expect(screen.getByText('trip')).toBeInTheDocument()
   })
 
-  it('stamps a single trip tag on a kama', () => {
+  it('stamps trip and monk together on a kama', () => {
     render(
       <I18nProvider>
         <InventoryHarness />
@@ -54,6 +54,7 @@ describe('InventoryPanel weapon properties', () => {
       target: { value: 'weapon.kama' },
     })
     expect(screen.getByText('trip')).toBeInTheDocument()
+    expect(screen.getByText('monk')).toBeInTheDocument()
     expect(screen.queryByText('reach')).not.toBeInTheDocument()
     expect(screen.queryByText('brace')).not.toBeInTheDocument()
   })
@@ -72,7 +73,7 @@ describe('InventoryPanel weapon properties', () => {
     expect(screen.getByText('trip')).toBeInTheDocument()
   })
 
-  it('stamps a single disarm tag on a nunchaku', () => {
+  it('stamps disarm and monk together on a nunchaku', () => {
     render(
       <I18nProvider>
         <InventoryHarness />
@@ -83,8 +84,24 @@ describe('InventoryPanel weapon properties', () => {
       target: { value: 'weapon.nunchaku' },
     })
     expect(screen.getByText('disarm')).toBeInTheDocument()
+    expect(screen.getByText('monk')).toBeInTheDocument()
     expect(screen.queryByText('reach')).not.toBeInTheDocument()
     expect(screen.queryByText('trip')).not.toBeInTheDocument()
+  })
+
+  it('stamps a single monk tag on a siangham', () => {
+    render(
+      <I18nProvider>
+        <InventoryHarness />
+      </I18nProvider>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Add item' }))
+    fireEvent.change(screen.getByLabelText('CRB item'), {
+      target: { value: 'weapon.siangham' },
+    })
+    expect(screen.getByText('monk')).toBeInTheDocument()
+    expect(screen.queryByText('trip')).not.toBeInTheDocument()
+    expect(screen.queryByText('disarm')).not.toBeInTheDocument()
   })
 
   it('stamps reach, trip, and disarm together on a whip', () => {
