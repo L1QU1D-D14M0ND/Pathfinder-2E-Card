@@ -3,7 +3,7 @@
   "system": "pf1e",
   "title": "Pathfinder CRB player catalog (minimal)",
   "schemaVersion": 1,
-  "status": "batches-1-19-w1-w2-w3-w4-w5-w6-complete",
+  "status": "batches-1-19-w1-w2-w3-w4-w5-w6-w7-complete",
   "license": "Mechanics-only curated numbers. No Product Identity. No class flavor or spell text.",
   "contentKind": "mechanics-only",
   "oglNoticeRequired": false,
@@ -132,6 +132,11 @@
       "id": "W6",
       "mechanics": ["nonlethal-tag", "append-without-replacing"],
       "notes": "Append nonlethal on matching catalog rows. Sap is N=1. Bolas keeps trip; whip keeps reach, trip, and disarm. Combat stays typed."
+    },
+    {
+      "id": "W7",
+      "mechanics": ["double-tag", "second-documentary-head"],
+      "notes": "Append double on matching catalog rows. Orc double axe and two-bladed sword are N=1. Quarterstaff keeps monk; dire flail keeps trip and disarm; hooked hammer keeps trip; urgrosh keeps brace. Second head is documentary Medium numbers. Primary dice stay a single string. Combat stays typed."
     }
   ]
 }
