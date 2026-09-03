@@ -12,7 +12,7 @@ This document **does** change product sequencing: **finish First Edition** in th
 
 The repo is a working multi-system sheet: **PF1e** is the development priority; **PF2e** is a preserved slice (schema, `compute()`, Fighter 5 / Wizard 5 / Bard 5 / Cleric 5 / Ranger 5 goldens, spreadsheet editors).
 
-The next **code** increment is **honesty / code fixes** ([`ROADMAP.md`](ROADMAP.md) Phase 1x): leftover W7 test titles, golden `weapon.properties` / `secondHead` vs catalog stamp, honest `focusTab`. Remaining CRB feats/spells wait until those land. Then APG follow-through, optional extra PF1e goldens, magic overlay, OGL when rules text ships. **Sidebar tools are the last character-sheet feature** (Attack Helper, Actions List, Budget Calculator). Remaining **PF2e** work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). The PF2e slice stays in the app and must not regress. **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. Batches 1–21, W1–W7, APG Synthesist, IndexedDB draft, and PWA dist check are in the repo.
+The next **code** increment is **honesty / code fixes** ([`ROADMAP.md`](ROADMAP.md) Phase 1x): leftover W7 test titles, golden `weapon.properties` / `secondHead` vs catalog stamp, honest `focusTab`. Remaining CRB feats/spells are **id-locked** ([`pf1e-crb-feat-spell-ids.md`](pf1e-crb-feat-spell-ids.md); F1–F4 / S1–S5) and wait to pack until those fixes land. Then APG follow-through, optional extra PF1e goldens, magic overlay, OGL when rules text ships. **Sidebar tools are the last character-sheet feature** (Attack Helper, Actions List, Budget Calculator). Remaining **PF2e** work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). The PF2e slice stays in the app and must not regress. **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. Batches 1–21, W1–W7, APG Synthesist, IndexedDB draft, and PWA dist check are in the repo.
 
 ---
 
@@ -342,3 +342,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-09-01 | CRB batch 20: remaining light + medium armor; next is heavy armor + shields |
 | 2026-09-01 | CRB batch 21: heavy armor + shields + extras; next is remaining feats/spells |
 | 2026-09-03 | Next code is honesty/code fixes; sidebar tools are the last character-sheet feature |
+| 2026-09-03 | Remaining CRB feat/spell ids locked (F1–F4, S1–S5); packing waits for honesty/code fixes |

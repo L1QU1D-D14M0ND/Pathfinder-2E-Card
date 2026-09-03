@@ -3,7 +3,7 @@
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
 **Status date:** 2026-09-03  
-**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). CRB batches 1–21 and W1–W7 landed (mundane weapons/armor/shields plus documentary `weapon.properties`). **Next code** is [honesty / code fixes](#phase-1x--honesty--code-fixes) from the 2026-09-03 docs-vs-code pass — not remaining feats/spells yet. After those fixes: remaining CRB feats/spells, APG follow-through, optional extra PF1e goldens, magic overlay, OGL when rules text ships. **Sidebar tools are the last character-sheet feature** (Attack Helper, Actions List, Budget Calculator). The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n).  
+**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). CRB batches 1–21 and W1–W7 landed (mundane weapons/armor/shields plus documentary `weapon.properties`). **Next code** is [honesty / code fixes](#phase-1x--honesty--code-fixes) from the 2026-09-03 docs-vs-code pass — not remaining feats/spells yet. Feat/spell ids are locked (F1–F4 / S1–S5). After those fixes: pack those tables, APG follow-through, optional extra PF1e goldens, magic overlay, OGL when rules text ships. **Sidebar tools are the last character-sheet feature** (Attack Helper, Actions List, Budget Calculator). The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n).  
 
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
@@ -229,7 +229,8 @@ Not in this slice (locked as-is): weapon properties remain documentary labels (`
 
 After the honesty fixes, in this order:
 
-- [ ] **CRB pack fill-out** remainder — remaining feats/spells (names + category/level only; [ADR 0007](adr/0007-content-licensing.md)). Lock an id table like pack-design §7 **before** packing. Combat/spell math stays typed unless a batch says otherwise. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
+- [x] **CRB feat/spell id tables** — remaining Chapter 5 feats and Chapter 10 class-list spells locked ([`pf1e-crb-feat-spell-ids.md`](pf1e-crb-feat-spell-ids.md); F1–F4 / S1–S5). Not packed yet.
+- [ ] **CRB pack fill-out** remainder — pack F1–F4 then S1–S5 from that lock (names + category/level only; [ADR 0007](adr/0007-content-licensing.md)). Combat/spell math stays typed unless a batch says otherwise. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §8
 - [ ] **APG follow-through** — Summoner `spellsPerDay` + spell catalog (mechanics-only); other APG classes as separate slices (Magical Child, etc.). Auto-applied evolutions only if a later slice says so. [`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)
 - [ ] **Optional PF1e goldens** (system spec §6) — Cleric 5 (domains/channel as daily resources); prestige smoke test; PF1e familiar/companion table fixture if the stub needs one
 - [ ] **CRB magic weapons / armor** — overlay on mundane ids; no plus-N catalog rows. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.5
@@ -297,7 +298,7 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 ## Recommended next work (in order)
 
 1. **Honesty / code fixes** (Phase 1x) — leftover W7 test titles, golden `weapon.properties` / `secondHead` vs catalog stamp, honest `focusTab`. Do not start remaining feats/spells or sidebar tools in that change.
-2. **Remaining CRB feats/spells**, then **APG follow-through**, optional PF1e goldens, magic overlay, OGL with first rules text. Keep Summoner out of the CRB pack.
+2. **Remaining CRB feats/spells** from the locked F1–F4 / S1–S5 tables, then **APG follow-through**, optional PF1e goldens, magic overlay, OGL with first rules text. Keep Summoner out of the CRB pack.
 3. **Sidebar tools** — last character-sheet feature (**Attack Helper**, **Actions List**, **Budget Calculator**). Empty host until then.
 4. **Later release** — leftover PF2e (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Encyclopedia / `effects[]` wait until after the sheet.
 
@@ -382,3 +383,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-09-01 | Phase 1x batch 20: remaining light + medium armor; next is heavy armor + shields |
 | 2026-09-01 | Phase 1x batch 21: heavy armor + shields + extras; next is remaining feats/spells |
 | 2026-09-03 | Docs-vs-code pass: next code is honesty/code fixes (not feats/spells). Sidebar tools are the last character-sheet feature, not a ~90% mid-pack gate |
+| 2026-09-03 | Locked remaining CRB feat/spell id tables (F1–F4, S1–S5). Packing waits for honesty/code fixes |

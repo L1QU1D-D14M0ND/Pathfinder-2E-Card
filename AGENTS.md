@@ -12,12 +12,13 @@ Phase 1x next code: leftover W7 test titles, golden `weapon.properties` / `secon
 
 ### CRB catalog fill-out (remaining feats/spells)
 
-These batches append remaining catalog rows **after** the honesty/code fixes. Inventory already lists chips for weapon properties. Lock an id table (pack-design §7 analog) before packing. Names + category/level only ([ADR 0007](docs/adr/0007-content-licensing.md)).
+These batches append remaining catalog rows **after** the honesty/code fixes. Id tables are locked ([`docs/pf1e-crb-feat-spell-ids.md`](docs/pf1e-crb-feat-spell-ids.md); F1–F4 then S1–S5). Inventory already lists chips for weapon properties. Names + category/level only ([ADR 0007](docs/adr/0007-content-licensing.md)).
 
 - From `app/`, run `npx vitest run src/systems/pf1e`.
 - Do **not** record a demo video or upload Inventory screenshots unless the Inventory UI itself changed.
+- Do **not** invent ids outside the lock file.
 
-See [`docs/pf1e-crb-pack-design.md`](docs/pf1e-crb-pack-design.md) §7.6.
+See [`docs/pf1e-crb-pack-design.md`](docs/pf1e-crb-pack-design.md) §8.
 
 ### When to record a browser walkthrough
 
