@@ -1,6 +1,6 @@
 # Next increment — multi-system refactor, then PF1e
 
-**Status:** Active sequencing document (2026-09-01)  
+**Status:** Active sequencing document (2026-09-03)  
 **Depends on:** [ADR 0003](adr/0003-multi-system-product-direction.md), [ADR 0004](adr/0004-shared-kernel.md), [ADR 0005](adr/0005-sidebar-host.md), [ADR 0007](adr/0007-content-licensing.md), [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md), [`shared-kernel-design.md`](shared-kernel-design.md), [`sidebar-host-design.md`](sidebar-host-design.md), [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md)  
 **Historical PF2e increment (T1/T3 executed, leftover goldens deprioritized):** [`next-increment-design.md`](next-increment-design.md)
 
@@ -10,9 +10,9 @@ This document **does** change product sequencing: **finish First Edition** in th
 
 ## 1. Purpose
 
-The repo is a working PF2e sheet (schema, `compute()`, Fighter 5, Wizard 5, spreadsheet editors). The new product is a **multi-system** sheet with **PF1e as the next playable system**.
+The repo is a working multi-system sheet: **PF1e** is the development priority; **PF2e** is a preserved slice (schema, `compute()`, Fighter 5 / Wizard 5 / Bard 5 / Cleric 5 / Ranger 5 goldens, spreadsheet editors).
 
-The next **code** increment is **finish First Edition** (mundane CRB armor in batches 20–21, then remaining feats/spells, then APG follow-through). Magic weapons and armor stay later. Remaining **PF2e** work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). The PF2e slice stays in the app and must not regress. **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. The Synthesist golden landed (Half-Elf Radiant Striker). The PF2e Bard 5, Cleric 5, and Ranger 5 goldens landed. APG slice 2 (documentary evolution names + fused overlay, [ADR 0007](adr/0007-content-licensing.md) mechanics-only) and the pre-1.0 architecture correction (locale runtime, polymorphic shell, pack JSON Schema + registry) are in the repo. Batches 1–19, W1–W7, and the IndexedDB draft / PWA dist check are in the repo. Sidebar **tools** wait until the **PF1e** sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.
+The next **code** increment is **honesty / code fixes** ([`ROADMAP.md`](ROADMAP.md) Phase 1x): leftover W7 test titles, golden `weapon.properties` / `secondHead` vs catalog stamp, honest `focusTab`. Remaining CRB feats/spells wait until those land. Then APG follow-through, optional extra PF1e goldens, magic overlay, OGL when rules text ships. **Sidebar tools are the last character-sheet feature** (Attack Helper, Actions List, Budget Calculator). Remaining **PF2e** work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). The PF2e slice stays in the app and must not regress. **1.0 landed:** Spanish (`es.json`) covers chrome + PF1e panels; PF2e panel literals remain. Batches 1–21, W1–W7, APG Synthesist, IndexedDB draft, and PWA dist check are in the repo.
 
 ---
 
@@ -43,7 +43,7 @@ Settled PF2e engineering (keep through the refactor): Vitest, Ajv 2020-12 reject
 | Engine | PF1e martial + spell DC/bonus slots; PF2e under `systems/pf2e/engine` |
 | UI | PF1e + PF2e workspaces (PF1e Spells tab); empty Tools sidebar |
 | Goldens | PF2e `fighter-5.json`, `wizard-5.json`, `bard-5.json`, `cleric-5.json`, `ranger-5.json`; PF1e `golden/pf1e/fighter-5.json`, `wizard-5.json`, `fighter-2-wizard-3.json`, `synthesist-5.json` |
-| Content | `content/pf1e/crb/` batches 1–21 and W1–W7. `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
+| Content | `content/pf1e/crb/` batches 1–21 and W1–W7 (5 feats / 4 spells — golden rows only). `content/pf1e/apg/` Synthesist + golden. Spanish UI catalog landed |
 
 ---
 
@@ -77,19 +77,18 @@ Extract current chrome to `en.json` **before** a large PF1e UI wave. Same ration
 
 Wire the collapsible rail + registry + `SidebarToolContext`. Zero tools is a valid empty state. Do **not** invent placeholder widgets.
 
-### Not next
+### Not next (historical — at the 2026-08-17 pivot)
 
-- PF2e Cleric/Bard/Champion/Ranger goldens
-- PF2e companion nested sheet
-- PF2e Remaster content pack
-- Spanish
+Several of these have since landed or moved: Bard/Cleric/Ranger 5 goldens exist; Spanish landed; companion editor / Remaster / PC2 remain a **later PF2e release**. Named sidebar tools stay out of honesty/catalog/APG work; they are the last character-sheet feature.
+
+- PF2e companion nested sheet, Remaster pack, PC2 golden, PF2e panel i18n
 - A third game system
 - Full 1E bonus-type stacker or feat automation
-- Named sidebar tools except documenting **Attack Helper**, **Actions List**, and **Budget Calculator** for later (do not implement them in M/Sb/1e/2e/3e)
+- Named sidebar tools during M/Sb/1e/2e/3e/honesty/pack fill-out
 
 ### Recommendation
 
-**1e → 2e → 3e**, with T4′ before a large remaining-UI wave. Content pack 3c after (or with) 3e. **Attack Helper**, **Actions List**, and **Budget Calculator** wait until the character sheet is ~90% done (not during schema/engine work).
+**Honesty/code fixes → remaining feats/spells → APG follow-through**, then optional goldens / magic overlay / OGL-with-rules-text. **Attack Helper**, **Actions List**, and **Budget Calculator** are the **last character-sheet features** (not during schema, pack, or honesty work). M / 1e / 2e / 3e / 1.0 already landed.
 
 ---
 
@@ -128,7 +127,7 @@ Second class row; stacked progressions; multiclass golden.
 
 ### WP-3c — PF1e CRB pack
 
-After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–14 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 2 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish UI catalog landed. 1.0 stability landed (goldens still compute; Save stamps `meta.locale`). Resolver: miss → custom; do not fail Load.
+After goldens can be typed by hand. Review CRB character mechanics **two at a time** ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §2 and §6). Batches 1–21 and W1–W7 landed (including Batch 7). Draft buffer + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 3 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish UI catalog landed. 1.0 stability landed. Next code is honesty/code fixes, then remaining feats/spells. Resolver: miss → custom; do not fail Load.
 
 ---
 
@@ -147,10 +146,10 @@ After goldens can be typed by hand. Review CRB character mechanics **two at a ti
 | 8 | Platform | IndexedDB draft; PWA install/offline proof |
 | 9 | 0.9 | English; PF1e bar; PF2e slice still works; sidebar host may be empty |
 | 10 | Phase 4 | `es` + playable APG Synthesist = 1.0 |
-| 11 | 1x | Finish First Edition (spells-per-day, mundane equipment 16–21, remaining catalog, APG follow-through) |
-| 12 | Later release | Leftover PF2e goldens/content; **sidebar tools** after the PF1e sheet is ~90% done; more systems |
+| 11 | 1x | Finish First Edition (honesty/code fixes, remaining catalog, APG follow-through, optional goldens, magic overlay, OGL-with-rules-text, **then** sidebar tools as the last sheet feature) |
+| 12 | Later release | Leftover PF2e goldens/content; encyclopedia / `effects[]` / more systems |
 
-Steps 2–4 are the **next development increments** after this documentation change.
+Steps 2–10 landed. The **next development increment** is Phase 1x honesty/code fixes.
 
 ---
 
@@ -222,7 +221,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 - [x] IndexedDB one-key draft + PWA build verify
 - [x] OGL / Product Identity review (mechanics-only pack; [ADR 0007](adr/0007-content-licensing.md))
 
-### Phase 4 (1.0 in progress)
+### Phase 4 (1.0 landed)
 
 - [x] APG slice 1: Summoner catalog + Synthesist name ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md))
 - [x] Documentary evolution names + fused overlay
@@ -253,7 +252,7 @@ Steps 2–4 are the **next development increments** after this documentation cha
 | P2 | 1E bonus-type rabbit hole | Explicit AC fields in 0.9 ([PF1e design §4.3](pf1e-character-sheet-design.md)) |
 | N3 | UI strings proliferate | T4′ before PF1e editor wave |
 | N2 | Content licensing | No scrape; ADR 0007 mechanics-only pack; OGL notice in the same PR as rules text |
-| S1 | Repo still named Pathfinder-2E-Card | Working title in docs/chrome; rename is a later decision |
+| S1 | Repo still named Pathfinder-2E-Card | **Historical.** npm/package/`$id` renamed ([ADR 0008](adr/0008-repo-package-rename.md)); GitHub slug is owner-admin |
 
 ---
 
@@ -263,7 +262,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 
 **Decisions (implemented on local `main`):** 1A New-sheet picker with Cancel abort (boot stays PF2e). 2B `tempScore` + keep `tempModifier`. 3A last-wins BAB; Combat flags BAB vs iteratives separately. 4A one `other` field; Combat states it applies to all three ACs. 5A warn when ranks > level (no clamp). 6B blank Disable Device / UMD / Handle Animal at 0 ranks; blank Fly without a fly speed. 7B full attack-row fields. 8C no extra CMD/max-Dex copy. 9B `en.json` + `t()` for chrome (shell, tabs, PF1e Combat/Abilities/Skills, Notes). 10B shared `ContentRef`/`Effect`/`applyOverrides`/`Notes`/`Currency`.
 
-**Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). Local `main` (0.9 bar + APG slice 1) is the publish tip.
+**Branch audit (2026-08-18):** Ancestors of `origin/main` need no merge. `pf1e-multiclass-budget-990b` had the same tree as #8 (histories joined). `audit-docs-code-cad8` merged. **Do not merge** `setup-cloud-agent-env-2c8f` (old tree) or `multi-system-docs-990b` (parallel rewrite; 17 conflicts; missing CRB 1–2). **2026-09-03:** publish tip is post–batch 21 / W7 (`4433597`); 0.9 + APG slice 1 is no longer the tip.
 
 **Still sequenced (finish First Edition; leftover PF2e later release):**
 
@@ -279,7 +278,7 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | OGL notice + Section 15 | Same PR as first pack **rules text** |
 | App’s one typed switch to pick `pf1eModule` vs `pf2eModule` | TypeScript cannot erase the `LoadedSheet` union; tabs stay inside each Workspace |
 | Remaining PF2e panel literals | Later PF2e *release* (when those panels next change) |
-| Finish First Edition (CRB fill-out, APG follow-through) | **Next** (Batches 15–21 and W1–W7 landed; next is remaining feats/spells) |
+| Finish First Edition (honesty/code fixes, then CRB fill-out, APG follow-through, sidebar tools last) | **Next code** is honesty/code fixes (Batches 15–21 and W1–W7 landed; remaining feats/spells wait) |
 | Leftover PF2e (PC2 golden, companion editor, Remaster packs) | Later *release* |
 
 ---
@@ -342,3 +341,4 @@ Code/docs pass after Phases M–3e and 3c batches 1–2. **First pass:** Wizard 
 | 2026-09-01 | CRB W7: double appended plus documentary secondHead; next is Batch 20 armor |
 | 2026-09-01 | CRB batch 20: remaining light + medium armor; next is heavy armor + shields |
 | 2026-09-01 | CRB batch 21: heavy armor + shields + extras; next is remaining feats/spells |
+| 2026-09-03 | Next code is honesty/code fixes; sidebar tools are the last character-sheet feature |

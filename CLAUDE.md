@@ -79,7 +79,7 @@ CRB "batch" test files (`crbBatch1.test.ts` … `crbBatch13.test.ts`) are increm
 
 ### Sidebar host (ADR 0005)
 
-`app/src/shell/sidebar/SidebarHost.tsx` is a registry-based rail shown beside the loaded sheet. Tools read `character`/`derived` and write only through the same `update(mutator)` path the spreadsheet panels use — no parallel state, no bypassing Ajv validation on save. Both `pf1eModule.sidebarTools` and `pf2eModule.sidebarTools` are currently **empty arrays** — named tools (Attack Helper, Actions List, Budget Calculator; see `docs/sidebar-tools-*.md`) are explicitly deferred until the PF1e sheet is ~90% done. Don't implement one unless asked.
+`app/src/shell/sidebar/SidebarHost.tsx` is a registry-based rail shown beside the loaded sheet. Tools read `character`/`derived` and write only through the same `update(mutator)` path the spreadsheet panels use — no parallel state, no bypassing Ajv validation on save. Both `pf1eModule.sidebarTools` and `pf2eModule.sidebarTools` are currently **empty arrays** — named tools (Attack Helper, Actions List, Budget Calculator; see `docs/sidebar-tools-*.md`) are the **last character-sheet feature**. Don't implement one unless asked.
 
 ### PWA
 

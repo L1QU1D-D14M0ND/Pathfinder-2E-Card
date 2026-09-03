@@ -130,9 +130,9 @@ Catalog ids may contain `.` as a namespace separator (`class.fighter`). **Skill 
 4. ~~Fighter 5 golden.~~
 5. ~~Spell DC + slots editor + Wizard 5 golden (Phase 2e).~~
 6. ~~Multiclass golden (Phase 3e).~~
-7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–13 landed (including Batch 7). Draft + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 2 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish UI catalog landed. **1.0 stability landed.** Keep Summoner out of the CRB pack.
+7. Phase 3c CRB pack in batches of two mechanics ([`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)). Batches 1–21 and W1–W7 landed (including Batch 7). Draft + PWA proof landed. OGL/PI review landed ([ADR 0007](adr/0007-content-licensing.md)). APG slice 3 + Synthesist golden landed ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)). Spanish UI catalog landed. **1.0 stability landed.** Keep Summoner out of the CRB pack. **Next code** is honesty/code fixes, then remaining feats/spells.
 
-Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until the character sheet is ~90% done (dynamic and functional). They are not part of schema/engine work.
+Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) are the **last character-sheet feature**. They are not part of schema/engine/honesty work.
 
 ---
 
@@ -161,3 +161,4 @@ Sidebar **tools** (Attack Helper, Actions List, Budget Calculator) wait until th
 | 2026-08-19 | 1.0 stability; Save stamps `meta.locale` |
 | 2026-08-19 | CRB batch 14: remaining player races + optional catalog `size`; ability adjustments stay typed |
 | 2026-08-27 | CRB batch 15: `slots[].max` nullable; default Max is class table + bonus |
+| 2026-09-03 | Next code is honesty/code fixes; sidebar tools are the last character-sheet feature |

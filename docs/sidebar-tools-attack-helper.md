@@ -2,7 +2,7 @@
 
 **Status:** Named future tool — **not implemented**. Host lock: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).  
 **Id (reserved):** `shell.attack-helper` (shared entry; per-system math behind it).  
-**Sequencing:** after the character sheet is **~90% done** (same window as [Actions List](sidebar-tools-actions-list.md) and [Budget Calculator](sidebar-tools-budget-calculator.md)). Not on the PF1e 0.9 critical path.
+**Sequencing:** last character-sheet feature after Phase 1x honesty/code fixes, remaining catalog, APG follow-through, optional goldens, magic overlay, and OGL-with-rules-text (same window as [Actions List](sidebar-tools-actions-list.md) and [Budget Calculator](sidebar-tools-budget-calculator.md)). Not on the PF1e 0.9 critical path.
 
 ---
 

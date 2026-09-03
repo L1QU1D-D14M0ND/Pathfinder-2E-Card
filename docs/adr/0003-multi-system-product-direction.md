@@ -66,6 +66,10 @@ PF2e proficiency ranks, typed item/status/circumstance stacking, single AC, MAP 
 
 **Postscript (2026-08-19):** Stakeholder override: **finish First Edition** in this release. Remaining PF2e work (PC2 golden, companion editor, Remaster packs, PF2e panel i18n) waits for a **later release**. The PF2e slice stays in the app and must not regress. See [`ROADMAP.md`](../ROADMAP.md) Phase 1x.
 
+**Postscript (2026-08-27):** Batch 15 hybrid Max superseded the defaults-table row “PF1e spells per day = user-entered max slots in 0.9”. Default Max is class table + bonus spells; a typed number is an override ([ADR 0006](0006-pf1e-character-schema.md) postscript).
+
+**Postscript (2026-09-03):** **Sidebar tools are the last character-sheet feature** in the First Edition finish (Attack Helper, Actions List, Budget Calculator). They are not gated on a “~90% sheet” midpoint. Next code after mundane CRB 16–21 / W1–W7 is honesty/code fixes, then remaining feats/spells.
+
 ## Defaults for open questions
 
 These are **locked for sequencing** unless the stakeholder overrides them. See also [the umbrella design](../ttrpg-character-sheet-design.md) § open picks.
@@ -81,9 +85,10 @@ These are **locked for sequencing** unless the stakeholder overrides them. See a
 | Resume remaining PF2e goldens | Later *release* (after finishing PF1e) | Stakeholder wants PF2e finished in this release |
 | Missing `system` on Load | Treat as `pf2e` | Never; would break current fixtures |
 | PF1e BAB/saves/HD | Engine tables for the 11 CRB classes + user-picked progression on custom/prestige rows | Fully user-entered BAB (weaker golden) |
-| PF1e spells per day | User-entered max slots in 0.9 (content pack may seed later) | Same as PF2e slot policy |
+| PF1e spells per day | Hybrid Max: class table + bonus spells; typed number overrides; empty resets (Batch 15 / ADR 0006) | Fully user-entered forever |
 | Third nearby system (Starfinder 1e) | Out of scope; architecture must not make it impossible | Explicitly added later |
 | Sidebar tools in 0.9 | Host only (empty/collapsed OK); no named tools | A specific tool is pulled into 0.9 |
+| Sidebar tools vs pack fill-out | **Last character-sheet feature** after honesty fixes, remaining catalog, APG follow-through, optional goldens, magic overlay, and OGL-with-rules-text | A named tool is pulled in earlier |
 
 ## References
 

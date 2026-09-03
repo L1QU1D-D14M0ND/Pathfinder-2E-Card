@@ -1,7 +1,7 @@
 # Sidebar tool: Budget Calculator (later)
 
 > **Status:** specified, **not implemented**. Reserved id `shell.budget-calculator`.
-> **When:** after the loaded sheet is ~90% complete, dynamic, and functional — same gate as Attack Helper and Actions List.
+> **When:** last character-sheet feature after Phase 1x honesty/code fixes, remaining catalog, APG follow-through, optional goldens, magic overlay, and OGL-with-rules-text — same gate as Attack Helper and Actions List.
 > **Host:** `docs/sidebar-host-design.md`. **Access:** `docs/adr/0005-sidebar-host.md`.
 
 A shopping and crafting planner. The user lists gear, magic items, and other priced purchases, then compares **buying at market** versus **crafting some or all** of those lines. Crafting must show **material cost**, **time**, **DC**, and **requirements**, and must flag unmet requirements as short reasons (same spirit as Actions List).
@@ -188,7 +188,7 @@ First implementation: **no writes**. Copy totals to notes is optional later, not
 | Access | `SidebarToolContext` — `character`, `derived`, `update` (update unused until apply-purchase) |
 | Systems | PF1e first (priced adventuring + magic items). PF2e when that sheet’s inventory/wealth is stable. |
 
-Empty sidebar until this id is registered in code. Spec-only until the 90% sheet gate.
+Empty sidebar until this id is registered in code. Spec-only until the last-sheet-feature window.
 
 ---
 
