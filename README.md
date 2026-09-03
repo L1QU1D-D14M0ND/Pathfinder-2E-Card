@@ -31,6 +31,7 @@ npm run dev
 - [Shared kernel — reuse between editions](docs/shared-kernel-design.md)
 - [Sidebar host](docs/sidebar-host-design.md)
 - [PF1e CRB pack (Phase 3c, batch reviews)](docs/pf1e-crb-pack-design.md)
+- [PF1e CRB remaining feat/spell ids (F1–F4, S1–S5)](docs/pf1e-crb-feat-spell-ids.md)
 - [PF1e APG pack (1.0 Synthesist)](docs/pf1e-apg-pack-design.md)
 - [Attack Helper (later tool)](docs/sidebar-tools-attack-helper.md)
 - [Actions List (later tool)](docs/sidebar-tools-actions-list.md)

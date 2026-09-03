@@ -32,7 +32,7 @@ Resolver rule (locked): missing catalog id → treat as **custom**; isolate to t
 
 Order is CRB character-build order, not encyclopedia order. Sidebar tools stay out. **Two mechanics per PR** — do not start the following pair in the same change.
 
-**How to pick the next PR:** the 0.9 character-basics queue and mundane 16–21 / W1–W7 rows are **Done**. The next **code** PR is honesty/code fixes on [`ROADMAP.md`](ROADMAP.md) (not a new row in this table). After that, remaining feats/spells — lock an id list like §7 first. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here; they are the last character-sheet feature.
+**How to pick the next PR:** the 0.9 character-basics queue and mundane 16–21 / W1–W7 rows are **Done**. Remaining feat/spell ids are **locked** ([§8](#8-remaining-crb-feats-and-spells)). The next **code** PR is still honesty/code fixes on [`ROADMAP.md`](ROADMAP.md). After that, pack **F1** (then F2–F4, S1–S5). Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here; they are the last character-sheet feature.
 
 | Batch | Mechanics | Why this pair | Kind | Status |
 | --- | --- | --- | --- | --- |
@@ -65,6 +65,15 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **20** | Remaining light armor; remaining medium armor | Skip packed chain shirt / chainmail | Catalog | Done |
 | **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Done |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
+| **F1** | Remaining combat feats (first half) | After honesty/code fixes. Documentary stamp | Catalog | Locked |
+| **F2** | Remaining combat feats (second half) | Same list as F1 | Catalog | Locked |
+| **F3** | Remaining general feats | After F2 | Catalog | Locked |
+| **F4** | Remaining item creation + metamagic | After F3 | Catalog | Locked |
+| **S1** | Remaining spells levels 0–1 | After F4. `spellLevel` = wizard else lowest CRB list | Catalog | Locked |
+| **S2** | Remaining spells levels 2–3 | Skip packed Fireball | Catalog | Locked |
+| **S3** | Remaining spells levels 4–5 | | Catalog | Locked |
+| **S4** | Remaining spells levels 6–7 | | Catalog | Locked |
+| **S5** | Remaining spells levels 8–9 | | Catalog | Locked |
 
 The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W7** landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on a `weapon.properties` array of **N** tags (one is valid; many are valid). W7 also stamps a documentary `secondHead`. **Batches 20–21** landed remaining armor and shields. **Next code** is honesty/code fixes (stale W7 test titles; golden inventory vs catalog `properties` / `secondHead`; honest `focusTab`). Next catalog work after that is remaining **feats/spells**. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor). **Sidebar tools are the last character-sheet feature**, not a pack batch.
 
@@ -79,8 +88,8 @@ content/pf1e/crb/
   classes.json       # HD/BAB/saves + class skills + skill points + spells/day (casters)
   races.json         # race id + name + size (batch 8 Human; batch 14 remaining CRB player races)
   items.json         # weapon/armor/gear ids (batch 10 goldens; 16–21 remaining mundane; magic later)
-  feats.json         # feat id + name + category (batch 12: golden rows only)
-  spells.json        # spell id + name + spellLevel (batch 13: golden rows only)
+  feats.json         # feat id + name + category (batch 12 goldens; F1–F4 remaining — locked, not packed)
+  spells.json        # spell id + name + spellLevel (batch 13 goldens; S1–S5 remaining — locked, not packed)
 ```
 
 A class catalog row in this phase is **not** a class description. It is:
@@ -1278,7 +1287,7 @@ Those bonus slots are added to the class table’s spells per day. Batch 15 fill
 
 The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W7 landed reach, brace, trip, disarm, monk, nonlethal, and double (plus a documentary second head). Batches 20–21 landed remaining armor and shields. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** [honesty / code fixes](ROADMAP.md#phase-1x--honesty--code-fixes), then remaining **feats/spells** (lock an id table like §7 before packing; names + category/level only — [ADR 0007](adr/0007-content-licensing.md)), then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. **Sidebar tools are the last character-sheet feature** (after this pack work).
+**Next product work:** [honesty / code fixes](ROADMAP.md#phase-1x--honesty--code-fixes), then remaining **feats/spells** using the locked id tables in [§8](#8-remaining-crb-feats-and-spells) (names + category/level only — [ADR 0007](adr/0007-content-licensing.md)), then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. **Sidebar tools are the last character-sheet feature** (after this pack work).
 
 ---
 
@@ -1523,7 +1532,7 @@ Shield-bash damage may live as an optional `weapon` subobject on the shield row 
 
 Schema work that is allowed when magic *starts* (not now): optional `baseItemId` on a catalog row; optional `enhancementBonus` on character item stats; keep `additionalProperties: false` so mundane JSON does not grow unused keys.
 
-After batch 21, the next catalog work is remaining **feats** and **spells**, not this magic pair, unless a later lock says otherwise.
+After batch 21, remaining **feats** and **spells** are locked in [§8](#8-remaining-crb-feats-and-spells). Do not start the magic pair unless a later lock says otherwise.
 
 ### 7.6 Weapon properties (after all weapon ids)
 
@@ -1557,6 +1566,45 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | Double last | W7 landed `double` and a documentary `secondHead`. Primary `damageDice` stays a single string. Two-weapon attack rows still wait |
 | Display | List **all** current tags, not only the first |
 | License | Tags are mechanic labels, not Special-quality prose |
+
+---
+
+## 8. Remaining CRB feats and spells
+
+Locked fill-out after honesty/code fixes. Same rules as batches 12–13: documentary stamp of id, name, and feat category or `spellLevel`. Combat numbers and slots stay typed. Unknown id → custom. Mechanics-only names and numbers. Two groups per PR.
+
+**Full id tables:** [`pf1e-crb-feat-spell-ids.md`](pf1e-crb-feat-spell-ids.md) (human) and [`pf1e-crb-feat-spell-ids.json`](pf1e-crb-feat-spell-ids.json) (Vitest).
+
+### 8.1 Shared locks
+
+See the lock file. Highlights:
+
+| Lock | Rule |
+| --- | --- |
+| Scope | Core Rulebook Chapter 5 feat table + Chapter 10 class lists only |
+| Fields | `id` + `name` + `category` or `spellLevel`. No prerequisites, benefit, or spell text |
+| Spell level | Sorcerer/wizard list when present; otherwise the lowest CRB class-list level |
+| Specialization | One row per feat. Weapon/school choice stays typed on the sheet |
+| Skip | Batch 12 five feats; Batch 13 four spells |
+| Combat | Apply does **not** rewrite `armorClass`, `attacks`, initiative, or slots |
+
+### 8.2 Batches F1–F4 and S1–S5
+
+| Batch | Remaining rows | Status |
+| --- | ---: | --- |
+| F1 remaining combat (Agile Maneuvers–Improved Trip) | 54 | Locked — not packed |
+| F2 remaining combat (Improved Two-Weapon Fighting–Wind Stance) | 53 | Locked — not packed |
+| F3 remaining general | 48 | Locked — not packed |
+| F4 remaining item creation + metamagic | 16 | Locked — not packed |
+| S1 remaining levels 0–1 | 108 | Locked — not packed |
+| S2 remaining levels 2–3 | 159 | Locked — not packed |
+| S3 remaining levels 4–5 | 141 | Locked — not packed |
+| S4 remaining levels 6–7 | 127 | Locked — not packed |
+| S5 remaining levels 8–9 | 83 | Locked — not packed |
+
+**Already packed (do not duplicate):** `feat.improved-initiative`, `feat.power-attack`, `feat.scribe-scroll`, `feat.spell-focus`, `feat.weapon-focus`; `spell.detect-magic`, `spell.light`, `spell.magic-missile`, `spell.fireball`.
+
+Do **not** start F1 in the same change as honesty/code fixes or a platform increment.
 
 ---
 
@@ -1607,3 +1655,4 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | 2026-09-01 | Batch 20: remaining light + medium armor; Combat stays typed; next is heavy armor + shields (21) |
 | 2026-09-01 | Batch 21: heavy armor + shields (kind shield) + extras; Combat stays typed; next is remaining feats/spells |
 | 2026-09-03 | Next code is honesty/code fixes (not feats/spells). Sidebar tools are the last character-sheet feature |
+| 2026-09-03 | Locked remaining CRB feat/spell ids (F1–F4, S1–S5). Do not pack until after honesty/code fixes |
