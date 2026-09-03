@@ -58,7 +58,7 @@ app/src/
     abilities.ts         # AttributeKey; abilityModifierFromScore()
     currency.ts          # cp/sp/gp/pp
     notes.ts             # appearance / personality / campaign / other
-    rows.ts              # DailyResource, generic labeled row
+    rows.ts              # DailyResource, generic labeled row — **not extracted**; still per-system createRows
     validate.ts          # Ajv 2020-12 compile(schema) + error format
     saveLoad.ts          # JSON parse, strip derived, download, filename
     ui/
@@ -69,14 +69,16 @@ app/src/
     pf1e/
   test/
     readRepoFile.ts
-    golden.ts            # load fixture → validate → compute → assert
+    golden.ts            # load fixture → validate → compute → assert — **not extracted**; goldens live per-system + `shell/goldens.stability.test.ts`
 ```
 
 Folder names can shift; the **boundaries** are the lock.
 
-**Extracted today:** `envelope.ts`, `ids.ts`, `format.ts` (`signed`), `validate.ts`, `saveLoad.ts` (strip-derived + file IO), `constants.ts`, `contentRef.ts`, `effects.ts`, `overrides.ts` (generic apply + per-system `applyOne`), `notes.ts`, `currency.ts`, `abilities.ts` (`AbilityKey`, `abilityModifierFromScore`), `i18n.ts` + `locales/en.json`, `ui/DerivedCell.tsx`, `ui/NotesPanel.tsx`.
+**Extracted today:** `envelope.ts`, `ids.ts`, `format.ts` (`signed`), `validate.ts`, `saveLoad.ts` (filename sanitize + `downloadJsonFile` / parse helpers — **not** `stripDerivedForSave`), `constants.ts`, `contentRef.ts`, `effects.ts`, `overrides.ts` (generic apply + per-system `applyOne`), `notes.ts`, `currency.ts`, `abilities.ts` (`AbilityKey`, `abilityModifierFromScore`), `i18n.tsx` + `locales/en.json` / `es.json`, `ui/DerivedCell.tsx`, `ui/NotesPanel.tsx`.
 
-**Still per-system:** allow-lists inside each `engine/overrides.ts`, PF2e `ContentRef` extensions (`rulesetSource`, `legacyId`), edition math. Duplicating those is cheaper than a shared type with optional edition fields.
+**Not extracted (do not treat as missing files to add unless a second caller needs them):** `rows.ts` / shared `DailyResource`, `test/golden.ts`, shared `stripDerivedForSave` (each system owns strip-derived because document shape differs).
+
+**Still per-system:** allow-lists inside each `engine/overrides.ts`, PF2e `ContentRef` extensions (`rulesetSource`, `legacyId`), edition math, `stripDerivedForSave`. Duplicating those is cheaper than a shared type with optional edition fields.
 
 JSON Schema files stay per system (`schemas/character.schema.json` for PF2e; `schemas/pf1e/character.schema.json` for PF1e). A tiny **envelope** fragment (or documented required fields) is shared conceptually: `schemaVersion`, `system`.
 
@@ -154,7 +156,7 @@ Lift from today’s PF2e code; strip edition knowledge.
 | --- | --- | --- |
 | `newId()` | `createRows.ts` | UUID / fallback id |
 | `signed(n)` | `engine/types.ts` | `+2` / `-1` / `0` display |
-| `stripDerivedForSave` | `saveLoad.ts` | Omit `derived`; stamp `meta` |
+| `stripDerivedForSave` | per-system `character/saveLoad.ts` | Omit `derived`; stamp `system` + `meta`. Not lifted into shared — document shape differs |
 | `suggestedSaveFilename` | `saveLoad.ts` | Sanitize `identity` name; `.json`. Name getter is injected (PF1e identity field may differ slightly) |
 | `downloadCharacterJson` / `readCharacterFile` | `saveLoad.ts` | Blob + FileReader; validate via module |
 | `formatAjvErrors` + compile | `validate.ts` | One Ajv instance helper; **schema argument** |
@@ -361,3 +363,4 @@ Duplicating a 20-line skill total function is cheaper than a shared skill API wi
 | 2026-08-17 | Record what Phase M actually extracted vs still-duplicated types |
 | 2026-08-17 | Extract ContentRef, Effect, applyOverrides, Notes, Currency, AbilityKey; `en.json` + `t()` |
 | 2026-08-19 | Align `SystemModule` with `shell/types.ts`: `Workspace`, `displayNameKey`, no `schema`/`tabs` on the module |
+| 2026-09-03 | Record that `rows.ts`, `golden.ts`, and shared `stripDerivedForSave` were never extracted; `i18n.tsx` not `i18n.ts` |

@@ -2,8 +2,8 @@
 
 Operational tracker for **TTRPG Character Sheet** (working title). Product decisions live in [ADR 0003](adr/0003-multi-system-product-direction.md) and the [umbrella design](ttrpg-character-sheet-design.md). Reuse boundaries: [ADR 0004](adr/0004-shared-kernel.md), [`shared-kernel-design.md`](shared-kernel-design.md). Sidebar host: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md). Content licensing: [ADR 0007](adr/0007-content-licensing.md), [`content-licensing.md`](content-licensing.md). PF1e system spec: [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md). PF2e system spec: [`pf2e-dynamic-character-sheet-design.md`](pf2e-dynamic-character-sheet-design.md) (ADR 0001 superseded; [ADR 0002](adr/0002-character-schema.md) still governs PF2e documents). Sequencing: [multi-system next increment](next-increment-multi-system.md). Historical PF2e sequencing: [continuation design](continuation-design.md) (S1/S4 executed), [next increment (PF2e)](next-increment-design.md) (T1/T3 executed; leftover goldens deprioritized).
 
-**Status date:** 2026-09-01  
-**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). Class spells-per-day tables landed (hybrid Max). CRB simple, martial, and exotic weapons are packed (batches 16–19); W1–W7 landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on an N-tag `weapon.properties` list (one tag is valid; many are valid). Double weapons also stamp a documentary second head. Batches 20–21 landed remaining armor and shields. Next catalog is remaining feats/spells. Magic gear waits. The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Sidebar **tools** wait until the PF1e sheet is ~90% done. Named later: Attack Helper, Actions List, Budget Calculator.  
+**Status date:** 2026-09-03  
+**Current phase:** **Finish First Edition.** 1.0 landed (Spanish + playable Synthesist). CRB batches 1–21 and W1–W7 landed (mundane weapons/armor/shields plus documentary `weapon.properties`). **Next code** is [honesty / code fixes](#phase-1x--honesty--code-fixes) from the 2026-09-03 docs-vs-code pass — not remaining feats/spells yet. After those fixes: remaining CRB feats/spells, APG follow-through, optional extra PF1e goldens, magic overlay, OGL when rules text ships. **Sidebar tools are the last character-sheet feature** (Attack Helper, Actions List, Budget Calculator). The PF2e slice stays in the app and must not regress. Remaining PF2e work waits for a **later release** (PC2 golden, companion editor, Remaster packs, PF2e panel i18n).  
 
 **0.9 bar:** landed (English PWA, PF1e Fighter 5 / Wizard 5 / multiclass, PF2e slice, Save/Load, empty Tools sidebar). **1.0** is Spanish + playable APG Synthesist.
 
@@ -15,7 +15,7 @@ Operational tracker for **TTRPG Character Sheet** (working title). Product decis
 
 **1.0** — Spanish locale; same 0.9 bar, called stable; **PF1e player can build and play an APG Synthesist Summoner** (fused eidolon). Still core calcs; no in-app dice.
 
-**Finish First Edition (current release)** — take PF1e past the 1.0 goldens: CRB pack fill-out, APG follow-through, optional extra PF1e goldens, OGL when rules text ships. Then sidebar tools when that sheet is ~90% done.
+**Finish First Edition (current release)** — take PF1e past the 1.0 goldens: honesty/code fixes, CRB pack fill-out, APG follow-through, optional extra PF1e goldens, magic overlay, OGL when rules text ships. **Sidebar tools are the last character-sheet feature** in this release (not a mid-pack “~90%” gate).
 
 **Later release — Second Edition** — leftover PF2e goldens (PC2 class), companion nested editor, Remaster/legacy packs, PF2e panel i18n. Do not start that work in this release.
 
@@ -99,7 +99,7 @@ Working display name in chrome is **TTRPG Character Sheet**.
 
 ## Phase 3c — PF1e content pack
 
-**Status:** Mechanic batches done (1–15, including Batch 7). OGL / PI review landed.
+**Status:** Mechanic batches done (1–21 and W1–W7, including Batch 7). OGL / PI review landed. Fill-out after 15 lives in Phase 1x.
 
 - [x] Batch 1 review: ability modifiers; BAB + save progressions — [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
 - [x] Pack scaffold `content/pf1e/crb/` + Fighter / Wizard progression tags
@@ -120,21 +120,21 @@ Working display name in chrome is **TTRPG Character Sheet**.
 - [x] **Batch 15:** class spells-per-day tables + hybrid Max — click to customize, empty resets; remaining stays play state
 - [x] OGL / Product Identity review — pack stays mechanics-only; no OGL notice until rules text ([ADR 0007](adr/0007-content-licensing.md))
 
-Until later batches land, goldens still store numeric inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name/size when they pick a CRB race, documentary item fields when they pick a catalog weapon or armor, feat name/category when they pick a catalog feat, and spell name/level when they pick a catalog spell).
+Goldens still store numeric combat/skill/slot inputs on the sheet (catalog stamps HD/BAB/saves/class skills when the player picks a CRB class, race id/name/size when they pick a CRB race, documentary item fields when they pick a catalog weapon or armor, feat name/category when they pick a catalog feat, and spell name/level when they pick a catalog spell). Remaining feat/spell ids wait until after honesty/code fixes.
 
 ---
 
 ## Phase Sb — Sidebar host
 
-**Status:** Done (thin host, 2026-08-17). Named tools not started.
+**Status:** Done (thin host, 2026-08-17). Named tools are the last character-sheet feature (Phase 1x); not started.
 
 - [x] Collapsible rail on the loaded sheet (New or Load)
 - [x] Tool registry + empty state; `SidebarToolContext` (`character`, `derived`, `update`)
 - [x] Mobile collapsed by default (and desktop starts collapsed while the registry is empty)
 - [x] No named tools required (list specified later)
-- [ ] **Attack Helper** (later — after the sheet is ~90% done) — [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md)
-- [ ] **Actions List** (later — after the sheet is ~90% done) — [`sidebar-tools-actions-list.md`](sidebar-tools-actions-list.md)
-- [ ] **Budget Calculator** (later — after the sheet is ~90% done) — [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md)
+- [ ] **Attack Helper** (last character-sheet feature — after Phase 1x catalog/APG/goldens) — [`sidebar-tools-attack-helper.md`](sidebar-tools-attack-helper.md)
+- [ ] **Actions List** (last character-sheet feature — after Phase 1x catalog/APG/goldens) — [`sidebar-tools-actions-list.md`](sidebar-tools-actions-list.md)
+- [ ] **Budget Calculator** (last character-sheet feature — after Phase 1x catalog/APG/goldens) — [`sidebar-tools-budget-calculator.md`](sidebar-tools-budget-calculator.md)
 
 See [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).
 
@@ -195,7 +195,7 @@ Not started (later PF2e release):
 
 Bar: a player can build and play PF1e from catalog beyond the four goldens, still core calcs, still mechanics-only until rules text. Keep Summoner out of the CRB pack. Existing PF1e and PF2e goldens must stay green.
 
-Recommended order:
+Landed catalog (do not re-open):
 
 - [x] **CRB Batch 14** — remaining player races + size stamp (ability adjustments stay typed)
 - [x] **CRB Batch 15** — class spells-per-day tables + hybrid Max (click to customize, empty resets)
@@ -212,12 +212,29 @@ Recommended order:
 - [x] **CRB weapon properties W7** — `double` appended on the same list, plus a documentary `secondHead` (two-bladed sword is N = 1; quarterstaff keeps monk). Primary dice stay a single string.
 - [x] **CRB Batch 20** — remaining light + medium armor
 - [x] **CRB Batch 21** — heavy armor + shields
-- [ ] **CRB magic weapons / armor** — reserved later. Overlay on mundane ids; no plus-N catalog rows. Do not start in 16–21. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.5
-- [ ] **CRB pack fill-out** remainder — remaining feats/spells and other catalog tags. Combat/spell math stays typed unless a batch says otherwise. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
-- [ ] **APG follow-through** — Summoner spell catalog (mechanics-only); other APG classes as separate slices (Magical Child, etc.). Auto-applied evolutions only if a later slice says so. [`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)
+
+### Phase 1x — honesty / code fixes
+
+**Status:** Next. Do this **before** remaining feats/spells. Do **not** start sidebar tools here. Combat/spell math stays typed; do not auto-apply feat text, weapon Special tags, or AC from inventory.
+
+Findings from the 2026-09-03 docs-vs-code pass (code disagrees with landed W7 / catalog stamp / host contract):
+
+- [ ] **Rename leftover W7-era tests** — `crbBatch19.test.ts` and `crbBatchW6.test.ts` still use `it('does not pack double yet')`. W7 packed `double` on double weapons. Keep the assertions that kama/whip/nunchaku/siangham/nonlethal rows do **not** carry `double`; rename so the title matches.
+- [ ] **Golden inventory vs catalog stamp** — CRB goldens that reference catalog weapons omit `weapon.properties` / `secondHead` even when the catalog row has them (Load does not re-apply). Stamp those documentary fields onto the fixtures, or re-apply them when a catalog id is present, so a loaded golden matches a fresh catalog pick. Do **not** rewrite `armorClass` / `attacks`.
+- [ ] **Honest `focusTab`** — `SidebarToolContext.focusTab` is on the host interface but `App.tsx` never passes it. Wire it to the workspace tab switch, or remove it from the contract.
+
+Not in this slice (locked as-is): weapon properties remain documentary labels (`compute()` does not read them); Human extra skill ranks stay `race.human`-only; APG Summoner still has no `spellsPerDay` (that is APG follow-through); do not extract unused kernel files (`rows.ts`, `golden.ts`) just to match an old layout sketch.
+
+### Phase 1x — remaining catalog and last sheet features
+
+After the honesty fixes, in this order:
+
+- [ ] **CRB pack fill-out** remainder — remaining feats/spells (names + category/level only; [ADR 0007](adr/0007-content-licensing.md)). Lock an id table like pack-design §7 **before** packing. Combat/spell math stays typed unless a batch says otherwise. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md)
+- [ ] **APG follow-through** — Summoner `spellsPerDay` + spell catalog (mechanics-only); other APG classes as separate slices (Magical Child, etc.). Auto-applied evolutions only if a later slice says so. [`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md)
 - [ ] **Optional PF1e goldens** (system spec §6) — Cleric 5 (domains/channel as daily resources); prestige smoke test; PF1e familiar/companion table fixture if the stub needs one
+- [ ] **CRB magic weapons / armor** — overlay on mundane ids; no plus-N catalog rows. [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) §7.5
 - [ ] **OGL notice + Section 15** — same change as the first pack **rules text** ([ADR 0007](adr/0007-content-licensing.md))
-- [ ] **Sidebar tools** when the PF1e sheet is ~90% done — Attack Helper, Actions List, Budget Calculator
+- [ ] **Sidebar tools** — **last character-sheet feature** in this release: Attack Helper, then Actions List, then Budget Calculator. Empty host until then.
 
 Do **not** start PF2e companion editor, PC2 golden, Remaster packs, or PF2e panel i18n in this phase.
 
@@ -225,9 +242,9 @@ Do **not** start PF2e companion editor, PC2 golden, Remaster packs, or PF2e pane
 
 ## Phase 5 — After the PF1e sheet (and later PF2e release)
 
-**Status:** Deferred. Tools wait until the PF1e sheet is ~90% done (Phase 1x). Remaining PF2e leftovers wait for the later PF2e *release*.
+**Status:** Deferred. Named sidebar tools ship as the **last Phase 1x character-sheet feature**, not here. Remaining PF2e leftovers wait for the later PF2e *release*.
 
-- [ ] Sidebar **tools** (Attack Helper + Actions List + Budget Calculator specified). Candidate also: Spells / Afflictions / Actions **encyclopedia** (rules text, not the PC action menu)
+- [ ] Spells / Afflictions / Actions **encyclopedia** (rules text, not the PC action menu) — candidate after the named tools
 - [ ] Typed `effects[]` automation
 - [ ] Optional card-oriented play surfaces
 - [ ] Additional systems behind `system`
@@ -279,9 +296,10 @@ Out of scope for 0.9/1.0: dice roller, cloud, VTT interop, house-rule flags, GM-
 
 ## Recommended next work (in order)
 
-1. **Finish First Edition** (Phase 1x) — remaining CRB catalog, then APG follow-through. Keep Summoner out of the CRB pack.
-2. **Sidebar tools** when the PF1e sheet is ~90% done (**Attack Helper**, **Actions List**, and **Budget Calculator** are the named tools). Do not start tools during pack/schema work.
-3. **Later release** — leftover PF2e (PC2 golden, companion editor, Remaster packs, PF2e panel i18n).
+1. **Honesty / code fixes** (Phase 1x) — leftover W7 test titles, golden `weapon.properties` / `secondHead` vs catalog stamp, honest `focusTab`. Do not start remaining feats/spells or sidebar tools in that change.
+2. **Remaining CRB feats/spells**, then **APG follow-through**, optional PF1e goldens, magic overlay, OGL with first rules text. Keep Summoner out of the CRB pack.
+3. **Sidebar tools** — last character-sheet feature (**Attack Helper**, **Actions List**, **Budget Calculator**). Empty host until then.
+4. **Later release** — leftover PF2e (PC2 golden, companion editor, Remaster packs, PF2e panel i18n). Encyclopedia / `effects[]` wait until after the sheet.
 
 Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-agent-env-2c8f` or `cursor/multi-system-docs-990b` (superseded / would regress).
 
@@ -363,3 +381,4 @@ Housekeeping (not a product increment): do **not** merge `cursor/setup-cloud-age
 | 2026-09-01 | Phase 1x W7: double appended plus documentary secondHead; next is Batch 20 armor |
 | 2026-09-01 | Phase 1x batch 20: remaining light + medium armor; next is heavy armor + shields |
 | 2026-09-01 | Phase 1x batch 21: heavy armor + shields + extras; next is remaining feats/spells |
+| 2026-09-03 | Docs-vs-code pass: next code is honesty/code fixes (not feats/spells). Sidebar tools are the last character-sheet feature, not a ~90% mid-pack gate |

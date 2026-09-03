@@ -62,7 +62,7 @@ lore.warfare
 | --- | --- |
 | UI framework | **React** + TypeScript |
 | Save file extension | **`.json`** |
-| App display name | **Pathfinder 2E Character sheet** in current chrome; working product title is **TTRPG Character Sheet** (ADR 0003) |
+| App display name | **TTRPG Character Sheet** in chrome (Phase M landed; ADR 0003 / ADR 0008) |
 
 ### Soft follow-up (not blocking)
 
@@ -125,8 +125,8 @@ PF2e leftover editors/goldens/content wait for a **later PF2e release** ([roadma
 4. ~~Validate Load and Save against `schemas/character.schema.json`.~~  
 5. ~~Core calc engine + Fighter 5 golden.~~ Wizard 5, Bard 5, Cleric 5, and Ranger 5 goldens exist; remaining PF2e golden is the PC2 smoke test (later release).  
 6. Companion nested-sheet editor still missing (Ranger 5 golden stores the nested sheet; editor waits for the later PF2e release).  
-7. Externalize English UI strings (may land as T4′ during Phase M).  
-8. Optional IndexedDB draft buffer for refresh safety.
+7. PF2e panel literals remain English (later PF2e *release*). Chrome + PF1e catalogs use `en.json` / `es.json`.  
+8. IndexedDB one-key draft **landed** (app-level; not a character library).
 
 S1/S4 record: [`continuation-design.md`](continuation-design.md).  
 Historical PF2e increment: [`next-increment-design.md`](next-increment-design.md).  
@@ -144,3 +144,4 @@ Current sequencing: [`next-increment-multi-system.md`](next-increment-multi-syst
 | 2026-08-19 | Cleric 5 golden exists; remaining leftover is companion user + PC2 class |
 | 2026-08-19 | Ranger 5 golden + `computeCompanion`; remaining leftover is PC2 class; companion editor still missing |
 | 2026-08-19 | Remaining PF2e leftover waits for a later release; finish First Edition first |
+| 2026-09-03 | Chrome title is TTRPG Character Sheet; IndexedDB draft and PF1e/chrome i18n landed |

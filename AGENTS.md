@@ -2,9 +2,17 @@
 
 ## Testing
 
+### Honesty / code fixes (next)
+
+Phase 1x next code: leftover W7 test titles, golden `weapon.properties` / `secondHead` vs catalog stamp, honest `focusTab`. See [`docs/ROADMAP.md`](docs/ROADMAP.md) Phase 1x honesty / code fixes.
+
+- From `app/`, run `npx vitest run src/systems/pf1e`.
+- Do **not** start remaining feats/spells or sidebar tools in that change.
+- Do **not** record a demo video unless sheet control, layout, or Combat math actually changes. Stamping golden inventory fields is not an Inventory UI change.
+
 ### CRB catalog fill-out (remaining feats/spells)
 
-These batches append remaining catalog rows. Inventory already lists chips for weapon properties.
+These batches append remaining catalog rows **after** the honesty/code fixes. Inventory already lists chips for weapon properties. Lock an id table (pack-design §7 analog) before packing. Names + category/level only ([ADR 0007](docs/adr/0007-content-licensing.md)).
 
 - From `app/`, run `npx vitest run src/systems/pf1e`.
 - Do **not** record a demo video or upload Inventory screenshots unless the Inventory UI itself changed.
@@ -14,3 +22,7 @@ See [`docs/pf1e-crb-pack-design.md`](docs/pf1e-crb-pack-design.md) §7.6.
 ### When to record a browser walkthrough
 
 Record a browser walkthrough when the sheet **control**, **layout**, or **Combat math** actually changes (new editor, restyle, derived AC/CMB/attack behavior, and similar).
+
+### Sidebar tools
+
+Named tools (Attack Helper, Actions List, Budget Calculator) are the **last character-sheet feature**. Do not implement one unless asked, and not before remaining catalog / APG follow-through / optional goldens / magic overlay / OGL-with-rules-text.

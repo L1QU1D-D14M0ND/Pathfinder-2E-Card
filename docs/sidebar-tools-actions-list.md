@@ -2,7 +2,7 @@
 
 **Status:** Named future tool — **not implemented**. Host lock: [ADR 0005](adr/0005-sidebar-host.md), [`sidebar-host-design.md`](sidebar-host-design.md).  
 **Id (reserved):** `shell.actions-list` (shared chrome; per-system action catalog and restriction table).  
-**Sequencing:** after the character sheet is **~90% done** (dynamic and functional). Not on the PF1e 0.9 critical path. Companion to [Attack Helper](sidebar-tools-attack-helper.md), not a replacement for it.
+**Sequencing:** last character-sheet feature after Phase 1x honesty/code fixes, remaining catalog, APG follow-through, optional goldens, magic overlay, and OGL-with-rules-text. Not on the PF1e 0.9 critical path. Companion to [Attack Helper](sidebar-tools-attack-helper.md), not a replacement for it.
 
 ---
 

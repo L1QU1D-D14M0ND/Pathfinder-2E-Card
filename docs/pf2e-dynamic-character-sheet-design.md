@@ -42,7 +42,7 @@ This document is the **PF2e system spec**. The app is a multi-system sheet ([umb
 | 15 | Campaign / house rules | **Omit** optional flags (e.g. Free Archetype) in 0.9/1.0 — extra feats entered as custom rows if needed |
 | 16 | Golden tests | **Fighter 5 and Wizard 5 required regressions.** Bard 5, Cleric 5, and Ranger 5 landed. Remaining proposed set in §12 waits for a **later PF2e release** |
 | 17 | Save extension | **`.json`** |
-| 18 | App display name | Chrome still **Pathfinder 2E Character sheet** until Phase M; working product title **TTRPG Character Sheet** |
+| 18 | App display name | Chrome is **TTRPG Character Sheet** (Phase M landed). Historical PF2e-only title is retired. |
 
 See also: [ADR 0001](adr/0001-product-direction.md) (superseded), [ADR 0003](adr/0003-multi-system-product-direction.md) (current).
 
@@ -306,7 +306,7 @@ Include as needed for players: ancestries, heritages, backgrounds, classes, clas
 | UI | **React** |
 | Styling | Minimal CSS tables/grids; system fonts OK for placeholder |
 | State | One character document in memory; Save/Load `.json` files; optional single draft buffer |
-| App title | Chrome: **Pathfinder 2E Character sheet** until Phase M; working product title **TTRPG Character Sheet** |
+| App title | Chrome: **TTRPG Character Sheet** (Phase M landed) |
 | Calcs | Pure functions + golden tests |
 | Content | Planned: static JSON under `/content/remaster` and `/content/legacy` (directories not in the repo yet) |
 | Offline | Service worker caches app shell + content packs |
@@ -331,7 +331,7 @@ Live status checkboxes: [`ROADMAP.md`](ROADMAP.md). App-level phases (M, 1e, 2e,
 
 ### Phase 2 — PWA spreadsheet shell
 
-- Tab chrome, Save/Load, derived cells, identity/feats/spells/inventory/strike/play editors exist. Remaining: companion nested sheet; optional IndexedDB draft buffer; English UI strings externalized (currently hardcoded; may land during Phase M as T4′).
+- Tab chrome, Save/Load, derived cells, identity/feats/spells/inventory/strike/play editors exist. Remaining: companion nested sheet. IndexedDB one-key draft **landed** (app-level). PF2e panel literals remain English (later PF2e *release*). Chrome + PF1e catalogs use `en.json` / `es.json`.
 
 ### Phase 3 — Content fill-out (later PF2e *release*)
 
@@ -418,3 +418,4 @@ This section is the **PF2e system target**, not the app 0.9 bar (see [umbrella �
 | 2026-08-19 | Cleric 5 golden (prepared divine); remaining §12 is companion user + PC2 class |
 | 2026-08-19 | Ranger 5 golden (nested wolf companion + `computeCompanion`); remaining §12 is PC2 class |
 | 2026-08-19 | Remaining PF2e leftover waits for a later *release*; finish First Edition first |
+| 2026-09-03 | Chrome title is TTRPG Character Sheet; IndexedDB draft landed; PF2e panel i18n still later release |

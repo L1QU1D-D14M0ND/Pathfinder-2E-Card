@@ -1,6 +1,6 @@
 # PF1e Core Rulebook pack (Phase 3c)
 
-**Status:** Mechanic batches 1–21 and W1–W7 landed (Batch 15 is class spells-per-day + hybrid Max; W7 is double plus a documentary second head; Batch 20 is remaining light + medium armor; Batch 21 is heavy armor + shields). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 1 landed). This CRB folder stays CRB-only.  
+**Status:** Mechanic batches 1–21 and W1–W7 landed (Batch 15 is class spells-per-day + hybrid Max; W7 is double plus a documentary second head; Batch 20 is remaining light + medium armor; Batch 21 is heavy armor + shields). OGL / Product Identity review landed ([ADR 0007](adr/0007-content-licensing.md)). APG Synthesist lives in a **separate** pack ([`pf1e-apg-pack-design.md`](pf1e-apg-pack-design.md) slice 3 golden landed). This CRB folder stays CRB-only. **Next code** is honesty/code fixes ([`ROADMAP.md`](ROADMAP.md) Phase 1x), then remaining feats/spells.  
 
 **Parent:** [`pf1e-character-sheet-design.md`](pf1e-character-sheet-design.md) §7, [ADR 0003](adr/0003-multi-system-product-direction.md)  
 **On disk:** [`../content/pf1e/crb/`](../content/pf1e/crb/)  
@@ -32,7 +32,7 @@ Resolver rule (locked): missing catalog id → treat as **custom**; isolate to t
 
 Order is CRB character-build order, not encyclopedia order. Sidebar tools stay out. **Two mechanics per PR** — do not start the following pair in the same change.
 
-**How to pick the next PR:** take the first row whose status is **Next**. Engine-owned rows review formulas and UI honesty; catalog rows add ids. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here. The 0.9 character-basics queue is complete; 1x fill-out continues after that table.
+**How to pick the next PR:** the 0.9 character-basics queue and mundane 16–21 / W1–W7 rows are **Done**. The next **code** PR is honesty/code fixes on [`ROADMAP.md`](ROADMAP.md) (not a new row in this table). After that, remaining feats/spells — lock an id list like §7 first. Goldens must stay green. Do not start Attack Helper / Actions List / Budget Calculator here; they are the last character-sheet feature.
 
 | Batch | Mechanics | Why this pair | Kind | Status |
 | --- | --- | --- | --- | --- |
@@ -66,7 +66,7 @@ Order is CRB character-build order, not encyclopedia order. Sidebar tools stay o
 | **21** | Heavy armor; shields (+ mundane extras) | Finish the CRB armor table. New `kind: shield` stamps `ItemEntry.shield` | Catalog | Done |
 | **later** | Magic weapons; magic armor | Reserved overlay / named items. **Do not start** in 16–21. No `plus-1` catalog ids | Catalog | Later |
 
-The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W7** landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on a `weapon.properties` array of **N** tags (one is valid; many are valid). W7 also stamps a documentary `secondHead`. **Batches 20–21** landed remaining armor and shields. Next catalog work is remaining **feats/spells**. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor).
+The 0.9 character-basics write-ups are in §4. Batches 14–15 are 1x fill-out. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. **W1–W7** landed `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on a `weapon.properties` array of **N** tags (one is valid; many are valid). W7 also stamps a documentary `secondHead`. **Batches 20–21** landed remaining armor and shields. **Next code** is honesty/code fixes (stale W7 test titles; golden inventory vs catalog `properties` / `secondHead`; honest `focusTab`). Next catalog work after that is remaining **feats/spells**. Later magic properties use the same list. Mundane equipment fill-out is locked in [§7](#7-remaining-mundane-weapons-and-armor). **Sidebar tools are the last character-sheet feature**, not a pack batch.
 
 ---
 
@@ -1278,7 +1278,7 @@ Those bonus slots are added to the class table’s spells per day. Batch 15 fill
 
 The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed remaining CRB player races and class spells-per-day. Batches 16–19 landed remaining simple, martial, and exotic weapon ids. W1–W7 landed reach, brace, trip, disarm, monk, nonlethal, and double (plus a documentary second head). Batches 20–21 landed remaining armor and shields. Do **not** start the next pair of CRB encyclopedia rows in the same change as a platform increment.
 
-**Next product work:** remaining **feats/spells**, then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. Sidebar tools still wait until the PF1e sheet is ~90% done.
+**Next product work:** [honesty / code fixes](ROADMAP.md#phase-1x--honesty--code-fixes), then remaining **feats/spells** (lock an id table like §7 before packing; names + category/level only — [ADR 0007](adr/0007-content-licensing.md)), then APG follow-through. Magic weapons and magic armor stay **later**. Leftover PF2e waits for a later release. Do **not** add Summoner to this CRB folder. **Sidebar tools are the last character-sheet feature** (after this pack work).
 
 ---
 
@@ -1286,7 +1286,7 @@ The 0.9 character-basics queue (batches 1–13) is done. Batches 14–15 landed 
 
 Locked fill-out after batch 15. Same rules as batch 10: documentary stamp of id, name, pounds, and weapon/armor (or later shield) stats. Combat numbers stay on `armorClass` / `attacks`. Unknown id → custom. Mechanics-only names and numbers. Two mechanics per PR.
 
-**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1–W7 Special tags (and W7 `secondHead`) are on the matching weapons. Batches 20–21 remaining armor, shields, and mundane extras. Skip those ids in later batches. Next catalog is remaining feats/spells.
+**Already packed (do not duplicate):** Batch 10 goldens plus Batches 16–19 remaining simple, martial, and exotic weapons and their ammo. W1–W7 Special tags (and W7 `secondHead`) are on the matching weapons. Batches 20–21 remaining armor, shields, and mundane extras. Skip those ids in later batches. Next code is honesty/code fixes; next catalog is remaining feats/spells.
 
 ### 7.1 Shared locks (every 16–21 PR)
 
@@ -1606,3 +1606,4 @@ Each W-batch is two mechanics: (1) **append** that one quality on the matching c
 | 2026-09-01 | W7: double appended plus documentary secondHead; primary dice stay a single string; next is Batch 20 armor |
 | 2026-09-01 | Batch 20: remaining light + medium armor; Combat stays typed; next is heavy armor + shields (21) |
 | 2026-09-01 | Batch 21: heavy armor + shields (kind shield) + extras; Combat stays typed; next is remaining feats/spells |
+| 2026-09-03 | Next code is honesty/code fixes (not feats/spells). Sidebar tools are the last character-sheet feature |

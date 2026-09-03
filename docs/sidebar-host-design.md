@@ -117,7 +117,7 @@ The old “reference sidebar” (Spells / Afflictions / Actions) remains a possi
 | Docs (now) | This file + ADR 0005 |
 | **M** | Done — empty collapsed `<aside>` in the shell |
 | **Sb** | Done (thin host: collapse, registry, empty state, context wired) |
-| **Tools** (later) | After the character sheet is **~90% done** (dynamic and functional). **Attack Helper**, **Actions List**, and **Budget Calculator** are specified; encyclopedia is a candidate |
+| **Tools** (later) | **Last character-sheet feature** after Phase 1x honesty/code fixes, remaining catalog, APG follow-through, optional goldens, magic overlay, and OGL-with-rules-text. **Attack Helper**, **Actions List**, and **Budget Calculator** are specified; encyclopedia is a candidate after those |
 | 0.9 | PF1e bar does **not** wait on tools. Empty/collapsed host is fine |
 | 1.0 | Same; Spanish includes `shell.tools*` if the host shipped |
 
@@ -152,3 +152,4 @@ Import rule unchanged: PF1e tools must not import PF2e modules.
 | 2026-08-17 | Reserve **Actions List** (grey-out + short reason) |
 | 2026-08-17 | Reserve **Budget Calculator** (buy vs craft cost, time, DC, requirements) |
 | 2026-08-19 | Types live in `shell/types.ts`; `labelKey`; collapse when no tools or `max-width: 800px` |
+| 2026-09-03 | Named tools are the last character-sheet feature; ~90% gate retired |

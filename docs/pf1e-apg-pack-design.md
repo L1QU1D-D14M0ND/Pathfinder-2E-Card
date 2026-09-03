@@ -77,7 +77,7 @@ Mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md), [`co
 
 ## Later slices (not this change)
 
-Auto-applied evolutions and a Summoner spell list wait for the First Edition finish (roadmap Phase 1x), not a PF2e increment. Spanish UI lives in `app/src/locales/es.json`, not this pack.
+Auto-applied evolutions and a Summoner spell list wait for the First Edition finish (roadmap Phase 1x APG follow-through, **after** honesty/code fixes and remaining CRB feats/spells), not a PF2e increment. Spanish UI lives in `app/src/locales/es.json`, not this pack.
 
 ---
 
@@ -91,3 +91,4 @@ Auto-applied evolutions and a Summoner spell list wait for the First Edition fin
 | 2026-08-19 | Spanish UI catalog landed outside this pack (`es.json`) |
 | 2026-08-19 | 1.0 stability; this pack unchanged |
 | 2026-08-19 | Summoner spell catalog / other APG classes sequenced in the First Edition finish, not leftover PF2e |
+| 2026-09-03 | `pack.json` status slice-3 (golden already landed). Next code is honesty/code fixes; APG follow-through waits |

@@ -1,6 +1,6 @@
 # Pathfinder First Edition — Character sheet (system spec)
 
-**Status:** System specification locked (ADR 0003). PF1e **0.9 bar landed**. **1.0 landed** (Synthesist golden + Spanish UI catalog + stability). **Next:** finish First Edition this release. Remaining PF2e work waits for a later release.  
+**Status:** System specification locked (ADR 0003). PF1e **0.9 bar landed**. **1.0 landed** (Synthesist golden + Spanish UI catalog + stability). **Next:** honesty/code fixes, then remaining First Edition catalog. Remaining PF2e work waits for a later release. **Sidebar tools are the last character-sheet feature.**  
 **Parent:** [`ttrpg-character-sheet-design.md`](ttrpg-character-sheet-design.md)  
 **Schema:** [ADR 0006](adr/0006-pf1e-character-schema.md), [`pf1e-schema-design-notes.md`](pf1e-schema-design-notes.md), [`../schemas/pf1e/character.schema.json`](../schemas/pf1e/character.schema.json)  
 **Priority:** **Finish** this system in the current release (ahead of remaining PF2e work, which waits for a later release)
@@ -170,7 +170,7 @@ Optional later (this First Edition finish): Cleric 5 (domains/channel as daily r
 
 Curated CRB player catalog under [`content/pf1e/crb/`](../content/pf1e/crb/). Review process: [`pf1e-crb-pack-design.md`](pf1e-crb-pack-design.md) — **two mechanics per batch**.
 
-Batch 1–15 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability; Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids; remaining CRB player races + size stamp; class spells-per-day tables with hybrid Max. Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); **batches 16–19 landed** (simple, martial, and exotic weapons). **W1–W7 landed** `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on `weapon.properties`, an **array of N tags** (one is valid; many are valid; later magic uses the same list). Double weapons also stamp a documentary `secondHead` ([pack design §7.6](pf1e-crb-pack-design.md)). **Batch 20 landed** remaining light + medium armor. **Batch 21 landed** heavy armor, shields (`kind: shield`), and mundane extras. Magic weapons/armor are a later overlay, not plus-N catalog rows. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, domain/specialist extras, and auto-filled spellbooks are not auto-written.
+Batch 1–15 (landed, including Batch 7): ability modifiers + BAB/saves; HP dialog + iteratives; AC/CMB; skills; size; encumbrance (Ignore weight opt-out); spell DC + bonus slots from ability; Human race catalog (ability +2 stays typed); Fighter/Wizard class skills + skill-point pool; documentary weapons/armor ids; remaining 9 CRB classes; documentary feat ids (Combat math stays typed); documentary spell ids; remaining CRB player races + size stamp; class spells-per-day tables with hybrid Max. Remaining mundane weapons/armor are queued as batches 16–21 ([pack design §7](pf1e-crb-pack-design.md)); **batches 16–19 landed** (simple, martial, and exotic weapons). **W1–W7 landed** `reach`, `brace`, `trip`, `disarm`, `monk`, `nonlethal`, and `double` on `weapon.properties`, an **array of N tags** (one is valid; many are valid; later magic uses the same list). Double weapons also stamp a documentary `secondHead` ([pack design §7.6](pf1e-crb-pack-design.md)). **Batch 20 landed** remaining light + medium armor. **Batch 21 landed** heavy armor, shields (`kind: shield`), and mundane extras. Magic weapons/armor are a later overlay, not plus-N catalog rows. **Next code** is honesty/code fixes (stale W7 test titles; golden inventory vs catalog stamp; honest `focusTab`), then remaining feats/spells. Load penalties, equipped-item AC, class features, feat combat math, Spell Focus DC, domain/specialist extras, and auto-filled spellbooks are not auto-written.
 
 License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.md)). **1.0 landed.** Spanish UI catalog: [`../app/src/locales/es.json`](../app/src/locales/es.json). Synthesist golden landed.
 
@@ -180,7 +180,7 @@ License: mechanics-only until rules text ([ADR 0007](adr/0007-content-licensing.
 
 ## 8. Relationship to PF2e
 
-Reuse is the **kernel**, not the rules. See [`shared-kernel-design.md`](shared-kernel-design.md): PWA, Ajv Load/Save, `ContentRef` core, `Effect` stub, coins, notes, `DerivedCell`, golden helper, **sidebar host**. Do not share proficiency math, bulk, hero points, `ProficiencyRank`, or a single character TypeScript type.
+Reuse is the **kernel**, not the rules. See [`shared-kernel-design.md`](shared-kernel-design.md): PWA, Ajv Load/Save, `ContentRef` core, `Effect` stub, coins, notes, `DerivedCell`, **sidebar host**. Do not share proficiency math, bulk, hero points, `ProficiencyRank`, or a single character TypeScript type. A shared golden helper was inventoried and **not** extracted; goldens live per-system plus `shell/goldens.stability.test.ts`.
 
 PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same as PF1e multiclass. PF1e multiclass is in scope here.
 
@@ -237,3 +237,4 @@ PF2e Dual Class (campaign option) stays out of PF2e 0.9; it is **not** the same 
 | 2026-09-01 | W7: double appended plus documentary secondHead. Next is Batch 20 armor. |
 | 2026-09-01 | CRB batch 20: remaining light + medium armor. Next is heavy armor + shields. |
 | 2026-09-01 | CRB batch 21: heavy armor + shields + extras. Next is remaining feats/spells. |
+| 2026-09-03 | Next code is honesty/code fixes; sidebar tools are the last character-sheet feature. |
